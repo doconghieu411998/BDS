@@ -3,7 +3,7 @@ import Header from '../header/header';
 import IntroSection from '../intro-section/intro-section';
 import styles from './main.module.css';
 
-const HERO_BG = "/images/Home.png"; 
+const HERO_BG = "images/home.png"; 
 
 export default function Main() {
   return (
