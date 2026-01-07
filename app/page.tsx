@@ -1,9 +1,5 @@
-import Main from "./components/home/main";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <>
-      <Main />
-    </>
-  );
+  redirect("/client");
 }

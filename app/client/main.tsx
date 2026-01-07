@@ -1,7 +1,12 @@
 import Image from 'next/image';
-import Header from '../header/header';
-import IntroSection from '../intro-section/intro-section';
 import styles from './main.module.css';
+import Header from './header';
+import IntroSection from './intro-section';
+import OverviewSection from './overview-section';
+import LocationSection from './location-section';
+import HighlightSection from './highlight-section';
+import NewsSection from './news-section';
+import Footer from './footer';
 
 const HERO_BG = "images/home.png"; 
 
@@ -47,6 +52,15 @@ export default function Main() {
 
       <IntroSection />
 
+      <OverviewSection />
+
+      <LocationSection />
+
+      <HighlightSection />
+
+      <NewsSection />
+
+      <Footer />
     </main>
   );
 }

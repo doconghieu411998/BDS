@@ -1,0 +1,128 @@
+.container {
+  width: 100%;
+  background-color: #f9f5ec;
+  padding: 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.bigNumber {
+  font-family: "Times New Roman", serif;
+  font-size: 150px;
+  color: #c0965c;
+  line-height: 0.7;
+}
+
+.titleGroup .subTitle {
+  color: #6d4c41;
+  letter-spacing: 2px;
+  margin: 0;
+  font-size: 20px;
+}
+
+.titleGroup .mainTitle {
+  font-family: "Times New Roman", serif;
+  font-size: 38px;
+  color: #6d4c41;
+  margin-top: 10px;
+}
+
+/* KHU VỰC ẢNH ĐÈ NỀN CAM */
+.highlightContent {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  height: 600px;
+  margin-bottom: 100px;
+}
+
+.orangeBg {
+  position: absolute;
+  right: 0;
+  top: 100px; /* Khối cam lùi xuống một chút */
+  width: 70%;
+  height: 500px;
+  background-color: #b38a4d; /* Màu cam nâu như thiết kế */
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 50px;
+}
+
+.archText {
+  width: 40%;
+  color: #fff;
+  z-index: 3;
+}
+
+.archText h3 { font-size: 22px; margin-bottom: 20px; }
+.archText p { font-size: 14px; line-height: 1.6; opacity: 0.9; }
+
+.imageWrapper {
+  position: absolute;
+  left: 50px;
+  top: 0;
+  width: 65%;
+  z-index: 2; /* Ảnh có z-index cao hơn khối cam để đè lên */
+  box-shadow: 20px 20px 50px rgba(0,0,0,0.2);
+}
+
+.mainImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* PHẦN GRID 3 CỘT */
+.bottomGrid {
+  width: 100%;
+  background-color: #b38a4d;
+  padding: 60px 0;
+  color: #fff;
+}
+
+.gridHeading {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+  font-size: 22px;
+}
+
+.gridContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  padding: 0 20px;
+}
+
+.gridItem h4 {
+  font-size: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.tagline { font-weight: bold; font-size: 14px; margin-bottom: 10px; }
+.desc { font-size: 13px; line-height: 1.7; opacity: 0.9; text-align: justify; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .highlightContent { height: auto; display: flex; flex-direction: column; }
+  .orangeBg, .imageWrapper { position: static; width: 100%; }
+  .archText { width: 90%; padding: 40px 20px; }
+  .gridContainer { grid-template-columns: 1fr; }
+}

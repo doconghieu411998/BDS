@@ -1,0 +1,122 @@
+.footer {
+  width: 100%;
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+.bannerWrapper {
+  width: 100%;
+  height: 500px; /* Điều chỉnh độ cao ảnh banner */
+  position: relative;
+}
+
+.bannerImg {
+  object-fit: cover;
+}
+
+.contentContainer {
+  background-color: #d4b483; /* Màu vàng cát đặc trưng trong ảnh */
+  padding: 60px 10%;
+  color: #fff;
+}
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.5fr 1fr;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+/* Logo Styling */
+.logoCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.subLogo {
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-top: -5px;
+}
+
+.mLetter {
+  font-size: 32px;
+}
+
+/* Info Styling */
+.heading {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.text {
+  font-size: 14px;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+/* Social Icons */
+.socialIcons {
+  display: flex;
+  gap: 15px;
+}
+
+.iconCircle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.iconCircle:hover {
+  background: white;
+  color: #d4b483;
+}
+
+/* Legal Section */
+.legalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.legalText {
+  font-size: 11px;
+  line-height: 1.6;
+  opacity: 0.8;
+  text-align: justify;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .legalGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+}

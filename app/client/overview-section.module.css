@@ -1,0 +1,111 @@
+.container {
+  width: 100%;
+  background-color: #f9f5ec; /* Màu nền kem nhạt như ảnh */
+  padding-top: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contentWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  padding: 0 20px;
+  gap: 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.leftCol {
+  flex: 1;
+}
+
+.title {
+  font-family: "Times New Roman", serif;
+  color: #6d4c41; /* Màu nâu đất sang trọng */
+  font-size: 42px;
+  line-height: 1.2;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.decorShape {
+  position: absolute;
+  top: -40px;
+  left: -60px;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(209, 159, 88, 0.15) 0%, transparent 70%);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+.rightCol {
+  flex: 2;
+}
+
+.infoList {
+  list-style: none;
+  padding: 0;
+}
+
+.infoItem {
+  display: grid;
+  grid-template-columns: 25px 230px 1fr; /* Chia cột chuẩn icon - nhãn - nội dung */
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(109, 76, 65, 0.1);
+  align-items: start;
+}
+
+.icon {
+  color: #d19f58; /* Màu vàng kim của icon mũi tên */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.label {
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #8a8a8a; /* Màu xám cho label */
+  font-weight: 400;
+  text-transform: none;
+}
+
+.value {
+  font-family: sans-serif;
+  font-size: 15px;
+  color: #333;
+  font-weight: 600; /* Nội dung chính in đậm */
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.imageContainer {
+  width: 100%;
+  margin-top: 60px;
+  line-height: 0; /* Khử khoảng trống dưới ảnh */
+}
+
+.panoramaImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* Hiệu ứng mờ dần cạnh trên để ảnh hòa vào nền kem */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .contentWrapper { flex-direction: column; gap: 30px; }
+  .title { font-size: 32px; }
+  .infoItem { grid-template-columns: 25px 180px 1fr; }
+}
+
+@media (max-width: 600px) {
+  .infoItem {
+    grid-template-columns: 20px 1fr;
+    gap: 4px;
+  }
+  .label { grid-column: 2; }
+  .value { grid-column: 2; font-size: 14px; }
+}
