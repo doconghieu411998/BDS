@@ -1,10 +1,11 @@
 .container {
   width: 100%;
   background-color: #f9f5ec;
-  padding: 100px 0;
+  padding: 80px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 .header {
@@ -38,91 +39,136 @@
   margin-top: 10px;
 }
 
-/* KHU VỰC ẢNH ĐÈ NỀN CAM */
+/* --- KHU VỰC INTERACTION (QUAN TRỌNG) --- */
 .highlightContent {
   position: relative;
   width: 100%;
-  max-width: 1400px;
-  height: 600px;
-  margin-bottom: 100px;
+  max-width: 1200px;
+  height: 550px; /* Chiều cao cố định để chứa 2 thẻ absolute */
+  margin-bottom: 80px;
+  /* Perspective để tạo chiều sâu nếu muốn 3D xoay nhẹ */
+  perspective: 1000px; 
 }
 
-.orangeBg {
+/* Class chung cho cả 2 thẻ */
+.cardBase {
   position: absolute;
-  right: 0;
-  top: 100px; /* Khối cam lùi xuống một chút */
-  width: 70%;
-  height: 500px;
-  background-color: #b38a4d; /* Màu cam nâu như thiết kế */
-  z-index: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-right: 50px;
-}
-
-.archText {
-  width: 40%;
-  color: #fff;
-  z-index: 3;
-}
-
-.archText h3 { font-size: 22px; margin-bottom: 20px; }
-.archText p { font-size: 14px; line-height: 1.6; opacity: 0.9; }
-
-.imageWrapper {
-  position: absolute;
-  left: 50px;
-  top: 0;
-  width: 65%;
-  z-index: 2; /* Ảnh có z-index cao hơn khối cam để đè lên */
+  border-radius: 4px;
   box-shadow: 20px 20px 50px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  overflow: hidden;
 }
 
-.mainImage {
-  width: 100%;
-  height: auto;
+.cardBase:hover {
+  box-shadow: 25px 25px 60px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+/* 1. THẺ ẢNH (Bên trái, cao hơn) */
+.imageCard {
+  top: 0;
+  left: 5%; /* Cách lề trái */
+  width: 60%; /* Chiếm 60% chiều rộng */
+  height: 450px;
+  background-color: #4a3a35; /* Màu nền dự phòng */
+}
+
+.cardImage {
   object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-/* PHẦN GRID 3 CỘT */
+/* Hiệu ứng hover vào thẻ ảnh thì zoom ảnh bên trong */
+.imageCard:hover .cardImage {
+  transform: scale(1.05);
+}
+
+.imageOverlayText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.9);
+  z-index: 2;
+  font-family: "Times New Roman", serif;
+  font-size: 40px;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+/* 2. THẺ TEXT (Bên phải, thấp hơn - Màu Vàng) */
+.textCard {
+  bottom: 0; /* Neo xuống đáy container */
+  right: 5%; /* Cách lề phải */
+  width: 60%; /* Chiếm 50% chiều rộng */
+  height: 450px; /* Thấp hơn thẻ ảnh một chút */
+  background-color: #b38a4d; /* Màu vàng kim chủ đạo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.textContent {
+  color: #fff;
+  text-align: left;
+}
+
+.textTitle {
+  font-size: 20px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.divider {
+  width: 50px;
+  height: 2px;
+  background-color: rgba(255,255,255,0.5);
+  margin-bottom: 20px;
+}
+
+.textDesc {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* --- GRID BOTTOM --- */
 .bottomGrid {
   width: 100%;
   background-color: #b38a4d;
   padding: 60px 0;
   color: #fff;
 }
-
-.gridHeading {
-  max-width: 1200px;
-  margin: 0 auto 40px;
-  padding: 0 20px;
-  font-size: 22px;
-}
-
-.gridContainer {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
-  padding: 0 20px;
-}
-
-.gridItem h4 {
-  font-size: 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-}
-
+/* ... Các class grid giữ nguyên ... */
+.gridHeading { max-width: 1200px; margin: 0 auto 40px; padding: 0 20px; font-size: 22px; }
+.gridContainer { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; padding: 0 20px; }
+.gridItem h4 { font-size: 24px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; margin-bottom: 15px; }
 .tagline { font-weight: bold; font-size: 14px; margin-bottom: 10px; }
 .desc { font-size: 13px; line-height: 1.7; opacity: 0.9; text-align: justify; }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .highlightContent { height: auto; display: flex; flex-direction: column; }
-  .orangeBg, .imageWrapper { position: static; width: 100%; }
-  .archText { width: 90%; padding: 40px 20px; }
-  .gridContainer { grid-template-columns: 1fr; }
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .highlightContent {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px;
+  }
+
+  .cardBase {
+    position: relative; /* Mobile thì bỏ absolute để xếp chồng dọc */
+    width: 100%;
+    left: 0; 
+    right: 0;
+    top: 0; 
+    bottom: 0;
+    height: 300px;
+  }
+  
+  .textCard { height: auto; padding: 30px; }
 }

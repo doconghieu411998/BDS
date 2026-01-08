@@ -1,25 +1,18 @@
-/* app/page.module.css */
-
-/* 1. Wrapper tổng cho cả trang */
 .main {
   width: 100%;
   min-height: 100vh;
   position: relative;
-  /* Quan trọng: Bỏ overflow: hidden và height: 100vh ở đây để trang web có thể cuộn xuống dưới */
   overflow-x: hidden; 
 }
 
-/* 2. Tạo class mới dành riêng cho màn hình Banner đầu tiên */
-.heroSection {
-  position: relative; /* Làm điểm neo cho các phần tử absolute bên trong */
+.mainSection {
+  position: relative;
   width: 100%;
-  height: 100vh; /* Chiều cao bằng đúng 1 màn hình */
-  overflow: hidden; /* Cắt ảnh thừa nếu có */
-  display: flex;       /* Thêm flex để dễ căn chỉnh nếu cần */
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
   flex-direction: column;
 }
-
-/* --- Các class bên dưới giữ nguyên logic nhưng nằm trong heroSection --- */
 
 .bgWrap {
   position: absolute;

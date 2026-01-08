@@ -1,6 +1,7 @@
-import React from 'react';
+"use client";
 import Image from 'next/image';
 import styles from './news-section.module.css';
+import { useRouter } from "next/navigation";
 
 const NEWS_DATA = [
   {
@@ -18,6 +19,13 @@ const NEWS_DATA = [
 ];
 
 const NewsSection = () => {
+
+  const router = useRouter();
+
+  const handleNewsClick = (id: number) => {
+    router.push(`/client/news/${id}`);
+  };
+
   return (
     <section className={styles.container}>
       <h2 className={styles.sectionTitle}>TIN TỨC</h2>
@@ -40,7 +48,7 @@ const NewsSection = () => {
               
               <div className={styles.cardFooter}>
                 <span className={styles.date}>{item.date}</span>
-                <button className={styles.arrowBtn}>
+                <button onClick={() => handleNewsClick(item.id)} className={styles.arrowBtn}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>

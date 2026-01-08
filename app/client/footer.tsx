@@ -2,19 +2,10 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './footer.module.css';
 import { FacebookFilled, YoutubeFilled, LinkedinFilled } from '@ant-design/icons';
+
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      {/* Banner Image Section */}
-      <div className={styles.bannerWrapper}>
-        <Image 
-          src="/path-to-your-banner.jpg" // Thay đường dẫn ảnh phối cảnh của bạn vào đây
-          alt="Masteri Trinity Square Overview"
-          fill
-          className={styles.bannerImg}
-        />
-      </div>
-
       {/* Main Content Section */}
       <div className={styles.contentContainer}>
         <div className={styles.mainGrid}>

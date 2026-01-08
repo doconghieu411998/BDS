@@ -4,16 +4,6 @@
   font-family: Arial, sans-serif;
 }
 
-.bannerWrapper {
-  width: 100%;
-  height: 500px; /* Điều chỉnh độ cao ảnh banner */
-  position: relative;
-}
-
-.bannerImg {
-  object-fit: cover;
-}
-
 .contentContainer {
   background-color: #d4b483; /* Màu vàng cát đặc trưng trong ảnh */
   padding: 60px 10%;
