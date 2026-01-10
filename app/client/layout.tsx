@@ -1,5 +1,6 @@
 import Footer from "./footer";
 import Header from "./header";
+import Preloader from "./pre-loading";
 
 export default function ClientLayout({
   children,
@@ -8,11 +9,14 @@ export default function ClientLayout({
 }>) {
   return (
     <div style={{ position: 'relative' }}>
-      {/* Header nằm ở đây, sẽ hiển thị ở tất cả các trang con */}
+      
+      <Preloader />
+
       <Header />
       
-      {/* Nội dung thay đổi (Home, News Detail...) sẽ được render vào đây */}
-      {children}
+      <main className="content-fade-in">
+        {children}
+      </main>
 
       <Footer />
     </div>
