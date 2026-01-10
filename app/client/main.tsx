@@ -5,6 +5,7 @@ import OverviewSection from './overview-section';
 import LocationSection from './location-section';
 import HighlightSection from './highlight-section';
 import NewsSection from './news-section';
+import PinSpace from './pin-space-section';
 
 const HERO_BG = "images/home.png";
 
@@ -53,6 +54,8 @@ export default function Main() {
       <LocationSection />
 
       <HighlightSection />
+
+      <PinSpace />
 
       <NewsSection />
 

@@ -227,26 +227,51 @@
 
   /* 1. Header Bar (Thanh menu khi chưa mở) */
   .header {
-    padding: 15px 20px;
+    padding: 10px 20px;
+    display: flex;
     justify-content: space-between;
-    height: auto; /* Đảm bảo chiều cao tự động */
+    align-items: center;
+    height: 70px;
+  }
+
+  .centerSection {
+    order: 1; 
+    flex: 1;
+    display: flex;
+    justify-content: flex-start; /* Đẩy logo về bên trái */
+  }
+
+  .leftSection {
+    order: 2;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Đẩy nút menu về bên phải */
+  }
+
+  /* Ẩn phần trống không cần thiết */
+  .rightSection {
+    display: none;
   }
 
   .logo { 
-    width: 100px; 
-    height: auto; 
-    object-fit: contain;
+    width: 90px; /* Thu nhỏ một chút cho cân đối */
+    height: auto;
   }
   
   .menuBtn {
-    width: 40px; height: 40px; /* Thu nhỏ nút một chút cho tinh tế */
-    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; /* Biến thành hình tròn */
     padding: 0;
+    display: flex;
+    align-items: center;
     justify-content: center;
     background-color: #d19f58;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   .menuTextOverflow { display: none !important; } /* Ẩn chữ MENU */
-  .burgerIcon { margin: 0; color: #fff; font-size: 18px; }
+  .burgerIcon { margin: 0; color: #fff; font-size: 20px; }
 
 
   /* --- 2. MENU FULLSCREEN (Giao diện khi mở ra) --- */
@@ -289,7 +314,7 @@
   /* 4. SỬA LỖI NÚT ĐÓNG (Góc Phải) */
   .closeBtn {
     position: absolute;
-    top: 25px;
+    top: 35px;
     right: 25px; /* Đặt cứng bên phải */
     left: auto !important; /* Hủy bỏ thuộc tính left nếu có */
     
@@ -348,5 +373,19 @@
     
     /* Reset transform nếu animation làm lệch vị trí */
     transform: none !important; 
+  }
+}
+
+.bgDecoration {
+  flex: 1.5; /* Chiếm 60% màn hình bên phải */
+  height: 100vh; /* Full chiều cao */
+  position: relative;
+  overflow: hidden; /* Cắt phần thừa */
+}
+
+/* Responsive Mobile (Giữ nguyên code ở câu trả lời trước) */
+@media (max-width: 768px) {
+  .bgDecoration {
+    display: none !important; /* Mobile ẩn Carousel đi cho nhẹ */
   }
 }

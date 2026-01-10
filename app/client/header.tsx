@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
+import VerticalCarousel from './vertical-carousel';
 
 const MENU_ITEMS = [
   { label: "TRANG CHỦ", href: "/" },
@@ -18,6 +19,7 @@ const MENU_ITEMS = [
   { label: "TIN TỨC", href: "/tin-tuc" },
   { label: "LIÊN HỆ", href: "/lien-he" },
 ];
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,41 +68,75 @@ const Header = () => {
     return () => ctx.revert(); // Dọn dẹp animation khi unmount
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      menuTimeline.current = gsap.timeline({ paused: true })
+      // Initialize the timeline with professional easing and lifecycle hooks
+      menuTimeline.current = gsap.timeline({
+        paused: true,
+        defaults: { ease: "expo.out" }, // Premium "expo" easing
+        onStart: () => {
+          // Lock scroll the moment the animation starts playing
+          document.body.style.overflow = 'hidden';
+        },
+        onReverseComplete: () => {
+          // ONLY unlock scroll once the menu is completely hidden
+          document.body.style.overflow = 'unset';
+          gsap.set(menuRef.current, { visibility: 'hidden' });
+        }
+      });
 
+      menuTimeline.current
+        // A. The Background Panel
         .fromTo(menuRef.current,
-          { xPercent: -100, visibility: 'hidden' },
+          {
+            xPercent: -100,
+            autoAlpha: 0 // autoAlpha is better for performance than visibility + opacity
+          },
           {
             xPercent: 0,
-            visibility: 'visible',
-            duration: 0.8,
-            ease: "power4.inOut"
+            autoAlpha: 1,
+            duration: 1.1,
+            ease: "expo.inOut", // Smooth acceleration and deceleration
+            force3D: true // Forces hardware acceleration (GPU)
           }
         )
-        // --------------------
-
-        .from(".menu-link-item", {
-          x: -50,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "power3.out"
-        }, "-=0.4");
+        // B. The Menu Items (Visual Hierarchy)
+        .fromTo(".menu-link-item",
+          {
+            x: -30,
+            opacity: 0
+          },
+          {
+            x: 0,
+            opacity: 1,
+            stagger: 0.08, // Subtle delay between each item
+            duration: 0.8,
+            ease: "power3.out"
+          },
+          "-=0.5" // Start animating items halfway through the panel slide
+        )
+        // C. Close Button & Logo Fade-in
+        .fromTo([`.${styles.closeBtn}`, `.${styles.overlayLogo}`],
+          { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1, duration: 0.5 },
+          "-=0.6"
+        );
 
     }, menuRef);
 
     return () => ctx.revert();
   }, []);
 
+  // 2. Optimized Trigger Effect
   useEffect(() => {
+    if (!menuTimeline.current) return;
+
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      menuTimeline.current?.play();
+      // Ensure visibility is set before playing
+      gsap.set(menuRef.current, { visibility: 'visible' });
+      menuTimeline.current.play();
     } else {
-      document.body.style.overflow = 'auto';
-      menuTimeline.current?.reverse();
+      menuTimeline.current.reverse();
     }
   }, [isMenuOpen]);
 
@@ -170,14 +206,13 @@ const Header = () => {
 
           {/* Cột phải: Hình ảnh trang trí mờ */}
           <div className={styles.bgDecoration}>
-            <Image
-              src={MENU_BG_IMG}
-              alt="Background Architecture"
-              fill
-              style={{ objectFit: 'cover', opacity: 0.3 }}
-            />
-            {/* Lớp gradient phủ lên ảnh để tiệp màu nền */}
-            <div className={styles.gradientOverlay}></div>
+
+            {/* Xóa thẻ Image cũ đi */}
+            {/* <Image src={MENU_BG_IMG} ... /> */}
+            {/* <div className={styles.gradientOverlay}></div> */}
+
+            {/* Chèn Carousel vào đây */}
+            <VerticalCarousel />
           </div>
         </div>
       </div>

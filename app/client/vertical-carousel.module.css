@@ -1,0 +1,58 @@
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Cắt phần ảnh trôi ra ngoài */
+  background-color: #000;
+  position: relative;
+}
+
+.marqueeTrack {
+  width: 100%;
+  /* Không set height, để nó tự giãn theo nội dung con */
+  
+  /* ANIMATION QUAN TRỌNG */
+  animation: scrollUp 60s linear infinite; 
+  /* 60s là thời gian chạy hết 1 vòng (càng to càng chậm) */
+  
+  /* Báo cho trình duyệt dùng Card đồ họa để render -> Siêu mượt */
+  will-change: transform;
+}
+
+/* Định nghĩa chuyển động */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    /* Di chuyển lên 50% chiều cao (vì mình nhân đôi data, nên 50% là hết list gốc) */
+    transform: translateY(-50%);
+  }
+}
+
+.slideItem {
+  width: 100%;
+  height: 100vh; /* Mỗi ảnh cao bằng 1 màn hình */
+  position: relative;
+}
+
+.bgImage {
+  object-fit: cover;
+}
+
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* Gradient hòa trộn sang menu bên trái */
+  background: linear-gradient(
+    to right,
+    #c59d5f 0%,              
+    rgba(197, 157, 95, 0.4) 30%, 
+    rgba(0,0,0,0.1) 100%    
+  );
+}
+
+/* Khi hover vào có muốn dừng lại không? Nếu muốn dừng thì thêm đoạn này: */
+.container:hover .marqueeTrack {
+  animation-play-state: paused;
+}

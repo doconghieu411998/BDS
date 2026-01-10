@@ -1,0 +1,94 @@
+/* Container chính bao bọc section */
+.sectionWrapper {
+  width: 100%;
+  position: relative;
+  background-color: #000;
+  /* Desktop: Ẩn thanh cuộn ngang thừa ra */
+  overflow: hidden; 
+}
+
+/* --- DESKTOP STYLES (Mặc định) --- */
+
+/* Container chứa dải ảnh nằm ngang */
+.horizontalContainer {
+  display: flex;         /* Xếp hàng ngang */
+  flex-wrap: nowrap;     /* Không xuống dòng */
+  width: fit-content;    /* Độ rộng bằng tổng các ảnh cộng lại */
+  height: 100vh;         /* Full chiều cao màn hình */
+  will-change: transform; /* Tối ưu hiệu năng animation */
+  transform: translate3d(0, 0, 0); /* Mẹo kích hoạt 3D Hardware Acceleration */
+  backface-visibility: hidden; /* Chống nháy khi cuộn nhanh */
+}
+
+/* Thẻ bao quanh mỗi ảnh */
+.imageCard {
+  width: 100vw;  /* QUAN TRỌNG: Full màn hình chiều ngang (1 ảnh 1 màn hình) */
+  height: 100vh; /* Full màn hình chiều dọc */
+  flex-shrink: 0; /* Đảm bảo không bị co lại */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0; /* Bỏ padding để ảnh tràn viền (full bleed) */
+}
+
+.imageInner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover; /* Ảnh phủ kín, cắt bớt phần thừa nếu tỷ lệ không khớp */
+  object-position: center;
+}
+
+/* Text trang trí đè lên ảnh */
+.overlayContent {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  color: #fff;
+  z-index: 2;
+  font-family: "Times New Roman", serif;
+  font-size: 2rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  border-left: 3px solid #d19f58;
+  padding-left: 15px;
+}
+
+
+/* --- RESPONSIVE MOBILE & TABLET (Dưới 1024px) --- */
+@media (max-width: 1023px) {
+  
+  /* 1. Reset chiều cao của Wrapper */
+  .sectionWrapper {
+    height: auto; /* Để nó tự giãn theo nội dung dọc */
+    overflow: visible;
+  }
+
+  /* 2. Chuyển từ Hàng Ngang -> Hàng Dọc */
+  .horizontalContainer {
+    width: 100%;      /* Chiếm hết chiều rộng */
+    height: auto;     /* Chiều cao tự động */
+    flex-direction: column; /* Xếp chồng dọc */
+    transform: none !important; /* Vô hiệu hóa mọi transform của GSAP nếu còn sót */
+  }
+
+  /* 3. Chỉnh lại kích thước từng ảnh */
+  .imageCard {
+    width: 100%;      /* Full chiều rộng mobile */
+    height: 60vh;     /* Chiều cao vừa phải (không cần 100vh để đỡ phải cuộn mỏi tay) */
+    margin-bottom: 0; /* Các ảnh dính liền nhau */
+  }
+
+  /* Tùy chọn: Nếu muốn có khe hở giữa các ảnh trên mobile */
+  /* .imageCard { margin-bottom: 10px; } */
+
+  .overlayContent {
+    font-size: 1.5rem;
+    bottom: 20px;
+    left: 20px;
+  }
+}
