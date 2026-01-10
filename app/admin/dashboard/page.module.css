@@ -1,0 +1,21 @@
+@reference 'tailwindcss';
+
+.dashboardTitle {
+    @apply text-2xl font-bold mb-6;
+}
+
+.statsGrid {
+    @apply mb-6;
+}
+
+.statCard {
+    @apply w-full;
+}
+
+.activityCard {
+    @apply w-full;
+}
+
+.activityPlaceholder {
+    @apply text-gray-500;
+}

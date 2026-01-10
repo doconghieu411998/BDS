@@ -1,0 +1,271 @@
+@reference 'tailwindcss';
+
+/* CSS Reset for Rich Text Editor */
+:global(.ProseMirror) * {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+:global(.ProseMirror article),
+:global(.ProseMirror aside),
+:global(.ProseMirror details),
+:global(.ProseMirror figcaption),
+:global(.ProseMirror figure),
+:global(.ProseMirror footer),
+:global(.ProseMirror header),
+:global(.ProseMirror hgroup),
+:global(.ProseMirror menu),
+:global(.ProseMirror nav),
+:global(.ProseMirror section) {
+    display: block;
+}
+
+:global(.ProseMirror ol),
+:global(.ProseMirror ul) {
+    list-style: none;
+}
+
+:global(.ProseMirror blockquote),
+:global(.ProseMirror q) {
+    quotes: none;
+}
+
+:global(.ProseMirror blockquote:before),
+:global(.ProseMirror blockquote:after),
+:global(.ProseMirror q:before),
+:global(.ProseMirror q:after) {
+    content: '';
+    content: none;
+}
+
+:global(.ProseMirror table) {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.editorWrapper {
+    @apply border border-gray-300 rounded-lg overflow-hidden;
+    @apply transition-colors duration-300;
+}
+
+.editorWrapper:hover {
+    @apply border-blue-500;
+}
+
+.editorWrapper:focus-within {
+    @apply border-blue-500;
+    box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.toolbar {
+    @apply flex flex-wrap gap-1 p-2;
+    @apply bg-gray-50 border-b border-gray-300;
+}
+
+.toolbar button {
+    @apply flex items-center justify-center;
+    @apply min-w-8 h-8 px-2 py-1;
+    @apply border border-gray-300 rounded;
+    @apply bg-white text-gray-800;
+    @apply text-sm font-medium cursor-pointer;
+    @apply transition-all duration-200;
+}
+
+.toolbar button:hover:not(:disabled) {
+    @apply border-blue-500 text-blue-500;
+}
+
+.toolbar button:disabled {
+    @apply opacity-40 cursor-not-allowed;
+}
+
+.toolbar button.isActive {
+    @apply bg-blue-50 border-blue-500 text-blue-500;
+}
+
+.divider {
+    @apply w-px h-6 bg-gray-300 mx-1;
+}
+
+.linkInput {
+    @apply flex gap-2 p-2 items-center;
+    @apply bg-gray-50 border-b border-gray-300;
+}
+
+.linkInput input {
+    @apply flex-1 px-3 py-1;
+    @apply border border-gray-300 rounded;
+    @apply text-sm outline-none;
+}
+
+.linkInput input:focus {
+    @apply border-blue-500;
+}
+
+.linkInput button {
+    @apply px-3 py-1;
+    @apply border border-gray-300 rounded;
+    @apply bg-white cursor-pointer;
+    @apply text-sm transition-all duration-200;
+}
+
+.linkInput button:hover {
+    @apply border-blue-500 text-blue-500;
+}
+
+.editorContent {
+    @apply min-h-[300px] max-h-[600px];
+    @apply overflow-y-auto p-4;
+}
+
+/* Tiptap Editor Content Styles */
+:global(.ProseMirror) {
+    @apply min-h-[300px] outline-none;
+    @apply text-sm leading-relaxed text-gray-800;
+}
+
+:global(.ProseMirror p) {
+    @apply mb-3;
+}
+
+:global(.ProseMirror p:last-child) {
+    @apply mb-0;
+}
+
+:global(.ProseMirror h1) {
+    @apply text-3xl font-semibold;
+    @apply my-6 leading-tight;
+}
+
+:global(.ProseMirror h2) {
+    @apply text-2xl font-semibold;
+    @apply my-5 leading-tight;
+}
+
+:global(.ProseMirror h3) {
+    @apply text-xl font-semibold;
+    @apply my-4 leading-tight;
+}
+
+:global(.ProseMirror ul),
+:global(.ProseMirror ol) {
+    @apply pl-6 my-3;
+    list-style: revert;
+}
+
+:global(.ProseMirror ul) {
+    list-style-type: disc;
+}
+
+:global(.ProseMirror ol) {
+    list-style-type: decimal;
+}
+
+:global(.ProseMirror li) {
+    @apply my-1;
+}
+
+:global(.ProseMirror blockquote) {
+    @apply border-l-4 border-gray-300;
+    @apply pl-4 my-4;
+    @apply text-gray-600 italic;
+}
+
+:global(.ProseMirror hr) {
+    @apply border-0 border-t-2 border-gray-100 my-6;
+}
+
+:global(.ProseMirror code) {
+    @apply bg-gray-100 px-1.5 py-0.5 rounded;
+    @apply font-mono text-sm;
+}
+
+:global(.ProseMirror pre) {
+    @apply bg-gray-100 p-3 rounded;
+    @apply overflow-x-auto my-3;
+}
+
+:global(.ProseMirror pre code) {
+    @apply bg-transparent p-0;
+}
+
+:global(.ProseMirror a) {
+    @apply text-blue-500 underline cursor-pointer;
+}
+
+:global(.ProseMirror a:hover) {
+    @apply text-blue-600;
+}
+
+:global(.ProseMirror ul[data-type='taskList']) {
+    @apply list-none pl-0;
+    text-align: left !important;
+}
+
+:global(.ProseMirror ul[data-type='taskList'] li) {
+    @apply flex items-center gap-2;
+    text-align: left !important;
+}
+
+:global(.ProseMirror ul[data-type='taskList'] li > label) {
+    @apply shrink-0;
+}
+
+:global(.ProseMirror ul[data-type='taskList'] li > div) {
+    @apply flex-1;
+}
+
+:global(.ProseMirror ul[data-type='taskList'] li input[type='checkbox']) {
+    @apply cursor-pointer w-4 h-4;
+}
+
+:global(.ProseMirror [style*='text-align: center']) {
+    @apply text-center;
+}
+
+:global(.ProseMirror [style*='text-align: right']) {
+    @apply text-right;
+}
+
+:global(.ProseMirror [style*='text-align: left']) {
+    @apply text-left;
+}
+
+:global(.ProseMirror img.editor-image) {
+    @apply max-w-full h-auto rounded;
+    @apply my-2 cursor-pointer;
+    @apply transition-all duration-200;
+}
+
+:global(.ProseMirror img.editor-image:hover) {
+    @apply shadow-md;
+}
+
+:global(.ProseMirror img.ProseMirror-selectednode) {
+    @apply outline-2 outline-blue-500 outline-offset-2;
+}
+
+:global(.ProseMirror p.is-editor-empty:first-child::before) {
+    @apply text-gray-400 pointer-events-none float-left;
+    content: attr(data-placeholder);
+    height: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .editorContent {
+        @apply min-h-[200px];
+    }
+
+    :global(.ProseMirror) {
+        @apply min-h-[200px];
+    }
+
+    .toolbar button {
+        @apply min-w-7 h-7 text-xs;
+    }
+}
