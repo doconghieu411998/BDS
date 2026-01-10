@@ -1,17 +1,6 @@
 import Image from 'next/image';
 import NewsSection from '../../news-section';
 
-export async function generateStaticParams() {
-  const posts = [
-    { id: '1' },
-    { id: '2' },
-  ];
-
-  return posts.map((post) => ({
-    id: post.id,
-  }));
-}
-
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return (
     <>

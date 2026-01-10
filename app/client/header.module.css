@@ -8,14 +8,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 50px; /* Trạng thái ban đầu: To và Thoáng */
+  padding: 30px 50px;
+  /* Trạng thái ban đầu: To và Thoáng */
   z-index: 1000;
-  background-color: transparent; /* Ban đầu trong suốt */
-  /* Không cần transition ở đây vì GSAP đã lo việc đó */
+  background-color: transparent;
+  /* Ban đầu trong suốt */
 }
 
 /* Các class con khác giữ nguyên */
-.leftSection, .rightSection {
+.leftSection,
+.rightSection {
   flex: 1;
 }
 
@@ -35,8 +37,65 @@
   padding: 10px 24px;
   border-radius: 50px;
   cursor: pointer;
-  font-weight: 600;
-  /* Nếu muốn nút cũng đổi màu khi sticky thì xử lý thêm trong GSAP */
+  font-weight: 700; /* Tăng độ đậm một chút cho đẹp */
+  font-family: "Segoe UI", sans-serif;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease; /* Thêm hiệu ứng đổi màu nền nhẹ */
+  
+  /* Quan trọng: để cắt những phần chữ trượt ra ngoài */
+  overflow: hidden;
+}
+
+.menuBtn:hover {
+  background-color: #b08d55;
+}
+
+.menuTextOverflow {
+  display: grid; /* Dùng Grid để xếp chồng lên nhau */
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+}
+
+/* 2. Khối chứa cả 2 dòng chữ, sẽ là đối tượng bị dịch chuyển */
+.menuTextSliding {
+  display: flex;
+  flex-direction: column;
+  /* Sử dụng cubic-bezier để tạo cảm giác trượt "xịn" (nhanh ở giữa, chậm dần ở cuối) */
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* 3. Định dạng 2 dòng chữ giống hệt nhau */
+.menuTextPrimary,
+.menuTextSecondary {
+  grid-row: 1 / 2; /* Cả 2 cùng nằm ở ô đầu tiên */
+  grid-column: 1 / 2;
+  
+  /* Cài đặt animation */
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* Easing siêu mượt */
+  display: block;
+  line-height: 1; /* Giữ dòng chữ gọn gàng */
+  padding: 2px 0;
+}
+
+/* 4. Kích hoạt Animation khi hover vào nút mẹ */
+/* Khi hover vào .menuBtn, dịch chuyển khối .menuTextSliding lên trên 100% chiều cao của nó */
+.menuBtn:hover .menuTextPrimary {
+  transform: translateY(-100%);
+}
+
+/* Chữ phụ từ dưới bay lên thế chỗ */
+.menuBtn:hover .menuTextSecondary {
+  transform: translateY(0);
+}
+.menuTextPrimary {
+  /* Chữ chính nằm đúng vị trí */
+  transform: translateY(0);
+}
+
+.menuTextSecondary {
+  /* Chữ phụ nằm ẩn ở ngay bên dưới (dịch xuống 100% chiều cao của nó) */
+  transform: translateY(100%);
 }
 
 .burgerIcon {
@@ -55,4 +114,239 @@
 .logo {
   height: auto;
   object-fit: contain;
+}
+
+.fullScreenMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  /* Luôn nằm trên cùng */
+
+  /* Màu nền Gradient Vàng Đồng sang trọng */
+  background: linear-gradient(135deg, #c59d5f 0%, #d2a45d 100%);
+
+  display: flex;
+  flex-direction: column;
+  /* Mặc định ẩn để GSAP xử lý hiện ra */
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  width: 50px;
+  height: 50px;
+  background-color: #5e463d;
+  /* Màu nâu đậm */
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: transform 0.3s;
+}
+
+.closeBtn:hover {
+  transform: rotate(90deg);
+  /* Xoay khi hover */
+  background-color: #4a362f;
+}
+
+.overlayLogo {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  opacity: 0.8;
+}
+
+.menuContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+/* CỘT TRÁI: LINKS */
+.navLinks {
+  flex: 1;
+  /* Chiếm 1 phần */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 15%;
+  /* Căn lề trái giống ảnh */
+  position: relative;
+  z-index: 10;
+}
+
+.navItem {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 25px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: color 0.3s, transform 0.3s;
+  display: inline-block;
+  width: fit-content;
+}
+
+.navItem:hover {
+  color: #5e463d;
+  /* Hover đổi màu nâu */
+  transform: translateX(10px);
+  /* Trượt nhẹ sang phải */
+}
+
+/* CỘT PHẢI: ẢNH NỀN TRANG TRÍ */
+.bgDecoration {
+  flex: 1.5;
+  /* Chiếm 1.5 phần (rộng hơn cột text) */
+  position: relative;
+  height: 100%;
+  /* Ảnh thật được đặt bằng next/image fill */
+}
+
+/* Lớp phủ gradient để ảnh hòa vào nền vàng */
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #c59d5f 0%, rgba(197, 157, 95, 0) 100%);
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+
+  /* 1. Header Bar (Thanh menu khi chưa mở) */
+  .header {
+    padding: 15px 20px;
+    justify-content: space-between;
+    height: auto; /* Đảm bảo chiều cao tự động */
+  }
+
+  .logo { 
+    width: 100px; 
+    height: auto; 
+    object-fit: contain;
+  }
+  
+  .menuBtn {
+    width: 40px; height: 40px; /* Thu nhỏ nút một chút cho tinh tế */
+    border-radius: 50%;
+    padding: 0;
+    justify-content: center;
+    background-color: #d19f58;
+  }
+  .menuTextOverflow { display: none !important; } /* Ẩn chữ MENU */
+  .burgerIcon { margin: 0; color: #fff; font-size: 18px; }
+
+
+  /* --- 2. MENU FULLSCREEN (Giao diện khi mở ra) --- */
+  
+  .fullScreenMenu {
+    background-color: #d2a45d; /* Màu nền vàng đồng */
+    /* background-image: url('...'); Thêm ảnh họa tiết vào đây nếu có */
+    
+    display: flex !important; /* Ép kiểu flex để căn chỉnh */
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    padding: 0; margin: 0;
+    
+    /* Reset các thuộc tính transform nếu bị JS can thiệp sai */
+    transform-origin: top left; 
+  }
+
+  /* 3. SỬA LỖI LOGO TO ĐÙNG (Góc Trái) */
+  .overlayLogo {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 100px !important; /* Ép chiều rộng cố định */
+    height: auto !important;
+    z-index: 50; /* Cao hơn mọi thứ khác */
+    opacity: 1; /* Hiển thị rõ */
+    transform: none !important; /* Bỏ transform căn giữa của desktop */
+  }
+  
+  /* Quan trọng: Ép ảnh bên trong logo phải tuân thủ kích thước cha */
+  .overlayLogo img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100px;
+    object-fit: contain;
+  }
+
+  /* 4. SỬA LỖI NÚT ĐÓNG (Góc Phải) */
+  .closeBtn {
+    position: absolute;
+    top: 25px;
+    right: 25px; /* Đặt cứng bên phải */
+    left: auto !important; /* Hủy bỏ thuộc tính left nếu có */
+    
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+
+  .closeBtn span { color: #fff; font-size: 18px; }
+
+
+  /* 5. CĂN CHỈNH DANH SÁCH LINK (Sửa lỗi bị cắt chữ) */
+  .menuContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa màn hình theo chiều dọc */
+    padding-top: 60px; /* Tránh đè lên logo */
+  }
+  
+  /* Ẩn triệt để cột ảnh trang trí và chữ nền gây rối */
+  .bgDecoration { 
+    display: none !important; 
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .navLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Căn trái */
+    justify-content: center;
+    
+    width: 100%;
+    padding-left: 25px !important; /* Đẩy lề trái vào 40px để chữ không bị cắt */
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+
+  .navItem {
+    font-size: 18px; /* Kích thước chữ vừa phải */
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-align: left;
+    display: block;
+    width: 100%;
+    
+    /* Reset transform nếu animation làm lệch vị trí */
+    transform: none !important; 
+  }
 }
