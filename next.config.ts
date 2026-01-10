@@ -5,7 +5,7 @@ export default (phase: string) => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
 
   const nextConfig: NextConfig = {
-    output: "export",
+    output: "standalone",
 
     basePath: isDev ? undefined : "/BDS",
     assetPrefix: isDev ? undefined : "/BDS",

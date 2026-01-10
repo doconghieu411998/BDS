@@ -1,0 +1,50 @@
+@reference 'tailwindcss';
+
+.propertyListContainer {
+    @apply p-6;
+}
+
+.propertyImage {
+    @apply w-16 h-16 rounded-lg object-cover;
+}
+
+.propertyTitle {
+    @apply font-semibold text-gray-900;
+}
+
+.propertyAddress {
+    @apply text-sm text-gray-600 mt-1;
+}
+
+.propertyPrice {
+    @apply font-bold text-blue-600;
+}
+
+.propertyArea {
+    @apply text-sm text-gray-600;
+}
+
+.propertyStatus {
+    @apply px-3 py-1 rounded-full text-xs font-medium;
+}
+
+.statusAvailable {
+    @apply bg-green-100 text-green-700;
+}
+
+.statusSold {
+    @apply bg-red-100 text-red-700;
+}
+
+.statusRented {
+    @apply bg-yellow-100 text-yellow-700;
+}
+
+.statusPending {
+    @apply bg-gray-100 text-gray-700;
+}
+
+.propertyType {
+    @apply px-2 py-1 rounded text-xs;
+    @apply bg-blue-50 text-blue-700;
+}

@@ -1,0 +1,55 @@
+@reference 'tailwindcss';
+
+.formModal :global(.ant-modal-body) {
+    @apply max-h-[70vh] overflow-y-auto;
+}
+
+.formContainer {
+    @apply space-y-4;
+}
+
+.formRow {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.formRowFull {
+    @apply col-span-full;
+}
+
+.richTextWrapper {
+    @apply border border-gray-300 rounded;
+}
+
+.richTextWrapper :global(.ql-container) {
+    @apply min-h-[200px];
+}
+
+.richTextWrapper :global(.ql-editor) {
+    @apply min-h-[200px];
+}
+
+.uploadWrapper {
+    @apply w-full;
+}
+
+.uploadButton {
+    @apply w-full h-32 border-2 border-dashed border-gray-300;
+    @apply rounded-lg flex flex-col items-center justify-center;
+    @apply hover:border-blue-500 transition-colors cursor-pointer;
+}
+
+.uploadIcon {
+    @apply text-3xl text-gray-400;
+}
+
+.uploadText {
+    @apply text-sm text-gray-600 mt-2;
+}
+
+.previewImage {
+    @apply w-full h-48 object-cover rounded-lg;
+}
+
+.formFooter {
+    @apply flex justify-end gap-3 mt-6 pt-4 border-t;
+}

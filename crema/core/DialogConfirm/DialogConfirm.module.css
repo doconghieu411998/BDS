@@ -1,0 +1,29 @@
+@reference 'tailwindcss';
+
+.confirmModal :global(.ant-modal-content) {
+    @apply rounded-lg p-6;
+}
+
+.confirmContent {
+    @apply flex flex-col gap-4 text-left;
+}
+
+.confirmTitle {
+    @apply text-lg font-semibold text-gray-900 m-0;
+}
+
+.confirmDescription {
+    @apply text-gray-700 leading-relaxed;
+}
+
+.confirmFooter {
+    @apply flex justify-end gap-3 mt-2;
+}
+
+.cancelButton {
+    @apply min-w-24;
+}
+
+.confirmButton {
+    @apply min-w-24;
+}

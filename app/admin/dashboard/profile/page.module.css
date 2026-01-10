@@ -1,0 +1,33 @@
+@reference 'tailwindcss';
+
+.profileContainer {
+    @apply p-6 max-w-4xl mx-auto;
+}
+
+.profileTitle {
+    @apply text-2xl mb-6;
+}
+
+.profileCard {
+    @apply w-full;
+}
+
+.tabContent {
+    @apply py-4;
+}
+
+.form {
+    @apply max-w-2xl mx-auto;
+}
+
+.avatarSection {
+    @apply flex justify-center mb-6;
+}
+
+.profileAvatar {
+    @apply bg-blue-500!;
+}
+
+.submitButton {
+    @apply w-full;
+}

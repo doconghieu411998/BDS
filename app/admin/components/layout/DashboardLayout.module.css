@@ -1,0 +1,63 @@
+@reference 'tailwindcss';
+
+.layoutContainer {
+    @apply min-h-screen;
+}
+
+.sidebar {
+    @apply !bg-white border-r border-gray-200;
+}
+
+.logoContainer {
+    @apply h-16 flex items-center justify-center border-b border-gray-200;
+}
+
+.logoText {
+    @apply text-lg font-bold text-blue-600;
+}
+
+.menu {
+    @apply border-0;
+}
+
+.header {
+    @apply !bg-white !px-6 border-b border-gray-200;
+    @apply flex items-center justify-between !h-16 !leading-none;
+}
+
+.headerLeft {
+    @apply flex items-center;
+}
+
+.toggleButton {
+    @apply !w-10 !h-10;
+}
+
+.userDropdown {
+    @apply flex items-center gap-3 cursor-pointer;
+    @apply hover:bg-gray-50 px-3 py-2 rounded-lg transition-colors;
+}
+
+.userAvatar {
+    @apply !bg-blue-500;
+}
+
+.userInfo {
+    @apply flex flex-col items-start;
+}
+
+.userName {
+    @apply text-sm;
+}
+
+.userRole {
+    @apply text-xs;
+}
+
+.content {
+    @apply p-6 bg-gray-50;
+}
+
+.contentWrapper {
+    @apply bg-white rounded-lg shadow-sm p-6 min-h-[calc(100vh-104px)];
+}

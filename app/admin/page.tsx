@@ -1,7 +1,8 @@
+import Login from '@admin/login/login';
 export default function Admin() {
   return (
     <>
-        <h1>Admin Page</h1>
+        <Login/>
     </>
   );
 }
