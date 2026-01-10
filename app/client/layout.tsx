@@ -1,5 +1,6 @@
 import Footer from "./footer";
 import Header from "./header";
+import LanguageSwitcher from "./language-switcher";
 import Preloader from "./pre-loading";
 
 export default function ClientLayout({
@@ -17,6 +18,8 @@ export default function ClientLayout({
       <main className="content-fade-in">
         {children}
       </main>
+
+      <LanguageSwitcher />
 
       <Footer />
     </div>
