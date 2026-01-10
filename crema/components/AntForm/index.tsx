@@ -3,8 +3,8 @@ import { Form, FormProps, FormInstance, FormItemProps } from 'antd';
 
 export const AntForm = <T extends Record<string, unknown> = Record<string, unknown>>(
     props: FormProps<T>
-) => {
-    return <Form<T> {...props} />;
+): React.ReactElement => {
+    return <Form<T> {...(props as any)} />;
 };
 
 AntForm.displayName = 'AntForm';

@@ -124,10 +124,10 @@ export default function PostList() {
             dataIndex: 'thumbnail',
             key: 'thumbnail',
             width: 120,
-            render: (thumbnail: string) => {
-                return thumbnail ? (
+            render: (_: unknown, record: Post) => {
+                return record.thumbnail ? (
                     <Image
-                        src={thumbnail}
+                        src={record.thumbnail}
                         alt="Thumbnail"
                         width={64}
                         height={64}
@@ -148,14 +148,14 @@ export default function PostList() {
             dataIndex: 'category',
             key: 'category',
             width: 120,
-            render: (category: PostCategory) => getCategoryBadge(category),
+            render: (_: unknown, record: Post) => getCategoryBadge(record.category),
         },
         {
             title: t('post.status'),
             dataIndex: 'status',
             key: 'status',
             width: 120,
-            render: (status: PostStatus) => getStatusBadge(status),
+            render: (_: unknown, record: Post) => getStatusBadge(record.status),
         },
         {
             title: t('post.author'),
@@ -168,13 +168,13 @@ export default function PostList() {
             dataIndex: 'publishedAt',
             key: 'publishedAt',
             width: 130,
-            render: (date: string) => formatDate(date),
+            render: (_: unknown, record: Post) => formatDate(record.publishedAt),
         },
     ];
 
     return (
         <div className={styles.container}>
-            <DataTable
+            <DataTable<Post>
                 columns={columns}
                 dataSource={posts}
                 loading={loading}

@@ -29,7 +29,7 @@ export const TableContent = <T extends Record<string, unknown> = Record<string, 
         <div className={styles.tableWrapper}>
             <AntTable<T>
                 dataSource={data}
-                columns={columns}
+                columns={columns as any}
                 loading={loading}
                 rowKey={rowKey}
                 pagination={

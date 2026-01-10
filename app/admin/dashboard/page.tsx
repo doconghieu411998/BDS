@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { AntCard, AntRow, AntCol, AntStatistic } from '@/crema/components';
-import { ShopOutlined, UserOutlined, DollarOutlined, EyeOutlined } from '@ant-design/icons';
+import { UserOutlined, EyeOutlined } from '@ant-design/icons';
 import { t } from '@/utils/i18n';
 import styles from './page.module.css';
 

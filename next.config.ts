@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
-export default (phase: string) => {
+const config = (phase: string) => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
 
   const nextConfig: NextConfig = {
@@ -23,3 +23,5 @@ export default (phase: string) => {
 
   return nextConfig;
 };
+
+export default config;

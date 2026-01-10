@@ -1,6 +1,5 @@
 import {
     HomeOutlined,
-    ShopOutlined,
     UnorderedListOutlined,
     FileTextOutlined,
 } from '@ant-design/icons';

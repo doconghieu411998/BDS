@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { UploadOutlined, SaveOutlined } from '@ant-design/icons';
+import type { UploadFile } from 'antd';
 import { t } from '@/utils/i18n';
 import {
     AntForm,
@@ -30,14 +31,7 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
     const [form] = AntForm.useForm();
     const [loading, setLoading] = useState(false);
     const [description, setDescription] = useState(initialData?.description || '');
-    const [fileList, setFileList] = useState<
-        Array<{
-            uid: string;
-            name: string;
-            status: string;
-            url: string;
-        }>
-    >([]);
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
 
     useEffect(() => {
         if (initialData) {
@@ -76,7 +70,9 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
             const formData: PropertyFormData = {
                 ...values,
                 description: description,
-                images: fileList.map((file) => file.url || file.response?.url || file.thumbUrl),
+                images: fileList
+                    .map((file) => file.url || file.response?.url || file.thumbUrl)
+                    .filter((url): url is string => !!url),
             };
 
             await onSubmit(formData);
@@ -87,19 +83,7 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
         }
     };
 
-    const handleUploadChange = ({
-        fileList: newFileList,
-    }: {
-        fileList: Array<{
-            uid: string;
-            name: string;
-            status: string;
-            url?: string;
-            response?: { url: string };
-            thumbUrl?: string;
-            originFileObj?: File;
-        }>;
-    }) => {
+    const handleUploadChange = ({ fileList: newFileList }: { fileList: UploadFile[] }) => {
         setFileList(newFileList);
     };
 

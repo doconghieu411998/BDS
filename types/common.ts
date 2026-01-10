@@ -51,7 +51,7 @@ export enum PropertyType {
     COMMERCIAL = 'commercial',
 }
 
-export interface Property {
+export interface Property extends Record<string, unknown> {
     id: string;
     title: string;
     description: string;
@@ -72,7 +72,7 @@ export interface Property {
     createdBy: string;
 }
 
-export interface PropertyFormData {
+export interface PropertyFormData extends Record<string, unknown> {
     title: string;
     description: string;
     price: number;
@@ -102,7 +102,7 @@ export enum PostCategory {
     TIPS = 'tips',
 }
 
-export interface Post {
+export interface Post extends Record<string, unknown> {
     id: string;
     title: string;
     content: string;
@@ -116,7 +116,7 @@ export interface Post {
     publishedAt?: string;
 }
 
-export interface PostFormData {
+export interface PostFormData extends Record<string, unknown> {
     title: string;
     content: string;
     excerpt: string;

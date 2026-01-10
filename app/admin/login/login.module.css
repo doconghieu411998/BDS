@@ -1,60 +1,88 @@
-@reference 'tailwindcss';
-
 /* Background container - chiếm full màn hình và center nội dung */
 .loginContainer {
-    @apply min-h-screen w-full flex items-center justify-center;
-    @apply bg-gradient-to-br from-blue-50 to-indigo-100;
-    @apply px-4 py-8;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom right, #eff6ff, #e0e7ff);
+    padding: 2rem 1rem;
 }
 
 /* Wrapper giới hạn max-width của card */
 .loginWrapper {
-    @apply w-full;
+    width: 100%;
     max-width: 450px;
 }
 
 /* Card chứa form login */
 .loginCard {
-    @apply w-full bg-white rounded-xl shadow-2xl;
-    @apply p-8;
+    width: 100%;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 2rem;
 }
 
 /* Header section */
 .loginHeader {
-    @apply text-center mb-8;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .loginTitle {
-    @apply text-3xl font-bold text-gray-900 mb-2;
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 0.5rem;
 }
 
 .loginSubtitle {
-    @apply text-base text-gray-600;
+    font-size: 1rem;
+    color: #4b5563;
 }
 
 /* Form elements */
 .formFooter {
-    @apply flex items-center justify-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .forgotPasswordLink {
-    @apply text-blue-600 hover:text-blue-700 text-sm;
-    @apply transition-colors duration-200;
+    color: #2563eb;
+    font-size: 0.875rem;
+    transition: color 200ms;
+}
+
+.forgotPasswordLink:hover {
+    color: #1d4ed8;
 }
 
 .loginButton {
-    @apply w-full h-12 text-base font-semibold;
-    @apply bg-blue-600 hover:bg-blue-700;
-    @apply transition-colors duration-200;
+    width: 100%;
+    height: 3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #2563eb;
+    transition: background-color 200ms;
+}
+
+.loginButton:hover {
+    background-color: #1d4ed8;
 }
 
 /* Footer */
 .footerText {
-    @apply text-center text-sm text-gray-500 mt-8 pt-6;
-    @apply border-t border-gray-200;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
 }
 
 /* Icon styling */
 .inputPrefixIcon {
-    @apply text-gray-400;
+    color: #9ca3af;
 }

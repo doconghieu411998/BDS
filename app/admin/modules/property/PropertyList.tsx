@@ -73,8 +73,10 @@ export const PropertyList: React.FC = () => {
         loadData(1, value);
     };
 
-    const handlePaginationChange = (page: number, pageSize: number) => {
-        setPagination((prev) => ({ ...prev, pageSize }));
+    const handlePaginationChange = (page: number, pageSize?: number) => {
+        if (pageSize) {
+            setPagination((prev) => ({ ...prev, pageSize }));
+        }
         loadData(page);
     };
 
@@ -127,13 +129,13 @@ export const PropertyList: React.FC = () => {
             dataIndex: 'type',
             key: 'type',
             width: 120,
-            render: (type: PropertyType) => (
+            render: (_: unknown, record: Property) => (
                 <span className={styles.propertyType}>
-                    {type === PropertyType.APARTMENT && 'Căn hộ'}
-                    {type === PropertyType.HOUSE && 'Nhà phố'}
-                    {type === PropertyType.VILLA && 'Biệt thự'}
-                    {type === PropertyType.LAND && 'Đất nền'}
-                    {type === PropertyType.COMMERCIAL && 'Thương mại'}
+                    {record.type === PropertyType.APARTMENT && 'Căn hộ'}
+                    {record.type === PropertyType.HOUSE && 'Nhà phố'}
+                    {record.type === PropertyType.VILLA && 'Biệt thự'}
+                    {record.type === PropertyType.LAND && 'Đất nền'}
+                    {record.type === PropertyType.COMMERCIAL && 'Thương mại'}
                 </span>
             ),
         },
@@ -142,9 +144,9 @@ export const PropertyList: React.FC = () => {
             dataIndex: 'price',
             key: 'price',
             width: 150,
-            render: (price: number) => (
+            render: (_: unknown, record: Property) => (
                 <div>
-                    <div className={styles.propertyPrice}>{(price / 1000000000).toFixed(2)} tỷ</div>
+                    <div className={styles.propertyPrice}>{(record.price / 1000000000).toFixed(2)} tỷ</div>
                 </div>
             ),
         },
@@ -153,14 +155,14 @@ export const PropertyList: React.FC = () => {
             dataIndex: 'area',
             key: 'area',
             width: 100,
-            render: (area: number) => <span className={styles.propertyArea}>{area} m²</span>,
+            render: (_: unknown, record: Property) => <span className={styles.propertyArea}>{record.area} m²</span>,
         },
         {
             title: 'Trạng thái',
             dataIndex: 'status',
             key: 'status',
             width: 120,
-            render: (status: PropertyStatus) => {
+            render: (_: unknown, record: Property) => {
                 const statusMap = {
                     [PropertyStatus.AVAILABLE]: {
                         text: 'Còn trống',
@@ -180,7 +182,7 @@ export const PropertyList: React.FC = () => {
                     },
                 };
 
-                const info = statusMap[status];
+                const info = statusMap[record.status];
                 return (
                     <span className={`${styles.propertyStatus} ${info.className}`}>
                         {info.text}
