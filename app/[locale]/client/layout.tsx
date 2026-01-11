@@ -1,7 +1,7 @@
-import Footer from "./footer";
-import Header from "./header";
-import LanguageSwitcher from "./language-switcher";
-import Preloader from "./pre-loading";
+import Footer from "./(components)/footer";
+import Header from "./(components)/header";
+import LanguageSwitcher from "./(components)/language-switcher";
+import Preloader from "./(components)/pre-loading";
 
 export default function ClientLayout({
   children,

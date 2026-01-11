@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import styles from './main.module.css';
-import IntroSection from './intro-section';
-import OverviewSection from './overview-section';
-import LocationSection from './location-section';
-import HighlightSection from './highlight-section';
-import NewsSection from './news-section';
-import PinSpace from './pin-space-section';
+import IntroSection from './(components)/intro-section';
+import OverviewSection from './(components)/overview-section';
+import LocationSection from './(components)/location-section';
+import HighlightSection from './(components)/highlight-section';
+import PinSpace from './(components)/pin-space-section';
+import NewsSection from './(components)/news-section';
 
 const HERO_BG = "images/home.png";
 

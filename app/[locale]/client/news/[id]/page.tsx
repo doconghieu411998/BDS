@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import NewsSection from '../../news-section';
+import NewsSection from '../../(components)/news-section';
 
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return (
