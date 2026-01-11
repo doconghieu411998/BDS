@@ -7,9 +7,7 @@ const config = (phase: string) => {
 
   const nextConfig: NextConfig = {
     output: "standalone",
-    env: {
-      NEXT_PUBLIC_BASE_PATH: isDev ? "" : "/BDS",
-    },
+    
     basePath: isDev ? undefined : "/BDS",
     assetPrefix: isDev ? undefined : "/BDS",
 

@@ -1,7 +1,9 @@
 "use client";
 import Image from 'next/image';
 import styles from './news-section.module.css';
-import { useRouter } from "next/navigation";
+import { convertSlugUrl } from '@/services/commonService';
+import { useLocale } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 const NEWS_DATA = [
   {
@@ -18,45 +20,82 @@ const NEWS_DATA = [
   }
 ];
 
+// Bỏ async vì Client Component dùng hooks không nên là async
 const NewsSection = () => {
-
-  const router = useRouter();
-
-  const handleNewsClick = (id: number) => {
-    router.push(`/client/news/${id}`);
-  };
+  // Lấy locale hiện tại (vi hoặc en)
+  const locale = useLocale();
 
   return (
     <section className={styles.container}>
       <h2 className={styles.sectionTitle}>TIN TỨC</h2>
 
       <div className={styles.newsGrid}>
-        {NEWS_DATA.map((item) => (
-          <div key={item.id} className={styles.newsCard}>
-            <div className={styles.imageWrapper}>
-              <Image
-                src={item.image}
-                alt={item.title}
-                width={500}
-                height={300}
-                className={styles.image}
-              />
-            </div>
-            
-            <div className={styles.cardBody}>
-              <h3 className={styles.cardTitle}>{item.title}</h3>
-              
-              <div className={styles.cardFooter}>
-                <span className={styles.date}>{item.date}</span>
-                <button onClick={() => handleNewsClick(item.id)} className={styles.arrowBtn}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </button>
+        {NEWS_DATA.map((item) => {
+          // 3. Tạo slug string: "du-an-nghin-ti-1.html"
+          // Lưu ý: Mình giữ nguyên logic hardcode text "Dự án nghìn tỉ" như bạn yêu cầu
+          // Nếu muốn lấy title thật thì đổi thành item.title
+          const urlSlug = `${convertSlugUrl('Dự án nghìn tỉ', locale)}-${item.id}.html`;
+
+          return (
+            <div key={item.id} className={styles.newsCard}>
+              <div className={styles.imageWrapper}>
+                {/* Bọc ảnh bằng Link để click vào ảnh cũng chuyển trang */}
+                <Link
+                  href={{
+                    pathname: '/client/[slug]',
+                    params: {
+                      slug: urlSlug
+                    }
+                  }}
+                  className={styles.imageLink} // Thêm class nếu cần CSS cursor: pointer
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={500}
+                    height={300}
+                    className={styles.image}
+                  />
+                </Link>
+              </div>
+
+              <div className={styles.cardBody}>
+                <h3 className={styles.cardTitle}>
+                  {/* Bọc tiêu đề bằng Link (Tốt cho SEO) */}
+                  <Link
+                    href={{
+                      pathname: '/client/[slug]',
+                      params: {
+                        slug: urlSlug
+                      }
+                    }}
+                  >
+                    {item.title}
+                  </Link>
+                </h3>
+
+                <div className={styles.cardFooter}>
+                  <span className={styles.date}>{item.date}</span>
+
+                  {/* Thay button onClick bằng Link */}
+                  <Link
+                    href={{
+                      pathname: '/client/[slug]',
+                      params: {
+                        slug: urlSlug
+                      }
+                    }}
+                    className={styles.arrowBtn}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Pagination */}

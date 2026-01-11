@@ -9,5 +9,9 @@ export const routing = defineRouting({
       vi: '/greenhill-village-quy-nhon',
       en: '/greenhill-village-quy-nhon',
     },
+    '/client/[slug]': {
+      vi: '/greenhill-village-quy-nhon/[slug]',
+      en: '/greenhill-village-quy-nhon/[slug]'
+    }
   }
 });

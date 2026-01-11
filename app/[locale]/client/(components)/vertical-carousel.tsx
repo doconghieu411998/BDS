@@ -2,14 +2,15 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from './vertical-carousel.module.css';
+import { withBasePath } from '@/services/commonService';
 
 const BG_ITEMS = [
-  "/images/location-bg-1.png",
-  "/images/location-bg-2.png",
-  "/images/location-bg-3.png",
-  "/images/location-bg-4.png",
-  "/images/location-bg-5.png",
-  "/images/location-bg-6.png"
+  "images/location-bg-1.png",
+  "images/location-bg-2.png",
+  "images/location-bg-3.png",
+  "images/location-bg-4.png",
+  "images/location-bg-5.png",
+  "images/location-bg-6.png"
 ];
 
 const VerticalCarousel = () => {
@@ -23,7 +24,7 @@ const VerticalCarousel = () => {
         {LOOP_ITEMS.map((src, index) => (
           <div key={index} className={styles.slideItem}>
             <Image 
-              src={src} 
+              src={withBasePath(src)} 
               alt="Architecture" 
               fill 
               className={styles.bgImage}

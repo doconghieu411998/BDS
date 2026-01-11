@@ -23,6 +23,7 @@
     "paths": {
       "@/*": ["./*"],
       "@admin/*": ["./app/[locale]/admin/*"],
+      "@navigation": ["./src/navigation.tsx"]
     }
   },
   "include": [

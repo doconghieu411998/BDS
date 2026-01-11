@@ -5,6 +5,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './pin-space-section.module.css';
+import { withBasePath } from '@/services/commonService';
 
 // Đăng ký plugin (chỉ chạy ở client)
 if (typeof window !== "undefined") {
@@ -13,9 +14,9 @@ if (typeof window !== "undefined") {
 
 // Danh sách ảnh từ thư mục public
 const BG_ITEMS = [
-  "/images/location-bg-1.png",
-  "/images/location-bg-2.png",
-  "/images/location-bg-3.png",
+  "images/location-bg-1.png",
+  "images/location-bg-2.png",
+  "images/location-bg-3.png",
 ];
 
 const PinSpace = () => {
@@ -72,7 +73,7 @@ const PinSpace = () => {
           <div key={index} className={styles.imageCard}>
             <div className={styles.imageInner}>
               <Image
-                src={src}
+                src={withBasePath(src)}
                 alt={`Location Background ${index + 1}`}
                 fill
                 className={styles.image}

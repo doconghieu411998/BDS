@@ -6,6 +6,7 @@ import LocationSection from './(components)/location-section';
 import HighlightSection from './(components)/highlight-section';
 import PinSpace from './(components)/pin-space-section';
 import NewsSection from './(components)/news-section';
+import { withBasePath } from '@/services/commonService';
 
 const HERO_BG = "images/home.png";
 
@@ -17,7 +18,7 @@ export default function Main() {
 
         <div className={styles.bgWrap}>
           <Image
-            src={HERO_BG}
+            src={withBasePath(HERO_BG)}
             alt="Phối cảnh dự án Masteri Trinity Square"
             fill
             style={{ objectFit: 'cover' }}
