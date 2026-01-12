@@ -1,91 +1,157 @@
 .container {
   position: fixed;
-  /* Đẩy lên cao hơn để tránh đè nút khác (từ 40px -> 110px) */
-  bottom: 110px; 
+  bottom: 110px;
   right: 40px;
   z-index: 900;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
 }
 
-.langBtn {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+/* Toggle switch dạng pill như ảnh mẫu */
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 76px;
+  height: 36px;
+  padding: 4px 10px;
+  border-radius: 999px;
   cursor: pointer;
-  
-  /* --- THAY ĐỔI GIAO DIỆN --- */
-  background: #ffffff; /* Nền trắng */
-  border: 2px solid #c59d5f; /* Viền màu vàng đồng */
-  /* -------------------------- */
-  
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Bóng nhẹ */
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #faf6f0 0%, #f5efe6 100%);
+  border: 1.5px solid #c59d5f;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden; /* Để cắt cờ hình chữ nhật thành hình tròn */
-  padding: 0;
 }
 
-.langBtn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(197, 157, 95, 0.3);
-  border-color: #b08d55; /* Đậm hơn khi hover */
+/* Enhanced hover effects with scale, glow and border animation */
+.toggleBtn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(197, 157, 95, 0.35), 0 0 15px rgba(197, 157, 95, 0.2), inset 0 1px 2px
+    rgba(255, 255, 255, 0.4);
+  border-color: #d4aa6a;
+  background: linear-gradient(135deg, #fdfaf5 0%, #f8f2e8 100%);
 }
 
-/* Container chứa cờ */
-.flagWrapper {
-  width: 100%;
-  height: 100%;
+/* Active press effect */
+.toggleBtn:active {
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(197, 157, 95, 0.25);
+}
+
+.toggleBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(197, 157, 95, 0.2);
+}
+
+/* Icon wrapper - di chuyển trái/phải */
+.iconWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.flagWrapper svg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Zoom nhẹ cờ lên 1 xíu để nó phủ kín viền tròn đẹp hơn */
-  transform: scale(1.1); 
-}
-
-/* Tooltip */
-.tooltip {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: transparent;
   position: absolute;
-  right: 60px;
-  background-color: #fff;
-  color: #c59d5f; /* Chữ màu vàng đồng */
-  border: 1px solid #c59d5f;
-  padding: 5px 12px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  left: 6px;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.langBtn:hover + .tooltip {
-  opacity: 1;
-  visibility: visible;
+/* Khi EN - icon gạt sang phải */
+.isEnglish .iconWrapper {
+  transform: translateX(36px);
+}
+
+.globeIcon {
+  font-size: 18px;
+  color: #c59d5f;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Globe icon spin and glow on hover */
+.toggleBtn:hover .globeIcon {
+  transform: rotate(20deg);
+  color: #d4aa6a;
+  filter: drop-shadow(0 0 4px rgba(197, 157, 95, 0.5));
+}
+
+/* Text labels */
+.langLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  user-select: none;
+  min-width: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Text label hover effect */
+.toggleBtn:hover .langLabel {
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+}
+
+.labelLeft {
+  margin-left: 2px;
+}
+
+.labelRight {
+  margin-right: 2px;
+}
+
+/* Pulse animation keyframes */
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(197, 157, 95, 0.3);
+  }
+}
+
+/* Optional: Add subtle pulse to draw attention */
+.toggleBtn:not(:hover) {
+  animation: pulse 3s ease-in-out infinite;
 }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
   .container {
-    bottom: 90px; /* Mobile cũng đẩy lên */
+    bottom: 90px;
     right: 20px;
   }
-  .langBtn {
-    width: 44px;
-    height: 44px;
+
+  .toggleBtn {
+    width: 68px;
+    height: 32px;
+    padding: 3px 8px;
+  }
+
+  /* Disable pulse on mobile to save battery */
+  .toggleBtn:not(:hover) {
+    animation: none;
+  }
+
+  .toggleBtn:hover {
+    transform: scale(1.05);
+  }
+
+  .iconWrapper {
+    width: 22px;
+    height: 22px;
+    left: 5px;
+  }
+
+  .isEnglish .iconWrapper {
+    transform: translateX(32px);
+  }
+
+  .globeIcon {
+    font-size: 16px;
+  }
+
+  .langLabel {
+    font-size: 12px;
   }
 }

@@ -4,28 +4,33 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 99999; /* Đảm bảo cao hơn tất cả mọi thứ */
-  
+  /* Đảm bảo preloader che hết mọi thứ và không scroll được */
+  height: 100dvh; /* Dynamic viewport height cho mobile */
+  z-index: 99999;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  /* Gradient nền sang trọng */
+
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  
-  /* Tối ưu hóa cho GPU để tránh giật */
+
+  /* Chặn scroll và touch trong preloader */
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+
+  /* GPU optimization */
   will-change: transform;
-  transform: translate3d(0, 0, 0); 
+  transform: translate3d(0, 0, 0);
 }
 
 .logoContainer {
-  opacity: 0; /* Ban đầu ẩn để GSAP hiện ra */
+  opacity: 0;
   transform: scale(0.8);
 }
 
 .logo {
   width: 120px;
   height: auto;
-  /* Bóng đổ nhẹ cho logo nổi bật */
   filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
 }

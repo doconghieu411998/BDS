@@ -1,41 +1,60 @@
-"use client";
+"use client"
 
-import React, { useState } from 'react';
-import styles from './language-switcher.module.css';
+import { useRouter, usePathname } from "next/navigation"
+import { GlobalOutlined } from "@ant-design/icons"
+import styles from "./language-switcher.module.css"
+
+const LOCALES = ["vi", "en"] as const
+type Locale = (typeof LOCALES)[number]
 
 const LanguageSwitcher = () => {
-  const [currentLang, setCurrentLang] = useState<'vn' | 'en'>('vn');
+  const router = useRouter()
+  const pathname = usePathname()
 
-  const toggleLanguage = () => {
-    const newLang = currentLang === 'vn' ? 'en' : 'vn';
-    setCurrentLang(newLang);
-  };
+  const getLocaleFromPath = (): Locale => {
+    const segments = pathname.split("/").filter(Boolean)
+    if (LOCALES.includes(segments[0] as Locale)) {
+      return segments[0] as Locale
+    }
+    return "vi"
+  }
+
+  const currentLocale = getLocaleFromPath()
+  const isEnglish = currentLocale === "en"
+
+  const handleToggle = () => {
+    const newLocale: Locale = currentLocale === "vi" ? "en" : "vi"
+
+    const segments = pathname.split("/").filter(Boolean)
+    const isLocaleSegment = LOCALES.includes(segments[0] as Locale)
+
+    let newPath: string
+    if (isLocaleSegment) {
+      segments[0] = newLocale
+      newPath = `/${segments.join("/")}`
+    } else {
+      newPath = `/${newLocale}${pathname}`
+    }
+
+    router.push(newPath)
+  }
 
   return (
     <div className={styles.container}>
-      <div className={styles.tooltip}>
-        {currentLang === 'vn' ? 'English' : 'Tiếng Việt'}
-      </div>
-
-      <button 
-        className={styles.langBtn} 
-        onClick={toggleLanguage}
-        title="Switch Language"
+      <button
+        className={`${styles.toggleBtn} ${isEnglish ? styles.isEnglish : ""}`}
+        onClick={handleToggle}
+        title={`Switch to ${isEnglish ? "Vietnamese" : "English"}`}
+        aria-label={`Chuyển sang ${isEnglish ? "Tiếng Việt" : "English"}`}
       >
-        <div className={styles.flagWrapper}>
-          {/* Logic: 
-              - Nếu đang là VN -> Hiện cờ VN (fi-vn)
-              - Nếu đang là EN -> Hiện cờ Anh (fi-gb)
-              Lớp 'fis' giúp cờ hiển thị dạng vuông/tròn tốt hơn 'fi' thường
-          */}
-          <span 
-            className={`fi fis ${currentLang === 'vn' ? 'fi-vn' : 'fi-gb'}`} 
-            style={{ fontSize: '60px' }} // Phóng to để lấp đầy hình tròn
-          />
-        </div>
+        <span className={`${styles.langLabel} ${styles.labelLeft}`}>{isEnglish ? "EN" : ""}</span>
+        <span className={styles.iconWrapper}>
+          <GlobalOutlined className={styles.globeIcon} />
+        </span>
+        <span className={`${styles.langLabel} ${styles.labelRight}`}>{!isEnglish ? "VI" : ""}</span>
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default LanguageSwitcher;
+export default LanguageSwitcher

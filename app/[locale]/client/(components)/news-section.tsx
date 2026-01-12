@@ -20,9 +20,7 @@ const NEWS_DATA = [
   }
 ];
 
-// Bỏ async vì Client Component dùng hooks không nên là async
 const NewsSection = () => {
-  // Lấy locale hiện tại (vi hoặc en)
   const locale = useLocale();
 
   return (
@@ -31,15 +29,11 @@ const NewsSection = () => {
 
       <div className={styles.newsGrid}>
         {NEWS_DATA.map((item) => {
-          // 3. Tạo slug string: "du-an-nghin-ti-1.html"
-          // Lưu ý: Mình giữ nguyên logic hardcode text "Dự án nghìn tỉ" như bạn yêu cầu
-          // Nếu muốn lấy title thật thì đổi thành item.title
           const urlSlug = `${convertSlugUrl('Dự án nghìn tỉ', locale)}-${item.id}.html`;
 
           return (
             <div key={item.id} className={styles.newsCard}>
               <div className={styles.imageWrapper}>
-                {/* Bọc ảnh bằng Link để click vào ảnh cũng chuyển trang */}
                 <Link
                   href={{
                     pathname: '/client/[slug]',
@@ -77,7 +71,6 @@ const NewsSection = () => {
                 <div className={styles.cardFooter}>
                   <span className={styles.date}>{item.date}</span>
 
-                  {/* Thay button onClick bằng Link */}
                   <Link
                     href={{
                       pathname: '/client/[slug]',
