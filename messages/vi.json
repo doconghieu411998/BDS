@@ -1,1 +1,21 @@
-{}
+{
+    "Consultation": {
+        "title": "Đăng ký nhận tư vấn",
+        "description": "Để lại thông tin liên hệ, nhận tin tức mới nhất của dự án từ chúng tôi",
+        "fullName": "Họ và tên*",
+        "phone": "Số điện thoại*",
+        "email": "Email*",
+        "message": "Lời nhắn",
+        "submit": "GỬI",
+        "privacy": "Bằng việc gửi thông tin cho chúng tôi, Quý khách hàng đã xác nhận đồng ý với Chính sách bảo mật từ dữ liệu cá nhân của Tập đoàn Masterise theo đường",
+        "privacyLink": "link này",
+        "errors": {
+            "fullNameRequired": "Vui lòng nhập họ và tên",
+            "phoneRequired": "Vui lòng nhập số điện thoại",
+            "phoneInvalid": "Số điện thoại không hợp lệ",
+            "emailRequired": "Vui lòng nhập email",
+            "emailInvalid": "Email không hợp lệ"
+        },
+        "success": "Đăng ký thành công! Chúng tôi sẽ liên hệ lại sớm."
+    }
+}

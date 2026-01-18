@@ -14,3 +14,8 @@ export const convertSlugUrl = (value: string, locale: string): string => {
 
     return value;
 }
+
+export const getIdFromSlug = (slug: string): string | null => {
+    const match = slug.match(/-(\d+)\.html$/);
+    return match ? match[1] : null;
+}

@@ -7,9 +7,8 @@ const config = (phase: string) => {
 
   const nextConfig: NextConfig = {
     output: "standalone",
-    
-    basePath: isDev ? undefined : "/BDS",
-    assetPrefix: isDev ? undefined : "/BDS",
+
+    basePath: "",
 
     images: {
       unoptimized: true,

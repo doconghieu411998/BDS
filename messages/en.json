@@ -1,1 +1,21 @@
-{}
+{
+    "Consultation": {
+        "title": "Register for Consultation",
+        "description": "Leave your contact information to receive the latest news about the project from us",
+        "fullName": "Full Name*",
+        "phone": "Phone Number*",
+        "email": "Email*",
+        "message": "Message",
+        "submit": "SEND",
+        "privacy": "By submitting your information, you agree to the Personal Data Privacy Policy of Masterise Group via this",
+        "privacyLink": "link",
+        "errors": {
+            "fullNameRequired": "Please enter your full name",
+            "phoneRequired": "Please enter your phone number",
+            "phoneInvalid": "Invalid phone number",
+            "emailRequired": "Please enter your email",
+            "emailInvalid": "Invalid email address"
+        },
+        "success": "Registration successful! We will contact you soon."
+    }
+}

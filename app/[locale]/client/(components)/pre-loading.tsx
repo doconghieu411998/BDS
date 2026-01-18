@@ -47,7 +47,6 @@ export default function Preloader() {
             window.history.scrollRestoration = "auto"
           }
 
-          // Scroll về đầu trang sau khi unlock
           window.scrollTo(0, 0)
 
           setIsActive(false)

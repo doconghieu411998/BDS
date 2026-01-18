@@ -1,41 +1,44 @@
-/* IntroSection.module.css */
-
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 80px 20px;
   background-color: #fff;
-  /* Bỏ overflow: hidden nếu bạn muốn các họa tiết tràn nhẹ ra ngoài tự nhiên */
   position: relative;
+}
+
+/* --- QUAN TRỌNG: Thiết lập Grid chung cho cả 2 phần --- */
+/* Áp dụng cùng tỉ lệ cột và khoảng cách cho cả Top và Image để thẳng hàng */
+.topSection,
+.imageSection {
+  display: grid;
+  /* Tỉ lệ: Cột trái 1.5 phần - Cột phải 1 phần (tương đương 60% - 40%) */
+  grid-template-columns: 1.5fr 1fr; 
+  /* Gap phải giống hệt nhau ở cả 2 phần */
+  gap: 40px; 
+  align-items: start;
 }
 
 /* --- Phần 1: Tiêu đề và nội dung trên --- */
 .topSection {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   margin-bottom: 60px;
-  gap: 60px;
 }
 
 .leftCol {
-  flex: 1.2; /* Cho tiêu đề rộng hơn một chút */
   position: relative;
+  /* Bỏ flex vì đã dùng grid cha */
 }
 
-/* Họa tiết ngôi sao/lá mờ ở góc trái tiêu đề */
+/* Họa tiết ngôi sao/lá mờ */
 .decorBg {
   position: absolute;
   top: -50px;
   left: -30px;
   width: 250px;
   height: 250px;
-  /* Sử dụng mask hoặc background image với hình hoa văn ngôi sao 8 cánh của Masteri */
   background: radial-gradient(circle, #f9f5ec 60%, transparent 100%);
   opacity: 0.6;
   z-index: 0;
-  /* Nếu có file svg họa tiết thì dùng: background-image: url('/decor.svg'); */
 }
 
 .textContent {
@@ -44,8 +47,8 @@
 }
 
 .titleMain {
-  font-family: "Times New Roman", serif; 
-  color: #6d4c41; 
+  font-family: "Times New Roman", serif;
+  color: #6d4c41;
   font-size: 36px;
   line-height: 1.2;
   text-transform: uppercase;
@@ -64,7 +67,6 @@
 }
 
 .rightCol {
-  flex: 1;
   padding-top: 10px;
 }
 
@@ -87,18 +89,16 @@
   text-align: justify;
 }
 
-/* --- Phần 2: Hình ảnh (Grid) --- */
+/* --- Phần 2: Hình ảnh --- */
 .imageSection {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr; /* Tỉ lệ ảnh to ảnh nhỏ giống thiết kế */
-  gap: 30px;
   margin-bottom: 80px;
+  /* grid-template-columns và gap đã được định nghĩa gộp ở trên cùng .topSection */
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 11; /* Tự động tính chiều cao theo tỉ lệ ảnh */
+  aspect-ratio: 16 / 11;
   overflow: hidden;
 }
 
@@ -111,7 +111,7 @@
   transform: scale(1.05);
 }
 
-/* --- Phần 3: Trích dẫn (Quotes) --- */
+/* --- Phần 3: Trích dẫn (Quotes) - Giữ nguyên --- */
 .quoteSection {
   text-align: center;
   max-width: 900px;
@@ -120,7 +120,6 @@
   position: relative;
 }
 
-/* Họa tiết ngôi sao lớn chìm dưới Quote */
 .quoteBg {
   position: absolute;
   top: 50%;
@@ -148,17 +147,15 @@
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
-  .topSection { gap: 30px; }
   .titleMain { font-size: 28px; }
 }
 
 @media (max-width: 768px) {
-  .topSection {
-    flex-direction: column;
-  }
-  
+  /* Khi về mobile, chuyển cả 2 section về 1 cột */
+  .topSection, 
   .imageSection {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
   
   .quoteText {

@@ -1,0 +1,80 @@
+.modalCustom :global(.ant-modal-content) {
+    padding: 40px;
+    border-radius: 4px;
+    max-width: 500px;
+}
+
+.modalCustom :global(.ant-modal-close) {
+    top: 20px;
+    right: 20px;
+}
+
+.title {
+    color: #c59b5f;
+    /* Gold color */
+    font-size: 28px;
+    font-weight: 400;
+    /* Looks somewhat thin/regular in the image */
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.description {
+    color: #555;
+    margin-bottom: 30px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.submitBtn {
+    background-color: #ba8d47 !important;
+    border-color: #ba8d47 !important;
+    color: white !important;
+    min-width: 100px;
+    height: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 2px;
+    font-size: 16px;
+    margin-top: 10px;
+    box-shadow: none;
+}
+
+.submitBtn:hover {
+    background-color: #a67c3b !important;
+    border-color: #a67c3b !important;
+    opacity: 0.9;
+}
+
+.privacyText {
+    font-size: 13px;
+    color: #888;
+    font-style: italic;
+    margin-top: 24px;
+    line-height: 1.6;
+}
+
+.privacyLink {
+    color: #a84832;
+    /* Reddish brown as seen in image */
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.privacyLink:hover {
+    text-decoration: underline;
+}
+
+/* Customize form inputs to match design (underline only or minimal border) */
+/* The design shows underlines. Antd Input is boxed by default. 
+   We can use variant="borderless" and add bottom border, or customize. */
+.customInput {
+    border-radius: 0;
+    padding-left: 0;
+}
+
+/* Or simpler, override antd input styles in this scope */
+.formItem {
+    margin-bottom: 20px;
+}

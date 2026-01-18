@@ -3,45 +3,39 @@ import Image from 'next/image';
 import styles from './intro-section.module.css';
 
 // Bạn thay thế link ảnh thật vào đây
-const IMG_LEFT = "https://placehold.co/600x400.png"; 
+const IMG_LEFT = "https://placehold.co/600x400.png";
 const IMG_RIGHT = "https://placehold.co/600x400.png";
 
 const IntroSection = () => {
   return (
     <section className={styles.container}>
-      
+
       <div className={styles.topSection}>
         <div className={styles.leftCol}>
           <div className={styles.decorBg}></div>
           <div className={styles.textContent}>
             <h2 className={styles.titleMain}>
-              KHU PHỨC HỢP <br />
-              CỘNG ĐỒNG CƯ DÂN MASTERI <br />
-              QUY MÔ NHẤT TẠI OCEAN CITY
+              KHU DU LỊCH NGHỈ DƯỠNG <br />
+              GREENHILL VILLAGE QUY NHƠN <br />
             </h2>
-            <p className={styles.subTitle}>MỘT SẢN PHẨM THUỘC MASTERI COLLECTION</p>
+            <p className={styles.subTitle}>MỘT SẢN PHẨM THUỘC MST GROUP</p>
           </div>
         </div>
 
         <div className={styles.rightCol}>
           <h4 className={styles.introTitle}>SỐNG TRỌN VẸN TRONG TỪNG KHOẢNH KHẮC</h4>
           <p className={styles.description}>
-            Đó chính là khởi nguồn của Masteri Trinity Square – tầm nhìn kết nối 
-            đa dạng phong cách sống, tiên phong kiến tạo bởi Nhà phát triển Bất động sản 
-            Quốc tế Masterise Homes.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
           </p>
           <p className={styles.description}>
-            Tọa lạc tại vị trí trung tâm trong khu thương mại sầm uất của đại đô thị 
-            Ocean Park 2 phía Đông Thủ đô & tiếp nối thành công của Masteri Collection 
-            tại Việt Nam, khu phức hợp cao tầng Masteri Trinity Square là dự án đầu tiên 
-            kết tinh trọn vẹn bộ ba giá trị chuẩn mực "Sống phong cách Masteri".
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
           </p>
         </div>
       </div>
 
       <div className={styles.imageSection}>
         <div className={styles.imageWrapper}>
-          <Image 
+          <Image
             src={IMG_LEFT}
             alt="Toàn cảnh tòa nhà Masteri Trinity Square"
             fill
@@ -50,7 +44,7 @@ const IntroSection = () => {
           />
         </div>
         <div className={styles.imageWrapper}>
-          <Image 
+          <Image
             src={IMG_RIGHT}
             alt="Tiện ích nội khu Masteri"
             fill
@@ -63,13 +57,10 @@ const IntroSection = () => {
       <div className={styles.quoteSection}>
         <div className={styles.quoteBg}></div>
         <p className={styles.quoteText}>
-          “Tại đây, ba giá trị sống, dẫu khác biệt nhưng hòa hợp tuyệt đối và 
-          cùng tồn tại trong một tổng thể.
+          “Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
         </p>
         <p className={styles.quoteText}>
-          Tại đây, dù bạn yêu thích lối sống năng động ngập tràn năng lượng, 
-          đề cao chất keo gắn kết cộng đồng, hay trân trọng sự an yên – 
-          tất cả đều tìm thấy điểm chạm của riêng mình.”
+          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.”
         </p>
       </div>
 

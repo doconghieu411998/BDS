@@ -1,9 +1,11 @@
-/* ... Các phần topContent giữ nguyên ... */
+/* location-section.module.css */
+
 .container {
   width: 100%;
   background-color: #f9f5ec;
   padding: 80px 0 0 0;
 }
+
 .topContent {
   max-width: 1200px;
   margin: 0 auto;
@@ -11,126 +13,44 @@
   gap: 40px;
   padding: 0 20px 60px;
 }
-.textSide { flex: 1; }
-.mapSide { flex: 1.5; }
-.label { font-size: 18px; color: #6d4c41; letter-spacing: 2px; font-weight: 500; }
-.mainTitle { font-family: "Times New Roman", serif; font-size: 44px; color: #6d4c41; margin: 5px 0 15px 0; }
-.desc { color: #888; font-size: 14px; line-height: 1.6; }
-.mapImg { width: 100%; height: auto; object-fit: contain; }
 
-/* --- KHU VỰC CAROUSEL --- */
-.carouselWrapper {
-  position: relative;
+.textSide {
+  flex: 1;
+}
+
+.mapSide {
+  flex: 1.5;
+}
+
+.label {
+  font-size: 18px;
+  color: #6d4c41;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+.mainTitle {
+  font-family: "Times New Roman", serif;
+  font-size: 44px;
+  color: #6d4c41;
+  margin: 5px 0 15px 0;
+}
+
+.desc {
+  color: #888;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.mapImg {
   width: 100%;
-  padding: 80px 0;
-  overflow: hidden;
+  height: auto;
+  object-fit: contain;
 }
 
-/* Container chứa các lớp nền xếp chồng */
-.bgContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-/* Từng lớp nền một */
-.bgLayer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0; /* Mặc định ẩn */
-  transition: opacity 0.8s ease-in-out; /* Chuyển opacity cực mượt */
-  z-index: 1;
-}
-
-/* Khi active thì hiện lên */
-.bgActive {
-  opacity: 1;
-  z-index: 2;
-}
-
-/* Lớp phủ đen mờ chung nằm trên cùng các ảnh */
-.darkOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 3;
-}
-
-.carouselContainer {
-  position: relative;
-  z-index: 10; /* Cao hẳn lên trên */
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.slideItem {
-  padding: 0 12px;
-}
-
-/* --- STYLE CHO CARD --- */
-.card {
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  height: 260px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Bỏ transition background */
-  
-  /* Chuẩn bị sẵn các thuộc tính để khi có ảnh thì hiển thị đẹp */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Lớp phủ trắng mờ TRONG THẺ để chữ dễ đọc khi có background */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.85); /* Che bớt ảnh đi */
-  opacity: 0;
-  transition: opacity 0.8s ease-in-out;
-  z-index: 1;
-}
-
-.activeCard {
-  background-color: #fff;
-  transform: translateY(-15px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-  /* Ảnh nền được gán inline trong JSX rồi */
-}
-
-/* Khi active thì hiện lớp phủ lên */
-.activeCard::before {
-  opacity: 1; 
-}
-
-/* Chữ phải nằm trên lớp phủ */
-.cardHeader, .cardBody {
-  position: relative;
-  z-index: 2;
-}
-
-.timeNum { font-family: "Times New Roman", serif; font-size: 60px; color: #d19f58; line-height: 1; }
-.timeUnit { font-size: 14px; color: #d19f58; font-weight: 600; margin-left: 8px; }
-.cardTitle { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 4px; }
-.cardSubtitle { font-size: 13px; color: #666; }
-.pinIcon { align-self: flex-end; color: #d19f58; margin-top: 10px; }
-
+/* Media query riêng cho phần Top Content */
 @media (max-width: 768px) {
-  .topContent { flex-direction: column; }
-  .carouselWrapper { padding: 40px 0; }
+  .topContent {
+    flex-direction: column;
+  }
 }

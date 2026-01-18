@@ -4,8 +4,7 @@ export const DEFAULT_LOCALE = 'vi';
 export const DEFAULT_VIEW_EXPIRATION_MS = 30 * 60 * 1000
 
 export const SESSION_KEYS = {
-  PRELOADER_SHOWN: "app_preloader_shown",
+  PRELOADER_SHOWN: "app_preloader",
   PAGE_VIEWS: "app_page_views",
   SESSION_ID: "app_session_id",
-  LANGUAGE_SWITCH_TRIGGER: "app_language_switch_trigger",
 } as const

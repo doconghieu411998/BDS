@@ -1,0 +1,173 @@
+.section {
+  width: 100%;
+  padding: 3rem 1rem;
+  background-color: #fafaf9; /* stone-50 */
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 3rem 2rem;
+  }
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #292524; /* stone-800 */
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.25rem;
+  }
+}
+
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.mapImage {
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
+  pointer-events: none;
+}
+
+.pinContainer {
+  position: absolute;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+}
+
+.pin {
+  position: relative;
+  cursor: pointer;
+}
+
+.pinOuterRing {
+  position: absolute;
+  inset: 0;
+  width: 2rem;
+  height: 2rem;
+  margin: -0.5rem;
+  border-radius: 50%;
+  background-color: rgba(245, 158, 11, 0.3); /* amber-500/30 */
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.pinMiddleRing {
+  position: absolute;
+  inset: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: -0.25rem;
+  border-radius: 50%;
+  background-color: rgba(245, 158, 11, 0.5); /* amber-500/50 */
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.pinInnerDot {
+  position: relative;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #fbbf24, #d97706); /* amber-400 to amber-600 */
+  box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.5);
+  border: 2px solid white;
+}
+
+.tooltipWrapper {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 1rem;
+  z-index: 20;
+}
+
+.tooltipArrow {
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 1rem;
+  height: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.tooltipCard {
+  position: relative;
+  width: 14rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.thumbnailWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.thumbnailImage {
+  object-fit: cover;
+}
+
+.tooltipContent {
+  padding: 0.75rem;
+}
+
+.tooltipTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #292524; /* stone-800 */
+  text-align: center;
+}
+
+.footnote {
+  text-align: center;
+  color: #78716c; /* stone-500 */
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

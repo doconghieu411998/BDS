@@ -7,13 +7,13 @@
   left: 0;
   width: 100%;
   display: flex;
-  justify-content: center; /* UPDATED */
+  justify-content: center;
+  /* UPDATED */
   align-items: center;
   padding: 30px 50px;
   z-index: 1000;
   background-color: transparent;
-  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow
-    0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header.sticky {
@@ -31,8 +31,10 @@
 
 .menuSection {
   position: absolute;
-  left: 50px; /* UPDATED */
-  right: auto; /* UPDATED */
+  left: 50px;
+  /* UPDATED */
+  right: auto;
+  /* UPDATED */
 }
 
 /* ==================== MENU BUTTON ==================== */
@@ -132,8 +134,7 @@
   visibility: hidden;
   clip-path: inset(0 100% 0 0);
   opacity: 0;
-  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s cubic-bezier(0.77, 0, 0.175, 1), visibility
-    0s linear 0.8s;
+  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s linear 0.8s;
   will-change: clip-path, opacity;
   /* Ensure no scroll on menu itself */
   overflow: hidden;
@@ -143,8 +144,7 @@
   visibility: visible;
   clip-path: inset(0 0 0 0);
   opacity: 1;
-  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), visibility
-    0s linear 0s;
+  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s linear 0s;
 }
 
 /* ==================== CLOSE BUTTON ==================== */
@@ -245,36 +245,43 @@
   opacity: 1;
   transform: translateX(0);
 }
+
 .fullScreenMenu.open .navItem:nth-child(2) {
   transition-delay: 0.26s;
   opacity: 1;
   transform: translateX(0);
 }
+
 .fullScreenMenu.open .navItem:nth-child(3) {
   transition-delay: 0.32s;
   opacity: 1;
   transform: translateX(0);
 }
+
 .fullScreenMenu.open .navItem:nth-child(4) {
   transition-delay: 0.38s;
   opacity: 1;
   transform: translateX(0);
 }
+
 .fullScreenMenu.open .navItem:nth-child(5) {
   transition-delay: 0.44s;
   opacity: 1;
   transform: translateX(0);
 }
+
 .fullScreenMenu.open .navItem:nth-child(6) {
   transition-delay: 0.5s;
   opacity: 1;
   transform: translateX(0);
 }
+
 .fullScreenMenu.open .navItem:nth-child(7) {
   transition-delay: 0.56s;
   opacity: 1;
   transform: translateX(0);
 }
+
 .fullScreenMenu.open .navItem:nth-child(8) {
   transition-delay: 0.62s;
   opacity: 1;
@@ -303,25 +310,35 @@
 /* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 768px) {
   .header {
-    padding: 15px 20px; /* UPDATED */
+    padding: 15px 20px;
+    /* UPDATED */
     height: 70px;
-    justify-content: space-between; /* ADDED */
+    justify-content: space-between;
+    /* ADDED */
   }
 
   /* Fix logo alignment - center on mobile */
   .logoSection {
-    position: relative; /* UPDATED */
-    left: auto; /* UPDATED */
-    transform: none; /* UPDATED */
-    order: 1; /* ADDED */
+    position: relative;
+    /* UPDATED */
+    left: auto;
+    /* UPDATED */
+    transform: none;
+    /* UPDATED */
+    order: 1;
+    /* ADDED */
   }
 
   /* Menu button stays on right */
   .menuSection {
-    position: relative; /* UPDATED */
-    left: auto; /* UPDATED */
-    right: auto; /* UPDATED */
-    order: 2; /* ADDED */
+    position: relative;
+    /* UPDATED */
+    left: auto;
+    /* UPDATED */
+    right: auto;
+    /* UPDATED */
+    order: 2;
+    /* ADDED */
   }
 
   .logo {
@@ -367,7 +384,8 @@
 
   .closeBtn {
     position: absolute;
-    top: 35px; /* UPDATED */
+    top: 35px;
+    /* UPDATED */
     right: 25px;
     left: auto;
     width: 40px;

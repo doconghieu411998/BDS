@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 .mainSection {
@@ -20,7 +20,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0; /* Index thấp nhất */
+  z-index: 0;
+  /* Index thấp nhất */
 }
 
 .overlay {
@@ -29,7 +30,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.6) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.6) 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -55,7 +56,7 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 16px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .subtitle {
@@ -65,7 +66,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   opacity: 0.9;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .ctaBtn {
@@ -85,7 +86,7 @@
   font-size: 13px;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s, background-color 0.2s;
 }
 
@@ -96,7 +97,17 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .title { font-size: 1.8rem; }
-  .subtitle { font-size: 0.8rem; }
-  .ctaBtn { right: 20px; padding: 8px 16px; font-size: 11px; }
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .ctaBtn {
+    right: 20px;
+    padding: 8px 16px;
+    font-size: 11px;
+  }
 }

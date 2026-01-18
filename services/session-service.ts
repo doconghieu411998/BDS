@@ -1,15 +1,19 @@
 /**
- * Session Service - Manages view count and preloader logic
- *
+ * Session Service - Manages session lifecycle and view counting
+ * 
  * Key behaviors:
- * - Preloader: Runs on:
- *   1. Fresh visit (first time user enters the site in session)
- *   2. F5 reload
- *   3. Language switch
- * - View Count: Tracks page views per session with expiration
+ * - Session Creation: Created on first visit or after expiration
+ * - Session Expiration: Fixed TTL (default 30 mins)
+ * - Preloader: Shows only when no valid session exists
+ * - View Count: Only recorded for valid sessions
  */
 import { DEFAULT_VIEW_EXPIRATION_MS, SESSION_KEYS } from "@constants/help"
 
+interface SessionData {
+  id: string
+  createdAt: number
+  expiresAt: number
+}
 
 interface PageViewData {
   viewedAt: number
@@ -28,98 +32,65 @@ const generateSessionId = (): string => {
 }
 
 /**
- * Get or create session ID
+ * Get current session data if valid
  */
-export const getSessionId = (): string => {
-  if (typeof window === "undefined") return ""
+export const getSession = (): SessionData | null => {
+  if (typeof window === "undefined") return null
 
-  let sessionId = sessionStorage.getItem(SESSION_KEYS.SESSION_ID)
-  if (!sessionId) {
-    sessionId = generateSessionId()
-    sessionStorage.setItem(SESSION_KEYS.SESSION_ID, sessionId)
+  try {
+    const stored = sessionStorage.getItem(SESSION_KEYS.SESSION_ID)
+    if (!stored) return null
+    return JSON.parse(stored) as SessionData
+  } catch {
+    return null
   }
-  return sessionId
 }
 
 /**
- * Check if this is a fresh visit (first time entering the site in this browser session)
- * Returns true ONLY for fresh visits, NOT for:
- * - F5 reload
- * - Language switch
- * - Client-side navigation
+ * Check if the current session is valid (exists and not expired)
+ * If expired, it clears the session data.
  */
-export const isFreshVisit = (): boolean => {
-  if (typeof window === "undefined") return false
+export const isSessionValid = (): boolean => {
+  const session = getSession()
+  if (!session) return false
 
-  // Check navigation type
-  const navEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[]
-  const navType = navEntries.length > 0 ? navEntries[0].type : "navigate"
-
-  // If reload (F5) -> NOT fresh visit
-  if (navType === "reload") {
+  if (Date.now() > session.expiresAt) {
+    clearSessionData()
     return false
   }
 
-  // If back_forward navigation -> NOT fresh visit
-  if (navType === "back_forward") {
-    return false
-  }
-
-  // Check if session already exists (meaning user already visited)
-  const hasSession = sessionStorage.getItem(SESSION_KEYS.PRELOADER_SHOWN)
-
-  if (hasSession) {
-    // Session exists -> NOT fresh visit
-    return false
-  }
-
-  // No session + navigate type = FRESH VISIT
   return true
 }
 
 /**
- * Mark preloader as shown (call this after preloader animation completes)
+ * Create a new session
+ * Call this when Preloader finishes or when a fresh session is needed
  */
-export const markPreloaderShown = (): void => {
-  if (typeof window === "undefined") return
-  sessionStorage.setItem(SESSION_KEYS.PRELOADER_SHOWN, "true")
+export const createSession = (ttl: number = DEFAULT_VIEW_EXPIRATION_MS): SessionData => {
+  if (typeof window === "undefined") return { id: "", createdAt: 0, expiresAt: 0 }
+
+  const now = Date.now()
+  const session: SessionData = {
+    id: generateSessionId(),
+    createdAt: now,
+    expiresAt: now + ttl, // Absolute expiration time
+  }
+
+  sessionStorage.setItem(SESSION_KEYS.SESSION_ID, JSON.stringify(session))
+  return session
 }
 
 /**
- * Check if preloader should run
- * Returns true for:
- * 1. Fresh visit (first time in session)
- * 2. F5 reload
- * 3. Language switch (triggered via triggerPreloaderForLanguageSwitch)
+ * Get session ID, creating a new session if one doesn't exist or is expired
+ * Note: Should use createSession() explicitly when controlling lifecycle (e.g. from Preloader)
  */
-export const shouldShowPreloader = (): boolean => {
-  if (typeof window === "undefined") return false
-
-  const languageSwitchTrigger = sessionStorage.getItem(SESSION_KEYS.LANGUAGE_SWITCH_TRIGGER)
-  if (languageSwitchTrigger === "true") {
-    // Clear the trigger immediately
-    sessionStorage.removeItem(SESSION_KEYS.LANGUAGE_SWITCH_TRIGGER)
-    return true
+export const getOrInitSessionId = (): string => {
+  if (isSessionValid()) {
+    return getSession()!.id
   }
-
-  const navEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[]
-  const navType = navEntries.length > 0 ? navEntries[0].type : "navigate"
-
-  if (navType === "reload") {
-    return true // F5 reload -> show preloader
-  }
-
-  // Check if session already exists (meaning user already visited)
-  const hasSession = sessionStorage.getItem(SESSION_KEYS.PRELOADER_SHOWN)
-
-  if (hasSession) {
-    // Session exists and not reload -> NOT fresh visit
-    return false
-  }
-
-  // No session + navigate type = FRESH VISIT
-  return true
+  return createSession().id
 }
+
 
 /**
  * Generate a unique key for a page/article
@@ -129,42 +100,27 @@ export const generatePageKey = (pageId: string, locale?: string): string => {
 }
 
 /**
- * Check if a page view has been recorded and is still valid
- */
-export const hasValidPageView = (pageKey: string): boolean => {
-  const store = getPageViewsStore()
-  const viewData = store[pageKey]
-
-  if (!viewData) return false
-
-  // Check if expired
-  if (Date.now() > viewData.expiresAt) {
-    // Clean up expired entry
-    delete store[pageKey]
-    savePageViewsStore(store)
-    return false
-  }
-
-  return true
-}
-
-/**
  * Record a page view with expiration
- * Returns true if this is a new view (API should be called)
- * Returns false if view already exists (no API call needed)
+ * Creates a new session if one doesn't exist
  */
 export const recordPageView = (pageKey: string, expirationMs: number = DEFAULT_VIEW_EXPIRATION_MS): boolean => {
   if (typeof window === "undefined") return false
 
+  // If no valid session exists, create one now!
+  if (!isSessionValid()) {
+    createSession()
+  }
+
+  const store = getPageViewsStore()
+  const viewData = store[pageKey]
+  const now = Date.now()
+
   // Check if valid view already exists
-  if (hasValidPageView(pageKey)) {
-    return false // No need to call API
+  if (viewData && viewData.expiresAt > now) {
+    return false
   }
 
   // Record new view
-  const store = getPageViewsStore()
-  const now = Date.now()
-
   store[pageKey] = {
     viewedAt: now,
     expiresAt: now + expirationMs,
@@ -173,14 +129,13 @@ export const recordPageView = (pageKey: string, expirationMs: number = DEFAULT_V
   savePageViewsStore(store)
 
   // Simulate API call
-  console.log("Call API Increase View Count", { pageKey, timestamp: now })
+  console.log("Call API Increase View Count", { pageKey, timestamp: now, sessionId: getSession()?.id })
 
-  return true // New view recorded, API was called
+  return true
 }
 
 /**
  * Hook-friendly function to handle page view logic
- * Call this in useEffect when a page/article loads
  */
 export const handlePageView = (
   pageId: string,
@@ -201,18 +156,17 @@ export const handlePageView = (
 }
 
 /**
- * Clear all session data (useful for testing or logout)
+ * Clear all session data
  */
 export const clearSessionData = (): void => {
   if (typeof window === "undefined") return
   sessionStorage.removeItem(SESSION_KEYS.PRELOADER_SHOWN)
   sessionStorage.removeItem(SESSION_KEYS.PAGE_VIEWS)
   sessionStorage.removeItem(SESSION_KEYS.SESSION_ID)
-  sessionStorage.removeItem(SESSION_KEYS.LANGUAGE_SWITCH_TRIGGER)
 }
 
 /**
- * Clean up expired page views (call periodically if needed)
+ * Clean up expired page views
  */
 export const cleanupExpiredViews = (): number => {
   const store = getPageViewsStore()
