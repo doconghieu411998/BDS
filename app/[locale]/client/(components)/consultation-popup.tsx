@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Modal, Form, Input, Button, message, type InputRef } from "antd"
 import { useTranslations } from "next-intl"
+import { CONSULTATION_KEYS } from "@/constants/localeKeys"
 import styles from "./consultation-popup.module.css"
 
 interface ConsultationPopupProps {
@@ -18,7 +19,7 @@ interface FormValues {
 }
 
 const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
-    const t = useTranslations("Consultation")
+    const t = useTranslations()
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
     const fullNameRef = useRef<InputRef>(null)
@@ -39,7 +40,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
 
         setTimeout(() => {
             setLoading(false)
-            message.success(t("success"))
+            message.success(t(CONSULTATION_KEYS.SUCCESS))
             form.resetFields()
             onClose()
         }, 1000)
@@ -56,9 +57,9 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
             centered
         >
             <div className={styles.container}>
-                <h2 className={styles.title}>{t("title")}</h2>
+                <h2 className={styles.title}>{t(CONSULTATION_KEYS.TITLE)}</h2>
                 <p className={styles.description}>
-                    {t("description")}
+                    {t(CONSULTATION_KEYS.DESCRIPTION)}
                 </p>
 
                 <Form
@@ -70,12 +71,12 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                 >
                     <Form.Item
                         name="fullName"
-                        rules={[{ required: true, message: t("errors.fullNameRequired") }]}
+                        rules={[{ required: true, message: t(CONSULTATION_KEYS.ERROR_FULL_NAME_REQUIRED) }]}
                         className={styles.formItem}
                     >
                         <Input
                             ref={fullNameRef}
-                            placeholder={t("fullName")}
+                            placeholder={t(CONSULTATION_KEYS.FULL_NAME)}
                             variant="borderless"
                             style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0 }}
                         />
@@ -84,23 +85,23 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                     <Form.Item
                         name="phone"
                         rules={[
-                            { required: true, message: t("errors.phoneRequired") },
-                            { pattern: /^[0-9]{10,11}$/, message: t("errors.phoneInvalid") }
+                            { required: true, message: t(CONSULTATION_KEYS.ERROR_PHONE_REQUIRED) },
+                            { pattern: /^[0-9]{10,11}$/, message: t(CONSULTATION_KEYS.ERROR_PHONE_INVALID) }
                         ]}
                         className={styles.formItem}
                     >
-                        <Input placeholder={t("phone")} variant="borderless" style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0 }} />
+                        <Input placeholder={t(CONSULTATION_KEYS.PHONE)} variant="borderless" style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0 }} />
                     </Form.Item>
 
                     <Form.Item
                         name="email"
                         rules={[
-                            { required: true, message: t("errors.emailRequired") },
-                            { type: "email", message: t("errors.emailInvalid") }
+                            { required: true, message: t(CONSULTATION_KEYS.ERROR_EMAIL_REQUIRED) },
+                            { type: "email", message: t(CONSULTATION_KEYS.ERROR_EMAIL_INVALID) }
                         ]}
                         className={styles.formItem}
                     >
-                        <Input placeholder={t("email")} variant="borderless" style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0 }} />
+                        <Input placeholder={t(CONSULTATION_KEYS.EMAIL)} variant="borderless" style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0 }} />
                     </Form.Item>
 
                     <Form.Item
@@ -108,7 +109,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                         className={styles.formItem}
                     >
                         <Input.TextArea
-                            placeholder={t("message")}
+                            placeholder={t(CONSULTATION_KEYS.MESSAGE)}
                             autoSize={{ minRows: 1, maxRows: 4 }}
                             variant="borderless"
                             style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0, resize: 'none' }}
@@ -122,13 +123,13 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                             loading={loading}
                             className={styles.submitBtn}
                         >
-                            {t("submit")}
+                            {t(CONSULTATION_KEYS.SUBMIT)}
                         </Button>
                     </Form.Item>
                 </Form>
 
                 <div className={styles.privacyText}>
-                    {t("privacy")} <a href="#" className={styles.privacyLink}>{t("privacyLink")}</a>
+                    {t(CONSULTATION_KEYS.PRIVACY)} <a href="#" className={styles.privacyLink}>{t(CONSULTATION_KEYS.PRIVACY_LINK)}</a>
                 </div>
             </div>
         </Modal>

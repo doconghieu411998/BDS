@@ -23,10 +23,10 @@ const VerticalCarousel = () => {
       <div className={styles.marqueeTrack}>
         {LOOP_ITEMS.map((src, index) => (
           <div key={index} className={styles.slideItem}>
-            <Image 
-              src={withBasePath(src)} 
-              alt="Architecture" 
-              fill 
+            <Image
+              src={withBasePath(src)}
+              alt="Architecture"
+              fill
               className={styles.bgImage}
               priority={index < 2} // Preload vài ảnh đầu
               sizes="50vw"

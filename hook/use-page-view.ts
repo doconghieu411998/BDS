@@ -1,6 +1,6 @@
 "use client"
 
-import { handlePageView } from "@/services/session-service"
+import { handlePageView } from "@/services/sessionService"
 import { useEffect, useRef } from "react"
 
 interface UsePageViewOptions {

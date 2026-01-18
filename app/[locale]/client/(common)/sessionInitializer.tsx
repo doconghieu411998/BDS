@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { cleanupExpiredViews } from "@/services/session-service"
+import { cleanupExpiredViews } from "@/services/sessionService"
 
 export default function SessionInitializer() {
     useEffect(() => {

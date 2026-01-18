@@ -1,21 +1,17 @@
 {
-    "Consultation": {
-        "title": "Register for Consultation",
-        "description": "Leave your contact information to receive the latest news about the project from us",
-        "fullName": "Full Name*",
-        "phone": "Phone Number*",
-        "email": "Email*",
-        "message": "Message",
-        "submit": "SEND",
-        "privacy": "By submitting your information, you agree to the Personal Data Privacy Policy of Masterise Group via this",
-        "privacyLink": "link",
-        "errors": {
-            "fullNameRequired": "Please enter your full name",
-            "phoneRequired": "Please enter your phone number",
-            "phoneInvalid": "Invalid phone number",
-            "emailRequired": "Please enter your email",
-            "emailInvalid": "Invalid email address"
-        },
-        "success": "Registration successful! We will contact you soon."
-    }
+    "consultation_title": "Register for Consultation",
+    "consultation_description": "Leave your contact information to receive the latest news about the project from us",
+    "consultation_full_name": "Full Name*",
+    "consultation_phone": "Phone Number*",
+    "consultation_email": "Email*",
+    "consultation_message": "Message",
+    "consultation_submit": "SEND",
+    "consultation_privacy": "By submitting your information, you agree to the Personal Data Privacy Policy of Masterise Group via this",
+    "consultation_privacy_link": "link",
+    "consultation_success": "Registration successful! We will contact you soon.",
+    "consultation_error_full_name_required": "Please enter your full name",
+    "consultation_error_phone_required": "Please enter your phone number",
+    "consultation_error_phone_invalid": "Invalid phone number",
+    "consultation_error_email_required": "Please enter your email",
+    "consultation_error_email_invalid": "Invalid email address"
 }

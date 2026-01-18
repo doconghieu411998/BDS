@@ -27,9 +27,9 @@ const PinSpace = () => {
     const ctx = gsap.context(() => {
       // SỬ DỤNG MATCHMEDIA: Chìa khóa để tắt animation trên Mobile
       ScrollTrigger.matchMedia({
-        
+
         // CHỈ CHẠY TRÊN DESKTOP (Màn hình lớn hơn 1024px)
-        "(min-width: 1024px)": function() {
+        "(min-width: 1024px)": function () {
           const horizontalContainer = horizontalRef.current;
           const sectionElement = sectionRef.current;
 
@@ -49,11 +49,11 @@ const PinSpace = () => {
               anticipatePin: 1,
               fastScrollEnd: true,
               preventOverlaps: true,
-              start: "top top", 
+              start: "top top",
               // Kết thúc sau khi cuộn hết chiều dài của tất cả các ảnh
               end: () => `+=${horizontalContainer.scrollWidth}`,
               invalidateOnRefresh: true, // Tính lại khi resize trình duyệt
-              
+
             }
           });
         },
