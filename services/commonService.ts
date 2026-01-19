@@ -19,3 +19,8 @@ export const getIdFromSlug = (slug: string): string | null => {
     const match = slug.match(/-(\d+)\.html$/);
     return match ? match[1] : null;
 }
+
+export const getTagFromSlug = (slug: string): string | null => {
+    const match = slug.match(/^(.+)\.html$/);
+    return match ? match[1] : null;
+};

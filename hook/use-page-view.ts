@@ -30,7 +30,6 @@ export const usePageView = ({ pageId, locale, expirationMs, enabled = true, onNe
   const hasTracked = useRef(false)
 
   useEffect(() => {
-    // Only track once per mount and when enabled
     if (!enabled || hasTracked.current || !pageId) return
 
     hasTracked.current = true

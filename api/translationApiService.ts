@@ -1,8 +1,3 @@
-/**
- * Translation Service
- * Handles fetching translations from the API with fallback support
- */
-
 export interface TranslationMessages {
     [key: string]: string;
 }
@@ -16,7 +11,7 @@ const responseVi = {
     "consultation_message": "Lời nhắn",
     "consultation_submit": "GỬI",
     "consultation_privacy": "Bằng việc gửi thông tin cho chúng tôi, Quý khách hàng đã xác nhận đồng ý với Chính sách bảo mật từ dữ liệu cá nhân của Tập đoàn Masterise theo đường",
-    "consultation_privacy_link": "link này",
+    "consultation_privacy_link": "đường dẫn này",
     "consultation_success": "Đăng ký thành công! Chúng tôi sẽ liên hệ lại sớm.",
     "consultation_error_full_name_required": "Vui lòng nhập họ và tên",
     "consultation_error_phone_required": "Vui lòng nhập số điện thoại",

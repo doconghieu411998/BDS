@@ -8,14 +8,14 @@ import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Pagination } from 'antd';
 import { NewsItem } from '@/models/news';
-import { getNews } from '@/services/newsService';
+import { getNews } from '@/api/newsApiService';
 
 interface NewsListProps {
-    relatedTags?: string[]; // Nếu truyền vào, sẽ lọc bài liên quan
-    excludeId?: number;     // Loại bỏ bài đang xem
-    limit?: number;         // Giới hạn số lượng (dùng cho Landing Page)
-    showPagination?: boolean; // Có hiện phân trang hay không
-    title?: string;         // Tiêu đề phần (vd: Tin tức mới nhất)
+    relatedTags?: string[];
+    excludeId?: number;
+    limit?: number;
+    showPagination?: boolean;
+    title?: string;
 }
 
 const NewsList = ({

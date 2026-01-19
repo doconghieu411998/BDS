@@ -2,90 +2,107 @@
 import { useState, useRef } from 'react';
 import { Carousel } from 'antd';
 import type { CarouselRef } from 'antd/es/carousel';
+import { ArrowRightOutlined } from '@ant-design/icons'; // Bạn có thể dùng icon của antd hoặc svg tùy ý
 import styles from './carousel.module.css';
+import { withBasePath } from '@/services/commonService';
 
-const BG_ITEMS = [
-  "images/location-bg-1.png",
-  "images/location-bg-2.png",
-  "images/location-bg-3.png",
-  "images/location-bg-4.png",
-  "images/location-bg-5.png",
-  "images/location-bg-6.png"
-];
-
-const CONNECT_DATA = [
-  { time: "02", unit: "PHÚT", title: "HỆ TIỆN ÍCH NỘI KHU", subtitle: "OCEAN PARK 2" },
-  { time: "05", unit: "PHÚT", title: "HỆ TIỆN ÍCH ĐẠI ĐÔ THỊ", subtitle: "OCEAN CITY" },
-  { time: "10", unit: "PHÚT", title: "TÂM ĐIỂM HỘI NHẬP PHÍA", subtitle: "ĐÔNG HÀ NỘI" },
-  { time: "20", unit: "PHÚT", title: "TÂM ĐIỂM QUẬN CẦU GIẤY", subtitle: "TÂY HÀ NỘI..." },
-  { time: "30", unit: "PHÚT", title: "HỒ HOÀN KIẾM", subtitle: "TRUNG TÂM" },
-  { time: "60", unit: "PHÚT", title: "NỘI BÀI", subtitle: "SÂN BAY TRUNG TÂM" },
+// 1. Gộp dữ liệu để dễ quản lý
+const CAROUSEL_DATA = [
+  {
+    image: "images/location-bg-1.png",
+    title: "TIỆN ÍCH NỘI KHU",
+    description: "Trải nghiệm cuộc sống đẳng cấp ngay thềm nhà tại Ocean Park 2."
+  },
+  {
+    image: "images/location-bg-2.png",
+    title: "HỆ SINH THÁI ĐẠI ĐÔ THỊ",
+    description: "Kết nối không giới hạn với quần thể tiện ích Ocean City."
+  },
+  {
+    image: "images/location-bg-3.png",
+    title: "TÂM ĐIỂM HỘI NHẬP",
+    description: "Cửa ngõ giao thương sầm uất phía Đông Hà Nội."
+  },
+  {
+    image: "images/location-bg-4.png",
+    title: "KẾT NỐI TRUNG TÂM",
+    description: "Di chuyển thuận tiện tới các quận nội thành Cầu Giấy, Hoàn Kiếm."
+  },
+  {
+    image: "images/location-bg-5.png",
+    title: "DI SẢN VĂN HÓA",
+    description: "Gần kề các địa điểm văn hóa và trung tâm lịch sử."
+  },
+  {
+    image: "images/location-bg-6.png",
+    title: "KẾT NỐI QUỐC TẾ",
+    description: "Dễ dàng di chuyển tới sân bay quốc tế Nội Bài."
+  },
 ];
 
 const CarouselCommon = () => {
-  const [activeBg, setActiveBg] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<CarouselRef>(null);
 
   const handleCardClick = (index: number) => {
-    setActiveBg(index);
-    carouselRef.current?.goTo(index); // Thêm dòng này nếu muốn click card thì slide cũng chạy tới đó
+    setActiveIndex(index);
+    carouselRef.current?.goTo(index);
   };
 
   return (
     <div className={styles.carouselWrapper}>
+      {/* --- PHẦN BACKGROUND LỚN --- */}
       <div className={styles.bgContainer}>
-        {BG_ITEMS.map((bg, index) => (
-          <div 
+        {CAROUSEL_DATA.map((item, index) => (
+          <div
             key={index}
-            className={`${styles.bgLayer} ${activeBg === index ? styles.bgActive : ''}`}
-            style={{ backgroundImage: `url(${bg})` }}
+            className={`${styles.bgLayer} ${activeIndex === index ? styles.bgActive : ''}`}
+            style={{ backgroundImage: `url(${withBasePath(item.image)})` }}
           />
         ))}
         <div className={styles.darkOverlay} />
       </div>
 
+      {/* --- PHẦN CAROUSEL CARD --- */}
       <div className={styles.carouselContainer}>
         <Carousel
           ref={carouselRef}
           autoplay
-          autoplaySpeed={3000}
-          speed={1000}
+          autoplaySpeed={4000} // Chậm lại chút để người dùng kịp đọc
+          speed={800}
           infinite={true}
-          slidesToShow={4}
+          slidesToShow={3} // Hiển thị 3 card nhìn sẽ thoáng hơn 4
           slidesToScroll={1}
           dots={false}
           arrows={false}
-          beforeChange={(current, next) => setActiveBg(next)}
+          beforeChange={(_, next) => setActiveIndex(next)}
           responsive={[
-            { breakpoint: 1024, settings: { slidesToShow: 2 } },
-            { breakpoint: 600, settings: { slidesToShow: 1 } },
+            { breakpoint: 1200, settings: { slidesToShow: 3 } },
+            { breakpoint: 992, settings: { slidesToShow: 2 } },
+            { breakpoint: 600, settings: { slidesToShow: 1, centerMode: true, centerPadding: '20px' } },
           ]}
         >
-          {CONNECT_DATA.map((item, index) => {
-            const bgIndex = index % BG_ITEMS.length;
-            const isActive = activeBg === index;
+          {CAROUSEL_DATA.map((item, index) => {
+            const isActive = activeIndex === index;
 
             return (
               <div key={index} className={styles.slideItem}>
-                <div 
-                  style={{ backgroundImage: isActive ? `url(${BG_ITEMS[bgIndex]})` : 'none' }}
+                <div
                   className={`${styles.card} ${isActive ? styles.activeCard : ''}`}
                   onClick={() => handleCardClick(index)}
                 >
-                  <div className={styles.cardHeader}>
-                    <span className={styles.timeNum}>{item.time}</span>
-                    <span className={styles.timeUnit}>{item.unit}</span>
-                  </div>
-                  <div className={styles.cardBody}>
-                    <p className={styles.cardTitle}>{item.title}</p>
-                    <p className={styles.cardSubtitle}>{item.subtitle}</p>
-                    <div className={styles.pinIcon}>
-                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <path d="M12 21C12 21 17 16 17 12C17 9.23858 14.7614 7 12 7C9.23858 7 7 9.23858 7 12C7 16 12 21 12 21Z" strokeWidth="2"/>
-                          <circle cx="12" cy="12" r="2" />
-                       </svg>
+                  <div className={styles.cardContent}>
+                    <h3 className={styles.cardTitle}>{item.title}</h3>
+                    <p className={styles.cardDesc}>{item.description}</p>
+
+                    <div className={styles.cardFooter}>
+                      <span className={styles.exploreText}>Khám phá</span>
+                      <ArrowRightOutlined className={styles.arrowIcon} />
                     </div>
                   </div>
+
+                  {/* Đường kẻ trang trí khi active */}
+                  <div className={styles.activeBar} />
                 </div>
               </div>
             );

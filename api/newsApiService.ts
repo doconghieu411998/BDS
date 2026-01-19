@@ -1,5 +1,5 @@
 import { NewsItem, PaginatedNews } from '@/models/news';
-import newsData from './mockData/news.json';
+import newsData from '../services/mockData/news.json';
 
 export const getNews = async (page: number = 1, limit: number = 10): Promise<PaginatedNews> => {
     // Simulate network delay
@@ -24,6 +24,15 @@ export const getNewsDetail = async (id: string): Promise<NewsItem | null> => {
         setTimeout(() => {
             const item = (newsData as NewsItem[]).find(n => n.id === Number(id));
             resolve(item || null);
+        }, 500);
+    });
+};
+
+export const getNewsListByTag = async (tag: string): Promise<NewsItem[]> => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const items = newsData;
+            resolve(items);
         }, 500);
     });
 };

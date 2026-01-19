@@ -1,129 +1,135 @@
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
-import { getLocale } from 'next-intl/server';
-import styles from './page.module.css';
-import { getNewsDetail } from '@/services/newsService';
-import { getIdFromSlug } from '@/services/commonService';
-import NewsList from '../(common)/news-list';
-import ArticleTracker from './article-tracker';
+import NewsDetailView from "./(view-detail)/view-detail";
+import { getIdFromSlug, getTagFromSlug } from "@/services/commonService";
+import { getNewsDetail, getNewsListByTag } from "@/api/newsApiService";
+import { notFound } from "next/navigation";
+import TagArticleList from "./(tags-article)/tags-article";
+import { getLocale } from "next-intl/server";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+    params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props) {
-  const { slug } = await params;
-  const id = await getIdFromSlug(slug);
-  const locale = await getLocale();
+    const locale = await getLocale();
 
-  if (!id) return { title: 'Không tìm thấy bài viết' };
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const response = await getNewsDetail(id);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-  const url = `${baseUrl}/${locale}/tin-tuc/${slug}`;
+    const { slug } = await params;
 
-  return {
-    title: `${response.title} | Greenhill Village Quy Nhon`,
-    description: response.description,
-    alternates: {
-      canonical: url,
-    },
-    openGraph: {
-      title: response.title,
-      description: response.description,
-      url: url,
-      siteName: 'Greenhill Village Quy Nhon',
-      images: [
-        {
-          url: response.banner,
-          width: 1200,
-          height: 630,
-          alt: response.title,
+    const currentUrl = `${baseUrl}/${locale}${slug}`;
+
+    const alternatesLanguages = {
+        'vi': `${baseUrl}/vi${slug}`,
+        'en': `${baseUrl}/en${slug}`,
+    };
+
+    const id = getIdFromSlug(slug);
+
+    if (id) {
+        const newsItem = await getNewsDetail(id);
+
+        if (!newsItem) {
+            return notFound();
+        }
+
+        return {
+            title: `${newsItem?.title} | Greenhill Village Quy Nhon`,
+            description: newsItem?.description,
+            alternates: {
+                canonical: currentUrl,
+                languages: alternatesLanguages,
+            },
+            openGraph: {
+                title: newsItem.title,
+                description: newsItem?.description,
+                url: currentUrl,
+                siteName: 'Greenhill Village Quy Nhon',
+                images: [
+                    {
+                        url: newsItem?.banner,
+                        width: 1200,
+                        height: 630,
+                        alt: newsItem?.title,
+                    },
+                ],
+                locale: locale === 'vi' ? 'vi_VN' : 'en_US',
+                type: 'article',
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: newsItem?.title,
+                description: newsItem?.description,
+                images: [newsItem?.banner],
+            },
+            robots: {
+                index: true,
+                follow: true,
+            },
+        };
+    }
+
+    const tag = getTagFromSlug(slug);
+
+    if (!tag) {
+        return notFound();
+    }
+
+    const url = `${baseUrl}/${locale}/${slug}`;
+
+    return {
+        title: `${tag} | Greenhill Village Quy Nhon`,
+        description: tag,
+        alternates: {
+            canonical: url,
         },
-      ],
-      locale: locale === 'vi' ? 'vi_VN' : 'en_US',
-      type: 'article',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: response.title,
-      description: response.description,
-      images: [response.banner],
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
+        openGraph: {
+            title: tag,
+            description: tag,
+            url: url,
+            siteName: 'Greenhill Village Quy Nhon',
+            locale: locale === 'vi' ? 'vi_VN' : 'en_US',
+            type: 'article',
+        },
+        robots: {
+            index: true,
+            follow: true,
+        },
+    };
 }
 
-export default async function NewsDetailPage({ params }: Props) {
-  const { slug } = await params;
-  const locale = await getLocale();
-  const id = await getIdFromSlug(slug);
+export default async function SlugPage({ params }: Props) {
 
-  if (!id) notFound();
+    const locale = await getLocale();
 
-  const newsItem = await getNewsDetail(id);
+    const { slug } = await params;
 
-  return (
-    <main className={styles.container}>
-      {/* 1. Header & Title Section */}
-      <header className={styles.header}>
-        {newsItem.tags.length > 0 && (
-          <span className={styles.categoryBadge}>{newsItem.tags[0]}</span>
-        )}
-        <h1 className={styles.title}>{newsItem.title}</h1>
-        <div className={styles.meta}>
-          Ngày đăng: {new Date(newsItem.createDate).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US')}
-          <span style={{ margin: '0 10px' }}>|</span>
-          Lượt xem: {newsItem.viewCount}
-        </div>
-      </header>
+    const id = getIdFromSlug(slug);
 
-      {/* 2. Featured Image (Banner) */}
-      <div className={styles.bannerWrapper}>
-        <Image
-          src={newsItem.banner}
-          alt={newsItem.title}
-          fill
-          priority
-          className={styles.bannerImage}
-        />
-      </div>
+    if (id) {
+        const newsItem = await getNewsDetail(id);
 
-      {/* 3. Article Body */}
-      <article className={styles.articleBody}>
-        {/* Sapo bài viết */}
-        <p className={styles.description}>{newsItem.description}</p>
+        if (!newsItem) {
+            return notFound();
+        }
 
-        {/* Render nội dung từ editor */}
-        <div
-          className={styles.htmlContent}
-          dangerouslySetInnerHTML={{ __html: newsItem.content }}
-        />
+        return (
+            <>
+                <NewsDetailView item={newsItem} slug={slug} locale={locale} />
+            </>
+        );
+    }
 
-        {newsItem.tags && newsItem.tags.length > 0 && (
-          <div className={styles.tagSection}>
-            <span className={styles.tagLabel}>CHỦ ĐỀ:</span>
-            <div className={styles.tagList}>
-              {newsItem.tags.map((tag, index) => (
-                <span key={index} className={styles.tagItem}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-      </article>
+    const tag = getTagFromSlug(slug);
 
-      <NewsList
-        relatedTags={newsItem.tags}
-        excludeId={newsItem.id}
-        limit={4}
-        showPagination={true}
-      />
-      <ArticleTracker newsId={String(newsItem.id)} locale={locale} />
-    </main>
-  );
+    if (!tag) {
+        return notFound();
+    }
+
+    const articles = await getNewsListByTag(tag);
+
+    return (
+        <>
+            <TagArticleList tagSlug={tag} articles={articles} locale={locale} />
+        </>
+    );
 }

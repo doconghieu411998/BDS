@@ -1,13 +1,16 @@
-/* connection-carousel.module.css */
-
 .carouselWrapper {
   position: relative;
   width: 100%;
-  padding: 80px 0;
+  padding: 100px 0;
+  /* Tăng padding để thoáng hơn */
   overflow: hidden;
+  min-height: 600px;
+  /* Đảm bảo chiều cao tối thiểu */
+  display: flex;
+  align-items: center;
 }
 
-/* Container chứa các lớp nền xếp chồng */
+/* --- BACKGROUND ANIMATION --- */
 .bgContainer {
   position: absolute;
   top: 0;
@@ -17,98 +20,188 @@
   z-index: 0;
 }
 
-/* Từng lớp nền một */
 .bgLayer {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  opacity: 0; /* Mặc định ẩn */
-  transition: opacity 0.8s ease-in-out;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 6s ease;
+  transform: scale(1.05);
+  /* Zoom nhẹ */
   z-index: 1;
 }
 
-/* Khi active thì hiện lên */
 .bgActive {
   opacity: 1;
+  transform: scale(1);
+  /* Reset zoom khi active tạo hiệu ứng chuyển động */
   z-index: 2;
 }
 
-/* Lớp phủ đen mờ chung nằm trên cùng các ảnh */
 .darkOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+  /* Gradient đen đẹp hơn màu bệt */
   z-index: 3;
+  backdrop-filter: blur(2px);
+  /* Làm mờ nhẹ background để nổi bật card */
 }
 
+/* --- CAROUSEL CONTAINER --- */
 .carouselContainer {
   position: relative;
   z-index: 10;
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .slideItem {
-  padding: 0 12px;
+  padding: 20px 15px;
+  /* Tạo khoảng cách giữa các card */
+  transition: all 0.3s ease;
 }
 
-/* --- STYLE CHO CARD --- */
+/* --- CARD STYLE (GLASSMORPHISM) --- */
 .card {
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  height: 260px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  /* Nền kính mờ */
+  backdrop-filter: blur(10px);
+  /* Hiệu ứng mờ đục phía sau */
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 30px 24px;
+  height: 280px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
+  /* Đẩy nội dung xuống dưới */
   cursor: pointer;
-  border-radius: 4px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Lớp phủ trắng mờ TRONG THẺ */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.85);
-  opacity: 0;
-  transition: opacity 0.8s ease-in-out;
-  z-index: 1;
+.card:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
 }
 
+/* --- ACTIVE CARD STYLE --- */
 .activeCard {
-  background-color: #fff;
-  transform: translateY(-15px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 0.95);
+  /* Active thì chuyển sang nền trắng rõ */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-15px) !important;
+  /* Nổi cao hơn hẳn */
+  border-color: transparent;
 }
 
-.activeCard::before {
-  opacity: 1; 
-}
-
-/* Chữ phải nằm trên lớp phủ */
-.cardHeader, .cardBody {
+/* Nội dung bên trong */
+.cardContent {
   position: relative;
   z-index: 2;
 }
 
-.timeNum { font-family: "Times New Roman", serif; font-size: 60px; color: #d19f58; line-height: 1; }
-.timeUnit { font-size: 14px; color: #d19f58; font-weight: 600; margin-left: 8px; }
-.cardTitle { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 4px; }
-.cardSubtitle { font-size: 13px; color: #666; }
-.pinIcon { align-self: flex-end; color: #d19f58; margin-top: 10px; }
+.cardTitle {
+  font-family: "Playfair Display", serif;
+  /* Nên dùng font có chân cho tiêu đề sang trọng */
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  /* Mặc định chữ trắng trên nền kính */
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
 
-/* Media query riêng cho phần Carousel */
+.cardDesc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  /* Giới hạn 3 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+/* Footer của card (Nút khám phá) */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  /* Ẩn mặc định */
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+.exploreText {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #d19f58;
+}
+
+.arrowIcon {
+  color: #d19f58;
+}
+
+/* --- TRẠNG THÁI ACTIVE CỦA TEXT --- */
+.activeCard .cardTitle {
+  color: #1a1a1a;
+  /* Active thì chữ đen */
+}
+
+.activeCard .cardDesc {
+  color: #555;
+}
+
+.activeCard .cardFooter {
+  opacity: 1;
+  /* Hiện footer khi active */
+  transform: translateY(0);
+}
+
+/* --- THANH TRANG TRÍ MÀU VÀNG --- */
+.activeBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background-color: #d19f58;
+  /* Màu vàng sang trọng */
+  transition: width 0.5s ease 0.2s;
+  /* Delay một chút cho đẹp */
+}
+
+.activeCard .activeBar {
+  width: 100%;
+}
+
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-  .carouselWrapper { padding: 40px 0; }
+  .carouselWrapper {
+    padding: 60px 0;
+    min-height: 500px;
+  }
+
+  .card {
+    height: 240px;
+    padding: 20px;
+  }
+
+  .cardTitle {
+    font-size: 18px;
+  }
 }

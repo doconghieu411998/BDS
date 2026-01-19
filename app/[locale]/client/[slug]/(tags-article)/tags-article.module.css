@@ -1,0 +1,180 @@
+/* app/[locale]/tin-tuc/[slug]/views/tag-list.module.css */
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    /* Quan trọng: padding-top 160px để tránh bị dính vào Header/Menu */
+    padding: 160px 20px 80px;
+    background-color: #fff;
+}
+
+/* --- Header Section (Giống style NewsDetail) --- */
+.headerWrapper {
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+}
+
+.heading {
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    position: relative;
+    padding-left: 18px;
+    /* Chừa chỗ cho vạch đỏ */
+    line-height: 1.3;
+}
+
+/* Vạch đỏ trang trí bên trái */
+.heading::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 28px;
+    background-color: #e00000;
+}
+
+.tagLabel {
+    color: #e00000;
+    margin-right: 10px;
+    font-weight: 800;
+}
+
+/* --- List Section --- */
+.listWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    /* Khoảng cách giữa các bài viết */
+}
+
+.articleItem {
+    display: flex;
+    gap: 25px;
+    padding-bottom: 30px;
+    border-bottom: 1px dashed #ccc;
+    /* Nét đứt phân cách */
+}
+
+/* Bỏ đường kẻ ở bài cuối cùng */
+.articleItem:last-child {
+    border-bottom: none;
+}
+
+/* --- Image Column --- */
+.imageWrapper {
+    flex-shrink: 0;
+    width: 300px;
+    /* Cố định chiều rộng ảnh trên Desktop */
+    aspect-ratio: 16 / 10;
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.thumbnail {
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.articleItem:hover .thumbnail {
+    transform: scale(1.05);
+    /* Zoom nhẹ khi hover */
+}
+
+/* --- Content Column --- */
+.contentWrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+    transition: color 0.2s;
+
+    /* Cắt dòng nếu tiêu đề quá dài (2 dòng) */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.articleItem:hover .title {
+    cursor: pointer;
+}
+
+.description {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+
+    /* Cắt dòng mô tả (3 dòng) */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- Responsive Mobile & Tablet --- */
+@media (max-width: 992px) {
+    .container {
+        padding-top: 120px;
+        /* Giảm padding top một chút trên tablet */
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 100px 16px 60px;
+        /* Mobile: Padding nhỏ hơn */
+    }
+
+    .headerWrapper {
+        margin-bottom: 25px;
+    }
+
+    .heading {
+        font-size: 22px;
+    }
+
+    /* Chuyển layout sang dọc */
+    .articleItem {
+        flex-direction: column;
+        gap: 15px;
+        padding-bottom: 20px;
+    }
+
+    .imageWrapper {
+        width: 100%;
+        /* Ảnh full màn hình */
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+    .title {
+        font-size: 18px;
+        /* Font nhỏ hơn trên mobile */
+        margin-bottom: 8px;
+    }
+
+    .description {
+        font-size: 14px;
+        -webkit-line-clamp: 4;
+        /* Cho hiện nhiều dòng hơn chút trên mobile vì chiều dọc thoải mái */
+    }
+}

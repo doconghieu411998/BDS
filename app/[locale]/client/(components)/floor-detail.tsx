@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
+import { Modal } from "antd" // Import Modal từ Ant Design
 import styles from "./floor-detail.module.css"
 import { withBasePath } from "@/services/commonService"
 
@@ -53,7 +54,42 @@ const LOCATIONS: Location[] = [
 ]
 
 export default function FloorDetail() {
+  // State cho Tooltip (Desktop hover)
   const [activeLocation, setActiveLocation] = useState<string | null>(null)
+
+  // State cho Modal (Mobile click)
+  const [modalLocation, setModalLocation] = useState<Location | null>(null)
+
+  // State check màn hình mobile
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Hook detect màn hình
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    // Check ngay khi mount
+    checkMobile()
+
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  // Xử lý sự kiện
+  const handleMouseEnter = (id: string) => {
+    if (!isMobile) setActiveLocation(id)
+  }
+
+  const handleMouseLeave = () => {
+    if (!isMobile) setActiveLocation(null)
+  }
+
+  const handlePinClick = (location: Location) => {
+    if (isMobile) {
+      setModalLocation(location)
+    }
+  }
 
   return (
     <section className={styles.section}>
@@ -70,7 +106,6 @@ export default function FloorDetail() {
             priority
           />
 
-          {/* Overlay gradient */}
           <div className={styles.overlay} />
 
           {/* Hotspot Pins */}
@@ -82,19 +117,19 @@ export default function FloorDetail() {
                 left: `${location.x}%`,
                 top: `${location.y}%`,
               }}
-              onMouseEnter={() => setActiveLocation(location.id)}
-              onMouseLeave={() => setActiveLocation(null)}
+              onMouseEnter={() => handleMouseEnter(location.id)}
+              onMouseLeave={handleMouseLeave}
+              onClick={() => handlePinClick(location)} // Thêm sự kiện Click
             >
-              {/* Pin with pulsing animation */}
               <div className={styles.pin}>
                 <span className={styles.pinOuterRing} />
                 <span className={styles.pinMiddleRing} />
                 <span className={styles.pinInnerDot} />
               </div>
 
-              {/* Tooltip Card */}
+              {/* Tooltip Card - Chỉ hiện trên Desktop (!isMobile) */}
               <AnimatePresence>
-                {activeLocation === location.id && (
+                {activeLocation === location.id && !isMobile && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.85, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -123,6 +158,34 @@ export default function FloorDetail() {
           ))}
         </div>
       </div>
+
+      {/* --- ANT DESIGN MODAL CHO MOBILE --- */}
+      <Modal
+        open={!!modalLocation}
+        onCancel={() => setModalLocation(null)}
+        footer={null} // Ẩn footer mặc định
+        centered
+        destroyOnClose
+        className="custom-modal" // Class global nếu muốn override sâu hơn
+        styles={{ body: { padding: 0, overflow: 'hidden', borderRadius: '8px' } }}
+      >
+        {modalLocation && (
+          <div className={styles.modalContent}>
+            <div className={styles.modalImageWrapper}>
+              <Image
+                src={withBasePath(modalLocation.image)}
+                alt={modalLocation.title}
+                fill
+                className={styles.modalImage}
+              />
+            </div>
+            <div className={styles.modalInfo}>
+              <h3 className={styles.modalTitle}>{modalLocation.title}</h3>
+              <p className={styles.modalDesc}>Khám phá không gian đẳng cấp tại {modalLocation.title}.</p>
+            </div>
+          </div>
+        )}
+      </Modal>
     </section>
   )
 }
