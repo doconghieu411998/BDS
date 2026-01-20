@@ -2,6 +2,7 @@ import {
     HomeOutlined,
     UnorderedListOutlined,
     FileTextOutlined,
+    FileSearchOutlined
 } from '@ant-design/icons';
 import { t } from '@/utils/i18n';
 import { ROUTES } from './routes';
@@ -34,4 +35,17 @@ export const MENU_ITEMS: MenuItem[] = [
             },
         ],
     },
+    {
+    key: 'survey',
+    icon: <FileSearchOutlined />,
+    label: t('menu.survey'),
+    children: [
+      {
+        key: 'survey-list',
+        icon: <UnorderedListOutlined />,
+        label: t('menu.surveyList'),
+        path: ROUTES.SURVEY.LIST,
+      },
+    ],
+  },
 ];

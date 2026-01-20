@@ -116,11 +116,28 @@ export interface Post extends Record<string, unknown> {
     publishedAt?: string;
 }
 
-export interface PostFormData extends Record<string, unknown> {
-    title: string;
-    content: string;
-    excerpt: string;
-    thumbnail?: string;
-    category: PostCategory;
-    status: PostStatus;
+export interface PostFormDataLanguage {
+  title: string;
+  content: string;
+  excerpt: string;
+}
+
+
+export interface PostFormData {
+  [key: string]: unknown;
+  vi: PostFormDataLanguage;
+  en: PostFormDataLanguage;
+  thumbnail?: string;
+  category: PostCategory;
+  status: PostStatus;
+}
+
+// Survey Types
+export interface Survey {
+  [key: string]: unknown;
+  id: string;
+  name: string;
+  phone: string;
+  content: string;
+  createdAt: string;
 }
