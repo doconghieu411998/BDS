@@ -1,0 +1,27 @@
+.container {
+    padding: 24px;
+}
+
+.noWrap {
+    white-space: nowrap;
+}
+
+.imagePreview {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.imagePreview:hover {
+    opacity: 0.8;
+}
+
+.modalImagePreview {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+    margin: 16px 0;
+}

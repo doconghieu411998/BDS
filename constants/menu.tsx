@@ -2,7 +2,9 @@ import {
     HomeOutlined,
     UnorderedListOutlined,
     FileTextOutlined,
-    FileSearchOutlined
+    FileSearchOutlined,
+    GlobalOutlined,
+    PictureOutlined,
 } from '@ant-design/icons';
 import { t } from '@/utils/i18n';
 import { ROUTES } from './routes';
@@ -36,16 +38,28 @@ export const MENU_ITEMS: MenuItem[] = [
         ],
     },
     {
-    key: 'survey',
-    icon: <FileSearchOutlined />,
-    label: t('menu.survey'),
-    children: [
-      {
-        key: 'survey-list',
-        icon: <UnorderedListOutlined />,
-        label: t('menu.surveyList'),
-        path: ROUTES.SURVEY.LIST,
-      },
-    ],
-  },
+        key: 'survey',
+        icon: <FileSearchOutlined />,
+        label: t('menu.survey'),
+        children: [
+            {
+                key: 'survey-list',
+                icon: <UnorderedListOutlined />,
+                label: t('menu.surveyList'),
+                path: ROUTES.SURVEY.LIST,
+            },
+        ],
+    },
+    {
+        key: 'language',
+        icon: <GlobalOutlined />,
+        label: 'Quản lý ngôn ngữ',
+        path: ROUTES.LANGUAGE,
+    },
+    {
+        key: 'images',
+        icon: <PictureOutlined />,
+        label: 'Quản lý ảnh',
+        path: ROUTES.IMAGES,
+    },
 ];

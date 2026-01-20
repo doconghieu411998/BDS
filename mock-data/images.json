@@ -1,0 +1,128 @@
+{
+    "carouselUtilities": [
+        {
+            "key": "utility-1",
+            "titleVi": "Bể bơi vô cực",
+            "titleEn": "Infinity Pool",
+            "descriptionVi": "Bể bơi vô cực hiện đại với tầm nhìn toàn cảnh thành phố",
+            "descriptionEn": "Modern infinity pool with panoramic city views",
+            "imageBanner": "https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800"
+        },
+        {
+            "key": "utility-2",
+            "titleVi": "Phòng gym cao cấp",
+            "titleEn": "Premium Gym",
+            "descriptionVi": "Phòng tập gym với trang thiết bị hiện đại nhất",
+            "descriptionEn": "Gym with state-of-the-art equipment",
+            "imageBanner": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800"
+        },
+        {
+            "key": "utility-3",
+            "titleVi": "Công viên cây xanh",
+            "titleEn": "Green Park",
+            "descriptionVi": "Không gian xanh rộng lớn cho cư dân thư giãn",
+            "descriptionEn": "Spacious green area for residents to relax",
+            "imageBanner": "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=800"
+        },
+        {
+            "key": "utility-4",
+            "titleVi": "Khu vui chơi trẻ em",
+            "titleEn": "Kids Playground",
+            "descriptionVi": "Khu vui chơi an toàn và thú vị dành cho trẻ em",
+            "descriptionEn": "Safe and fun playground for children",
+            "imageBanner": "https://images.unsplash.com/photo-1587846762239-e908424c50e1?w=800"
+        }
+    ],
+    "carouselShowHouses": [
+        {
+            "key": "showhouse-1",
+            "titleVi": "Căn hộ 2 phòng ngủ",
+            "titleEn": "2-Bedroom Apartment",
+            "descriptionVi": "Thiết kế hiện đại, nội thất cao cấp, diện tích 75m²",
+            "descriptionEn": "Modern design, premium furniture, 75m² area",
+            "imageBanner": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800"
+        },
+        {
+            "key": "showhouse-2",
+            "titleVi": "Penthouse sang trọng",
+            "titleEn": "Luxury Penthouse",
+            "descriptionVi": "Căn hộ penthouse 4 phòng ngủ với tầm nhìn 360 độ",
+            "descriptionEn": "4-bedroom penthouse with 360-degree views",
+            "imageBanner": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800"
+        },
+        {
+            "key": "showhouse-3",
+            "titleVi": "Studio tiện nghi",
+            "titleEn": "Convenient Studio",
+            "descriptionVi": "Căn studio 35m² tối ưu công năng cho người trẻ",
+            "descriptionEn": "35m² studio optimized for young professionals",
+            "imageBanner": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800"
+        },
+        {
+            "key": "showhouse-4",
+            "titleVi": "Duplex 3 tầng",
+            "titleEn": "3-Story Duplex",
+            "descriptionVi": "Căn hộ duplex rộng rãi với sân vườn riêng",
+            "descriptionEn": "Spacious duplex apartment with private garden",
+            "imageBanner": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"
+        },
+        {
+            "key": "showhouse-5",
+            "titleVi": "Căn góc view sông",
+            "titleEn": "Corner Unit River View",
+            "descriptionVi": "Căn hộ góc 3 phòng ngủ view sông tuyệt đẹp",
+            "descriptionEn": "3-bedroom corner unit with stunning river view",
+            "imageBanner": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"
+        }
+    ],
+    "mapPoints": [
+        {
+            "key": "map-1",
+            "titleVi": "Trung tâm thương mại",
+            "titleEn": "Shopping Mall",
+            "descriptionVi": "Chỉ 5 phút đi bộ đến trung tâm thương mại lớn nhất khu vực",
+            "descriptionEn": "Just 5 minutes walk to the largest shopping mall in the area",
+            "imageBanner": "https://images.unsplash.com/photo-1555529902-5261145633bf?w=800"
+        },
+        {
+            "key": "map-2",
+            "titleVi": "Trường học quốc tế",
+            "titleEn": "International School",
+            "descriptionVi": "Trường học quốc tế uy tín trong bán kính 1km",
+            "descriptionEn": "Prestigious international school within 1km radius",
+            "imageBanner": "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800"
+        },
+        {
+            "key": "map-3",
+            "titleVi": "Bệnh viện đa khoa",
+            "titleEn": "General Hospital",
+            "descriptionVi": "Bệnh viện đa khoa lớn chỉ cách 800m",
+            "descriptionEn": "Large general hospital just 800m away",
+            "imageBanner": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800"
+        },
+        {
+            "key": "map-4",
+            "titleVi": "Công viên công cộng",
+            "titleEn": "Public Park",
+            "descriptionVi": "Công viên lớn với hồ nước và khu thể thao",
+            "descriptionEn": "Large park with lake and sports area",
+            "imageBanner": "https://images.unsplash.com/photo-1582139329536-e7284fece509?w=800"
+        },
+        {
+            "key": "map-5",
+            "titleVi": "Ga metro",
+            "titleEn": "Metro Station",
+            "descriptionVi": "Trạm metro số 1 cách 300m, kết nối toàn thành phố",
+            "descriptionEn": "Metro station line 1, 300m away, connecting the entire city",
+            "imageBanner": "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=800"
+        },
+        {
+            "key": "map-6",
+            "titleVi": "Siêu thị tiện lợi",
+            "titleEn": "Convenience Supermarket",
+            "descriptionVi": "Siêu thị lớn phục vụ 24/7 ngay dưới tòa nhà",
+            "descriptionEn": "Large 24/7 supermarket right at the building",
+            "imageBanner": "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?w=800"
+        }
+    ]
+}

@@ -1,0 +1,110 @@
+[
+    {
+        "id": 1,
+        "type": "en",
+        "key": "menu.dashboard",
+        "value": "Dashboard",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 2,
+        "type": "vi",
+        "key": "menu.dashboard",
+        "value": "Bảng điều khiển",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 3,
+        "type": "en",
+        "key": "menu.post",
+        "value": "Post",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 4,
+        "type": "vi",
+        "key": "menu.post",
+        "value": "Bài viết",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 5,
+        "type": "en",
+        "key": "menu.postList",
+        "value": "Post List",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 6,
+        "type": "vi",
+        "key": "menu.postList",
+        "value": "Danh sách bài viết",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 7,
+        "type": "en",
+        "key": "auth.logout",
+        "value": "Logout",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 8,
+        "type": "vi",
+        "key": "auth.logout",
+        "value": "Đăng xuất",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 9,
+        "type": "en",
+        "key": "common.error",
+        "value": "An error occurred",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 10,
+        "type": "vi",
+        "key": "common.error",
+        "value": "Đã xảy ra lỗi",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 11,
+        "type": "en",
+        "key": "post.searchPlaceholder",
+        "value": "Search posts...",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    },
+    {
+        "id": 12,
+        "type": "vi",
+        "key": "post.searchPlaceholder",
+        "value": "Tìm kiếm bài viết...",
+        "createDate": "2025-01-01T00:00:00Z",
+        "updateDate": "2025-01-01T00:00:00Z",
+        "isEdit": false
+    }
+]
