@@ -228,11 +228,7 @@ export default function ImagesManagement() {
                         columns={getColumns<CarouselUtilityItem>('utilities')}
                         dataSource={utilitiesItems}
                         rowKey="key"
-                        pagination={{
-                            pageSize: 10,
-                            showSizeChanger: true,
-                            showTotal: (total) => `Tổng ${total} items`,
-                        }}
+                        pagination={false}
                         bordered
                     />
                 </Spin>
@@ -248,11 +244,7 @@ export default function ImagesManagement() {
                         columns={getColumns<CarouselShowHouseItem>('showhouses')}
                         dataSource={showHousesItems}
                         rowKey="key"
-                        pagination={{
-                            pageSize: 10,
-                            showSizeChanger: true,
-                            showTotal: (total) => `Tổng ${total} items`,
-                        }}
+                        pagination={false}
                         bordered
                     />
                 </Spin>
@@ -268,11 +260,7 @@ export default function ImagesManagement() {
                         columns={getColumns<MapPointItem>('mappoints')}
                         dataSource={mapPointsItems}
                         rowKey="key"
-                        pagination={{
-                            pageSize: 10,
-                            showSizeChanger: true,
-                            showTotal: (total) => `Tổng ${total} items`,
-                        }}
+                        pagination={false}
                         bordered
                     />
                 </Spin>

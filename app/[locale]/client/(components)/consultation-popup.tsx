@@ -5,6 +5,9 @@ import { Modal, Form, Input, Button, message, type InputRef } from "antd"
 import { useTranslations } from "next-intl"
 import { CONSULTATION_KEYS } from "@/constants/localeKeys"
 import styles from "./consultation-popup.module.css"
+import { ConsultationRequest } from "@/models/consultation"
+import { submitConsultationRequest } from "@/api/consultationApiService"
+import { on } from "events"
 
 interface ConsultationPopupProps {
     isOpen: boolean
@@ -36,14 +39,23 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
 
     const handleSubmit = async (values: FormValues) => {
         setLoading(true)
-        console.log("Form Values:", values)
+        try {
+            const payload: ConsultationRequest = {
+                name: values.fullName,
+                phoneNumber: values.phone,
+                email: values.email,
+                content: values.message || "",
+            }
 
-        setTimeout(() => {
+            await submitConsultationRequest(payload);
+
+            form.resetFields();
+            onClose();
+        } catch (error) {
+            console.error("Gửi thông tin thất bại:", error)
+        } finally {
             setLoading(false)
-            message.success(t(CONSULTATION_KEYS.SUCCESS))
-            form.resetFields()
-            onClose()
-        }, 1000)
+        }
     }
 
     return (

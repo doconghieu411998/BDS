@@ -13,7 +13,6 @@ const axiosClient: AxiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json',
-        'Access-Control-Allow-Origin': '*',
     },
 });
 
@@ -47,9 +46,9 @@ axiosClient.interceptors.response.use(
                 Cookies.remove('token');
                 Cookies.remove('user');
 
-                // Redirect về trang login (chỉ ở client-side)
-                if (typeof window !== 'undefined') {
-                    window.location.href = '/login';
+                // Chỉ redirect về trang login nếu đang ở admin area
+                if (typeof window !== 'undefined' && window.location.pathname.includes('/admin')) {
+                    window.location.href = '/admin';
                 }
             }
 

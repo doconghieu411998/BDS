@@ -165,7 +165,6 @@ export default function FloorDetail() {
         onCancel={() => setModalLocation(null)}
         footer={null} // Ẩn footer mặc định
         centered
-        destroyOnClose
         className="custom-modal" // Class global nếu muốn override sâu hơn
         styles={{ body: { padding: 0, overflow: 'hidden', borderRadius: '8px' } }}
       >

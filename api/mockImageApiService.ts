@@ -1,5 +1,5 @@
 import { CarouselUtilityItem, CarouselShowHouseItem, MapPointItem } from '@/models/image-item';
-import imagesData from '@/mock-data/images.json';
+import imagesData from '@services/mockData/images.json';
 
 // Simulate API delay
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
