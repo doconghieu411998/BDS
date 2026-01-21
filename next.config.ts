@@ -17,6 +17,10 @@ const config = (phase: string) => {
           protocol: "https",
           hostname: "placehold.co",
         },
+        {
+          protocol: "https",
+          hostname: "images.unsplash.com",
+        },
       ],
       formats: ["image/avif", "image/webp"],
     },

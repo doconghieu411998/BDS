@@ -44,34 +44,38 @@
   position: relative;
   width: 100%;
   max-width: 1200px;
-  height: 550px; /* Chiều cao cố định để chứa 2 thẻ absolute */
+  height: 550px;
+  /* Chiều cao cố định để chứa 2 thẻ absolute */
   margin-bottom: 80px;
   /* Perspective để tạo chiều sâu nếu muốn 3D xoay nhẹ */
-  perspective: 1000px; 
+  perspective: 1000px;
 }
 
 /* Class chung cho cả 2 thẻ */
 .cardBase {
   position: absolute;
   border-radius: 4px;
-  box-shadow: 20px 20px 50px rgba(0,0,0,0.2);
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: box-shadow 0.3s ease;
   overflow: hidden;
 }
 
 .cardBase:hover {
-  box-shadow: 25px 25px 60px rgba(0,0,0,0.3);
+  box-shadow: 25px 25px 60px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
 
 /* 1. THẺ ẢNH (Bên trái, cao hơn) */
 .imageCard {
   top: 0;
-  left: 5%; /* Cách lề trái */
-  width: 60%; /* Chiếm 60% chiều rộng */
+  left: 5%;
+  /* Cách lề trái */
+  width: 60%;
+  /* Chiếm 60% chiều rộng */
   height: 450px;
-  background-color: #4a3a35; /* Màu nền dự phòng */
+  background-color: #4a3a35;
+  /* Màu nền dự phòng */
 }
 
 .cardImage {
@@ -90,21 +94,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   z-index: 2;
   font-family: "Times New Roman", serif;
   font-size: 40px;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   pointer-events: none;
 }
 
 /* 2. THẺ TEXT (Bên phải, thấp hơn - Màu Vàng) */
 .textCard {
-  bottom: 0; /* Neo xuống đáy container */
-  right: 5%; /* Cách lề phải */
-  width: 60%; /* Chiếm 50% chiều rộng */
-  height: 450px; /* Thấp hơn thẻ ảnh một chút */
-  background-color: #b38a4d; /* Màu vàng kim chủ đạo */
+  bottom: 0;
+  /* Neo xuống đáy container */
+  right: 5%;
+  /* Cách lề phải */
+  width: 60%;
+  /* Chiếm 50% chiều rộng */
+  height: 450px;
+  /* Thấp hơn thẻ ảnh một chút */
+  background-color: #b38a4d;
+  /* Màu vàng kim chủ đạo */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +135,7 @@
 .divider {
   width: 50px;
   height: 2px;
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   margin-bottom: 20px;
 }
 
@@ -143,15 +152,54 @@
   padding: 60px 0;
   color: #fff;
 }
+
 /* ... Các class grid giữ nguyên ... */
-.gridHeading { max-width: 1200px; margin: 0 auto 40px; padding: 0 20px; font-size: 22px; }
-.gridContainer { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; padding: 0 20px; }
-.gridItem h4 { font-size: 24px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; margin-bottom: 15px; }
-.tagline { font-weight: bold; font-size: 14px; margin-bottom: 10px; }
-.desc { font-size: 13px; line-height: 1.7; opacity: 0.9; text-align: justify; }
+.gridHeading {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+  font-size: 22px;
+}
+
+.gridContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  padding: 0 20px;
+}
+
+.gridItem h4 {
+  font-size: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.tagline {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.desc {
+  font-size: 13px;
+  line-height: 1.7;
+  opacity: 0.9;
+  text-align: justify;
+}
 
 /* RESPONSIVE */
 @media (max-width: 992px) {
+  .bigNumber {
+    font-size: 100px;
+  }
+
+  .titleGroup .mainTitle {
+    font-size: 28px;
+  }
+
   .highlightContent {
     height: auto;
     display: flex;
@@ -161,14 +209,92 @@
   }
 
   .cardBase {
-    position: relative; /* Mobile thì bỏ absolute để xếp chồng dọc */
+    position: relative;
+    /* Mobile thì bỏ absolute để xếp chồng dọc */
     width: 100%;
-    left: 0; 
+    left: 0;
     right: 0;
-    top: 0; 
+    top: 0;
     bottom: 0;
     height: 300px;
   }
-  
-  .textCard { height: auto; padding: 30px; }
+
+  .textCard {
+    height: auto;
+    padding: 30px;
+  }
+
+  /* Grid chuyển thành 1 cột */
+  .gridContainer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 40px 0 0 0;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bigNumber {
+    font-size: 80px;
+  }
+
+  .titleGroup .subTitle {
+    font-size: 16px;
+  }
+
+  .titleGroup .mainTitle {
+    font-size: 24px;
+  }
+
+  .highlightContent {
+    margin-bottom: 40px;
+  }
+
+  .cardBase {
+    height: 250px;
+  }
+
+  .imageOverlayText h3 {
+    font-size: 28px;
+  }
+
+  .textCard {
+    padding: 20px;
+  }
+
+  .textTitle {
+    font-size: 18px;
+  }
+
+  .textDesc {
+    font-size: 13px;
+  }
+
+  .bottomGrid {
+    padding: 40px 0;
+  }
+
+  .gridHeading {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+
+  .gridItem h4 {
+    font-size: 20px;
+  }
+
+  .tagline {
+    font-size: 13px;
+  }
+
+  .desc {
+    font-size: 12px;
+  }
 }

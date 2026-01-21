@@ -2,7 +2,7 @@ import Image from "next/image"
 import { RightOutlined } from "@ant-design/icons"
 import styles from "./overview-section.module.css"
 
-const PANORAMA_DEMO = "https://placehold.co/1400x600/f0e6d2/6d4c41?text=Greenhill+Village+Quy+Nhon"
+const PANORAMA_DEMO = "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1400&h=600&fit=crop"
 
 const OverviewSection = () => {
   const overviewData = [

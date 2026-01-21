@@ -3,8 +3,8 @@ import Image from 'next/image';
 import styles from './intro-section.module.css';
 
 // Bạn thay thế link ảnh thật vào đây
-const IMG_LEFT = "https://placehold.co/600x400.png";
-const IMG_RIGHT = "https://placehold.co/600x400.png";
+const IMG_LEFT = "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800";
+const IMG_RIGHT = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800";
 
 const IntroSection = () => {
   return (

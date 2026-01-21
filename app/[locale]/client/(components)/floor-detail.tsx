@@ -13,6 +13,7 @@ interface Location {
   y: number
   title: string
   image: string
+  description: string
 }
 
 const LOCATIONS: Location[] = [
@@ -22,6 +23,7 @@ const LOCATIONS: Location[] = [
     y: 25,
     title: "Bird Nest Museum",
     image: "images/luxury-museum-building-with-modern-architecture.jpg",
+    description: "Bảo tàng kiến trúc độc đáo với thiết kế hiện đại, mang đến không gian nghệ thuật và văn hóa đẳng cấp cho cộng đồng cư dân.",
   },
   {
     id: "2",
@@ -29,6 +31,7 @@ const LOCATIONS: Location[] = [
     y: 40,
     title: "Central Lake Park",
     image: "images/beautiful-lake-park-with-gardens-and-walkways.jpg",
+    description: "Công viên hồ nước rộng lớn với lối đi bộ xanh mát, tạo không gian thư giãn lý tưởng giữa thiên nhiên trong lòng đô thị.",
   },
   {
     id: "3",
@@ -36,6 +39,7 @@ const LOCATIONS: Location[] = [
     y: 30,
     title: "Wellness Spa Resort",
     image: "images/luxury-spa-resort-with-pool-and-palm-trees.jpg",
+    description: "Khu nghỉ dưỡng spa cao cấp với hồ bơi vô cực và dịch vụ chăm sóc sức khỏe toàn diện, mang đến trải nghiệm thư giãn tuyệt vời.",
   },
   {
     id: "4",
@@ -43,6 +47,7 @@ const LOCATIONS: Location[] = [
     y: 65,
     title: "Golf Course Clubhouse",
     image: "images/premium-golf-clubhouse-with-green-fairway.jpg",
+    description: "Câu lạc bộ golf đẳng cấp với sân golf chuyên nghiệp, phục vụ nhu cầu giải trí và giao lưu của cư dân yêu thể thao.",
   },
   {
     id: "5",
@@ -50,6 +55,7 @@ const LOCATIONS: Location[] = [
     y: 70,
     title: "Beachfront Villas",
     image: "images/luxury-beachfront-villas-with-ocean-view.jpg",
+    description: "Biệt thự ven biển sang trọng với tầm nhìn toàn cảnh đại dương, mang đến không gian sống riêng tư và đẳng cấp bậc nhất.",
   },
 ]
 
@@ -86,9 +92,8 @@ export default function FloorDetail() {
   }
 
   const handlePinClick = (location: Location) => {
-    if (isMobile) {
-      setModalLocation(location)
-    }
+    // Cả desktop và mobile đều mở modal khi click
+    setModalLocation(location)
   }
 
   return (
@@ -180,7 +185,7 @@ export default function FloorDetail() {
             </div>
             <div className={styles.modalInfo}>
               <h3 className={styles.modalTitle}>{modalLocation.title}</h3>
-              <p className={styles.modalDesc}>Khám phá không gian đẳng cấp tại {modalLocation.title}.</p>
+              <p className={styles.modalDesc}>{modalLocation.description}</p>
             </div>
           </div>
         )}
