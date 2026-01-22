@@ -73,13 +73,13 @@ export default function Main() {
 
       <FloorDetail />
 
-      <CarouselCommon />
+      {/* <PinSpace /> */}
+
+      <CarouselCommon title='Tiện Ích' />
 
       <HighlightSection />
 
-      <CarouselCommon />
-
-      {/* <PinSpace /> */}
+      <CarouselCommon title='Nhà Mẫu' />
 
       <NewsSection />
 

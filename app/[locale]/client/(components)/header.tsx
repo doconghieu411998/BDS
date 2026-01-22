@@ -6,21 +6,22 @@ import styles from "./header.module.css"
 import { useEffect, useRef, useState, useCallback } from "react"
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons"
 import VerticalCarousel from "./vertical-carousel"
+import { withBasePath } from "@/services/commonService"
 
 // Menu items configuration
 const MENU_ITEMS = [
-  { label: "TRANG CHỦ", href: "/" },
-  { label: "GIỚI THIỆU", href: "/gioi-thieu" },
-  { label: "TỔNG QUAN KHU PHỨC HỢP", href: "/tong-quan" },
-  { label: "VỊ TRÍ", href: "/vi-tri" },
-  { label: "CẢM HỨNG THIẾT KẾ", href: "/cam-hung" },
-  { label: "TỔNG MẶT BẰNG", href: "/mat-bang" },
-  { label: "TIN TỨC", href: "/tin-tuc" },
-  { label: "LIÊN HỆ", href: "/lien-he" },
+  { label: "TRANG CHỦ", href: "/", scrollTo: null },
+  { label: "GIỚI THIỆU", href: "#", scrollTo: "overview-section" },
+  { label: "TỔNG QUAN KHU PHỨC HỢP", href: "#", scrollTo: "location-section" },
+  { label: "VỊ TRÍ", href: "#", scrollTo: "highlight-section" },
+  { label: "CẢM HỨNG THIẾT KẾ", href: "#", scrollTo: "highlight-section" },
+  { label: "TỔNG MẶT BẰNG", href: "#", scrollTo: "floor-detail-section" },
+  { label: "TIN TỨC", href: "#", scrollTo: "news-section" },
+  { label: "LIÊN HỆ", href: "/lien-he", scrollTo: null },
 ]
 
 // Logo sources
-const LOGO_SRC = "https://placehold.co/600x400.png"
+const LOGO_SRC = "images/logo.png"
 const LOGO_WHITE = "https://placehold.co/600x400.png"
 
 const Header = () => {
@@ -84,6 +85,33 @@ const Header = () => {
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [isMenuOpen])
 
+  // Smooth scroll to section
+  const scrollToSection = useCallback((sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      const headerOffset = 80 // Fixed header height
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }, [])
+
+  // Handle menu item click
+  const handleMenuClick = useCallback((item: typeof MENU_ITEMS[0], e: React.MouseEvent) => {
+    if (item.scrollTo) {
+      e.preventDefault()
+      closeMenu()
+      // Delay scroll slightly for smoother UX after menu closes
+      setTimeout(() => scrollToSection(item.scrollTo!), 300)
+    } else {
+      closeMenu()
+    }
+  }, [scrollToSection])
+
   // Open menu handler
   const openMenu = useCallback(() => {
     setIsMenuOpen(true)
@@ -101,7 +129,7 @@ const Header = () => {
         <div className={styles.logoSection}>
           <Link href="/" className={styles.logoLink} aria-label="Trang chủ">
             <Image
-              src={LOGO_SRC || "/placeholder.svg"}
+              src={withBasePath(LOGO_SRC)}
               alt="Masteri Logo"
               width={120}
               height={50}
@@ -162,11 +190,11 @@ const Header = () => {
           <nav className={styles.navLinks} aria-label="Menu chính">
             {MENU_ITEMS.map((item, index) => (
               <Link
-                key={item.href}
+                key={item.label}
                 ref={index === 0 ? firstLinkRef : undefined}
                 href={item.href}
                 className={styles.navItem}
-                onClick={closeMenu}
+                onClick={(e) => handleMenuClick(item, e)}
                 tabIndex={isMenuOpen ? 0 : -1}
               >
                 {item.label}

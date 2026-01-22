@@ -97,9 +97,9 @@ export default function FloorDetail() {
   }
 
   return (
-    <section className={styles.section}>
+    <section id="floor-detail-section" className={styles.section}>
       <div className={styles.container}>
-        <h2 className={styles.title}>Interactive Master Plan</h2>
+        <h2 className={styles.title}>Giới Thiệu Chi Tiết Mặt Bằng</h2>
 
         <div className={styles.mapWrapper}>
           {/* Map Image */}

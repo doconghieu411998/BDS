@@ -17,7 +17,7 @@ const OverviewSection = () => {
   ]
 
   return (
-    <section className={styles.container}>
+    <section id="overview-section" className={styles.container}>
       <div className={styles.contentWrapper}>
         <div className={styles.leftCol}>
           <h2 className={styles.title}>

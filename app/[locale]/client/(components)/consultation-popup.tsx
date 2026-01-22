@@ -1,13 +1,12 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Modal, Form, Input, Button, message, type InputRef } from "antd"
+import { Modal, Form, Input, Button, type InputRef } from "antd"
 import { useTranslations } from "next-intl"
 import { CONSULTATION_KEYS } from "@/constants/localeKeys"
 import styles from "./consultation-popup.module.css"
 import { ConsultationRequest } from "@/models/consultation"
 import { submitConsultationRequest } from "@/api/consultationApiService"
-import { on } from "events"
 
 interface ConsultationPopupProps {
     isOpen: boolean

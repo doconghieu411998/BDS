@@ -32,7 +32,6 @@
     object-fit: cover;
     transform: translate(-50%, -50%);
     opacity: 1;
-    /* Changed from 0 to 1 - show immediately */
     transition: opacity 1s ease-in-out;
 }
 

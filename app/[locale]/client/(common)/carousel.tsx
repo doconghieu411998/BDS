@@ -40,7 +40,11 @@ const CAROUSEL_DATA = [
   },
 ];
 
-const CarouselCommon = () => {
+interface CarouselCommonProps {
+  title?: string;
+}
+
+const CarouselCommon: React.FC<CarouselCommonProps> = ({ title }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<CarouselRef>(null);
 
@@ -65,6 +69,7 @@ const CarouselCommon = () => {
 
       {/* --- PHẦN CAROUSEL CARD --- */}
       <div className={styles.carouselContainer}>
+        {title && <h2 className={styles.sectionTitle}>{title}</h2>}
         <Carousel
           ref={carouselRef}
           autoplay
@@ -90,6 +95,7 @@ const CarouselCommon = () => {
                 <div
                   className={`${styles.card} ${isActive ? styles.activeCard : ''}`}
                   onClick={() => handleCardClick(index)}
+                  style={{ backgroundImage: `url(${withBasePath(item.image)})` }}
                 >
                   <div className={styles.cardContent}>
                     <h3 className={styles.cardTitle}>{item.title}</h3>

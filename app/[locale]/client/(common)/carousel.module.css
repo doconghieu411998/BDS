@@ -59,6 +59,18 @@
   padding: 0 20px;
 }
 
+.sectionTitle {
+  text-align: center;
+  font-family: "Times New Roman", serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 60px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
 .slideItem {
   padding: 20px 15px;
   /* Tạo khoảng cách giữa các card */
@@ -85,6 +97,11 @@
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  /* Background image properties */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card:hover {

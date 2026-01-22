@@ -44,7 +44,7 @@ const HighlightSection = () => {
   }, [activeCard]); // Chạy lại khi activeCard thay đổi
 
   return (
-    <section className={styles.container}>
+    <section id="highlight-section" className={styles.container}>
       <div className={styles.header}>
         <span className={styles.bigNumber}>3</span>
         <div className={styles.titleGroup}>
@@ -61,9 +61,16 @@ const HighlightSection = () => {
           className={`${styles.cardBase} ${styles.imageCard} ${CARD_IDS.IMAGE}`}
           onClick={() => setActiveCard(CARD_IDS.IMAGE)}
         >
-          {/* Text trang trí trên ảnh (nếu cần giống mẫu) */}
+          <Image
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80"
+            alt="Kiến trúc resort cao cấp"
+            fill
+            className={styles.cardImage}
+            sizes="(max-width: 992px) 100vw, 60vw"
+          />
+          {/* Text trang trí trên ảnh */}
           <div className={styles.imageOverlayText}>
-            <h3>Lorem ipsum dolor</h3>
+            <h3>Thiết Kế Đẳng Cấp</h3>
           </div>
         </div>
 

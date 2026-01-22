@@ -8,7 +8,7 @@ const MAP_IMG = "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=120
 
 const LocationSection = () => {
   return (
-    <section className={styles.container}>
+    <section id="location-section" className={styles.container}>
       {/* Phần Top: Text + Map */}
       <div className={styles.topContent}>
         <div className={styles.textSide}>
