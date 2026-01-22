@@ -11,6 +11,7 @@ import { withBasePath } from '@/services/commonService';
 import FloorDetail from './(components)/floor-detail';
 import CarouselCommon from './(common)/carousel';
 import ConsultationPopup from './(components)/consultation-popup';
+import VideoHeroSection from './(components)/video-hero-section';
 
 const HERO_BG = "images/home.jpg";
 
@@ -67,6 +68,8 @@ export default function Main() {
       <OverviewSection />
 
       <LocationSection />
+
+      <VideoHeroSection />
 
       <FloorDetail />
 
