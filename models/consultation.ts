@@ -6,7 +6,8 @@ export interface ConsultationRequest {
 }
 
 export interface ConsultationResponse {
-  id?: string | number;
+  [key: string]: unknown;
+  id: string;
   name: string;
   phoneNumber: string;
   email: string;

@@ -26,13 +26,13 @@ export interface User {
 }
 
 export interface LoginRequest {
-    email: string;
+    username: string;
     password: string;
 }
 
 export interface LoginResponse {
-    token: string;
-    user: User;
+    accessToken: string;
+    refreshToken: string;
 }
 
 // Property Types
@@ -117,27 +117,27 @@ export interface Post extends Record<string, unknown> {
 }
 
 export interface PostFormDataLanguage {
-  title: string;
-  content: string;
-  excerpt: string;
+    title: string;
+    content: string;
+    excerpt: string;
 }
 
 
 export interface PostFormData {
-  [key: string]: unknown;
-  vi: PostFormDataLanguage;
-  en: PostFormDataLanguage;
-  thumbnail?: string;
-  category: PostCategory;
-  status: PostStatus;
+    [key: string]: unknown;
+    vi: PostFormDataLanguage;
+    en: PostFormDataLanguage;
+    thumbnail?: string;
+    category: PostCategory;
+    status: PostStatus;
 }
 
 // Survey Types
 export interface Survey {
-  [key: string]: unknown;
-  id: string;
-  name: string;
-  phone: string;
-  content: string;
-  createdAt: string;
+    [key: string]: unknown;
+    id: string;
+    name: string;
+    phone: string;
+    content: string;
+    createdAt: string;
 }

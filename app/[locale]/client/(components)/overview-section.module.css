@@ -7,7 +7,7 @@
 }
 
 .contentWrapper {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   padding: 0 20px;
@@ -68,7 +68,8 @@
   line-height: 1.5;
   display: flex;
   align-items: center;
-  height: 21px; /* Khớp với chiều cao dòng của label (14px * 1.5) */
+  height: 21px;
+  /* Khớp với chiều cao dòng của label (14px * 1.5) */
 }
 
 .label {
@@ -108,9 +109,11 @@
     flex-direction: column;
     gap: 30px;
   }
+
   .title {
     font-size: 32px;
   }
+
   .infoItem {
     grid-template-columns: 20px 180px 1fr;
   }
@@ -121,9 +124,11 @@
     grid-template-columns: 20px 1fr;
     gap: 4px;
   }
+
   .label {
     grid-column: 2;
   }
+
   .value {
     grid-column: 2;
     font-size: 14px;

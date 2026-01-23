@@ -7,8 +7,8 @@ export const ROUTES = {
         EDIT: (id: string) => `/admin/dashboard/post/edit/${id}`,
         DETAIL: (id: string) => `/admin/dashboard/post/${id}`,
     },
-    SURVEY: {
-        LIST: "/admin/dashboard/survey",
+    CONSULTATION: {
+        LIST: "/admin/dashboard/consultation",
     },
     USER: {
         LIST: "/admin/dashboard/user",

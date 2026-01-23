@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { CONSULTATION_KEYS } from "@/constants/localeKeys"
 import styles from "./consultation-popup.module.css"
 import { ConsultationRequest } from "@/models/consultation"
-import { submitConsultationRequest } from "@/api/consultationApiService"
+import { consultationApiService } from "@/api/consultationApiService"
 
 interface ConsultationPopupProps {
     isOpen: boolean
@@ -46,7 +46,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                 content: values.message || "",
             }
 
-            await submitConsultationRequest(payload);
+            await consultationApiService.submit(payload);
 
             form.resetFields();
             onClose();

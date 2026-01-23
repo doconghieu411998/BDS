@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 80px 20px;
   background-color: #fff;
@@ -13,9 +13,9 @@
 .imageSection {
   display: grid;
   /* Tỉ lệ: Cột trái 1.5 phần - Cột phải 1 phần (tương đương 60% - 40%) */
-  grid-template-columns: 1.5fr 1fr; 
+  grid-template-columns: 1.5fr 1fr;
   /* Gap phải giống hệt nhau ở cả 2 phần */
-  gap: 40px; 
+  gap: 40px;
   align-items: start;
 }
 
@@ -147,17 +147,20 @@
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
-  .titleMain { font-size: 28px; }
+  .titleMain {
+    font-size: 28px;
+  }
 }
 
 @media (max-width: 768px) {
+
   /* Khi về mobile, chuyển cả 2 section về 1 cột */
-  .topSection, 
+  .topSection,
   .imageSection {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
+
   .quoteText {
     font-size: 16px;
     padding: 0 15px;

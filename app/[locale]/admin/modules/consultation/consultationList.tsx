@@ -1,45 +1,44 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { Survey } from '@/types/common';
-import { surveyService } from './mockData';
-import { t } from '@/utils/i18n';
+import { ConsultationResponse } from '@/models/consultation';
+import { consultationApiService } from '@/api/consultationApiService';
 import DataTable from '@/crema/core/DataTable';
 import { success as notifySuccess, error as notifyError } from '@/utils/antd-notification';
-import SurveyDetailModal from './SurveyDetailModal';
+import ConsultationDetailModal from './consultationDetailModal';
 import { formatDateTime } from '@/utils/format';
 import type { ColumnType } from '@/crema/core/DataTable/types';
-import styles from './SurveyList.module.css';
+import styles from './consultationList.module.css';
 
-export default function SurveyList() {
-  const [surveys, setSurveys] = useState<Survey[]>([]);
+export default function ConsultationList() {
+  const [consultations, setConsultations] = useState<ConsultationResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
-  const [detailSurvey, setDetailSurvey] = useState<Survey | null>(null);
+  const [detailConsultation, setDetailConsultation] = useState<ConsultationResponse | null>(null);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
 
-  const loadSurveys = useCallback(async (page: number, search: string) => {
+  const loadConsultations = useCallback(async (page: number, search: string) => {
     setLoading(true);
     try {
-      const result = await surveyService.getList({
+      const result = await consultationApiService.getList({
         page,
         limit: 10,
         search,
       });
-      setSurveys(result.data);
+      setConsultations(result.data);
       setTotal(result.total);
     } catch {
-      notifyError(t('common.error'));
+      notifyError('Đã có lỗi xảy ra');
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    loadSurveys(currentPage, searchText);
-  }, [currentPage, searchText, loadSurveys]);
+    loadConsultations(currentPage, searchText);
+  }, [currentPage, searchText, loadConsultations]);
 
   const handleSearch = (value: string) => {
     setSearchText(value);
@@ -52,31 +51,31 @@ export default function SurveyList() {
 
   const handleViewDetail = async (id: string) => {
     try {
-      const survey = await surveyService.getById(id);
-      if (survey) {
-        setDetailSurvey(survey);
+      const consultation = await consultationApiService.getById(id);
+      if (consultation) {
+        setDetailConsultation(consultation);
         setDetailModalOpen(true);
       }
     } catch {
-      notifyError(t('common.error'));
+      notifyError('Đã có lỗi xảy ra');
     }
   };
 
-  const columns: ColumnType<Survey>[] = [
+  const columns: ColumnType<ConsultationResponse>[] = [
     {
-      title: t('survey.name'),
+      title: 'Họ tên',
       dataIndex: 'name',
       key: 'name',
       width: 200,
     },
     {
-      title: t('survey.phone'),
-      dataIndex: 'phone',
-      key: 'phone',
+      title: 'Số điện thoại',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
       width: 150,
     },
     {
-      title: t('survey.content'),
+      title: 'Nội dung',
       dataIndex: 'content',
       key: 'content',
       render: (value: unknown) => {
@@ -89,7 +88,7 @@ export default function SurveyList() {
       },
     },
     {
-      title: t('survey.createdAt'),
+      title: 'Ngày tạo',
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 180,
@@ -99,10 +98,10 @@ export default function SurveyList() {
 
   return (
     <div className={styles.container}>
-      <DataTable<Survey>
-        title={t('survey.title')}
+      <DataTable<ConsultationResponse>
+        title="Danh sách khảo sát"
         columns={columns}
-        dataSource={surveys}
+        dataSource={consultations}
         loading={loading}
         pagination={{
           current: currentPage,
@@ -111,19 +110,19 @@ export default function SurveyList() {
           onChange: handlePageChange,
         }}
         searchConfig={{
-          placeholder: t('survey.searchPlaceholder'),
+          placeholder: 'Tìm kiếm theo tên, số điện thoại, nội dung...',
           onSearch: handleSearch,
         }}
         onView={(record) => handleViewDetail(record.id)}
         rowKey="id"
       />
 
-      <SurveyDetailModal
-        survey={detailSurvey}
+      <ConsultationDetailModal
+        consultation={detailConsultation}
         open={detailModalOpen}
         onClose={() => {
           setDetailModalOpen(false);
-          setDetailSurvey(null);
+          setDetailConsultation(null);
         }}
       />
     </div>

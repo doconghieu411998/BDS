@@ -1,7 +1,7 @@
 /* app/[locale]/tin-tuc/[slug]/views/tag-list.module.css */
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     width: 100%;
     margin: 0 auto;
     /* Quan trọng: padding-top 160px để tránh bị dính vào Header/Menu */

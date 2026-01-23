@@ -10,7 +10,7 @@
 
 .header {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   display: flex;
   align-items: flex-start;
   gap: 20px;
@@ -162,7 +162,7 @@
 }
 
 .gridContainer {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);

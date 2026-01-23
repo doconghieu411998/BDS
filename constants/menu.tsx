@@ -38,15 +38,15 @@ export const MENU_ITEMS: MenuItem[] = [
         ],
     },
     {
-        key: 'survey',
+        key: 'consultation',
         icon: <FileSearchOutlined />,
-        label: t('menu.survey'),
+        label: 'Khảo sát',
         children: [
             {
-                key: 'survey-list',
+                key: 'consultation-list',
                 icon: <UnorderedListOutlined />,
-                label: t('menu.surveyList'),
-                path: ROUTES.SURVEY.LIST,
+                label: 'Danh sách khảo sát',
+                path: ROUTES.CONSULTATION.LIST,
             },
         ],
     },

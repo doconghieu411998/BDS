@@ -4,7 +4,7 @@ import axios, {
     AxiosResponse,
     AxiosError,
 } from 'axios';
-import Cookies from 'js-cookie';
+import { authStorage } from '@/utils/auth';
 import { ApiResponse } from '@/types/common';
 
 const axiosClient: AxiosInstance = axios.create({
@@ -19,7 +19,7 @@ const axiosClient: AxiosInstance = axios.create({
 // Request Interceptor - Tự động đính kèm token
 axiosClient.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-        const token = Cookies.get('token');
+        const token = authStorage.getAccessToken();
 
         if (token && config.headers) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -40,11 +40,13 @@ axiosClient.interceptors.response.use(
     (error: AxiosError<ApiResponse>) => {
         if (error.response) {
             const { status, data } = error.response;
+            const requestUrl = error.config?.url || '';
 
             // Xử lý lỗi 401 - Unauthorized (Token hết hạn hoặc không hợp lệ)
-            if (status === 401) {
-                Cookies.remove('token');
-                Cookies.remove('user');
+            // Không xử lý 401 cho endpoint login vì đó là lỗi sai credentials
+            if (status === 401 && !requestUrl.includes('/auth/login')) {
+                // Clear toàn bộ auth data
+                authStorage.clearAuth();
 
                 // Chỉ redirect về trang login nếu đang ở admin area
                 if (typeof window !== 'undefined' && window.location.pathname.includes('/admin')) {
