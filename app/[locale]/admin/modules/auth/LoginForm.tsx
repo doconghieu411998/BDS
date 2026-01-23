@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { AntForm, AntInput, AntButton, AntCheckbox } from '@/crema/components';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 import { authService } from '@/services/authService';
+import { authStorage } from '@/utils/auth';
 import { LoginRequest } from '@/types/common';
 import { t } from '@/utils/i18n';
 import { ROUTES } from '@/constants/routes';
@@ -21,20 +21,32 @@ export default function LoginForm() {
         try {
             setLoading(true);
 
-            const { email, password, remember } = values;
-            const response = await authService.login({ email, password });
+            const { username, password, remember = false } = values;
 
-            // Lưu token và user info
-            const cookieOptions = remember ? { expires: 7 } : undefined;
-            Cookies.set('token', response.token, cookieOptions);
-            Cookies.set('user', JSON.stringify(response.user), cookieOptions);
+            // Login và nhận tokens
+            const response = await authService.login({ username, password });
+
+            // Lưu authentication data
+            authStorage.setAuth(response.accessToken, response.refreshToken, remember);
+
+            // TODO: Uncomment khi backend hỗ trợ /auth/profile
+            // const userProfile = await authService.getProfile();
+            // authStorage.setUser(userProfile, remember);
 
             notifySuccess(t('auth.loginSuccess'));
 
             // Redirect về dashboard
             router.push(ROUTES.DASHBOARD);
         } catch (error: unknown) {
-            const message = error instanceof Error ? error.message : t('auth.loginFailed');
+            // Xử lý error message từ API
+            let message = t('auth.loginFailed');
+
+            if (error && typeof error === 'object' && 'message' in error) {
+                message = (error as { message: string }).message;
+            } else if (error instanceof Error) {
+                message = error.message;
+            }
+
             notifyError(message);
         } finally {
             setLoading(false);
@@ -61,16 +73,12 @@ export default function LoginForm() {
                         layout="vertical"
                     >
                         <AntForm.Item
-                            name="email"
+                            name="username"
                             label={t('auth.email')}
                             rules={[
                                 {
                                     required: true,
                                     message: t('auth.emailRequired'),
-                                },
-                                {
-                                    type: 'email',
-                                    message: t('auth.emailInvalid'),
                                 },
                             ]}
                         >
