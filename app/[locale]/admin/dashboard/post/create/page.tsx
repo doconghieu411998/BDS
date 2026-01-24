@@ -20,6 +20,7 @@ export default function CreatePostPage() {
 
     const handleSubmit = async (data: PostFormData) => {
         try {
+            console.log('Submitting data:', data);
             await postService.create(data);
             notifySuccess(t('post.createSuccess'));
             router.push(ROUTES.POST.LIST);

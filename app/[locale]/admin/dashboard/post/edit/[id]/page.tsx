@@ -28,8 +28,8 @@ export default function EditPostPage() {
 
     const loadPost = async () => {
         try {
-            // const data = await postService.getById(id);
-            // setPost(data);
+            const data = await postService.getById(id);
+            setPost(data);
         } catch {
             notifyError(t('common.error'));
             router.push(ROUTES.POST.LIST);

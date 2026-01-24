@@ -90,9 +90,9 @@ export interface PropertyFormData extends Record<string, unknown> {
 
 // Post Types
 export enum PostStatus {
-    DRAFT = 'draft',
-    PUBLISHED = 'published',
-    ARCHIVED = 'archived',
+    DRAFT = '0',
+    PUBLISHED = '1',
+    ARCHIVED = '2',
 }
 
 export enum PostCategory {
@@ -106,14 +106,17 @@ export interface Post extends Record<string, unknown> {
     id: string;
     title: string;
     content: string;
-    excerpt: string;
-    thumbnail?: string;
+    description: string;
+    viewCount: number;
     category: PostCategory;
-    status: PostStatus;
+    status: string;
     author: string;
     createdAt: string;
     updatedAt: string;
     publishedAt?: string;
+    tags?: { id: number; tagName: string }[];
+    thumbnail?: string;
+    media?: unknown;
 }
 
 export interface PostFormDataLanguage {

@@ -33,9 +33,9 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
             form.setFieldsValue({
                 title: initialData.title,
                 content: initialData.content,
-                excerpt: initialData.excerpt,
+                description: initialData.description,
                 category: initialData.category,
-                status: initialData.status,
+                status: String(initialData.status),
             });
             setThumbnailUrl(initialData.thumbnail);
 
@@ -78,12 +78,12 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
 
             const formData = {
                 title: values.title,
-                titleEn: values.title,
-                slug: values.title,
+                description: values.description,
                 content: values.content,
                 media: thumbnailBase64,
                 tags: values.category,
-                status: values.status,
+                status: +values.status,
+                viewCount: initialData ? initialData.viewCount : 0,
             };
 
             await onSubmit(formData);
@@ -133,18 +133,17 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                         <AntInput placeholder={t('post.titlePlaceholder')} size="large" />
                     </AntForm.Item>
 
-                    {/* Tóm tắt */}
                     <AntForm.Item
-                        name="titleEn"
-                        label={t('post.titleEn')}
+                        name="description"
+                        label={'Mô tả'}
                         rules={[
                             {
                                 required: true,
-                                message: t('post.titleRequired'),
+                                message: ('Mô tả bài viết là bắt buộc'),
                             },
                         ]}
                     >
-                        <AntInput placeholder={t('post.titlePlaceholder')}  />
+                        <AntInput.TextArea placeholder={'Nhập mô tả bài viết'} rows={3}/>
                     </AntForm.Item>
 
                     {/* Danh mục và Trạng thái */}

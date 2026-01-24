@@ -31,7 +31,7 @@ export default function PostList() {
                 search,
             });
             setPosts(result.data);
-            setTotal(result.total);
+            // setTotal(result.total);
         } catch {
             notifyError(t('common.error'));
         } finally {
@@ -73,7 +73,7 @@ export default function PostList() {
         }
     };
 
-    const getStatusBadge = (status: PostStatus) => {
+    const getStatusBadge = (status: string) => {
         const statusMap = {
             [PostStatus.PUBLISHED]: {
                 text: t('post.statusPublished'),
@@ -120,25 +120,6 @@ export default function PostList() {
 
     const columns: ColumnType<Post>[] = [
         {
-            title: t('post.thumbnail'),
-            dataIndex: 'thumbnail',
-            key: 'thumbnail',
-            width: 120,
-            render: (_: unknown, record: Post) => {
-                return record.thumbnail ? (
-                    <Image
-                        src={record.thumbnail}
-                        alt="Thumbnail"
-                        width={64}
-                        height={64}
-                        className={styles.thumbnail}
-                    />
-                ) : (
-                    <div className={styles.thumbnail} />
-                );
-            },
-        },
-        {
             title: t('post.title'),
             dataIndex: 'title',
             key: 'title',
@@ -158,9 +139,9 @@ export default function PostList() {
             render: (_: unknown, record: Post) => getStatusBadge(record.status),
         },
         {
-            title: t('post.author'),
-            dataIndex: 'author',
-            key: 'author',
+            title: 'ViewCount',
+            dataIndex: 'viewCount',
+            key: 'viewCount',
             width: 120,
         },
         {

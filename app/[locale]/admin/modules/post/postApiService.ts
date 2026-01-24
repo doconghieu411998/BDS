@@ -32,18 +32,10 @@ export const postService = {
     },
 
     // Lấy chi tiết bài viết theo ID
-    // async getById(id: string): Promise<Post> {
-    //     return new Promise((resolve, reject) => {
-    //         setTimeout(() => {
-    //             const post = mockPosts.find((p) => p.id === id);
-    //             if (!post) {
-    //                 reject(new Error('Không tìm thấy bài viết'));
-    //                 return;
-    //             }
-    //             resolve(post);
-    //         }, 500);
-    //     });
-    // },
+    async getById(id: string): Promise<Post> {
+        const response = await axiosClient.get<Post>(`${BASE_URL}/${id}`);
+        return response.data;
+    },
 
     // Thêm mới bài viết
     async create(data: Partial<Post>): Promise<Post> {
