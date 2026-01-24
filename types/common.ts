@@ -130,6 +130,7 @@ export interface PostFormData {
     thumbnail?: string;
     category: PostCategory;
     status: PostStatus;
+    media: unknown;
 }
 
 // Survey Types

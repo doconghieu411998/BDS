@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Post, PostStatus, PostCategory } from '@/types/common';
-import { postService } from './mockData';
+import { postService } from './postApiService';
 import { t } from '@/utils/i18n';
 import { ROUTES } from '@/constants/routes';
 import DataTable from '@/crema/core/DataTable';
@@ -64,7 +64,7 @@ export default function PostList() {
         if (!deleteId) return;
 
         try {
-            await postService.delete(deleteId);
+            // await postService.delete(deleteId);
             notifySuccess(t('post.deleteSuccess'));
             loadPosts(currentPage, searchText);
             setDeleteId(null);

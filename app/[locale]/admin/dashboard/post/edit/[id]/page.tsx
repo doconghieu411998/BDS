@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import PostForm from '@admin/modules/post/PostForm';
-import { postService } from '@admin/modules/post/mockData';
+import { postService } from '@/app/[locale]/admin/modules/post/postApiService';
 import { Post, PostFormData } from '@/types/common';
 import { ROUTES } from '@/constants/routes';
 import { t } from '@/utils/i18n';
@@ -28,8 +28,8 @@ export default function EditPostPage() {
 
     const loadPost = async () => {
         try {
-            const data = await postService.getById(id);
-            setPost(data);
+            // const data = await postService.getById(id);
+            // setPost(data);
         } catch {
             notifyError(t('common.error'));
             router.push(ROUTES.POST.LIST);
@@ -40,7 +40,7 @@ export default function EditPostPage() {
 
     const handleSubmit = async (data: PostFormData) => {
         try {
-            await postService.update(id, data);
+            // await postService.update(id, data);
             notifySuccess(t('post.updateSuccess'));
             router.push(ROUTES.POST.LIST);
         } catch {

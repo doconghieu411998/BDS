@@ -80,10 +80,6 @@ export default function LoginForm() {
                                     required: true,
                                     message: t('auth.emailRequired'),
                                 },
-                                {
-                                    type: 'email',
-                                    message: t('auth.emailInvalid'),
-                                },
                             ]}
                         >
                             <AntInput

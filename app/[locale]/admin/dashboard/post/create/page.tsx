@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import PostForm from '@admin/modules/post/PostForm';
-import { postService } from '@admin/modules/post/mockData';
+import { postService } from '@/app/[locale]/admin/modules/post/postApiService';
 import { PostFormData } from '@/types/common';
 import { ROUTES } from '@/constants/routes';
 import { t } from '@/utils/i18n';

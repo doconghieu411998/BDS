@@ -139,10 +139,11 @@
   },
   "post": {
     "title": "Tiêu đề",
+    "titleEn": "Tiêu đề (Tiếng Anh)",
     "content": "Nội dung",
     "excerpt": "Tóm tắt",
     "thumbnail": "Ảnh đại diện",
-    "category": "Danh mục",
+    "category": "Tags",
     "status": "Trạng thái",
     "author": "Tác giả",
     "publishedAt": "Ngày xuất bản",
