@@ -1,6 +1,5 @@
-export interface TranslationMessages {
-    [key: string]: string;
-}
+import { TranslationMessages, TranslationResponse } from "@/models/translation";
+import axiosClient from "@/services/axiosClient";
 
 const responseVi = {
     "consultation_title": "Đăng ký nhận tư vấn",
@@ -39,39 +38,38 @@ const responseEn = {
     "consultation_error_email_invalid": "Invalid email address"
 }
 
-/**
- * Fetches translations from the API
- * @param locale - The locale to fetch (e.g., 'vi', 'en')
- * @returns Promise resolving to translation messages object
- */
-export async function fetchTranslations(locale: string): Promise<TranslationMessages> {
-    try {
-        return new Promise((resolve, reject) => {
-            if (locale === 'vi') {
-                resolve(responseVi);
-            } else if (locale === 'en') {
-                resolve(responseEn);
-            } else {
-                reject(new Error(`Unsupported locale: ${locale}`));
+const BASE_URL = 'http://103.82.23.181:5000/api/metadata';
+
+export const translationApiService = {
+    async getTranslations(locale: string): Promise<TranslationMessages> {
+        try {
+
+            const response = await axiosClient.get<TranslationResponse>(`${BASE_URL}?group=${locale === 'vi' ? 0 : 1}`);
+
+            const data = response.data;
+
+            const translationMessages: TranslationMessages = {};
+
+            if (Array.isArray(data)) {
+                data.forEach(item => {
+                    translationMessages[item.keyName] = item.value;
+                });
             }
-        });
-    } catch (error) {
-        console.error(`Failed to fetch translations for locale "${locale}":`, error);
 
-        return await loadFallbackTranslations(locale);
-    }
-}
+            return translationMessages;
+        } catch (error) {
+            console.error(`Failed to fetch translations for locale "${locale}":`, error);
+            return await this.loadFallbackTranslations(locale);
+        }
+    },
 
-/**
- * Fallback function to load translations from local files
- * Transforms nested structure to flat structure to match API format
- */
-async function loadFallbackTranslations(locale: string): Promise<TranslationMessages> {
-    try {
-        console.log(`Loading fallback translations for locale: ${locale}`);
-        return await import(`@/messages/${locale}.json`);
-    } catch (error) {
-        console.error(`Failed to load fallback translations for locale "${locale}":`, error);
-        return {};
+    async loadFallbackTranslations(locale: string): Promise<TranslationMessages> {
+        try {
+            console.log(`Loading fallback translations for locale: ${locale}`);
+            return await import(`@/messages/${locale}.json`);
+        } catch (error) {
+            console.error(`Failed to load fallback translations for locale "${locale}":`, error);
+            return {};
+        }
     }
-}
+};

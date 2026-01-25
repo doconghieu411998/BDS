@@ -21,5 +21,21 @@ export const CONSULTATION_KEYS = {
     ERROR_EMAIL_INVALID: 'consultation_error_email_invalid',
 } as const;
 
+export const HEADER_KEYS = {
+    HEADER_MENU_HOME: 'header_menu_home',
+    HEADER_MENU_ABOUT: 'header_menu_about',
+    HEADER_MENU_OVERVIEW: 'header_menu_overview',
+    HEADER_MENU_LOCATION: 'header_menu_location',
+    HEADER_MENU_DESIGN_INSPIRATION: 'header_menu_design_inspiration',
+    HEADER_MENU_FLOOR_PLAN: 'header_menu_floor_plan',
+    HEADER_MENU_NEWS: 'header_menu_news',
+    HEADER_MENU_CONTACT: 'header_menu_contact',
+    HEADER_MENU_LOGO_ALT: 'header_menu_logo_alt',
+    HEADER_ARIA_OPEN_MENU: 'header_aria_open_menu',
+    HEADER_ARIA_CLOSE_MENU: 'header_aria_close_menu',
+    HEADER_MENU_ARIA_LABEL: 'header_menu_aria_label',
+    HEADER_MENU_TEXT: 'header_menu_text'
+} as const;
+
 // Type for consultation keys
 export type ConsultationKeyType = typeof CONSULTATION_KEYS[keyof typeof CONSULTATION_KEYS];

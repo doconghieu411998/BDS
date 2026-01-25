@@ -3,28 +3,19 @@
 import Image from "next/image"
 import Link from "next/link"
 import styles from "./header.module.css"
-import { useEffect, useRef, useState, useCallback } from "react"
+import { useEffect, useRef, useState, useCallback, useMemo } from "react"
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons"
 import VerticalCarousel from "./vertical-carousel"
 import { withBasePath } from "@/services/commonService"
-
-// Menu items configuration
-const MENU_ITEMS = [
-  { label: "TRANG CHỦ", href: "/", scrollTo: null },
-  { label: "GIỚI THIỆU", href: "#", scrollTo: "overview-section" },
-  { label: "TỔNG QUAN KHU PHỨC HỢP", href: "#", scrollTo: "location-section" },
-  { label: "VỊ TRÍ", href: "#", scrollTo: "highlight-section" },
-  { label: "CẢM HỨNG THIẾT KẾ", href: "#", scrollTo: "highlight-section" },
-  { label: "TỔNG MẶT BẰNG", href: "#", scrollTo: "floor-detail-section" },
-  { label: "TIN TỨC", href: "#", scrollTo: "news-section" },
-  { label: "LIÊN HỆ", href: "/lien-he", scrollTo: null },
-]
+import { useTranslations } from "next-intl"
+import { HEADER_KEYS } from "@/constants/localeKeys"
 
 // Logo sources
 const LOGO_SRC = "images/logo.png"
 const LOGO_WHITE = "https://placehold.co/600x400.png"
 
 const Header = () => {
+  const t = useTranslations()
   const headerRef = useRef<HTMLElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
@@ -32,6 +23,18 @@ const Header = () => {
 
   const [isSticky, setIsSticky] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Menu items configuration
+  const MENU_ITEMS = useMemo(() => [
+    { label: t(HEADER_KEYS.HEADER_MENU_HOME), href: "/", scrollTo: null },
+    { label: t(HEADER_KEYS.HEADER_MENU_ABOUT), href: "#", scrollTo: "overview-section" },
+    { label: t(HEADER_KEYS.HEADER_MENU_OVERVIEW), href: "#", scrollTo: "location-section" },
+    { label: t(HEADER_KEYS.HEADER_MENU_LOCATION), href: "#", scrollTo: "highlight-section" },
+    { label: t(HEADER_KEYS.HEADER_MENU_DESIGN_INSPIRATION), href: "#", scrollTo: "highlight-section" },
+    { label: t(HEADER_KEYS.HEADER_MENU_FLOOR_PLAN), href: "#", scrollTo: "floor-detail-section" },
+    { label: t(HEADER_KEYS.HEADER_MENU_NEWS), href: "#", scrollTo: "news-section" },
+    { label: t(HEADER_KEYS.HEADER_MENU_CONTACT), href: "/lien-he", scrollTo: null },
+  ], [t])
 
   // Handle scroll for sticky header
   useEffect(() => {
@@ -127,7 +130,7 @@ const Header = () => {
       {/* HEADER BAR */}
       <header ref={headerRef} className={`${styles.header} ${isSticky ? styles.sticky : ""}`} role="banner">
         <div className={styles.logoSection}>
-          <Link href="/" className={styles.logoLink} aria-label="Trang chủ">
+          <Link href="/" className={styles.logoLink} aria-label={t(HEADER_KEYS.HEADER_MENU_LOGO_ALT)}>
             <Image
               src={withBasePath(LOGO_SRC)}
               alt="Masteri Logo"
@@ -146,13 +149,13 @@ const Header = () => {
             onClick={openMenu}
             aria-expanded={isMenuOpen}
             aria-controls="fullscreen-menu"
-            aria-label="Mở menu điều hướng"
+            aria-label={t(HEADER_KEYS.HEADER_ARIA_OPEN_MENU)}
           >
             <MenuOutlined className={styles.menuIcon} />
             {/* Sliding text effect */}
             <span className={styles.menuTextOverflow}>
-              <span className={styles.menuTextPrimary}>MENU</span>
-              <span className={styles.menuTextSecondary}>MENU</span>
+              <span className={styles.menuTextPrimary}>{t(HEADER_KEYS.HEADER_MENU_TEXT)}</span>
+              <span className={styles.menuTextSecondary}>{t(HEADER_KEYS.HEADER_MENU_TEXT)}</span>
             </span>
           </button>
         </div>
@@ -173,7 +176,7 @@ const Header = () => {
           ref={closeBtnRef}
           className={styles.closeBtn}
           onClick={closeMenu}
-          aria-label="Đóng menu"
+          aria-label={t(HEADER_KEYS.HEADER_ARIA_CLOSE_MENU)}
           tabIndex={isMenuOpen ? 0 : -1}
         >
           <CloseOutlined className={styles.closeIcon} />
@@ -187,7 +190,7 @@ const Header = () => {
         {/* Menu container */}
         <div className={styles.menuContainer}>
           {/* Navigation links */}
-          <nav className={styles.navLinks} aria-label="Menu chính">
+          <nav className={styles.navLinks} aria-label={t(HEADER_KEYS.HEADER_MENU_ARIA_LABEL)}>
             {MENU_ITEMS.map((item, index) => (
               <Link
                 key={item.label}
