@@ -9,9 +9,15 @@ async function proxyRequest(request: NextRequest, method: string) {
         const targetUrl = `${REMOTE_SERVER_URL}/api/${apiPath}`;
 
         const headers: HeadersInit = {
-            'Content-Type': 'application/json',
             'Accept': 'application/json',
         };
+
+        const contentType = request.headers.get('content-type');
+        if (contentType) {
+            headers['Content-Type'] = contentType;
+        } else {
+            headers['Content-Type'] = 'application/json';
+        }
 
         const authorization = request.headers.get('authorization');
         if (authorization) {
@@ -21,12 +27,26 @@ async function proxyRequest(request: NextRequest, method: string) {
         const options: RequestInit = {
             method,
             headers,
+            // @ts-ignore - Required for streaming bodies in some environments
+            duplex: 'half',
             signal: AbortSignal.timeout(60000),
         };
 
         if (['POST', 'PUT', 'PATCH'].includes(method)) {
-            const body = await request.json();
-            options.body = JSON.stringify(body);
+            if (contentType?.includes('multipart/form-data')) {
+                options.body = request.body;
+            } else {
+                // For JSON, we can either forward body or parse/stringify.
+                // Existing logic parsed it, implying potential validation or just habit. 
+                // To be safe and minimal change:
+                if (contentType?.includes('application/json')) {
+                    const body = await request.json();
+                    options.body = JSON.stringify(body);
+                } else {
+                    // Fallback for other types (e.g. text/plain), just pass body
+                    options.body = request.body;
+                }
+            }
         }
 
         const response = await fetch(targetUrl, options);

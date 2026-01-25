@@ -40,6 +40,7 @@ import { ExportPdf, RichTextExportPdf } from 'reactjs-tiptap-editor/exportpdf';
 import { ExportWord, RichTextExportWord } from 'reactjs-tiptap-editor/exportword';
 import { ImportWord, RichTextImportWord } from 'reactjs-tiptap-editor/importword';
 import { Column, ColumnNode, MultipleColumnNode, RichTextColumn } from 'reactjs-tiptap-editor/column';
+import { FileApiService } from '@/api/fileApiService';
 import {
     RichTextBubbleColumns,
     RichTextBubbleExcalidraw,
@@ -142,12 +143,13 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             Image.configure({
                 resourceImage: 'upload', // Required property
                 upload: async (file: File) => {
-                    return new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result as string);
-                        reader.onerror = reject;
-                        reader.readAsDataURL(file);
-                    });
+                    try {
+                        const url = await FileApiService.uploadImage(file);
+                        return url; // The extension expects a Promise<string> returning the URL
+                    } catch (error) {
+                        console.error("Upload failed", error);
+                        throw error;
+                    }
                 },
             }),
             Blockquote,
