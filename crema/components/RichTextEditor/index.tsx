@@ -1,14 +1,100 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
+import { Document } from '@tiptap/extension-document';
+import { DocumentColumn } from './DocumentColumn';
 import StarterKit from '@tiptap/starter-kit';
-import Link from '@tiptap/extension-link';
-import TextAlign from '@tiptap/extension-text-align';
-import TaskList from '@tiptap/extension-task-list';
-import TaskItem from '@tiptap/extension-task-item';
-import Image from '@tiptap/extension-image';
+import { RichTextProvider } from 'reactjs-tiptap-editor';
+import 'reactjs-tiptap-editor/style.css';
 import styles from './RichTextEditor.module.css';
+
+// Extensions
+import { Bold, RichTextBold } from 'reactjs-tiptap-editor/bold';
+import { Italic, RichTextItalic } from 'reactjs-tiptap-editor/italic';
+import { Strike, RichTextStrike } from 'reactjs-tiptap-editor/strike';
+import { TextUnderline, RichTextUnderline } from 'reactjs-tiptap-editor/textunderline';
+import { Heading, RichTextHeading } from 'reactjs-tiptap-editor/heading';
+import { BulletList, RichTextBulletList } from 'reactjs-tiptap-editor/bulletlist';
+import { OrderedList, RichTextOrderedList } from 'reactjs-tiptap-editor/orderedlist';
+import { TaskList, RichTextTaskList } from 'reactjs-tiptap-editor/tasklist';
+import { Link, RichTextLink } from 'reactjs-tiptap-editor/link';
+import { Image, RichTextImage } from 'reactjs-tiptap-editor/image';
+import { Blockquote, RichTextBlockquote } from 'reactjs-tiptap-editor/blockquote';
+import { HorizontalRule, RichTextHorizontalRule } from 'reactjs-tiptap-editor/horizontalrule';
+import { Code, RichTextCode } from 'reactjs-tiptap-editor/code';
+import { CodeBlock, RichTextCodeBlock } from 'reactjs-tiptap-editor/codeblock';
+import { TextAlign, RichTextAlign } from 'reactjs-tiptap-editor/textalign';
+import { History, RichTextUndo, RichTextRedo } from 'reactjs-tiptap-editor/history';
+import { Clear, RichTextClear } from 'reactjs-tiptap-editor/clear';
+import { Color, RichTextColor } from 'reactjs-tiptap-editor/color';
+import { Highlight, RichTextHighlight } from 'reactjs-tiptap-editor/highlight';
+import { FontFamily, RichTextFontFamily } from 'reactjs-tiptap-editor/fontfamily';
+import { FontSize, RichTextFontSize } from 'reactjs-tiptap-editor/fontsize';
+import { Table, RichTextTable } from 'reactjs-tiptap-editor/table';
+import { Video, RichTextVideo } from 'reactjs-tiptap-editor/video';
+import { Indent, RichTextIndent } from 'reactjs-tiptap-editor/indent';
+import { LineHeight, RichTextLineHeight } from 'reactjs-tiptap-editor/lineheight';
+import { MoreMark, RichTextMoreMark } from 'reactjs-tiptap-editor/moremark';
+import { ExportPdf, RichTextExportPdf } from 'reactjs-tiptap-editor/exportpdf';
+import { ExportWord, RichTextExportWord } from 'reactjs-tiptap-editor/exportword';
+import { ImportWord, RichTextImportWord } from 'reactjs-tiptap-editor/importword';
+import { Column, ColumnNode, MultipleColumnNode, RichTextColumn } from 'reactjs-tiptap-editor/column';
+import {
+    RichTextBubbleColumns,
+    RichTextBubbleExcalidraw,
+    RichTextBubbleIframe,
+    RichTextBubbleImage,
+    RichTextBubbleImageGif,
+    RichTextBubbleLink,
+    RichTextBubbleMermaid,
+    RichTextBubbleTable,
+    RichTextBubbleText,
+    RichTextBubbleVideo,
+    RichTextBubbleMenuDragHandle,
+    RichTextBubbleCallout,
+    RichTextBubbleDrawer,
+    RichTextBubbleKatex,
+    RichTextBubbleTwitter,
+} from 'reactjs-tiptap-editor/bubble';
+
+import {
+    SlashCommand,
+    SlashCommandList,
+} from 'reactjs-tiptap-editor/slashcommand';
+
+import { RichTextSearchAndReplace, SearchAndReplace } from 'reactjs-tiptap-editor/searchandreplace';
+import { Emoji, RichTextEmoji } from 'reactjs-tiptap-editor/emoji';
+import { CodeView, RichTextCodeView } from 'reactjs-tiptap-editor/codeview';
+import { RichTextTextDirection, TextDirection } from 'reactjs-tiptap-editor/textdirection';
+import { Iframe, RichTextIframe } from 'reactjs-tiptap-editor/iframe';
+import { Callout, RichTextCallout } from 'reactjs-tiptap-editor/callout';
+import { Katex, RichTextKatex } from 'reactjs-tiptap-editor/katex';
+import { Mermaid, RichTextMermaid } from 'reactjs-tiptap-editor/mermaid';
+import { Excalidraw, RichTextExcalidraw } from 'reactjs-tiptap-editor/excalidraw';
+import { Drawer, RichTextDrawer } from 'reactjs-tiptap-editor/drawer';
+import { RichTextTwitter, Twitter } from 'reactjs-tiptap-editor/twitter';
+import { Attachment, RichTextAttachment } from 'reactjs-tiptap-editor/attachment';
+import { ImageGif, RichTextImageGif } from 'reactjs-tiptap-editor/imagegif';
+
+// Mock Emojis (Simple fallback)
+const EMOJI_LIST = [
+    { name: 'smile', text: '😄', emoticons: [':)', ':-)'] },
+    { name: 'laughing', text: '😆', emoticons: [':D', ':-D'] },
+    // Add more if needed or fetch dynamic
+];
+
+function convertBase64ToBlob(base64: string) {
+    const arr = base64.split(',');
+    const mime = arr[0].match(/:(.*?);/)![1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+}
 
 interface RichTextEditorProps {
     value?: string;
@@ -21,13 +107,31 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     onChange,
     placeholder = 'Nhập nội dung...',
 }) => {
-    const [showLinkInput, setShowLinkInput] = useState(false);
-    const [linkUrl, setLinkUrl] = useState('');
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
     const editor = useEditor({
         extensions: [
-            StarterKit,
+            DocumentColumn,
+            StarterKit.configure({
+                bold: false,
+                italic: false,
+                strike: false,
+                code: false,
+                heading: false,
+                bulletList: false,
+                orderedList: false,
+                blockquote: false,
+                horizontalRule: false,
+                codeBlock: false,
+                undoRedo: false, // Use independent history extension
+                document: false, // Disable to use custom Document for columns
+            }),
+            Bold,
+            Italic,
+            Strike,
+            TextUnderline,
+            Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
+            BulletList,
+            OrderedList,
+            TaskList,
             Link.configure({
                 openOnClick: false,
                 HTMLAttributes: {
@@ -35,18 +139,106 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     rel: 'noopener noreferrer',
                 },
             }),
-            TextAlign.configure({
-                types: ['heading', 'paragraph'],
-            }),
-            TaskList,
-            TaskItem.configure({
-                nested: true,
-            }),
             Image.configure({
-                inline: true,
-                allowBase64: true,
-                HTMLAttributes: {
-                    class: 'editor-image',
+                resourceImage: 'upload', // Required property
+                upload: async (file: File) => {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result as string);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                },
+            }),
+            Blockquote,
+            HorizontalRule,
+            Code,
+            CodeBlock,
+            TextAlign.configure({ types: ['heading', 'paragraph'] }),
+            History,
+            Clear,
+            Color,
+            Highlight,
+            FontFamily,
+            FontSize,
+            Table.configure({ resizable: true }),
+            Video.configure({
+                resourceVideo: 'upload',
+                upload: async (file: File) => {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result as string);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                },
+            }),
+            Indent,
+            LineHeight,
+            Column,
+            ColumnNode,
+            MultipleColumnNode,
+            ExportPdf,
+            ImportWord,
+            ExportWord,
+            MoreMark,
+            SlashCommand,
+            SearchAndReplace,
+            Emoji.configure({
+                suggestion: {
+                    items: async ({ query }: any) => {
+                        const lowerCaseQuery = query?.toLowerCase();
+                        return EMOJI_LIST.filter(({ name }) =>
+                            name.toLowerCase().includes(lowerCaseQuery),
+                        );
+                    },
+                },
+            }),
+            CodeView,
+            TextDirection,
+            Iframe,
+            Callout,
+            Twitter,
+            Katex,
+            Excalidraw,
+            ImageGif.configure({
+                provider: 'giphy',
+                API_KEY: process.env.NEXT_PUBLIC_GIPHY_API_KEY as string,
+            }),
+            Mermaid.configure({
+                upload: (file: any) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            const blob = convertBase64ToBlob(reader.result as string);
+                            resolve(URL.createObjectURL(blob));
+                        }, 300);
+                    });
+                },
+            }),
+            Drawer.configure({
+                upload: (file: any) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            const blob = convertBase64ToBlob(reader.result as string);
+                            resolve(URL.createObjectURL(blob));
+                        }, 300);
+                    });
+                },
+            }),
+            Attachment.configure({
+                upload: (file: any) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            const blob = convertBase64ToBlob(reader.result as string);
+                            resolve(URL.createObjectURL(blob));
+                        }, 300);
+                    });
                 },
             }),
         ],
@@ -60,11 +252,15 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                 class: styles.editorContent,
             },
         },
+        immediatelyRender: false,
     });
 
     React.useEffect(() => {
         if (editor && value !== editor.getHTML()) {
-            editor.commands.setContent(value);
+            // Only update if content is different to avoid cursor jumps
+            if (value === '' || (Math.abs(value.length - editor.getHTML().length) > 10)) {
+                editor.commands.setContent(value);
+            }
         }
     }, [value, editor]);
 
@@ -72,323 +268,93 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
         return null;
     }
 
-    const setLink = () => {
-        if (!linkUrl) {
-            editor.chain().focus().unsetLink().run();
-            return;
-        }
-
-        const url = linkUrl.startsWith('http') ? linkUrl : `https://${linkUrl}`;
-        editor.chain().focus().setLink({ href: url }).run();
-        setLinkUrl('');
-        setShowLinkInput(false);
-    };
-
-    const handleLinkClick = () => {
-        const previousUrl = editor.getAttributes('link').href;
-        if (previousUrl) {
-            setLinkUrl(previousUrl);
-        }
-        setShowLinkInput(!showLinkInput);
-    };
-
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (!file) return;
-
-        // Kiểm tra file type
-        if (!file.type.startsWith('image/')) {
-            alert('Vui lòng chọn file ảnh');
-            return;
-        }
-
-        // Kiểm tra file size (max 5MB)
-        if (file.size > 5 * 1024 * 1024) {
-            alert('Kích thước ảnh không được vượt quá 5MB');
-            return;
-        }
-
-        // Convert to base64
-        const reader = new FileReader();
-        reader.onload = () => {
-            const base64 = reader.result as string;
-            editor?.chain().focus().setImage({ src: base64 }).run();
-        };
-        reader.readAsDataURL(file);
-
-        // Reset input
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
-    };
-
-    const triggerImageUpload = () => {
-        fileInputRef.current?.click();
-    };
-
     return (
-        <div className={styles.editorWrapper}>
-            <div className={styles.toolbar}>
-                {/* Text Formatting */}
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleBold().run()}
-                    className={editor.isActive('bold') ? styles.isActive : ''}
-                    title="Bold (Ctrl+B)"
-                >
-                    <strong>B</strong>
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleItalic().run()}
-                    className={editor.isActive('italic') ? styles.isActive : ''}
-                    title="Italic (Ctrl+I)"
-                >
-                    <em>I</em>
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleStrike().run()}
-                    className={editor.isActive('strike') ? styles.isActive : ''}
-                    title="Strike"
-                >
-                    <s>S</s>
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleCode().run()}
-                    className={editor.isActive('code') ? styles.isActive : ''}
-                    title="Code"
-                >
-                    {'</>'}
-                </button>
+        <RichTextProvider editor={editor}>
+            <div className={styles.editorWrapper}>
+                <div className={styles.toolbar}>
+                    <RichTextUndo />
+                    <RichTextRedo />
+                    <RichTextSearchAndReplace />
+                    <RichTextClear />
+                    <div className={styles.divider} />
 
-                <div className={styles.divider} />
+                    <RichTextFontFamily />
+                    <RichTextFontSize />
+                    <RichTextHeading />
 
-                {/* Headings */}
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-                    className={editor.isActive('heading', { level: 1 }) ? styles.isActive : ''}
-                    title="Heading 1"
-                >
-                    H1
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-                    className={editor.isActive('heading', { level: 2 }) ? styles.isActive : ''}
-                    title="Heading 2"
-                >
-                    H2
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                    className={editor.isActive('heading', { level: 3 }) ? styles.isActive : ''}
-                    title="Heading 3"
-                >
-                    H3
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-                    className={editor.isActive('heading', { level: 4 }) ? styles.isActive : ''}
-                    title="Heading 4"
-                >
-                    H4
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-                    className={editor.isActive('heading', { level: 5 }) ? styles.isActive : ''}
-                    title="Heading 5"
-                >
-                    H5
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-                    className={editor.isActive('heading', { level: 6 }) ? styles.isActive : ''}
-                    title="Heading 6"
-                >
-                    H6
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().setParagraph().run()}
-                    className={editor.isActive('paragraph') ? styles.isActive : ''}
-                    title="Paragraph"
-                >
-                    ¶
-                </button>
+                    <div className={styles.divider} />
 
-                <div className={styles.divider} />
+                    <RichTextBold />
+                    <RichTextItalic />
+                    <RichTextUnderline />
+                    <RichTextStrike />
+                    <RichTextMoreMark />
+                    <RichTextEmoji />
+                    <RichTextColor />
+                    <RichTextHighlight />
 
-                {/* Lists */}
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    className={editor.isActive('bulletList') ? styles.isActive : ''}
-                    title="Bullet List"
-                >
-                    ☰
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                    className={editor.isActive('orderedList') ? styles.isActive : ''}
-                    title="Numbered List"
-                >
-                    ≡
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleTaskList().run()}
-                    className={editor.isActive('taskList') ? styles.isActive : ''}
-                    title="Task List"
-                >
-                    ☑
-                </button>
+                    <div className={styles.divider} />
 
-                <div className={styles.divider} />
+                    <RichTextBulletList />
+                    <RichTextOrderedList />
+                    <RichTextAlign />
+                    <RichTextIndent />
+                    <RichTextLineHeight />
+                    <RichTextTaskList />
 
-                {/* Link */}
-                <button
-                    type="button"
-                    onClick={handleLinkClick}
-                    className={editor.isActive('link') ? styles.isActive : ''}
-                    title="Add Link"
-                >
-                    🔗
-                </button>
-                {editor.isActive('link') && (
-                    <button
-                        type="button"
-                        onClick={() => editor.chain().focus().unsetLink().run()}
-                        title="Remove Link"
-                    >
-                        🔗✕
-                    </button>
-                )}
+                    <div className={styles.divider} />
 
-                {/* Image Upload */}
-                <button type="button" onClick={triggerImageUpload} title="Upload Image">
-                    🖼️
-                </button>
-                <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    style={{ display: 'none' }}
-                />
+                    <RichTextLink />
+                    <RichTextImage />
+                    <RichTextVideo />
+                    <RichTextImageGif />
+                    <RichTextBlockquote />
+                    <RichTextHorizontalRule />
+                    <RichTextCode />
+                    <RichTextCodeBlock />
+                    <RichTextColumn />
+                    <RichTextTable />
+                    <RichTextIframe />
 
-                <div className={styles.divider} />
+                    <div className={styles.divider} />
 
-                {/* Quote & HR */}
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                    className={editor.isActive('blockquote') ? styles.isActive : ''}
-                    title="Blockquote"
-                >
-                    &quot;&quot;
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().setHorizontalRule().run()}
-                    title="Horizontal Rule"
-                >
-                    ―
-                </button>
-
-                <div className={styles.divider} />
-
-                {/* Text Align */}
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().setTextAlign('left').run()}
-                    className={editor.isActive({ textAlign: 'left' }) ? styles.isActive : ''}
-                    title="Align Left"
-                >
-                    ⫴
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().setTextAlign('center').run()}
-                    className={editor.isActive({ textAlign: 'center' }) ? styles.isActive : ''}
-                    title="Align Center"
-                >
-                    ≡
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().setTextAlign('right').run()}
-                    className={editor.isActive({ textAlign: 'right' }) ? styles.isActive : ''}
-                    title="Align Right"
-                >
-                    ⫵
-                </button>
-
-                <div className={styles.divider} />
-
-                {/* Undo/Redo */}
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().undo().run()}
-                    disabled={!editor.can().undo()}
-                    title="Undo"
-                >
-                    ↶
-                </button>
-                <button
-                    type="button"
-                    onClick={() => editor.chain().focus().redo().run()}
-                    disabled={!editor.can().redo()}
-                    title="Redo"
-                >
-                    ↷
-                </button>
-            </div>
-
-            {/* Link Input */}
-            {showLinkInput && (
-                <div className={styles.linkInput}>
-                    <input
-                        type="url"
-                        placeholder="Nhập URL (https://...)"
-                        value={linkUrl}
-                        onChange={(e) => setLinkUrl(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                setLink();
-                            }
-                            if (e.key === 'Escape') {
-                                setShowLinkInput(false);
-                                setLinkUrl('');
-                            }
-                        }}
-                        autoFocus
-                    />
-                    <button type="button" onClick={setLink}>
-                        ✓
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setShowLinkInput(false);
-                            setLinkUrl('');
-                        }}
-                    >
-                        ✕
-                    </button>
+                    <RichTextExportPdf />
+                    <RichTextImportWord />
+                    <RichTextExportWord />
+                    <RichTextTextDirection />
+                    <RichTextAttachment />
+                    <RichTextKatex />
+                    <RichTextExcalidraw />
+                    <RichTextMermaid />
+                    <RichTextDrawer />
+                    <RichTextTwitter />
+                    <RichTextCodeView />
+                    <RichTextCallout />
                 </div>
-            )}
 
-            <EditorContent editor={editor} placeholder={placeholder} />
-        </div>
+                <EditorContent editor={editor} className={styles.editorContainer} placeholder={placeholder} />
+
+                {/* Bubble Menus */}
+                <RichTextBubbleColumns />
+                <RichTextBubbleDrawer />
+                <RichTextBubbleExcalidraw />
+                <RichTextBubbleIframe />
+                <RichTextBubbleKatex />
+                <RichTextBubbleLink />
+                <RichTextBubbleImage />
+                <RichTextBubbleVideo />
+                <RichTextBubbleImageGif />
+                <RichTextBubbleMermaid />
+                <RichTextBubbleTable />
+                <RichTextBubbleText />
+                <RichTextBubbleTwitter />
+                <RichTextBubbleCallout />
+                <RichTextBubbleMenuDragHandle />
+
+                {/* Command List */}
+                <SlashCommandList />
+            </div>
+        </RichTextProvider>
     );
 };
 

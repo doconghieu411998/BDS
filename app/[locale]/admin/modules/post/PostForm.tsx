@@ -8,7 +8,8 @@ import { AntInput } from '@/crema/components/AntInput';
 import { AntButton } from '@/crema/components/AntButton';
 import { AntSelect } from '@/crema/components/AntSelect';
 import { AntUpload } from '@/crema/components/AntUpload';
-import RichTextEditor from '@/crema/components/RichTextEditor';
+import dynamic from 'next/dynamic';
+const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), { ssr: false });
 import { Select } from 'antd';
 import type { SelectProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -17,15 +18,15 @@ import { Tabs } from 'antd';
 import styles from './PostForm.module.css';
 
 interface PostFormProps {
-  initialData?: Post;
-  isEdit?: boolean;
-  onSubmit: (data) => Promise<void>;
+    initialData?: Post;
+    isEdit?: boolean;
+    onSubmit: (data) => Promise<void>;
 }
 
 export default function PostForm({ initialData, isEdit = false, onSubmit }: PostFormProps) {
     const [form] = AntForm.useForm();
     const [loading, setLoading] = useState(false);
-    const [thumbnailUrl, setThumbnailUrl] = useState<string | undefined>(initialData?.thumbnail);
+    const [thumbnailUrl, setThumbnailUrl] = useState<string | undefined>(initialData?.media?.image);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
 
     useEffect(() => {
@@ -34,19 +35,19 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                 title: initialData.title,
                 content: initialData.content,
                 description: initialData.description,
-                category: initialData.category,
+                category: initialData.tags, // Maps tags to category field in form
                 status: String(initialData.status),
             });
-            setThumbnailUrl(initialData.thumbnail);
+            setThumbnailUrl(initialData.media?.image);
 
             // Set fileList để hiển thị ảnh dạng list item khi edit
-            if (initialData.thumbnail) {
+            if (initialData.media?.image) {
                 setFileList([
                     {
                         uid: '-1',
-                        name: 'thumbnail.jpg',
+                        name: 'image.jpg',
                         status: 'done',
-                        url: initialData.thumbnail,
+                        url: initialData.media.image,
                     },
                 ]);
             }
@@ -65,7 +66,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
         });
     };
 
-    const handleSubmit = async (values: PostFormData) => {
+    const handleSubmit = async (values: any) => {
         try {
             setLoading(true);
 
@@ -76,12 +77,14 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                 thumbnailBase64 = await handleImageUpload(fileList[0].originFileObj as File);
             }
 
-            const formData = {
+            const formData: PostFormData = {
                 title: values.title,
                 description: values.description,
                 content: values.content,
-                media: thumbnailBase64,
-                tags: values.category,
+                media: {
+                    image: thumbnailBase64 || '',
+                },
+                tags: Array.isArray(values.category) ? values.category : [values.category],
                 status: +values.status,
                 viewCount: initialData ? initialData.viewCount : 0,
             };
@@ -143,7 +146,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                             },
                         ]}
                     >
-                        <AntInput.TextArea placeholder={'Nhập mô tả bài viết'} rows={3}/>
+                        <AntInput.TextArea placeholder={'Nhập mô tả bài viết'} rows={3} />
                     </AntForm.Item>
 
                     {/* Danh mục và Trạng thái */}

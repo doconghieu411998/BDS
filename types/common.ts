@@ -90,9 +90,9 @@ export interface PropertyFormData extends Record<string, unknown> {
 
 // Post Types
 export enum PostStatus {
-    DRAFT = '0',
-    PUBLISHED = '1',
-    ARCHIVED = '2',
+    DRAFT = 0,
+    PUBLISHED = 1,
+    ARCHIVED = 2,
 }
 
 export enum PostCategory {
@@ -102,38 +102,41 @@ export enum PostCategory {
     TIPS = 'tips',
 }
 
+export interface PostMedia {
+    id: number;
+    url: string;
+    image: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
 export interface Post extends Record<string, unknown> {
-    id: string;
+    id: number;
     title: string;
-    content: string;
     description: string;
-    viewCount: number;
-    category: PostCategory;
-    status: string;
-    author: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt?: string;
-    tags?: { id: number; tagName: string }[];
-    thumbnail?: string;
-    media?: unknown;
-}
-
-export interface PostFormDataLanguage {
-    title: string;
     content: string;
-    excerpt: string;
+    viewCount: number;
+    status: PostStatus;
+    media: PostMedia;
+    tags: string[]; // Backend expects: [ "string" ]
+    createDate?: string; // Matching news model if needed, or stick to swagger which doesn't explicitly show date in example but likely has it
+    createdAt?: string; // Fallback
+    updatedAt?: string;
 }
-
 
 export interface PostFormData {
-    [key: string]: unknown;
-    vi: PostFormDataLanguage;
-    en: PostFormDataLanguage;
-    thumbnail?: string;
-    category: PostCategory;
+    title: string;
+    description: string;
+    content: string;
     status: PostStatus;
-    media: unknown;
+    media: {
+        image: string; // Sending base64 as 'image' field in media object? Or sending media object? 
+        // Swagger request body has "media": { "image": "string", ... }
+        // We will construct this object.
+    };
+    tags: string[];
+    viewCount?: number;
+    id?: number;
 }
 
 // Survey Types
