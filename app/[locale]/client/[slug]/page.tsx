@@ -1,6 +1,6 @@
 import NewsDetailView from "./(view-detail)/view-detail";
 import { getIdFromSlug, getTagFromSlug } from "@/services/commonService";
-import { getNewsDetail, getNewsListByTag } from "@/api/newsApiService";
+import { ClientPostApiService } from "@/api/clientPostApiService";
 import { notFound } from "next/navigation";
 import TagArticleList from "./(tags-article)/tags-article";
 import { getLocale } from "next-intl/server";
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props) {
     const id = getIdFromSlug(slug);
 
     if (id) {
-        const newsItem = await getNewsDetail(id);
+        const newsItem = await ClientPostApiService.getPostDetail(id);
 
         if (!newsItem) {
             return notFound();
@@ -106,7 +106,7 @@ export default async function SlugPage({ params }: Props) {
     const id = getIdFromSlug(slug);
 
     if (id) {
-        const newsItem = await getNewsDetail(id);
+        const newsItem = await ClientPostApiService.getPostDetail(id);
 
         if (!newsItem) {
             return notFound();
@@ -125,7 +125,7 @@ export default async function SlugPage({ params }: Props) {
         return notFound();
     }
 
-    const articles = await getNewsListByTag(tag);
+    const articles = await ClientPostApiService.getPostsByTag(tag);
 
     return (
         <>

@@ -10,7 +10,10 @@ import { AntButton } from '@/crema/components/AntButton';
 import { AntSelect } from '@/crema/components/AntSelect';
 import { AntUpload } from '@/crema/components/AntUpload';
 import dynamic from 'next/dynamic';
-const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), { ssr: false });
+const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), {
+    ssr: false,
+    loading: () => <p>Loading editor...</p>
+});
 import { Select } from 'antd';
 import type { SelectProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';

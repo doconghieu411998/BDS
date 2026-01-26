@@ -15,61 +15,72 @@ interface Props {
 export default async function NewsDetailView({ item, locale }: Props) {
   return (
     <main className={styles.container}>
-      <header className={styles.header}>
-        {item.tags.length > 0 && (
-          <span className={styles.categoryBadge}>{item.tags[0]}</span>
-        )}
-        <h1 className={styles.title}>{item.title}</h1>
-        <div className={styles.meta}>
-          Ngày đăng: {new Date(item.createDate).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US')}
-          <span style={{ margin: '0 10px' }}>|</span>
-          Lượt xem: {item.viewCount}
-        </div>
-      </header>
-
-      <div className={styles.bannerWrapper}>
+      <section className={styles.bannerWrapper}>
         <Image
-          src={item.banner}
+          src={item.banner || '/images/placeholder.jpg'}
           alt={item.title}
           fill
           priority
           className={styles.bannerImage}
         />
+      </section>
+
+      <div className={styles.contentWrapper}>
+        <header className={styles.header}>
+          {item.tags?.length > 0 && (
+            <span className={styles.categoryBadge}>{item.tags[0]}</span>
+          )}
+
+          <h1 className={styles.title}>{item.title}</h1>
+
+          <div className={styles.meta}>
+            <span>Ngày đăng: {new Date(item.createDate).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US')}</span>
+            <span className={styles.separator}>|</span>
+            <span>Lượt xem: {item.viewCount}</span>
+          </div>
+        </header>
+
+        <article className={styles.articleBody}>
+          {item.description && (
+            <p className={styles.description}>{item.description}</p>
+          )}
+
+          <div
+            className={styles.htmlContent}
+            dangerouslySetInnerHTML={{ __html: item.content }}
+          />
+
+          {item.tags && item.tags.length > 0 && (
+            <div className={styles.tagSection}>
+              <span className={styles.tagLabel}>CHỦ ĐỀ:</span>
+              <div className={styles.tagList}>
+                {item.tags.map((tag, index) => (
+                  <Link
+                    key={index}
+                    href={{
+                      pathname: '/client/[slug]',
+                      params: { slug: `${convertSlugUrl(tag, locale)}.html` }
+                    }}
+                    className={styles.tagItem}
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </article>
+
+        <div style={{ marginTop: '80px' }}>
+          <NewsList
+            relatedTags={item.tags}
+            excludeId={item.id}
+            limit={4}
+            showPagination={true}
+          />
+        </div>
       </div>
 
-      <article className={styles.articleBody}>
-        <p className={styles.description}>{item.description}</p>
-
-        <div
-          className={styles.htmlContent}
-          dangerouslySetInnerHTML={{ __html: item.content }}
-        />
-
-        {item.tags && item.tags.length > 0 && (
-          <div className={styles.tagSection}>
-            <span className={styles.tagLabel}>CHỦ ĐỀ:</span>
-            <div className={styles.tagList}>
-              {item.tags.map((tag, index) => {
-                const urlSlug = `${convertSlugUrl(tag, locale)}.html`;
-                return (<Link
-                  key={index}
-                  href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }}
-                  className={styles.tagItem}
-                >
-                  {tag}
-                </Link>)
-              })}
-            </div>
-          </div>
-        )}
-      </article>
-
-      <NewsList
-        relatedTags={item.tags}
-        excludeId={item.id}
-        limit={4}
-        showPagination={true}
-      />
       <ArticleTracker newsId={String(item.id)} locale={locale} />
     </main>
   );

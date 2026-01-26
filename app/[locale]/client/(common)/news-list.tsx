@@ -8,7 +8,7 @@ import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Pagination } from 'antd';
 import { NewsItem } from '@/models/news';
-import { getNews } from '@/api/newsApiService';
+import { ClientPostApiService } from '@/api/clientPostApiService';
 
 interface NewsListProps {
     relatedTags?: string[];
@@ -16,6 +16,7 @@ interface NewsListProps {
     limit?: number;
     showPagination?: boolean;
     title?: string;
+    sortByDate?: boolean;
 }
 
 const NewsList = ({
@@ -23,7 +24,8 @@ const NewsList = ({
     excludeId,
     limit,
     showPagination = true,
-    title
+    title,
+    sortByDate = false
 }: NewsListProps) => {
     const locale = useLocale();
     const [items, setItems] = useState<NewsItem[]>([]);
@@ -33,19 +35,29 @@ const NewsList = ({
 
     useEffect(() => {
         const fetchNews = async () => {
-            // Giả sử API hỗ trợ truyền limit và page
-            const response = await getNews(currentPage, PAGE_SIZE);
+            // Use Client Service
+            const response = await ClientPostApiService.getPosts(currentPage, PAGE_SIZE);
             let data = response.data;
 
-            // 1. Nếu là mode "Bài liên quan": Lọc theo tags và loại trừ ID hiện tại
-            // if (relatedTags && relatedTags.length > 0) {
-            //     data = data.filter(item =>
-            //         item.id !== excludeId &&
-            //         item.tags.some(tag => relatedTags.includes(tag))
-            //     );
-            // }
+            // 1. Filter by related tags and exclude current ID
+            if (relatedTags && relatedTags.length > 0) {
+                // Not modifying existing related tags logic
+                if (relatedTags[0]) {
+                    const related = await ClientPostApiService.getPostsByTag(relatedTags[0]);
+                    data = related;
+                }
+            }
 
-            // 2. Nếu dùng cho Landing Page hoặc Detail, thường chỉ lấy 1 số lượng nhất định
+            if (excludeId) {
+                data = data.filter(item => item.id !== excludeId);
+            }
+
+            // Sort by date if requested (Newest First)
+            if (sortByDate) {
+                data.sort((a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
+            }
+
+            // 2. Limit if needed
             if (limit) {
                 data = data.slice(0, limit);
             }
@@ -55,7 +67,7 @@ const NewsList = ({
         };
 
         fetchNews();
-    }, [currentPage, relatedTags, excludeId, limit]);
+    }, [currentPage, relatedTags, excludeId, limit, PAGE_SIZE, sortByDate]);
 
     if (!items || items.length === 0) return null;
 
@@ -72,7 +84,7 @@ const NewsList = ({
                         <div key={item.id} className={styles.newsCard}>
                             <div className={styles.imageWrapper}>
                                 <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }}>
-                                    <Image src={item.banner} alt={item.title} fill className={styles.image} />
+                                    <Image src={item.banner || '/images/placeholder.jpg'} alt={item.title} fill className={styles.image} />
                                 </Link>
                                 {/* Hiển thị tag đầu tiên lên ảnh cho đẹp */}
                                 {item.tags.length > 0 && (

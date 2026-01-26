@@ -7,8 +7,34 @@ import axios, {
 import { authStorage } from '@/utils/auth';
 import { ApiResponse } from '@/types/common';
 
+const getBaseUrl = () => {
+    // 1. Client-side: can be relative
+    if (typeof window !== 'undefined') {
+        return process.env.NEXT_PUBLIC_API_URL || '/api';
+    }
+
+    // 2. Server-side: MUST be absolute
+    const url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+
+    // Check if it's explicitly strictly relative (starts with /)
+    if (url.startsWith('/')) {
+        // Prepend localhost if relative
+        // Try to get dynamic port if available, else default to 3000
+        const port = process.env.PORT || 3000;
+        return `http://localhost:${port}${url}`;
+    }
+
+    return url;
+};
+
+// Debug log for server-side
+if (typeof window === 'undefined') {
+    console.log('Server-side axios baseURL:', getBaseUrl());
+}
+
 const axiosClient: AxiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
+    baseURL: getBaseUrl(),
+    // remainder of file...
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json',
