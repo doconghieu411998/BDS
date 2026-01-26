@@ -17,7 +17,7 @@ export { AntDropdown } from './AntDropdown';
 export { AntAvatar } from './AntAvatar';
 export { AntStatistic } from './AntStatistic';
 export { AntBreadcrumb } from './AntBreadcrumb';
-// export { RichTextEditor } from './RichTextEditor';
+export { RichTextEditor } from './RichTextEditor';
 
 export type { FormInstance, FormItemProps } from './AntForm';
 export type { MenuProps } from './AntMenu';
