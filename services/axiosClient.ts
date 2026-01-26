@@ -62,7 +62,7 @@ axiosClient.interceptors.response.use(
             }
 
             // Xử lý lỗi 500 - Internal Server Error
-            if (status === 500) {
+            if (status === 500 || status === 400) {
                 if (typeof window !== 'undefined') {
                     alert('Lỗi hệ thống! Vui lòng thử lại sau.');
                 }
