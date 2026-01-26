@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -21,12 +25,27 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@admin/*": ["./app/[locale]/admin/*"],
-      "@navigation": ["./src/navigation.tsx"],
-      "@constants/*": ["./constants/*"],
-      "@services/*": ["./services/*"],
-      "@hooks/*": ["./hooks/*"],
+      "@/*": [
+        "./*"
+      ],
+      "@admin/*": [
+        "./app/[locale]/admin/*"
+      ],
+      "@navigation": [
+        "./src/navigation.tsx"
+      ],
+      "@constants/*": [
+        "./constants/*"
+      ],
+      "@services/*": [
+        "./services/*"
+      ],
+      "@hooks/*": [
+        "./hooks/*"
+      ],
+      "@api/*": [
+        "./api/*"
+      ]
     }
   },
   "include": [
@@ -37,5 +56,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

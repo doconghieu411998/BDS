@@ -8,6 +8,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { RichTextProvider } from 'reactjs-tiptap-editor';
 import 'reactjs-tiptap-editor/style.css';
 import styles from './RichTextEditor.module.css';
+import { FileApiService } from '@/api/fileApiService';
 
 // Extensions
 import { Bold, RichTextBold } from 'reactjs-tiptap-editor/bold';
@@ -76,7 +77,6 @@ import { Drawer, RichTextDrawer } from 'reactjs-tiptap-editor/drawer';
 import { RichTextTwitter, Twitter } from 'reactjs-tiptap-editor/twitter';
 import { Attachment, RichTextAttachment } from 'reactjs-tiptap-editor/attachment';
 import { ImageGif, RichTextImageGif } from 'reactjs-tiptap-editor/imagegif';
-import { FileApiService } from '@/api/fileApiService';
 
 // Mock Emojis (Simple fallback)
 const EMOJI_LIST = [
