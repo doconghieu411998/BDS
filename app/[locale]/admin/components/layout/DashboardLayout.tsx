@@ -24,6 +24,7 @@ import { t } from '@/utils/i18n';
 import { ROUTES } from '@/constants/routes';
 import type { User } from '@/types/common';
 import styles from './DashboardLayout.module.css';
+import { authService } from '@/services/authService';
 
 const { Header, Sider, Content } = AntLayout;
 const { Text } = AntTypography;
@@ -93,6 +94,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     // Handle logout
     const handleLogout = () => {
+        authService.logout();
         Cookies.remove('token');
         Cookies.remove('user');
         router.push(ROUTES.LOGIN);
