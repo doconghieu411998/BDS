@@ -40,7 +40,6 @@ import { ExportPdf, RichTextExportPdf } from 'reactjs-tiptap-editor/exportpdf';
 import { ExportWord, RichTextExportWord } from 'reactjs-tiptap-editor/exportword';
 import { ImportWord, RichTextImportWord } from 'reactjs-tiptap-editor/importword';
 import { Column, ColumnNode, MultipleColumnNode, RichTextColumn } from 'reactjs-tiptap-editor/column';
-import { FileApiService } from '@/api/fileApiService';
 import {
     RichTextBubbleColumns,
     RichTextBubbleExcalidraw,
@@ -77,6 +76,7 @@ import { Drawer, RichTextDrawer } from 'reactjs-tiptap-editor/drawer';
 import { RichTextTwitter, Twitter } from 'reactjs-tiptap-editor/twitter';
 import { Attachment, RichTextAttachment } from 'reactjs-tiptap-editor/attachment';
 import { ImageGif, RichTextImageGif } from 'reactjs-tiptap-editor/imagegif';
+import { FileApiService } from '@/api/fileApiService';
 
 // Mock Emojis (Simple fallback)
 const EMOJI_LIST = [

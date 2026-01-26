@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import Image from 'next/image';
+
 import { useRouter } from 'next/navigation';
 import { Post, PostStatus, PostCategory } from '@/types/common';
 import { postService } from './postApiService';
@@ -31,7 +31,7 @@ export default function PostList() {
                 search,
             });
             setPosts(result.data);
-            // setTotal(result.total);
+            setTotal(result.total);
         } catch {
             notifyError(t('common.error'));
         } finally {
@@ -73,7 +73,7 @@ export default function PostList() {
         }
     };
 
-    const getStatusBadge = (status: string) => {
+    const getStatusBadge = (status: PostStatus) => {
         const statusMap = {
             [PostStatus.PUBLISHED]: {
                 text: t('post.statusPublished'),
@@ -89,7 +89,7 @@ export default function PostList() {
             },
         };
 
-        const statusInfo = statusMap[status];
+        const statusInfo = statusMap[status] || statusMap[PostStatus.DRAFT];
         return (
             <span className={`${styles.statusBadge} ${statusInfo.className}`}>
                 {statusInfo.text}
@@ -172,8 +172,8 @@ export default function PostList() {
                 title={t('menu.postList')}
                 onAdd={handleCreate}
                 addButtonText={t('post.createPost')}
-                onEdit={(record) => handleEdit(record.id)}
-                onDelete={(record) => setDeleteId(record.id)}
+                onEdit={(record) => handleEdit(record.id?.toString())}
+                onDelete={(record) => setDeleteId(record.id?.toString())}
             />
 
             <DialogConfirm

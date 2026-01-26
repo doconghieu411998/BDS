@@ -117,11 +117,13 @@ export interface Post extends Record<string, unknown> {
     content: string;
     viewCount: number;
     status: PostStatus;
+    category: PostCategory;
     media: PostMedia;
     tags: string[]; // Backend expects: [ "string" ]
     createDate?: string; // Matching news model if needed, or stick to swagger which doesn't explicitly show date in example but likely has it
     createdAt?: string; // Fallback
     updatedAt?: string;
+    publishedAt?: string;
 }
 
 export interface PostFormData {

@@ -1,6 +1,6 @@
 import axiosClient from '@/services/axiosClient';
 
-export const fileApiService = {
+export const FileApiService = {
     uploadImage: async (file: File): Promise<string> => {
         const formData = new FormData();
         formData.append('Image', file);
