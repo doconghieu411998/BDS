@@ -8,7 +8,7 @@ import { authStorage } from '@/utils/auth';
 import { ApiResponse } from '@/types/common';
 
 const axiosClient: AxiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json',
