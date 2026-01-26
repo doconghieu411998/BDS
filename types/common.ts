@@ -90,8 +90,8 @@ export interface PropertyFormData extends Record<string, unknown> {
 
 // Post Types
 export enum PostStatus {
-    DRAFT = 0,
-    PUBLISHED = 1,
+    PUBLISHED = 0,
+    DRAFT = 1,
     ARCHIVED = 2,
 }
 

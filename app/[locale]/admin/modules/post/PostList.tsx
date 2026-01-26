@@ -64,7 +64,7 @@ export default function PostList() {
         if (!deleteId) return;
 
         try {
-            // await postService.delete(deleteId);
+            await postService.delete(deleteId);
             notifySuccess(t('post.deleteSuccess'));
             loadPosts(currentPage, searchText);
             setDeleteId(null);

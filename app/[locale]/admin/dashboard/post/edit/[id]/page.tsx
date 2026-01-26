@@ -40,7 +40,7 @@ export default function EditPostPage() {
 
     const handleSubmit = async (data: PostFormData) => {
         try {
-            // await postService.update(id, data);
+            await postService.update(id, data);
             notifySuccess(t('post.updateSuccess'));
             router.push(ROUTES.POST.LIST);
         } catch {

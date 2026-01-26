@@ -83,7 +83,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
         try {
             setLoading(true);
 
-            let thumbnailBase64 = thumbnailUrl;
+            let thumbnailBase64 = null;
 
             // Nếu có file mới được upload
             if (fileList.length > 0 && fileList[0].originFileObj) {
@@ -91,11 +91,13 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
             }
 
             const formData: PostFormData = {
+                id: initialData ? initialData.id : undefined,
                 title: values.title,
                 description: values.description,
                 content: values.content,
                 media: {
-                    imageBase64: thumbnailBase64 || '',
+                    ...initialData?.media,
+                    imageBase64: thumbnailBase64 || null,
                 },
                 tags: Array.isArray(values.category) ? values.category : [values.category],
                 status: +values.status,
@@ -126,7 +128,6 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                 onFinish={handleSubmit}
                 initialValues={{
                     status: PostStatus.DRAFT,
-                    category: PostCategory.NEWS,
                 }}
             >
                 <div className={styles.formGrid}>
@@ -174,6 +175,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                                 placeholder={t('post.categoryPlaceholder')}
                                 size="large"
                                 mode="tags"
+                                maxCount={4}
                             />
                         </AntForm.Item>
 

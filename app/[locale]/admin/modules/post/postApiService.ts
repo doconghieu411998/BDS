@@ -42,4 +42,14 @@ export const postService = {
         const response = await axiosClient.post<Post>(`${BASE_URL}`, data);
         return response.data;
     },
+
+    async update(id: string, data: PostFormData): Promise<Post> {
+        const response = await axiosClient.put<Post>(`${BASE_URL}/${id}`, data);
+        return response.data;
+    },
+
+    // Xoá bài viết
+    async delete(id: string): Promise<void> {
+        await axiosClient.delete(`${BASE_URL}/${id}`);
+    },
 };
