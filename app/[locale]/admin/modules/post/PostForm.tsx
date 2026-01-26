@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Post, PostFormData, PostStatus, PostCategory } from '@/types/common';
+import { Post, PostFormData, PostStatus, PostCategory, Tag } from '@/types/common';
+import { TagApiService } from '@/api/tagApiService';
 import { t } from '@/utils/i18n';
 import { AntForm } from '@/crema/components/AntForm';
 import { AntInput } from '@/crema/components/AntInput';
@@ -20,14 +21,23 @@ import styles from './PostForm.module.css';
 interface PostFormProps {
     initialData?: Post;
     isEdit?: boolean;
-    onSubmit: (data) => Promise<void>;
+    onSubmit: (data: any) => Promise<void>;
 }
 
 export default function PostForm({ initialData, isEdit = false, onSubmit }: PostFormProps) {
     const [form] = AntForm.useForm();
     const [loading, setLoading] = useState(false);
-    const [thumbnailUrl, setThumbnailUrl] = useState<string | undefined>(initialData?.media?.image);
+    const [thumbnailUrl, setThumbnailUrl] = useState<string | undefined>(initialData?.media?.url);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [tags, setTags] = useState<Tag[]>([]);
+
+    useEffect(() => {
+        TagApiService.getTags().then((data) => {
+            setTags(data);
+        }).catch((err) => {
+            console.error("Failed to fetch tags", err);
+        });
+    }, []);
 
     useEffect(() => {
         if (initialData) {
@@ -35,19 +45,19 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                 title: initialData.title,
                 content: initialData.content,
                 description: initialData.description,
-                category: initialData.tags, // Maps tags to category field in form
-                status: String(initialData.status),
+                category: initialData.tags?.map((t: any) => t.tagName || t) || [], // Handle both object and string if mix
+                status: initialData.status,
             });
-            setThumbnailUrl(initialData.media?.image);
+            setThumbnailUrl(initialData.media?.url);
 
             // Set fileList để hiển thị ảnh dạng list item khi edit
-            if (initialData.media?.image) {
+            if (initialData.media?.url) {
                 setFileList([
                     {
                         uid: '-1',
                         name: 'image.jpg',
                         status: 'done',
-                        url: initialData.media.image,
+                        url: initialData.media.url,
                     },
                 ]);
             }
@@ -82,7 +92,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                 description: values.description,
                 content: values.content,
                 media: {
-                    image: thumbnailBase64 || '',
+                    imageBase64: thumbnailBase64 || '',
                 },
                 tags: Array.isArray(values.category) ? values.category : [values.category],
                 status: +values.status,
@@ -97,12 +107,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
         }
     };
 
-    const categoryOptions = [
-        { label: t('post.categoryNews'), value: PostCategory.NEWS },
-        { label: t('post.categoryGuide'), value: PostCategory.GUIDE },
-        { label: t('post.categoryMarket'), value: PostCategory.MARKET },
-        { label: t('post.categoryTips'), value: PostCategory.TIPS },
-    ];
+    const categoryOptions = tags.map(tag => ({ label: tag.tagName, value: tag.tagName }));
 
     const statusOptions = [
         { label: t('post.statusDraft'), value: PostStatus.DRAFT },

@@ -102,10 +102,15 @@ export enum PostCategory {
     TIPS = 'tips',
 }
 
+export interface Tag {
+    id: number;
+    tagName: string;
+}
+
 export interface PostMedia {
     id: number;
     url: string;
-    image: string;
+    imageBase64?: string | null;
     createdAt?: string;
     updatedAt?: string;
 }
@@ -117,11 +122,11 @@ export interface Post extends Record<string, unknown> {
     content: string;
     viewCount: number;
     status: PostStatus;
-    category: PostCategory;
+    category?: PostCategory; // Optional or mapped from tags?
     media: PostMedia;
-    tags: string[]; // Backend expects: [ "string" ]
-    createDate?: string; // Matching news model if needed, or stick to swagger which doesn't explicitly show date in example but likely has it
-    createdAt?: string; // Fallback
+    tags: Tag[];
+    createDate?: string;
+    createdAt?: string;
     updatedAt?: string;
     publishedAt?: string;
 }
@@ -132,11 +137,9 @@ export interface PostFormData {
     content: string;
     status: PostStatus;
     media: {
-        image: string; // Sending base64 as 'image' field in media object? Or sending media object? 
-        // Swagger request body has "media": { "image": "string", ... }
-        // We will construct this object.
+        imageBase64: string;
     };
-    tags: string[];
+    tags: string[]; // Sending array of tag names or IDs? Assuming names based on previous code usually
     viewCount?: number;
     id?: number;
 }

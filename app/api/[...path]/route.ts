@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const REMOTE_SERVER_URL = process.env.REMOTE_SERVER_URL;
+const REMOTE_SERVER_URL = process.env.REMOTE_SERVER_URL || 'http://103.82.23.181:5000';
 
 async function proxyRequest(request: NextRequest, method: string) {
     try {

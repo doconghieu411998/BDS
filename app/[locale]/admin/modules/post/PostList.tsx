@@ -97,15 +97,18 @@ export default function PostList() {
         );
     };
 
-    const getCategoryBadge = (category: PostCategory) => {
-        const categoryMap = {
-            [PostCategory.NEWS]: t('post.categoryNews'),
-            [PostCategory.GUIDE]: t('post.categoryGuide'),
-            [PostCategory.MARKET]: t('post.categoryMarket'),
-            [PostCategory.TIPS]: t('post.categoryTips'),
-        };
+    const getTagsBadge = (tags: any[]) => {
+        if (!tags || !Array.isArray(tags)) return null;
 
-        return <span className={styles.categoryBadge}>{categoryMap[category]}</span>;
+        return (
+            <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                {tags.map((tag, index) => (
+                    <span key={index} className={styles.categoryBadge}>
+                        {tag.tagName || tag}
+                    </span>
+                ))}
+            </div>
+        );
     };
 
     const formatDate = (dateString?: string) => {
@@ -126,10 +129,10 @@ export default function PostList() {
         },
         {
             title: t('post.category'),
-            dataIndex: 'category',
-            key: 'category',
-            width: 120,
-            render: (_: unknown, record: Post) => getCategoryBadge(record.category),
+            dataIndex: 'tags',
+            key: 'tags',
+            width: 200,
+            render: (_: unknown, record: Post) => getTagsBadge(record.tags),
         },
         {
             title: t('post.status'),
