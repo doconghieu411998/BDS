@@ -7,5 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/admin',
     },
+    sitemap: 'http://greenhillvillage.vn/sitemap.xml',
   };
 }

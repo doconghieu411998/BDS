@@ -9,8 +9,30 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "GREENHILL VILLAGE QUY NHƠN",
-  description: "Tựa như một ốc đảo xanh giữa lòng thành phố biển, GreenHill Village Quy Nhơn kiến tạo không gian sống giao hòa giữa thiên nhiên và hiện đại, nơi con người tìm thấy sự cân bằng và bình yên giữa nhịp sống đô thị. Với vị trí đắt giá trên trục phát triển mới của Quy Nhơn, thiết kế thông minh và hệ tiện ích toàn diện, Green Hill mang đến lựa chọn lý tưởng cho những ai đang tìm kiếm nơi an cư chuẩn mực, đồng thời là cơ hội đầu tư sinh lời bền vững giữa vùng đất đang vươn mình mạnh mẽ.",
+  title: {
+    template: "%s | Greenhill Village Quy Nhơn",
+    default: "Greenhill Village Quy Nhơn - Resort & Luxury Villas",
+  },
+  description: "Tựa như một ốc đảo xanh giữa lòng thành phố biển, GreenHill Village Quy Nhơn kiến tạo không gian sống giao hòa giữa thiên nhiên và hiện đại. Vị trí đắt giá, thiết kế thông minh và tiện ích toàn diện.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://greenhillvillage.vn'),
+  alternates: {
+    canonical: '/',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default async function RootLayout({
