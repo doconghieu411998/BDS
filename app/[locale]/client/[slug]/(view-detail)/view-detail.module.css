@@ -102,6 +102,42 @@
     color: #444;
 }
 
+/* Fix layout for images from editor */
+.htmlContent img {
+    max-width: 100%;
+    height: auto !important;
+    float: none !important;
+    /* Disable legacy align="left" */
+    display: block;
+    margin: 20px auto 12px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    /* Shadow nhẹ */
+}
+
+/* Style for auto-generated captions */
+.htmlContent :global(.img-caption) {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-style: italic;
+    line-height: 1.5;
+    background: transparent;
+    padding: 0 20px;
+    display: block;
+    width: 100%;
+}
+
+.htmlContent .image {
+    text-align: center !important;
+    width: 100%;
+    margin: 30px 0;
+    max-width: 100%;
+}
+
 /* --- TAG SECTION (LÀM LẠI CHO ĐẸP) --- */
 .tagSection {
     margin-top: 60px;
@@ -154,4 +190,8 @@
     .title {
         font-size: 32px;
     }
+}
+
+.relatedNews {
+    margin-top: 80px;
 }

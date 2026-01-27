@@ -4,61 +4,64 @@ const REMOTE_SERVER_URL = process.env.REMOTE_SERVER_URL || 'http://103.82.23.181
 
 async function proxyRequest(request: NextRequest, method: string) {
     try {
-        const { pathname } = new URL(request.url);
-        const apiPath = pathname.replace('/api/', '');
-        const targetUrl = `${REMOTE_SERVER_URL}/api/${apiPath}`;
+        const url = new URL(request.url);
+        const apiPath = url.pathname.replace('/api/', '');
+        const targetUrl = `${REMOTE_SERVER_URL}/api/${apiPath}${url.search}`;
 
+        // Build headers
         const headers: HeadersInit = {
             'Accept': 'application/json',
         };
 
         const contentType = request.headers.get('content-type');
-        if (contentType) {
+        const authorization = request.headers.get('authorization');
+
+        // Only set Content-Type if not multipart (browser handles multipart boundary)
+        if (contentType && !contentType.includes('multipart/form-data')) {
             headers['Content-Type'] = contentType;
-        } else {
+        } else if (!contentType) {
             headers['Content-Type'] = 'application/json';
         }
 
-        const authorization = request.headers.get('authorization');
         if (authorization) {
             headers['Authorization'] = authorization;
         }
 
-        const options: RequestInit = {
+        // Build request options
+        const options: RequestInit & { duplex?: string } = {
             method,
             headers,
-            // @ts-ignore - Required for streaming bodies in some environments
-            duplex: 'half',
             signal: AbortSignal.timeout(60000),
+            duplex: 'half', // Required for Node.js fetch with body
         };
 
+        // Handle request body for POST/PUT/PATCH
         if (['POST', 'PUT', 'PATCH'].includes(method)) {
             if (contentType?.includes('multipart/form-data')) {
+                // For multipart, forward the raw body stream
                 options.body = request.body;
+            } else if (contentType?.includes('application/json')) {
+                // For JSON, parse and re-stringify to validate
+                const body = await request.json();
+                options.body = JSON.stringify(body);
             } else {
-                // For JSON, we can either forward body or parse/stringify.
-                // Existing logic parsed it, implying potential validation or just habit. 
-                // To be safe and minimal change:
-                if (contentType?.includes('application/json')) {
-                    const body = await request.json();
-                    options.body = JSON.stringify(body);
-                } else {
-                    // Fallback for other types (e.g. text/plain), just pass body
-                    options.body = request.body;
-                }
+                // For other types, forward as-is
+                options.body = request.body;
             }
         }
 
+        // Make request to backend
         const response = await fetch(targetUrl, options);
 
+        // Handle error responses
         if (!response.ok) {
             const errorText = await response.text();
-
             let errorData;
+
             try {
                 errorData = JSON.parse(errorText);
             } catch {
-                errorData = { message: errorText };
+                errorData = { message: errorText || 'Unknown error' };
             }
 
             return NextResponse.json(
@@ -67,9 +70,35 @@ async function proxyRequest(request: NextRequest, method: string) {
             );
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        // Handle success responses
+        const responseContentType = response.headers.get('content-type');
+
+        // Try to parse as JSON if content-type indicates JSON
+        if (responseContentType?.includes('application/json')) {
+            try {
+                const data = await response.json();
+                return NextResponse.json(data);
+            } catch {
+                // If JSON parse fails, return success anyway
+                return NextResponse.json({ success: true });
+            }
+        }
+
+        // For non-JSON responses, try to read as text
+        const text = await response.text();
+        if (!text || text.trim() === '') {
+            return NextResponse.json({ success: true });
+        }
+
+        // Try to parse text as JSON, fallback to text message
+        try {
+            return NextResponse.json(JSON.parse(text));
+        } catch {
+            return NextResponse.json({ success: true, message: text });
+        }
+
     } catch (error) {
+        console.error('Proxy request error:', error);
         return NextResponse.json(
             {
                 success: false,

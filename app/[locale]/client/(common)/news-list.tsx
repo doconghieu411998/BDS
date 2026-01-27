@@ -11,12 +11,13 @@ import { NewsItem } from '@/models/news';
 import { ClientPostApiService } from '@/api/clientPostApiService';
 
 interface NewsListProps {
-    relatedTags?: string[];
+    relatedTags?: number[];  // Changed from string[] to number[] for tag IDs
     excludeId?: number;
     limit?: number;
     showPagination?: boolean;
     title?: string;
     sortByDate?: boolean;
+    className?: string; // Support custom class
 }
 
 const NewsList = ({
@@ -25,7 +26,8 @@ const NewsList = ({
     limit,
     showPagination = true,
     title,
-    sortByDate = false
+    sortByDate = false,
+    className
 }: NewsListProps) => {
     const locale = useLocale();
     const [items, setItems] = useState<NewsItem[]>([]);
@@ -39,13 +41,11 @@ const NewsList = ({
             const response = await ClientPostApiService.getPosts(currentPage, PAGE_SIZE);
             let data = response.data;
 
-            // 1. Filter by related tags and exclude current ID
+            // Client-side filter by tag IDs (for related posts in detail page)
             if (relatedTags && relatedTags.length > 0) {
-                // Not modifying existing related tags logic
-                if (relatedTags[0]) {
-                    const related = await ClientPostApiService.getPostsByTag(relatedTags[0]);
-                    data = related;
-                }
+                data = data.filter(item =>
+                    item.tags.some(tag => relatedTags.includes(tag.id))
+                );
             }
 
             if (excludeId) {
@@ -57,7 +57,7 @@ const NewsList = ({
                 data.sort((a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
             }
 
-            // 2. Limit if needed
+            // Limit if needed
             if (limit) {
                 data = data.slice(0, limit);
             }
@@ -67,12 +67,13 @@ const NewsList = ({
         };
 
         fetchNews();
-    }, [currentPage, relatedTags, excludeId, limit, PAGE_SIZE, sortByDate]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage]);
 
     if (!items || items.length === 0) return null;
 
     return (
-        <div className={styles.newsSectionWrapper}>
+        <div className={`${styles.newsSectionWrapper} ${className || ''}`}>
             {title && <h2 className={styles.sectionTitle}>{title}</h2>}
 
             <div className={styles.newsGrid}>
@@ -88,7 +89,7 @@ const NewsList = ({
                                 </Link>
                                 {/* Hiển thị tag đầu tiên lên ảnh cho đẹp */}
                                 {item.tags.length > 0 && (
-                                    <span className={styles.floatingTag}>{item.tags[0]}</span>
+                                    <span className={styles.floatingTag}>{item.tags[0].tagName}</span>
                                 )}
                             </div>
 

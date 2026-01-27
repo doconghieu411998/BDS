@@ -5,6 +5,15 @@ import { SESSION_KEYS } from '@/constants/help';
 
 const BASE_URL = 'post';
 
+// Backend response structure for landing page
+interface PostListResponse {
+    items: Post[];
+    page: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+}
+
 // Helper to map API Post to Client NewsItem
 const mapPostToNewsItem = (post: Post): NewsItem => {
     return {
@@ -12,7 +21,7 @@ const mapPostToNewsItem = (post: Post): NewsItem => {
         title: post.title,
         description: post.description,
         content: post.content,
-        tags: post.tags?.map(t => t.tagName) || [],
+        tags: post.tags || [],  // Keep full Tag objects with id and tagName
         banner: post.media?.url || '',
         createDate: post.publishedAt || post.createdAt || new Date().toISOString(),
         viewCount: post.viewCount || 0,
@@ -21,39 +30,21 @@ const mapPostToNewsItem = (post: Post): NewsItem => {
 };
 
 export const ClientPostApiService = {
-    // Get List of Posts
+    // Get List of Posts for Landing Page
     async getPosts(page: number = 1, limit: number = 10, search?: string): Promise<PaginatedNews> {
-        // Since backend doesn't support pagination object response yet (it returns array), we mock it for now
-        // OR if updated postApiService shows backend returns array, we follow that.
-        // Actually admin postApiService says: "Backend returns array directly".
-        // But we want to simulate pagination for client consistent with News model.
-
-        const response = await axiosClient.get<Post[]>(BASE_URL); // Fetch all for now? Or query params? 
-        // Admin service sends query params. Let's send them too.
-        const queryParams = new URLSearchParams({
-            page: page.toString(),
-            limit: limit.toString(),
+        const response = await axiosClient.post<PostListResponse>(`${BASE_URL}/getalllanding`, {
+            page,
+            pageSize: limit
         });
-        if (search) queryParams.append('search', search);
 
-        // NOTE: The previous admin service note said "Backend trả về array trực tiếp".
-        // But typically API returns pagination structure. We will trust the admin service findings:
-        // "return response.data" which is Post[].
-
-        const allPosts = await axiosClient.get<Post[]>(`${BASE_URL}?${queryParams.toString()}`);
-
-        // Filter only published posts for client
-        const publishedPosts = allPosts.data; // Server might already filter? Assume server returns what we ask.
-        // If server returns all, we should filter. But usually public API returns public posts.
-        // Let's assume response.data is the list.
-
-        const newsItems = publishedPosts.map(mapPostToNewsItem);
+        // Map posts to news items
+        const newsItems = response.data.items.map(mapPostToNewsItem);
 
         return {
             data: newsItems,
-            total: newsItems.length, // total is tricky if backend doesn't return it
-            currentPage: page,
-            pageSize: limit
+            total: response.data.totalItems,
+            currentPage: response.data.page,
+            pageSize: response.data.pageSize
         };
     },
 
@@ -68,11 +59,15 @@ export const ClientPostApiService = {
         }
     },
 
-    // Get by Tag (Client-side filtering for now)
-    async getPostsByTag(tag: string): Promise<NewsItem[]> {
-        const response = await axiosClient.get<Post[]>(BASE_URL);
-        const newsItems = response.data.map(mapPostToNewsItem);
-        return newsItems.filter(item => item.tags.includes(tag));
+    // Get by Tag - using tag ID as query parameter
+    async getPostsByTag(tagId: string | number): Promise<NewsItem[]> {
+        try {
+            const id = typeof tagId === 'string' ? parseInt(tagId, 10) : tagId;
+            const response = await axiosClient.put<Post[]>(`${BASE_URL}/getpostbytag?id=${id}`);
+            return response.data.map(mapPostToNewsItem);
+        } catch (error) {
+            return [];
+        }
     },
 
     // Boost View Count

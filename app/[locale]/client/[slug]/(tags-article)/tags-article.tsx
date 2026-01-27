@@ -25,7 +25,7 @@ export default function TagArticleList({ tagSlug, tagName, articles, locale }: T
 
             {/* LIST ARTICLE */}
             <div className={styles.listWrapper}>
-                {articles && articles.length > 0 ? (
+                {articles && articles?.length > 0 ? (
                     articles.map((item) => (
                         <article key={item.id} className={styles.articleItem}>
                             {/* Cột trái: Hình ảnh */}
@@ -56,7 +56,9 @@ export default function TagArticleList({ tagSlug, tagName, articles, locale }: T
                         </article>
                     ))
                 ) : (
-                    <p>Không có bài viết nào thuộc chủ đề này.</p>
+                    <div className={styles.emptyState}>
+                        <p>Không có bài viết nào thuộc chủ đề này.</p>
+                    </div>
                 )}
             </div>
 

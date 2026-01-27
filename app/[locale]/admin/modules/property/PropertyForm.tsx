@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { UploadOutlined, SaveOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd';
+import dynamic from 'next/dynamic';
 import { t } from '@/utils/i18n';
 import {
     AntForm,
@@ -11,10 +12,14 @@ import {
     AntButton,
     AntUpload,
     AntSelect,
-    RichTextEditor,
 } from '@/crema/components';
 import { PropertyType, PropertyStatus, Property, PropertyFormData } from '@/types/common';
 import styles from './PropertyForm.module.css';
+
+const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Đang tải editor...</div>,
+});
 
 interface PropertyFormProps {
     initialData?: Property | null;

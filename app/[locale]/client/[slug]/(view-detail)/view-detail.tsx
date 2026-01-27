@@ -12,7 +12,20 @@ interface Props {
   locale: string;
 }
 
+// Helper to auto-generate captions from alt text
+const processContent = (content: string) => {
+  if (!content) return '';
+  return content.replace(
+    /(<img\s[^>]*?alt=["']([^"']+)["'][^>]*?>)/gi,
+    (match, imgTag, altText) => {
+      if (!altText || altText.trim() === '') return match;
+      return `${match}<p class="img-caption">${altText}</p>`;
+    }
+  );
+};
+
 export default async function NewsDetailView({ item, locale }: Props) {
+  const processedContent = processContent(item.content);
   return (
     <main className={styles.container}>
       <section className={styles.bannerWrapper}>
@@ -28,7 +41,7 @@ export default async function NewsDetailView({ item, locale }: Props) {
       <div className={styles.contentWrapper}>
         <header className={styles.header}>
           {item.tags?.length > 0 && (
-            <span className={styles.categoryBadge}>{item.tags[0]}</span>
+            <span className={styles.categoryBadge}>{item.tags[0].tagName}</span>
           )}
 
           <h1 className={styles.title}>{item.title}</h1>
@@ -47,38 +60,38 @@ export default async function NewsDetailView({ item, locale }: Props) {
 
           <div
             className={styles.htmlContent}
-            dangerouslySetInnerHTML={{ __html: item.content }}
+            dangerouslySetInnerHTML={{ __html: processedContent }}
           />
 
           {item.tags && item.tags.length > 0 && (
             <div className={styles.tagSection}>
               <span className={styles.tagLabel}>CHỦ ĐỀ:</span>
               <div className={styles.tagList}>
-                {item.tags.map((tag, index) => (
-                  <Link
-                    key={index}
-                    href={{
-                      pathname: '/client/[slug]',
-                      params: { slug: `${convertSlugUrl(tag, locale)}.html` }
-                    }}
-                    className={styles.tagItem}
-                  >
-                    {tag}
-                  </Link>
-                ))}
+                {item.tags.map((tag, index) => {
+                  const tagSlug = `${convertSlugUrl(tag.tagName, locale)}-t${tag.id}.html`;
+                  return (
+                    <Link
+                      key={index}
+                      href={`/client/${tagSlug}` as any}
+                      className={styles.tagItem}
+                    >
+                      {tag.tagName}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}
         </article>
 
-        <div style={{ marginTop: '80px' }}>
-          <NewsList
-            relatedTags={item.tags}
-            excludeId={item.id}
-            limit={4}
-            showPagination={true}
-          />
-        </div>
+        {/* Pass tag IDs instead of tag names to NewsList */}
+        <NewsList
+          relatedTags={item.tags.map(t => t.id)}
+          excludeId={item.id}
+          limit={4}
+          showPagination={true}
+          className={styles.relatedNews}
+        />
       </div>
 
       <ArticleTracker newsId={String(item.id)} locale={locale} />

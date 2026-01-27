@@ -3,31 +3,33 @@ import { Post, PaginationParams, PaginationResponse, PostFormData } from '@/type
 
 const BASE_URL = 'post';
 
+// Backend response structure
+interface PostListResponse {
+    items: Post[];
+    page: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+}
+
 export const postService = {
     // Lấy danh sách bài viết
     async getList(params: PaginationParams & { search?: string }): Promise<PaginationResponse<Post>> {
         const { page, limit, search } = params;
-        const queryParams = new URLSearchParams({
-            page: page.toString(),
-            limit: limit.toString(),
+
+        const response = await axiosClient.post<PostListResponse>(`${BASE_URL}/getall`, {
+            page,
+            pageSize: limit,
+            title: search || ''
         });
 
-        if (search) {
-            queryParams.append('search', search);
-        }
-
-        // Backend trả về array trực tiếp, không có pagination wrapper
-        const response = await axiosClient.get<Post[]>(
-            `${BASE_URL}?${queryParams.toString()}`
-        );
-
-        // Wrap response vào pagination format cho frontend
+        // Map backend response to frontend PaginationResponse format
         return {
-            data: response.data,
-            total: response.data.length, // Backend không trả total, dùng length tạm
-            page,
-            limit,
-            totalPages: Math.ceil(response.data.length / limit),
+            data: response.data.items,
+            total: response.data.totalItems,
+            page: response.data.page,
+            limit: response.data.pageSize,
+            totalPages: response.data.totalPages
         };
     },
 

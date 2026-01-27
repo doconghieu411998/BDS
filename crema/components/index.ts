@@ -17,7 +17,10 @@ export { AntDropdown } from './AntDropdown';
 export { AntAvatar } from './AntAvatar';
 export { AntStatistic } from './AntStatistic';
 export { AntBreadcrumb } from './AntBreadcrumb';
-export { RichTextEditor } from './RichTextEditor';
+// RichTextEditor removed from barrel exports - use dynamic import instead
+// import dynamic from 'next/dynamic';
+// const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), { ssr: false });
+
 
 export type { FormInstance, FormItemProps } from './AntForm';
 export type { MenuProps } from './AntMenu';

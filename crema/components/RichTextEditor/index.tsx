@@ -9,6 +9,7 @@ import { RichTextProvider } from 'reactjs-tiptap-editor';
 import 'reactjs-tiptap-editor/style.css';
 import styles from './RichTextEditor.module.css';
 import { FileApiService } from '@/api/fileApiService';
+import { TextStyle } from '@tiptap/extension-text-style';
 
 // Extensions
 import { Bold, RichTextBold } from 'reactjs-tiptap-editor/bold';
@@ -133,6 +134,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             BulletList,
             OrderedList,
             TaskList,
+            TextStyle,
             Link.configure({
                 openOnClick: false,
                 HTMLAttributes: {

@@ -7,6 +7,22 @@
     /* Quan trọng: padding-top 160px để tránh bị dính vào Header/Menu */
     padding: 160px 20px 80px;
     background-color: #fff;
+    min-height: 60vh;
+    /* Prevent footer from jumping up */
+}
+
+.emptyState {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    color: #666;
+    font-size: 16px;
+    padding: 40px;
+    text-align: center;
+    border: 1px dashed #ddd;
 }
 
 /* --- Header Section (Giống style NewsDetail) --- */

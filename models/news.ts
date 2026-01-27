@@ -1,9 +1,11 @@
+import { Tag } from '@/types/common';
+
 export interface NewsItem {
     id: number;
     title: string;
     description: string;
     content: string;
-    tags: string[];
+    tags: Tag[];  // Changed from string[] to Tag[] to preserve tag IDs
     banner: string;
     createDate: string;
     viewCount: number;

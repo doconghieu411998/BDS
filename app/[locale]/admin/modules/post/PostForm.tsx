@@ -12,13 +12,11 @@ import { AntUpload } from '@/crema/components/AntUpload';
 import dynamic from 'next/dynamic';
 const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), {
     ssr: false,
-    loading: () => <p>Loading editor...</p>
+    loading: () => <div style={{ minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Đang tải editor...</div>,
 });
-import { Select } from 'antd';
-import type { SelectProps } from 'antd';
+
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadFile, FormInstance } from 'antd';
-import { Tabs } from 'antd';
 import styles from './PostForm.module.css';
 
 interface PostFormProps {

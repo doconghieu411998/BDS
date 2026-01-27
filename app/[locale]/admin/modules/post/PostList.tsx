@@ -41,7 +41,8 @@ export default function PostList() {
 
     useEffect(() => {
         loadPosts(currentPage, searchText);
-    }, [currentPage, searchText, loadPosts]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, searchText]);
 
     const handleSearch = (value: string) => {
         setSearchText(value);
@@ -128,6 +129,22 @@ export default function PostList() {
             key: 'title',
         },
         {
+            title: t('post.thumbnail'),
+            dataIndex: 'media',
+            key: 'media',
+            width: 100,
+            render: (media: any) => (
+                media?.url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                        src={media.url}
+                        alt="banner"
+                        style={{ width: '80px', height: '50px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #eee' }}
+                    />
+                ) : null
+            ),
+        },
+        {
             title: t('post.category'),
             dataIndex: 'tags',
             key: 'tags',
@@ -149,10 +166,10 @@ export default function PostList() {
         },
         {
             title: t('post.publishedAt'),
-            dataIndex: 'publishedAt',
-            key: 'publishedAt',
+            dataIndex: 'createDate',
+            key: 'createDate',
             width: 130,
-            render: (_: unknown, record: Post) => formatDate(record.publishedAt),
+            render: (_: unknown, record: Post) => formatDate(record.createDate),
         },
     ];
 
