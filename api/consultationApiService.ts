@@ -42,4 +42,10 @@ export const consultationApiService = {
         const response = await axiosClient.post(BASE_URL, data);
         return response.data;
     },
+
+    async exportExcel(): Promise<{ success: boolean , message: string}> {
+        const response = await axiosClient.post(`${BASE_URL}/exportexcel`, {});
+
+        return response.data;
+    }
 };
