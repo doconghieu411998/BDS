@@ -23,6 +23,12 @@ export const MENU_ITEMS: MenuItem[] = [
         label: 'Trang chủ',
         path: ROUTES.DASHBOARD,
     },
+     {
+        key: 'language',
+        icon: <GlobalOutlined />,
+        label: 'Quản lý ngôn ngữ',
+        path: ROUTES.LANGUAGE,
+    },
     {
         key: 'post',
         icon: <FileTextOutlined />,
@@ -48,12 +54,6 @@ export const MENU_ITEMS: MenuItem[] = [
                 path: ROUTES.CONSULTATION.LIST,
             },
         ],
-    },
-    {
-        key: 'language',
-        icon: <GlobalOutlined />,
-        label: 'Quản lý ngôn ngữ',
-        path: ROUTES.LANGUAGE,
     },
     {
         key: 'images',

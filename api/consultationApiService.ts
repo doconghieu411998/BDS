@@ -14,6 +14,8 @@ export const consultationApiService = {
         const response = await axiosClient.post(`${BASE_URL}/paged`, {
             page,
             pageSize: limit,
+            name: search || '',
+            phoneNumber: search || '',
         });
 
         const result = response.data?.value || response.data;
