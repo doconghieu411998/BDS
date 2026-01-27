@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { UploadOutlined, SaveOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd';
 import dynamic from 'next/dynamic';
-import { t } from '@/utils/i18n';
 import {
     AntForm,
     AntInput,
@@ -98,18 +97,18 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
 
     // Select options with i18n labels
     const typeOptions = [
-        { label: t('property.typeApartment'), value: PropertyType.APARTMENT },
-        { label: t('property.typeHouse'), value: PropertyType.HOUSE },
-        { label: t('property.typeVilla'), value: PropertyType.VILLA },
-        { label: t('property.typeLand'), value: PropertyType.LAND },
-        { label: t('property.typeCommercial'), value: PropertyType.COMMERCIAL },
+        { label: 'Căn hộ', value: PropertyType.APARTMENT },
+        { label: 'Nhà phố', value: PropertyType.HOUSE },
+        { label: 'Biệt thự', value: PropertyType.VILLA },
+        { label: 'Đất nền', value: PropertyType.LAND },
+        { label: 'Thương mại', value: PropertyType.COMMERCIAL },
     ];
 
     const statusOptions = [
-        { label: t('property.statusAvailable'), value: PropertyStatus.AVAILABLE },
-        { label: t('property.statusSold'), value: PropertyStatus.SOLD },
-        { label: t('property.statusRented'), value: PropertyStatus.RENTED },
-        { label: t('property.statusPending'), value: PropertyStatus.PENDING },
+        { label: 'Còn trống', value: PropertyStatus.AVAILABLE },
+        { label: 'Đã bán', value: PropertyStatus.SOLD },
+        { label: 'Đã cho thuê', value: PropertyStatus.RENTED },
+        { label: 'Đang chờ', value: PropertyStatus.PENDING },
     ];
 
     return (
@@ -119,55 +118,55 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
                     {/* Title */}
                     <AntForm.Item
                         name="title"
-                        label={t('property.title')}
-                        rules={[{ required: true, message: t('property.titleRequired') }]}
+                        label={'Tiêu đề'}
+                        rules={[{ required: true, message: 'Vui lòng nhập tiêu đề!' }]}
                     >
-                        <AntInput placeholder={t('property.titlePlaceholder')} size="large" />
+                        <AntInput placeholder={'Nhập tiêu đề bất động sản'} size="large" />
                     </AntForm.Item>
 
                     {/* Address */}
                     <AntForm.Item
                         name="address"
-                        label={t('property.address')}
-                        rules={[{ required: true, message: t('property.addressRequired') }]}
+                        label={'Địa chỉ'}
+                        rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
                     >
-                        <AntInput placeholder={t('property.addressPlaceholder')} size="large" />
+                        <AntInput placeholder={'Nhập địa chỉ'} size="large" />
                     </AntForm.Item>
 
                     {/* Type - Status - Price */}
                     <div className={styles.formRow3}>
                         <AntForm.Item
                             name="type"
-                            label={t('property.type')}
-                            rules={[{ required: true, message: t('property.typeRequired') }]}
+                            label={'Loại Bất động sản'}
+                            rules={[{ required: true, message: 'Vui lòng chọn loại BĐS!' }]}
                         >
                             <AntSelect
                                 options={typeOptions}
-                                placeholder={t('property.typePlaceholder')}
+                                placeholder={'Chọn loại BĐS'}
                                 size="large"
                             />
                         </AntForm.Item>
 
                         <AntForm.Item
                             name="status"
-                            label={t('property.status')}
-                            rules={[{ required: true, message: t('property.statusRequired') }]}
+                            label={'Trạng thái'}
+                            rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
                         >
                             <AntSelect
                                 options={statusOptions}
-                                placeholder={t('property.statusPlaceholder')}
+                                placeholder={'Chọn trạng thái'}
                                 size="large"
                             />
                         </AntForm.Item>
 
                         <AntForm.Item
                             name="price"
-                            label={t('property.price')}
-                            rules={[{ required: true, message: t('property.priceRequired') }]}
+                            label={'Giá (VNĐ)'}
+                            rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}
                         >
                             <AntInput
                                 type="number"
-                                placeholder={t('property.pricePlaceholder')}
+                                placeholder={'Nhập giá'}
                                 size="large"
                             />
                         </AntForm.Item>
@@ -177,28 +176,28 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
                     <div className={styles.formRow3}>
                         <AntForm.Item
                             name="area"
-                            label={t('property.area')}
-                            rules={[{ required: true, message: t('property.areaRequired') }]}
+                            label={'Diện tích (m²)'}
+                            rules={[{ required: true, message: 'Vui lòng nhập diện tích!' }]}
                         >
                             <AntInput
                                 type="number"
-                                placeholder={t('property.areaPlaceholder')}
+                                placeholder={'Nhập diện tích'}
                                 size="large"
                             />
                         </AntForm.Item>
 
-                        <AntForm.Item name="bedrooms" label={t('property.bedrooms')}>
+                        <AntForm.Item name="bedrooms" label={'Số phòng ngủ'}>
                             <AntInput
                                 type="number"
-                                placeholder={t('property.bedroomsPlaceholder')}
+                                placeholder={'Số phòng ngủ'}
                                 size="large"
                             />
                         </AntForm.Item>
 
-                        <AntForm.Item name="bathrooms" label={t('property.bathrooms')}>
+                        <AntForm.Item name="bathrooms" label={'Số phòng tắm'}>
                             <AntInput
                                 type="number"
-                                placeholder={t('property.bathroomsPlaceholder')}
+                                placeholder={'Số phòng tắm'}
                                 size="large"
                             />
                         </AntForm.Item>
@@ -208,47 +207,47 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
                     <div className={styles.formRow3}>
                         <AntForm.Item
                             name="ward"
-                            label={t('property.ward')}
-                            rules={[{ required: true, message: t('property.wardRequired') }]}
+                            label={'Phường/Xã'}
+                            rules={[{ required: true, message: 'Vui lòng nhập phường/xã!' }]}
                         >
-                            <AntInput placeholder={t('property.wardPlaceholder')} size="large" />
+                            <AntInput placeholder={'Nhập phường/xã'} size="large" />
                         </AntForm.Item>
 
                         <AntForm.Item
                             name="district"
-                            label={t('property.district')}
-                            rules={[{ required: true, message: t('property.districtRequired') }]}
+                            label={'Quận/Huyện'}
+                            rules={[{ required: true, message: 'Vui lòng nhập quận/huyện!' }]}
                         >
                             <AntInput
-                                placeholder={t('property.districtPlaceholder')}
+                                placeholder={'Nhập quận/huyện'}
                                 size="large"
                             />
                         </AntForm.Item>
 
                         <AntForm.Item
                             name="city"
-                            label={t('property.city')}
-                            rules={[{ required: true, message: t('property.cityRequired') }]}
+                            label={'Tỉnh/Thành phố'}
+                            rules={[{ required: true, message: 'Vui lòng nhập tỉnh/thành phố!' }]}
                         >
-                            <AntInput placeholder={t('property.cityPlaceholder')} size="large" />
+                            <AntInput placeholder={'Nhập tỉnh/thành phố'} size="large" />
                         </AntForm.Item>
                     </div>
 
                     {/* Description */}
                     <AntForm.Item
-                        label={t('property.description')}
-                        rules={[{ required: true, message: t('property.descriptionRequired') }]}
+                        label={'Mô tả'}
+                        rules={[{ required: true, message: 'Vui lòng nhập mô tả!' }]}
                     >
                         <RichTextEditor
                             value={description}
                             onChange={setDescription}
-                            placeholder={t('property.descriptionPlaceholder')}
+                            placeholder={'Nhập mô tả chi tiết về bất động sản...'}
                         />
                     </AntForm.Item>
 
                     {/* Images */}
                     <div className={styles.formItem}>
-                        <label className={styles.label}>{t('property.images')}</label>
+                        <label className={styles.label}>{'Hình ảnh'}</label>
                         <AntUpload.Dragger
                             multiple
                             listType="picture-card"
@@ -259,9 +258,9 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
                         >
                             <div className={styles.uploadInner}>
                                 <UploadOutlined className={styles.uploadIcon} />
-                                <div className={styles.uploadTitle}>{t('property.uploadHint')}</div>
+                                <div className={styles.uploadTitle}>{'Nhấp hoặc kéo thả file vào đây'}</div>
                                 <div className={styles.uploadSub}>
-                                    {t('property.uploadSupported')}
+                                    {'Hỗ trợ định dạng JPG, PNG (tối đa 5MB mỗi ảnh)'}
                                 </div>
                             </div>
                         </AntUpload.Dragger>
@@ -271,7 +270,7 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
                 {/* Actions */}
                 <div className={styles.actions}>
                     <AntButton size="large" onClick={handleBack} disabled={loading}>
-                        {t('common.cancel')}
+                        {'Hủy'}
                     </AntButton>
                     <AntButton
                         type="primary"
@@ -280,7 +279,7 @@ export const PropertyForm: React.FC<PropertyFormProps> = ({
                         loading={loading}
                         icon={<SaveOutlined />}
                     >
-                        {isEdit ? t('common.update') : t('common.create')}
+                        {isEdit ? 'Cập nhật' : 'Tạo mới'}
                     </AntButton>
                 </div>
             </AntForm>

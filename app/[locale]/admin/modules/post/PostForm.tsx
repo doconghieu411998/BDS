@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { Post, PostFormData, PostStatus, PostCategory, Tag } from '@/types/common';
 import { TagApiService } from '@/api/tagApiService';
-import { t } from '@/utils/i18n';
 import { AntForm } from '@/crema/components/AntForm';
 import { AntInput } from '@/crema/components/AntInput';
 import { AntButton } from '@/crema/components/AntButton';
@@ -113,9 +112,9 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
     const categoryOptions = tags.map(tag => ({ label: tag.tagName, value: tag.tagName }));
 
     const statusOptions = [
-        { label: t('post.statusDraft'), value: PostStatus.DRAFT },
-        { label: t('post.statusPublished'), value: PostStatus.PUBLISHED },
-        { label: t('post.statusArchived'), value: PostStatus.ARCHIVED },
+        { label: 'Bản nháp', value: PostStatus.DRAFT },
+        { label: 'Đã xuất bản', value: PostStatus.PUBLISHED },
+        { label: 'Lưu trữ', value: PostStatus.ARCHIVED },
     ];
 
     return (
@@ -132,15 +131,15 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                     {/* Tiêu đề */}
                     <AntForm.Item
                         name="title"
-                        label={t('post.title')}
+                        label={'Tiêu đề'}
                         rules={[
                             {
                                 required: true,
-                                message: t('post.titleRequired'),
+                                message: 'Vui lòng nhập tiêu đề!',
                             },
                         ]}
                     >
-                        <AntInput placeholder={t('post.titlePlaceholder')} size="large" />
+                        <AntInput placeholder={'Nhập tiêu đề bài viết'} size="large" />
                     </AntForm.Item>
 
                     <AntForm.Item
@@ -160,17 +159,24 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                     <div className={styles.formRow}>
                         <AntForm.Item
                             name="category"
-                            label={t('post.category')}
+                            label={'Tags'}
                             rules={[
                                 {
                                     required: true,
-                                    message: t('post.categoryRequired'),
+                                    message: 'Vui lòng chọn danh mục!',
+                                },
+                                {
+                                    validator: async (_, value) => {
+                                        if (value && value.length > 4) {
+                                            return Promise.reject(new Error('Chỉ được chọn tối đa 4 tag'));
+                                        }
+                                    },
                                 },
                             ]}
                         >
                             <AntSelect
                                 options={categoryOptions}
-                                placeholder={t('post.categoryPlaceholder')}
+                                placeholder={'Chọn danh mục'}
                                 size="large"
                                 mode="tags"
                                 maxCount={4}
@@ -179,17 +185,17 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
 
                         <AntForm.Item
                             name="status"
-                            label={t('post.status')}
+                            label={'Trạng thái'}
                             rules={[
                                 {
                                     required: true,
-                                    message: t('post.statusRequired'),
+                                    message: 'Vui lòng chọn trạng thái!',
                                 },
                             ]}
                         >
                             <AntSelect
                                 options={statusOptions}
-                                placeholder={t('post.statusPlaceholder')}
+                                placeholder={'Chọn trạng thái'}
                                 size="large"
                             />
                         </AntForm.Item>
@@ -197,7 +203,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
 
                     {/* Ảnh đại diện */}
                     <div className={styles.formItem}>
-                        <label className={styles.label}>{t('post.thumbnail')}</label>
+                        <label className={styles.label}>{'Ảnh đại diện'}</label>
                         <AntUpload
                             fileList={fileList}
                             onChange={({ fileList }) => setFileList(fileList)}
@@ -207,7 +213,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                             listType="picture"
                         >
                             <AntButton icon={<UploadOutlined />}>
-                                {t('common.uploadImage')}
+                                {'Tải ảnh lên'}
                             </AntButton>
                         </AntUpload>
                     </div>
@@ -215,11 +221,11 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                     {/* Nội dung */}
                     <AntForm.Item
                         name="content"
-                        label={t('post.content')}
+                        label={'Nội dung'}
                         rules={[
                             {
                                 required: true,
-                                message: t('post.contentRequired'),
+                                message: 'Vui lòng nhập nội dung!',
                             },
                         ]}
                     >
@@ -233,10 +239,10 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                 {/* Actions */}
                 <div className={styles.actions}>
                     <AntButton type="default" size="large" onClick={() => window.history.back()}>
-                        {t('common.cancel')}
+                        {'Hủy'}
                     </AntButton>
                     <AntButton type="primary" htmlType="submit" size="large" loading={loading}>
-                        {isEdit ? t('common.update') : t('common.create')}
+                        {isEdit ? 'Cập nhật' : 'Tạo mới'}
                     </AntButton>
                 </div>
             </AntForm>

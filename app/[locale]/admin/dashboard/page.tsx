@@ -9,7 +9,7 @@ import styles from './page.module.css';
 export default function DashboardPage() {
     return (
         <div>
-            <h1 className={styles.dashboardTitle}>{t('menu.dashboard')}</h1>
+            <h1 className={styles.dashboardTitle}>Trang chủ</h1>
 
             <AntRow gutter={[16, 16]} className={styles.statsGrid}>
 

@@ -6,7 +6,6 @@ import {
     GlobalOutlined,
     PictureOutlined,
 } from '@ant-design/icons';
-import { t } from '@/utils/i18n';
 import { ROUTES } from './routes';
 
 export interface MenuItem {
@@ -21,18 +20,18 @@ export const MENU_ITEMS: MenuItem[] = [
     {
         key: 'dashboard',
         icon: <HomeOutlined />,
-        label: t('menu.dashboard'),
+        label: 'Trang chủ',
         path: ROUTES.DASHBOARD,
     },
     {
         key: 'post',
         icon: <FileTextOutlined />,
-        label: t('menu.post'),
+        label: 'Quản lý Bài viết',
         children: [
             {
                 key: 'post-list',
                 icon: <UnorderedListOutlined />,
-                label: t('menu.postList'),
+                label: 'Danh sách bài viết',
                 path: ROUTES.POST.LIST,
             },
         ],

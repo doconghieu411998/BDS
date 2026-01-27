@@ -5,7 +5,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Post, PostStatus, PostCategory } from '@/types/common';
 import { postService } from './postApiService';
-import { t } from '@/utils/i18n';
 import { ROUTES } from '@/constants/routes';
 import DataTable from '@/crema/core/DataTable';
 import { success as notifySuccess, error as notifyError } from '@/utils/antd-notification';
@@ -33,7 +32,7 @@ export default function PostList() {
             setPosts(result.data);
             setTotal(result.total);
         } catch {
-            notifyError(t('common.error'));
+            notifyError('Lỗi');
         } finally {
             setLoading(false);
         }
@@ -66,26 +65,26 @@ export default function PostList() {
 
         try {
             await postService.delete(deleteId);
-            notifySuccess(t('post.deleteSuccess'));
+            notifySuccess('Xóa bài viết thành công!');
             loadPosts(currentPage, searchText);
             setDeleteId(null);
         } catch {
-            notifyError(t('common.error'));
+            notifyError('Lỗi');
         }
     };
 
     const getStatusBadge = (status: PostStatus) => {
         const statusMap = {
             [PostStatus.PUBLISHED]: {
-                text: t('post.statusPublished'),
+                text: 'Đã xuất bản',
                 className: styles.statusPublished,
             },
             [PostStatus.DRAFT]: {
-                text: t('post.statusDraft'),
+                text: 'Bản nháp',
                 className: styles.statusDraft,
             },
             [PostStatus.ARCHIVED]: {
-                text: t('post.statusArchived'),
+                text: 'Lưu trữ',
                 className: styles.statusArchived,
             },
         };
@@ -124,12 +123,12 @@ export default function PostList() {
 
     const columns: ColumnType<Post>[] = [
         {
-            title: t('post.title'),
+            title: 'Tiêu đề',
             dataIndex: 'title',
             key: 'title',
         },
         {
-            title: t('post.thumbnail'),
+            title: 'Ảnh đại diện',
             dataIndex: 'media',
             key: 'media',
             width: 100,
@@ -145,14 +144,14 @@ export default function PostList() {
             ),
         },
         {
-            title: t('post.category'),
+            title: 'Tags',
             dataIndex: 'tags',
             key: 'tags',
             width: 200,
             render: (_: unknown, record: Post) => getTagsBadge(record.tags),
         },
         {
-            title: t('post.status'),
+            title: 'Trạng thái',
             dataIndex: 'status',
             key: 'status',
             width: 120,
@@ -165,7 +164,7 @@ export default function PostList() {
             width: 120,
         },
         {
-            title: t('post.publishedAt'),
+            title: 'Ngày xuất bản',
             dataIndex: 'createDate',
             key: 'createDate',
             width: 130,
@@ -186,20 +185,20 @@ export default function PostList() {
                     onChange: handlePageChange,
                 }}
                 searchConfig={{
-                    placeholder: t('post.searchPlaceholder'),
+                    placeholder: 'Tìm kiếm bài viết...',
                     onSearch: handleSearch,
                 }}
-                title={t('menu.postList')}
+                title={'Danh sách bài viết'}
                 onAdd={handleCreate}
-                addButtonText={t('post.createPost')}
+                addButtonText={'Tạo bài viết'}
                 onEdit={(record) => handleEdit(record.id?.toString())}
                 onDelete={(record) => setDeleteId(record.id?.toString())}
             />
 
             <DialogConfirm
                 open={!!deleteId}
-                title={t('post.deletePost')}
-                content={t('post.deleteConfirm')}
+                title={'Xóa bài viết'}
+                content={'Bạn có chắc chắn muốn xóa bài viết này?'}
                 onConfirm={handleDeleteConfirm}
                 onCancel={() => setDeleteId(null)}
             />

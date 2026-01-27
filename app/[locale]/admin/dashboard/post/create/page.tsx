@@ -5,7 +5,6 @@ import PostForm from '@admin/modules/post/PostForm';
 import { postService } from '@/app/[locale]/admin/modules/post/postApiService';
 import { PostFormData } from '@/types/common';
 import { ROUTES } from '@/constants/routes';
-import { t } from '@/utils/i18n';
 import { AntButton, AntBreadcrumb } from '@/crema/components';
 import { success as notifySuccess, error as notifyError } from '@/utils/antd-notification';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -22,10 +21,10 @@ export default function CreatePostPage() {
         try {
             console.log('Submitting data:', data);
             await postService.create(data);
-            notifySuccess(t('post.createSuccess'));
+            notifySuccess('Tạo bài viết thành công!');
             router.push(ROUTES.POST.LIST);
         } catch {
-            notifyError(t('common.error'));
+            notifyError('Lỗi');
         }
     };
 
@@ -45,9 +44,9 @@ export default function CreatePostPage() {
                     onClick={() => router.push(ROUTES.POST.LIST)}
                     className={styles.backButton}
                 >
-                    {t('common.back')}
+                    Quay lại
                 </AntButton>
-                <h1 className={styles.pageTitle}>{t('menu.postCreate')}</h1>
+                <h1 className={styles.pageTitle}>Thêm bài viết</h1>
             </div>
 
             <PostForm onSubmit={handleSubmit} />

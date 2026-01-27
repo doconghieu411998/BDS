@@ -114,7 +114,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         {
             key: 'logout',
             icon: <LogoutOutlined />,
-            label: t('auth.logout'),
+            label: 'Đăng xuất',
             onClick: handleLogout,
             danger: true,
         },

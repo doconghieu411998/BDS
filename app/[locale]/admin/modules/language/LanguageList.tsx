@@ -20,6 +20,8 @@ interface UpdateModalData {
     key: string;
     enValue: string;
     viValue: string;
+    enId?: number;
+    viId?: number;
 }
 
 export default function LanguageList() {
@@ -73,15 +75,22 @@ export default function LanguageList() {
         loadLanguages();
     }, [loadLanguages]);
 
+    useEffect(() => {
+        if (modalVisible && selectedPair) {
+            form.setFieldsValue({
+                enValue: selectedPair.enValue,
+                viValue: selectedPair.viValue,
+            });
+        }
+    }, [modalVisible, selectedPair, form]);
+
     const handleUpdate = (pair: LanguagePair) => {
         setSelectedPair({
             key: pair.key,
             enValue: pair.en?.value || '',
             viValue: pair.vi?.value || '',
-        });
-        form.setFieldsValue({
-            enValue: pair.en?.value || '',
-            viValue: pair.vi?.value || '',
+            enId: pair.en?.id,
+            viId: pair.vi?.id,
         });
         setModalVisible(true);
     };
@@ -103,7 +112,9 @@ export default function LanguageList() {
             const result = await updateLanguageByKey(
                 selectedPair.key,
                 values.enValue,
-                values.viValue
+                values.viValue,
+                selectedPair.enId,
+                selectedPair.viId
             );
 
             if (result.success) {

@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { authService } from '@/services/authService';
 import { authStorage } from '@/utils/auth';
 import { LoginRequest } from '@/types/common';
-import { t } from '@/utils/i18n';
 import { ROUTES } from '@/constants/routes';
 import { success as notifySuccess, error as notifyError } from '@/utils/antd-notification';
 import styles from './login.module.css';
@@ -33,13 +32,13 @@ export default function LoginForm() {
             // const userProfile = await authService.getProfile();
             // authStorage.setUser(userProfile, remember);
 
-            notifySuccess(t('auth.loginSuccess'));
+            notifySuccess('Đăng nhập thành công!');
 
             // Redirect về dashboard
             router.push(ROUTES.DASHBOARD);
         } catch (error: unknown) {
             // Xử lý error message từ API
-            let message = t('auth.loginFailed');
+            let message = 'Đăng nhập thất bại!';
 
             if (error && typeof error === 'object' && 'message' in error) {
                 message = (error as { message: string }).message;
@@ -59,8 +58,8 @@ export default function LoginForm() {
                 <div className={styles.loginCard}>
                     {/* Header */}
                     <div className={styles.loginHeader}>
-                        <h1 className={styles.loginTitle}>{t('auth.welcome')}</h1>
-                        <p className={styles.loginSubtitle}>{t('auth.loginSubtitle')}</p>
+                        <h1 className={styles.loginTitle}>Chào mừng trở lại</h1>
+                        <p className={styles.loginSubtitle}>Vui lòng đăng nhập để tiếp tục</p>
                     </div>
 
                     {/* Form */}
@@ -74,44 +73,44 @@ export default function LoginForm() {
                     >
                         <AntForm.Item
                             name="username"
-                            label={t('auth.email')}
+                            label={'Email'}
                             rules={[
                                 {
                                     required: true,
-                                    message: t('auth.emailRequired'),
+                                    message: 'Vui lòng nhập email!',
                                 },
                             ]}
                         >
                             <AntInput
                                 prefix={<UserOutlined className={styles.inputPrefixIcon} />}
-                                placeholder={t('auth.email')}
+                                placeholder={'Email'}
                             />
                         </AntForm.Item>
 
                         <AntForm.Item
                             name="password"
-                            label={t('auth.password')}
+                            label={'Mật khẩu'}
                             rules={[
                                 {
                                     required: true,
-                                    message: t('auth.passwordRequired'),
+                                    message: 'Vui lòng nhập mật khẩu!',
                                 },
                                 {
                                     min: 6,
-                                    message: t('auth.passwordMinLength'),
+                                    message: 'Mật khẩu phải có ít nhất 6 ký tự!',
                                 },
                             ]}
                         >
                             <AntInput.Password
                                 prefix={<LockOutlined className={styles.inputPrefixIcon} />}
-                                placeholder={t('auth.password')}
+                                placeholder={'Mật khẩu'}
                             />
                         </AntForm.Item>
 
                         <AntForm.Item>
                             <div className={styles.formFooter}>
                                 <AntForm.Item name="remember" valuePropName="checked" noStyle>
-                                    <AntCheckbox>{t('auth.rememberMe')}</AntCheckbox>
+                                    <AntCheckbox>Ghi nhớ đăng nhập</AntCheckbox>
                                 </AntForm.Item>
 
                                 <a
@@ -119,7 +118,7 @@ export default function LoginForm() {
                                     href="#"
                                     onClick={(e) => e.preventDefault()}
                                 >
-                                    {t('auth.forgotPassword')}
+                                    Quên mật khẩu?
                                 </a>
                             </div>
                         </AntForm.Item>
@@ -131,7 +130,7 @@ export default function LoginForm() {
                                 loading={loading}
                                 className={styles.loginButton}
                             >
-                                {t('auth.login')}
+                                Đăng nhập
                             </AntButton>
                         </AntForm.Item>
                     </AntForm>

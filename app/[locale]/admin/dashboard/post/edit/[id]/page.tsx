@@ -6,7 +6,6 @@ import PostForm from '@admin/modules/post/PostForm';
 import { postService } from '@/app/[locale]/admin/modules/post/postApiService';
 import { Post, PostFormData } from '@/types/common';
 import { ROUTES } from '@/constants/routes';
-import { t } from '@/utils/i18n';
 import { success as notifySuccess, error as notifyError } from '@/utils/antd-notification';
 import { AntButton } from '@/crema/components/AntButton';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -31,7 +30,7 @@ export default function EditPostPage() {
             const data = await postService.getById(id);
             setPost(data);
         } catch {
-            notifyError(t('common.error'));
+            notifyError('Lỗi');
             router.push(ROUTES.POST.LIST);
         } finally {
             setLoading(false);
@@ -41,15 +40,15 @@ export default function EditPostPage() {
     const handleSubmit = async (data: PostFormData) => {
         try {
             await postService.update(id, data);
-            notifySuccess(t('post.updateSuccess'));
+            notifySuccess('Cập nhật bài viết thành công!');
             router.push(ROUTES.POST.LIST);
         } catch {
-            notifyError(t('common.error'));
+            notifyError('Lỗi');
         }
     };
 
     if (loading) {
-        return <div style={{ padding: '24px', textAlign: 'center' }}>{t('common.loading')}...</div>;
+        return <div style={{ padding: '24px', textAlign: 'center' }}>Đang tải...</div>;
     }
 
     if (!post) {
@@ -64,10 +63,10 @@ export default function EditPostPage() {
                     onClick={() => router.push(ROUTES.POST.LIST)}
                     style={{ marginBottom: '16px' }}
                 >
-                    {t('common.back')}
+                    Quay lại
                 </AntButton>
                 <h1 style={{ fontSize: '24px', fontWeight: 600, margin: 0 }}>
-                    {t('post.editPost')}
+                    Sửa bài viết
                 </h1>
             </div>
             <PostForm initialData={post} isEdit onSubmit={handleSubmit} />

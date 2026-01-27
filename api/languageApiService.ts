@@ -1,41 +1,70 @@
 import { LanguageItem } from '@/models/language';
-import languageData from '../services/mockData/language.json';
+import axiosClient from "@/services/axiosClient";
+
+const BASE_URL = 'metadata';
 
 export const getLanguageList = async (): Promise<LanguageItem[]> => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(languageData as LanguageItem[]);
-        }, 500);
-    });
+    try {
+        // Fetch all metadata via Proxy
+        const response = await axiosClient.get<any[]>(BASE_URL);
+        const data = response.data;
+
+        if (!Array.isArray(data)) return [];
+
+        // App requirements: Only show items where isUpdate == 0 AND introduceImageId is null
+        const filtered = data.filter(item =>
+            item.isUpdate &&
+            !item.introduceImageId
+        );
+
+        // Map to frontend model
+        return filtered.map(item => ({
+            id: item.id,
+            key: item.keyName,
+            value: item.value,
+            type: item.group === 0 ? 'vi' : 'en',
+            createDate: item.createdAt,
+            updateDate: item.updatedAt,
+            isEdit: true
+        }));
+    } catch (error) {
+        console.error("Failed to fetch language list", error);
+        return [];
+    }
 };
 
 export const updateLanguageByKey = async (
     key: string,
     enValue: string,
-    viValue: string
+    viValue: string,
+    enId?: number,
+    viId?: number
 ): Promise<{ success: boolean }> => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            // Find items with the matching key
-            const items = (languageData as LanguageItem[]).filter(item => item.key === key);
+    try {
+        const promises = [];
 
-            if (items.length === 0) {
-                resolve({ success: false });
-                return;
-            }
+        if (enId) {
+            promises.push(axiosClient.put(BASE_URL, {
+                id: enId,
+                value: enValue,
+            }));
+        }
 
-            // Update values in memory (this is fake, so changes won't persist)
-            items.forEach(item => {
-                if (item.type === 'en') {
-                    item.value = enValue;
-                } else if (item.type === 'vi') {
-                    item.value = viValue;
-                }
-                item.updateDate = new Date().toISOString();
-                item.isEdit = false;
-            });
+        if (viId) {
+            promises.push(axiosClient.put(BASE_URL, {
+                id: viId,
+                value: viValue,
+            }));
+        }
 
-            resolve({ success: true });
-        }, 500);
-    });
+        if (promises.length > 0) {
+            await Promise.all(promises);
+            return { success: true };
+        }
+
+        return { success: false };
+    } catch (error) {
+        console.error("Failed to update language", error);
+        return { success: false };
+    }
 };
