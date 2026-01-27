@@ -10,27 +10,20 @@ export const consultationApiService = {
      */
     async getList(params: PaginationParams & { search?: string }): Promise<PaginationResponse<ConsultationResponse>> {
         const { page, limit, search } = params;
-        const queryParams = new URLSearchParams({
-            page: page.toString(),
-            limit: limit.toString(),
+
+        const response = await axiosClient.post(`${BASE_URL}/paged`, {
+            page,
+            pageSize: limit,
         });
 
-        if (search) {
-            queryParams.append('search', search);
-        }
+        const result = response.data?.value || response.data;
 
-        // Backend trả về array trực tiếp, không có pagination wrapper
-        const response = await axiosClient.get<ConsultationResponse[]>(
-            `${BASE_URL}?${queryParams.toString()}`
-        );
-
-        // Wrap response vào pagination format cho frontend
         return {
-            data: response.data,
-            total: response.data.length, // Backend không trả total, dùng length tạm
-            page,
-            limit,
-            totalPages: Math.ceil(response.data.length / limit),
+            data: result.items || [],
+            total: result.totalItems || 0,
+            page: result.page || page,
+            limit: result.pageSize || limit,
+            totalPages: result.totalPages || 0,
         };
     },
 

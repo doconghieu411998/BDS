@@ -11,7 +11,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
     const locale = await getLocale();
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://greenhillvillage.com.vn';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://greenhillvillage.vn';
     const { slug } = await params;
 
     // Check for tag first (tags have -tID.html pattern)
