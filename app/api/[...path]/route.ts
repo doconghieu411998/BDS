@@ -16,10 +16,11 @@ async function proxyRequest(request: NextRequest, method: string) {
         const contentType = request.headers.get('content-type');
         const authorization = request.headers.get('authorization');
 
-        // Only set Content-Type if not multipart (browser handles multipart boundary)
-        if (contentType && !contentType.includes('multipart/form-data')) {
+        // CRITICAL: Always forward Content-Type header if present
+        // Backend needs this to handle multipart/form-data
+        if (contentType) {
             headers['Content-Type'] = contentType;
-        } else if (!contentType) {
+        } else {
             headers['Content-Type'] = 'application/json';
         }
 

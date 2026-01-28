@@ -70,20 +70,14 @@ export const ClientPostApiService = {
         }
     },
 
-    // Boost View Count
+    // Boost View Count - Called by ArticleTracker when a new view is recorded
     async increaseViewCount(id: string) {
         if (typeof window === 'undefined') return;
 
-        const sessionKey = `${SESSION_KEYS.PAGE_VIEWS}_post_${id}`;
-        const hasViewed = sessionStorage.getItem(sessionKey);
-
-        if (!hasViewed) {
-            try {
-                await axiosClient.put(`${BASE_URL}/boostviews?id=${id}`);
-                sessionStorage.setItem(sessionKey, 'true');
-            } catch (error) {
-                console.error("Failed to boost view count", error);
-            }
+        try {
+            await axiosClient.put(`${BASE_URL}/boostviews?id=${id}`);
+        } catch (error) {
+            console.error("Failed to boost view count", error);
         }
     }
 };

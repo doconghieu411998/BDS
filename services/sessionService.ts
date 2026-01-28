@@ -101,37 +101,54 @@ export const generatePageKey = (pageId: string, locale?: string): string => {
 
 /**
  * Record a page view with expiration
- * Creates a new session if one doesn't exist
+ * 
+ * Logic:
+ * 1. If no session exists OR session is expired -> Create new session -> Call API -> Record view
+ * 2. If session exists and is valid:
+ *    - If page view doesn't exist OR page view is expired -> Call API -> Record/Extend view
+ *    - If page view exists and is valid -> Skip (already counted)
  */
 export const recordPageView = (pageKey: string, expirationMs: number = DEFAULT_VIEW_EXPIRATION_MS): boolean => {
   if (typeof window === "undefined") return false
 
-  // If no valid session exists, create one now!
-  if (!isSessionValid()) {
-    createSession()
-  }
-
+  const now = Date.now()
+  const sessionValid = isSessionValid()
   const store = getPageViewsStore()
   const viewData = store[pageKey]
-  const now = Date.now()
 
-  // Check if valid view already exists
-  if (viewData && viewData.expiresAt > now) {
-    return false
+  // Case 1: No valid session -> Create session and record view
+  if (!sessionValid) {
+    createSession(expirationMs)
+
+    // Record new view
+    store[pageKey] = {
+      viewedAt: now,
+      expiresAt: now + expirationMs,
+    }
+    savePageViewsStore(store)
+
+    console.log("[Session] Created new session and recorded view", { pageKey, sessionId: getSession()?.id })
+    return true
   }
 
-  // Record new view
-  store[pageKey] = {
-    viewedAt: now,
-    expiresAt: now + expirationMs,
+  // Case 2: Session is valid, check if page view is valid
+  // If page view doesn't exist or is expired -> Record/Extend view
+  if (!viewData || viewData.expiresAt <= now) {
+
+    // Record new view
+    store[pageKey] = {
+      viewedAt: now,
+      expiresAt: now + expirationMs,
+    }
+    savePageViewsStore(store)
+
+    console.log("[Session] Extended/Recorded page view", { pageKey, sessionId: getSession()?.id })
+    return true
   }
 
-  savePageViewsStore(store)
-
-  // Simulate API call
-  console.log("Call API Increase View Count", { pageKey, timestamp: now, sessionId: getSession()?.id })
-
-  return true
+  // Case 3: Both session and page view are valid -> Skip
+  console.log("[Session] View already counted", { pageKey, sessionId: getSession()?.id })
+  return false
 }
 
 /**

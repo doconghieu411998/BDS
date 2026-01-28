@@ -153,6 +153,10 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                         throw error;
                     }
                 },
+                onError: (error: { type: 'size' | 'type' | 'upload'; message: string; file?: File }) => {
+                    console.error("Image upload error:", error);
+                    alert(`Lỗi upload ảnh: ${error.message}`);
+                },
             }),
             Blockquote,
             HorizontalRule,
