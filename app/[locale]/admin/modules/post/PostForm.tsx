@@ -8,6 +8,7 @@ import { AntInput } from '@/crema/components/AntInput';
 import { AntButton } from '@/crema/components/AntButton';
 import { AntSelect } from '@/crema/components/AntSelect';
 import { AntUpload } from '@/crema/components/AntUpload';
+import { Image } from 'antd';
 import dynamic from 'next/dynamic';
 const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), {
     ssr: false,
@@ -47,6 +48,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                 description: initialData.description,
                 category: initialData.tags?.map((t: any) => t.tagName || t) || [], // Handle both object and string if mix
                 status: initialData.status,
+                thumbnail: initialData.media?.url || '', // Set thumbnail for validation
             });
             setThumbnailUrl(initialData.media?.url);
 
@@ -202,21 +204,107 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                     </div>
 
                     {/* Ảnh đại diện */}
-                    <div className={styles.formItem}>
-                        <label className={styles.label}>{'Ảnh đại diện'}</label>
-                        <AntUpload
-                            fileList={fileList}
-                            onChange={({ fileList }) => setFileList(fileList)}
-                            beforeUpload={() => false}
-                            maxCount={1}
-                            accept="image/*"
-                            listType="picture"
-                        >
-                            <AntButton icon={<UploadOutlined />}>
-                                {'Tải ảnh lên'}
-                            </AntButton>
-                        </AntUpload>
-                    </div>
+                    <AntForm.Item
+                        label="Ảnh đại diện"
+                        extra="Click vào ảnh để xem toàn màn hình. Chỉ chấp nhận JPG, PNG, GIF (Tối đa 5MB)."
+                    >
+                        <div style={{
+                            border: '1px solid #d9d9d9',
+                            borderRadius: 8,
+                            padding: 16,
+                            backgroundColor: '#fafafa'
+                        }}>
+                            {thumbnailUrl ? (
+                                <div>
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        marginBottom: 12
+                                    }}>
+                                        <Image
+                                            src={thumbnailUrl}
+                                            alt="Preview"
+                                            style={{
+                                                maxWidth: '100%',
+                                                maxHeight: 200,
+                                                objectFit: 'contain',
+                                                borderRadius: 4
+                                            }}
+                                            preview={{
+                                                mask: 'Xem toàn màn hình',
+                                            }}
+                                        />
+                                    </div>
+                                    <AntUpload
+                                        fileList={[]}
+                                        onChange={({ fileList }) => {
+                                            setFileList(fileList);
+                                            if (fileList[0]?.originFileObj) {
+                                                const reader = new FileReader();
+                                                reader.onload = (e) => {
+                                                    const url = e.target?.result as string;
+                                                    setThumbnailUrl(url);
+                                                    form.setFieldValue('thumbnail', url);
+                                                };
+                                                reader.readAsDataURL(fileList[0].originFileObj as File);
+                                            }
+                                        }}
+                                        beforeUpload={() => false}
+                                        maxCount={1}
+                                        accept="image/*"
+                                        showUploadList={false}
+                                    >
+                                        <AntButton
+                                            icon={<UploadOutlined />}
+                                            block
+                                        >
+                                            Thay đổi ảnh
+                                        </AntButton>
+                                    </AntUpload>
+                                </div>
+                            ) : (
+                                <AntUpload
+                                    fileList={[]}
+                                    onChange={({ fileList }) => {
+                                        setFileList(fileList);
+                                        if (fileList[0]?.originFileObj) {
+                                            const reader = new FileReader();
+                                            reader.onload = (e) => {
+                                                const url = e.target?.result as string;
+                                                setThumbnailUrl(url);
+                                                form.setFieldValue('thumbnail', url);
+                                            };
+                                            reader.readAsDataURL(fileList[0].originFileObj as File);
+                                        }
+                                    }}
+                                    beforeUpload={() => false}
+                                    maxCount={1}
+                                    accept="image/*"
+                                    listType="picture-card"
+                                    showUploadList={false}
+                                    style={{ width: '100%' }}
+                                >
+                                    <div style={{ textAlign: 'center', padding: '30px 20px' }}>
+                                        <UploadOutlined style={{ fontSize: 40, color: '#8c8c8c' }} />
+                                        <div style={{ marginTop: 12, fontSize: 14, color: '#595959' }}>
+                                            Click để tải ảnh lên
+                                        </div>
+                                    </div>
+                                </AntUpload>
+                            )}
+                        </div>
+                    </AntForm.Item>
+
+                    {/* Hidden field for validation */}
+                    <AntForm.Item
+                        name="thumbnail"
+                        rules={[
+                            { required: true, message: 'Vui lòng tải ảnh đại diện!' },
+                        ]}
+                        hidden
+                    >
+                        <input type="hidden" />
+                    </AntForm.Item>
 
                     {/* Nội dung */}
                     <AntForm.Item

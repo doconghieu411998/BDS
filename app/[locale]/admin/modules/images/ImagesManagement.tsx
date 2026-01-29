@@ -1,15 +1,14 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { Spin, Image as AntImage, Row, Col } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
-import { CarouselUtilityItem, CarouselShowHouseItem, MapPointItem } from '@/models/image-item';
+import { Spin, Image as AntImage, Row, Col, Upload, message } from 'antd';
+import { EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { IntroduceImage, IntroduceImageType, getTypeLabel, buildUpdatePayload } from '@/models/introduce-image';
 import {
-    getCarouselUtilities,
-    getCarouselShowHouses,
-    getMapPoints,
-    updateImageItem,
-} from '@/api/mockImageApiService';
+    getAllIntroduceImages,
+    updateIntroduceImage,
+    filterImagesByType,
+} from '@/api/introduceImageApiService';
 import { success as notifySuccess, error as notifyError } from '@/utils/antd-notification';
 import {
     AntTable,
@@ -21,84 +20,119 @@ import {
 import type { ColumnType } from 'antd/es/table';
 import styles from './ImageListBase.module.css';
 
-type ImageItem = CarouselUtilityItem | CarouselShowHouseItem | MapPointItem;
-type ImageType = 'utilities' | 'showhouses' | 'mappoints';
-
 export default function ImagesManagement() {
-    // Carousel Utilities State
-    const [utilitiesItems, setUtilitiesItems] = useState<CarouselUtilityItem[]>([]);
-    const [utilitiesLoading, setUtilitiesLoading] = useState(false);
+    // All images state
+    const [allImages, setAllImages] = useState<IntroduceImage[]>([]);
+    const [loading, setLoading] = useState(false);
 
-    // Carousel Show Houses State
-    const [showHousesItems, setShowHousesItems] = useState<CarouselShowHouseItem[]>([]);
-    const [showHousesLoading, setShowHousesLoading] = useState(false);
+    // Filtered images by type
+    const [utilitiesItems, setUtilitiesItems] = useState<IntroduceImage[]>([]);
+    const [showHousesItems, setShowHousesItems] = useState<IntroduceImage[]>([]);
+    const [mapPointsItems, setMapPointsItems] = useState<IntroduceImage[]>([]);
 
-    // Map Points State
-    const [mapPointsItems, setMapPointsItems] = useState<MapPointItem[]>([]);
-    const [mapPointsLoading, setMapPointsLoading] = useState(false);
-
-    // Shared Modal State
+    // Modal State
     const [modalVisible, setModalVisible] = useState(false);
     const [saving, setSaving] = useState(false);
-    const [editingItem, setEditingItem] = useState<ImageItem | null>(null);
-    const [editingType, setEditingType] = useState<ImageType>('utilities');
+    const [uploading, setUploading] = useState(false);
+    const [editingItem, setEditingItem] = useState<IntroduceImage | null>(null);
+    const [imageBase64, setImageBase64] = useState<string | null>(null);
     const [form] = AntForm.useForm();
 
-    // Load Carousel Utilities
-    const loadUtilities = useCallback(async () => {
-        setUtilitiesLoading(true);
+    // Load all images and filter by type
+    const loadAllImages = useCallback(async () => {
+        setLoading(true);
         try {
-            const data = await getCarouselUtilities();
-            setUtilitiesItems(data);
-        } catch {
-            notifyError('Không thể tải dữ liệu carousel tiện ích');
-        } finally {
-            setUtilitiesLoading(false);
-        }
-    }, []);
+            const data = await getAllIntroduceImages();
+            setAllImages(data);
 
-    // Load Carousel Show Houses
-    const loadShowHouses = useCallback(async () => {
-        setShowHousesLoading(true);
-        try {
-            const data = await getCarouselShowHouses();
-            setShowHousesItems(data);
-        } catch {
-            notifyError('Không thể tải dữ liệu carousel nhà mẫu');
+            // Filter by type
+            setUtilitiesItems(filterImagesByType(data, IntroduceImageType.CAROUSEL_UTILITY));
+            setShowHousesItems(filterImagesByType(data, IntroduceImageType.CAROUSEL_SHOWHOUSE));
+            setMapPointsItems(filterImagesByType(data, IntroduceImageType.MAP_POINT));
+        } catch (error) {
+            console.error('Error loading images:', error);
+            notifyError('Không thể tải dữ liệu hình ảnh');
         } finally {
-            setShowHousesLoading(false);
-        }
-    }, []);
-
-    // Load Map Points
-    const loadMapPoints = useCallback(async () => {
-        setMapPointsLoading(true);
-        try {
-            const data = await getMapPoints();
-            setMapPointsItems(data);
-        } catch {
-            notifyError('Không thể tải dữ liệu map points');
-        } finally {
-            setMapPointsLoading(false);
+            setLoading(false);
         }
     }, []);
 
     useEffect(() => {
-        loadUtilities();
-        loadShowHouses();
-        loadMapPoints();
-    }, [loadUtilities, loadShowHouses, loadMapPoints]);
+        loadAllImages();
+    }, [loadAllImages]);
 
-    const handleEdit = (item: ImageItem, type: ImageType) => {
+    const handleEdit = (item: IntroduceImage) => {
         setEditingItem(item);
-        setEditingType(type);
-        form.setFieldsValue(item);
+        setImageBase64(null); // Reset base64 when opening modal
+        form.setFieldsValue({
+            titleVi: item.titleVi || '',
+            titleEn: item.titleEn || '',
+            descriptionVi: item.descriptionVi || '',
+            descriptionEn: item.descriptionEn || '',
+            imageUrl: item.imageUrl || '',
+        });
         setModalVisible(true);
+    };
+
+    // Convert file to base64
+    const convertFileToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
+    // Handle image selection (convert to base64 for preview)
+    const handleImageSelect = async (file: File) => {
+        try {
+            setUploading(true);
+
+            // Convert to base64
+            const base64String = await convertFileToBase64(file);
+            setImageBase64(base64String);
+
+            // Create preview URL for display
+            const previewUrl = URL.createObjectURL(file);
+
+            // Update preview
+            if (editingItem) {
+                setEditingItem({
+                    ...editingItem,
+                    imageUrl: previewUrl
+                });
+            }
+
+            // Update form field (just to pass validation)
+            form.setFieldsValue({ imageUrl: previewUrl });
+
+            message.success('Đã chọn ảnh thành công');
+            return false; // Prevent default upload behavior
+        } catch (error) {
+            console.error('Error processing image:', error);
+            message.error('Lỗi khi xử lý ảnh');
+            return false;
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    // Handle image URL change for realtime preview
+    const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newUrl = e.target.value;
+        if (editingItem) {
+            setEditingItem({
+                ...editingItem,
+                imageUrl: newUrl || null
+            });
+        }
     };
 
     const handleModalCancel = () => {
         setModalVisible(false);
         setEditingItem(null);
+        setImageBase64(null); // Reset base64
         form.resetFields();
     };
 
@@ -112,19 +146,25 @@ export default function ImagesManagement() {
                 return;
             }
 
-            const result = await updateImageItem(editingItem.key, values);
+            // Build payload using helper function
+            const payload = buildUpdatePayload(
+                editingItem,
+                {
+                    titleVi: values.titleVi,
+                    titleEn: values.titleEn,
+                    descriptionVi: values.descriptionVi,
+                    descriptionEn: values.descriptionEn
+                },
+                imageBase64
+            );
 
-            if (result.success) {
-                notifySuccess('Cập nhật thành công');
-                handleModalCancel();
-                if (editingType === 'utilities') await loadUtilities();
-                else if (editingType === 'showhouses') await loadShowHouses();
-                else await loadMapPoints();
-            } else {
-                notifyError('Cập nhật thất bại');
-            }
+            await updateIntroduceImage(editingItem.id, payload);
+            notifySuccess('Cập nhật thành công');
+            handleModalCancel();
+            await loadAllImages();
         } catch (error) {
             if (error instanceof Error && error.message !== 'Validation failed') {
+                console.error('Error updating image:', error);
                 notifyError('Cập nhật thất bại');
             }
         } finally {
@@ -133,31 +173,27 @@ export default function ImagesManagement() {
     };
 
     // Common columns generator
-    const getColumns = <T extends ImageItem>(type: ImageType): ColumnType<T>[] => [
+    const getColumns = (): ColumnType<IntroduceImage>[] => [
         {
-            title: 'STT',
-            key: 'index',
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
             width: 70,
             align: 'center',
-            render: (_: unknown, __: T, index: number) => index + 1,
-        },
-        {
-            title: 'Khóa',
-            dataIndex: 'key',
-            key: 'key',
-            width: 150,
         },
         {
             title: 'Tiêu đề (VI)',
             dataIndex: 'titleVi',
             key: 'titleVi',
             width: 200,
+            ellipsis: true,
         },
         {
             title: 'Tiêu đề (EN)',
             dataIndex: 'titleEn',
             key: 'titleEn',
             width: 200,
+            ellipsis: true,
         },
         {
             title: 'Mô tả (VI)',
@@ -173,49 +209,50 @@ export default function ImagesManagement() {
         },
         {
             title: 'Ảnh',
-            dataIndex: 'imageBanner',
-            key: 'imageBanner',
+            dataIndex: 'imageUrl',
+            key: 'imageUrl',
             width: 100,
             align: 'center',
-            render: (imageBanner: string) => (
-                <AntImage
-                    src={imageBanner}
-                    alt="Preview"
-                    className={styles.imagePreview}
-                    preview={{
-                        mask: 'Xem',
-                    }}
-                />
-            ),
+            render: (imageUrl: string | null) => {
+                if (!imageUrl) {
+                    return <span style={{ color: '#999' }}>Không có ảnh</span>;
+                }
+                return (
+                    <AntImage
+                        src={imageUrl}
+                        alt="Preview"
+                        className={styles.imagePreview}
+                        preview={{
+                            mask: 'Xem',
+                        }}
+                    />
+                );
+            },
         },
         {
             title: 'Thao tác',
             key: 'action',
             width: 80,
             align: 'center',
-            render: (_: unknown, record: T) => (
+            render: (_: unknown, record: IntroduceImage) => (
                 <AntButton
                     type="link"
                     icon={<EditOutlined />}
-                    onClick={() => handleEdit(record, type)}
+                    onClick={() => handleEdit(record)}
                 />
             ),
         },
     ];
 
     const getModalTitle = () => {
-        const typeNames = {
-            utilities: 'Carousel - Tiện ích',
-            showhouses: 'Carousel - Nhà mẫu',
-            mappoints: 'Map Point'
-        };
-        return `Cập nhật ${typeNames[editingType]}`;
+        if (!editingItem) return 'Cập nhật hình ảnh';
+        return `Cập nhật ${getTypeLabel(editingItem.type, 'vi')} #${editingItem.id}`;
     };
 
     return (
         <div className={styles.container}>
             <h1 style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 24 }}>
-                Quản lý Hình ảnh
+                Quản lý Hình ảnh Giới thiệu
             </h1>
 
             {/* Carousel - Tiện ích */}
@@ -223,11 +260,11 @@ export default function ImagesManagement() {
                 <h2 style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 16 }}>
                     Carousel - Tiện ích
                 </h2>
-                <Spin spinning={utilitiesLoading}>
+                <Spin spinning={loading}>
                     <AntTable
-                        columns={getColumns<CarouselUtilityItem>('utilities')}
+                        columns={getColumns()}
                         dataSource={utilitiesItems}
-                        rowKey="key"
+                        rowKey="id"
                         pagination={false}
                         bordered
                     />
@@ -239,11 +276,11 @@ export default function ImagesManagement() {
                 <h2 style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 16 }}>
                     Carousel - Nhà mẫu
                 </h2>
-                <Spin spinning={showHousesLoading}>
+                <Spin spinning={loading}>
                     <AntTable
-                        columns={getColumns<CarouselShowHouseItem>('showhouses')}
+                        columns={getColumns()}
                         dataSource={showHousesItems}
-                        rowKey="key"
+                        rowKey="id"
                         pagination={false}
                         bordered
                     />
@@ -255,22 +292,23 @@ export default function ImagesManagement() {
                 <h2 style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 16 }}>
                     Map Points
                 </h2>
-                <Spin spinning={mapPointsLoading}>
+                <Spin spinning={loading}>
                     <AntTable
-                        columns={getColumns<MapPointItem>('mappoints')}
+                        columns={getColumns()}
                         dataSource={mapPointsItems}
-                        rowKey="key"
+                        rowKey="id"
                         pagination={false}
                         bordered
                     />
                 </Spin>
             </div>
 
-            {/* Create/Edit Modal */}
+            {/* Edit Modal */}
             <AntModal
                 title={getModalTitle()}
                 open={modalVisible}
                 onCancel={handleModalCancel}
+                keyboard={false}
                 footer={[
                     <AntButton key="cancel" onClick={handleModalCancel}>
                         Hủy
@@ -307,7 +345,7 @@ export default function ImagesManagement() {
                             }}>
                                 Xem trước ảnh
                             </label>
-                            {editingItem?.imageBanner ? (
+                            {editingItem?.imageUrl ? (
                                 <div style={{
                                     flex: 1,
                                     display: 'flex',
@@ -316,7 +354,7 @@ export default function ImagesManagement() {
                                     minHeight: 400
                                 }}>
                                     <AntImage
-                                        src={editingItem.imageBanner}
+                                        src={editingItem.imageUrl}
                                         alt="Preview"
                                         style={{
                                             width: '100%',
@@ -351,7 +389,76 @@ export default function ImagesManagement() {
                         <AntForm
                             form={form}
                             layout="vertical"
+                            initialValues={{
+                                titleVi: '',
+                                titleEn: '',
+                                descriptionVi: '',
+                                descriptionEn: '',
+                                imageUrl: '',
+                            }}
                         >
+                            {/* Image Upload Field - Moved to top for better UX */}
+                            <AntForm.Item
+                                label="Upload Ảnh"
+                                extra="Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Tối đa 5MB."
+                            >
+                                <Upload
+                                    name="image"
+                                    listType="picture-card"
+                                    showUploadList={false}
+                                    beforeUpload={handleImageSelect}
+                                    accept="image/*"
+                                    disabled={uploading}
+                                >
+                                    {editingItem?.imageUrl ? (
+                                        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                                            <AntImage
+                                                src={editingItem.imageUrl}
+                                                alt="Current"
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                preview={false}
+                                            />
+                                            <div style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                width: '100%',
+                                                height: '100%',
+                                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                opacity: 0,
+                                                transition: 'opacity 0.3s',
+                                                cursor: 'pointer'
+                                            }}
+                                                className="upload-hover-overlay"
+                                            >
+                                                <UploadOutlined style={{ fontSize: 24, color: '#fff' }} />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div style={{ textAlign: 'center' }}>
+                                            <UploadOutlined style={{ fontSize: 24 }} />
+                                            <div style={{ marginTop: 8 }}>
+                                                {uploading ? 'Đang upload...' : 'Upload ảnh'}
+                                            </div>
+                                        </div>
+                                    )}
+                                </Upload>
+                            </AntForm.Item>
+
+                            {/* Hidden field for validation */}
+                            <AntForm.Item
+                                name="imageUrl"
+                                rules={[
+                                    { required: true, message: 'Vui lòng upload ảnh' },
+                                ]}
+                                hidden
+                            >
+                                <input type="hidden" />
+                            </AntForm.Item>
+
                             <Row gutter={12}>
                                 <Col span={12}>
                                     <AntForm.Item
@@ -395,20 +502,9 @@ export default function ImagesManagement() {
                                 rules={[
                                     { required: true, message: 'Vui lòng nhập mô tả tiếng Anh' },
                                 ]}
-                            >
-                                <AntInput.TextArea rows={3} placeholder="Nhập mô tả tiếng Anh" />
-                            </AntForm.Item>
-
-                            <AntForm.Item
-                                label="URL Ảnh Banner"
-                                name="imageBanner"
-                                rules={[
-                                    { required: true, message: 'Vui lòng nhập URL ảnh' },
-                                    { type: 'url', message: 'URL không hợp lệ' },
-                                ]}
                                 style={{ marginBottom: 0 }}
                             >
-                                <AntInput placeholder="https://example.com/image.jpg" />
+                                <AntInput.TextArea rows={3} placeholder="Nhập mô tả tiếng Anh" />
                             </AntForm.Item>
                         </AntForm>
                     </Col>

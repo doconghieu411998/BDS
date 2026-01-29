@@ -19,7 +19,7 @@ export default function DashboardPage() {
                             title="Người dùng"
                             value={45}
                             prefix={<UserOutlined />}
-                            valueStyle={{ color: '#1890ff' }}
+                            styles={{ content: { color: '#1890ff' } }}
                         />
                     </AntCard>
                 </AntCol>
@@ -30,7 +30,7 @@ export default function DashboardPage() {
                             title="Lượt xem"
                             value={3542}
                             prefix={<EyeOutlined />}
-                            valueStyle={{ color: '#722ed1' }}
+                            styles={{ content: { color: '#722ed1' } }}
                         />
                     </AntCard>
                 </AntCol>

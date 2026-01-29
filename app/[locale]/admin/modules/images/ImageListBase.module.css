@@ -25,3 +25,8 @@
     border-radius: 8px;
     margin: 16px 0;
 }
+
+/* Upload hover effect */
+:global(.ant-upload-picture-card):hover :global(.upload-hover-overlay) {
+    opacity: 1 !important;
+}

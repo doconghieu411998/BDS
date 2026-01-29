@@ -23,8 +23,8 @@ export default function CreatePostPage() {
             await postService.create(data);
             notifySuccess('Tạo bài viết thành công!');
             router.push(ROUTES.POST.LIST);
-        } catch {
-            notifyError('Lỗi');
+        } catch (error: any) {
+            notifyError(error?.message || 'Có lỗi xảy ra khi tạo bài viết. Vui lòng thử lại!');
         }
     };
 

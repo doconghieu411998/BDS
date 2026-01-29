@@ -31,8 +31,8 @@ export default function PostList() {
             });
             setPosts(result.data);
             setTotal(result.total);
-        } catch {
-            notifyError('Lỗi');
+        } catch (error: any) {
+            notifyError(error?.message || 'Không thể tải danh sách bài viết. Vui lòng thử lại!');
         } finally {
             setLoading(false);
         }
@@ -68,8 +68,8 @@ export default function PostList() {
             notifySuccess('Xóa bài viết thành công!');
             loadPosts(currentPage, searchText);
             setDeleteId(null);
-        } catch {
-            notifyError('Lỗi');
+        } catch (error: any) {
+            notifyError(error?.message || 'Có lỗi xảy ra khi xóa bài viết. Vui lòng thử lại!');
         }
     };
 
@@ -165,10 +165,10 @@ export default function PostList() {
         },
         {
             title: 'Ngày xuất bản',
-            dataIndex: 'createDate',
-            key: 'createDate',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
             width: 130,
-            render: (_: unknown, record: Post) => formatDate(record.createDate),
+            render: (_: unknown, record: Post) => formatDate(record.createdAt),
         },
     ];
 
