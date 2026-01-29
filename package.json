@@ -8,7 +8,9 @@
     "export": "next export",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "gh-pages -d out --nojekyll"
+    "deploy": "gh-pages -d out --nojekyll",
+    "build:standalone": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
+    "start:standalone": "node .next/standalone/server.js"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
