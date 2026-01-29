@@ -6,6 +6,7 @@ import axios, {
 } from 'axios';
 import { authStorage } from '@/utils/auth';
 import { ApiResponse } from '@/types/common';
+import { error as notifyError } from '@/utils/antd-notification';
 
 const getBaseUrl = () => {
     // 1. Client-side: can be relative
@@ -83,14 +84,80 @@ axiosClient.interceptors.response.use(
             // Xử lý lỗi 403 - Forbidden
             if (status === 403) {
                 if (typeof window !== 'undefined') {
-                    alert('Bạn không có quyền truy cập chức năng này!');
+                    notifyError({
+                        message: 'Không có quyền truy cập',
+                        description: data?.message || 'Bạn không có quyền truy cập chức năng này!',
+                    });
+                }
+            }
+
+            // Xử lý lỗi 400 - Bad Request
+            if (status === 400) {
+                if (typeof window !== 'undefined') {
+                    notifyError({
+                        message: 'Yêu cầu không hợp lệ',
+                        description: data?.message || 'Dữ liệu gửi lên không hợp lệ!',
+                    });
+                }
+            }
+
+            // Xử lý lỗi 404 - Not Found
+            if (status === 404) {
+                if (typeof window !== 'undefined') {
+                    notifyError({
+                        message: 'Không tìm thấy',
+                        description: data?.message || 'Dữ liệu không tồn tại hoặc đã bị xóa!',
+                    });
+                }
+            }
+
+            // Xử lý lỗi 409 - Conflict
+            if (status === 409) {
+                if (typeof window !== 'undefined') {
+                    notifyError({
+                        message: 'Xung đột dữ liệu',
+                        description: data?.message || 'Dữ liệu đã tồn tại hoặc bị xung đột!',
+                    });
+                }
+            }
+
+            // Xử lý lỗi 422 - Unprocessable Entity
+            if (status === 422) {
+                if (typeof window !== 'undefined') {
+                    notifyError({
+                        message: 'Dữ liệu không hợp lệ',
+                        description: data?.message || 'Vui lòng kiểm tra lại thông tin đã nhập!',
+                    });
                 }
             }
 
             // Xử lý lỗi 500 - Internal Server Error
-            if (status === 500 || status === 400) {
+            if (status === 500) {
                 if (typeof window !== 'undefined') {
-                    alert('Lỗi hệ thống! Vui lòng thử lại sau.');
+                    notifyError({
+                        message: 'Lỗi máy chủ',
+                        description: data?.message || 'Đã xảy ra lỗi hệ thống! Vui lòng thử lại sau.',
+                    });
+                }
+            }
+
+            // Xử lý lỗi 502 - Bad Gateway
+            if (status === 502) {
+                if (typeof window !== 'undefined') {
+                    notifyError({
+                        message: 'Lỗi kết nối máy chủ',
+                        description: 'Máy chủ tạm thời không phản hồi. Vui lòng thử lại sau!',
+                    });
+                }
+            }
+
+            // Xử lý lỗi 503 - Service Unavailable
+            if (status === 503) {
+                if (typeof window !== 'undefined') {
+                    notifyError({
+                        message: 'Dịch vụ không khả dụng',
+                        description: 'Hệ thống đang bảo trì. Vui lòng thử lại sau!',
+                    });
                 }
             }
 
@@ -99,9 +166,10 @@ axiosClient.interceptors.response.use(
 
         // Lỗi network hoặc timeout
         if (typeof window !== 'undefined') {
-            alert(
-                'Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng!'
-            );
+            notifyError({
+                message: 'Lỗi kết nối',
+                description: 'Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng!',
+            });
         }
 
         return Promise.reject(error);

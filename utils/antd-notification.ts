@@ -11,12 +11,35 @@ export const bindNotificationApi = (api: NotificationInstance) => {
 const toArgs = (args: ArgsProps | string): ArgsProps =>
     typeof args === 'string' ? { message: args } : args;
 
+const warnIfNotBound = () => {
+    if (!notificationApi) {
+        console.log(
+            'Notification API'
+        );
+    }
+};
+
 export const notificationHelper = {
-    success: (args: ArgsProps | string) => notificationApi?.success(toArgs(args)),
-    error: (args: ArgsProps | string) => notificationApi?.error(toArgs(args)),
-    warning: (args: ArgsProps | string) => notificationApi?.warning(toArgs(args)),
-    info: (args: ArgsProps | string) => notificationApi?.info(toArgs(args)),
-    open: (args: ArgsProps) => notificationApi?.open(args),
+    success: (args: ArgsProps | string) => {
+        warnIfNotBound();
+        return notificationApi?.success(toArgs(args));
+    },
+    error: (args: ArgsProps | string) => {
+        warnIfNotBound();
+        return notificationApi?.error(toArgs(args));
+    },
+    warning: (args: ArgsProps | string) => {
+        warnIfNotBound();
+        return notificationApi?.warning(toArgs(args));
+    },
+    info: (args: ArgsProps | string) => {
+        warnIfNotBound();
+        return notificationApi?.info(toArgs(args));
+    },
+    open: (args: ArgsProps) => {
+        warnIfNotBound();
+        return notificationApi?.open(args);
+    },
     destroy: () => notificationApi?.destroy(),
 };
 
