@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Post, PostFormData, PostStatus, PostCategory, Tag } from '@/types/common';
+import { Post, PostFormData, PostStatus, Tag } from '@/types/common';
 import { TagApiService } from '@/api/tagApiService';
 import { AntForm } from '@/crema/components/AntForm';
 import { AntInput } from '@/crema/components/AntInput';
@@ -16,13 +16,13 @@ const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor')
 });
 
 import { UploadOutlined } from '@ant-design/icons';
-import type { UploadFile, FormInstance } from 'antd';
+import type { UploadFile } from 'antd';
 import styles from './PostForm.module.css';
 
 interface PostFormProps {
     initialData?: Post;
     isEdit?: boolean;
-    onSubmit: (data: any) => Promise<void>;
+    onSubmit: (data: PostFormData) => Promise<void>;
 }
 
 export default function PostForm({ initialData, isEdit = false, onSubmit }: PostFormProps) {
@@ -46,7 +46,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                 title: initialData.title,
                 content: initialData.content,
                 description: initialData.description,
-                category: initialData.tags?.map((t: any) => t.tagName || t) || [], // Handle both object and string if mix
+                category: initialData.tags?.map((t: Tag | string) => typeof t === 'string' ? t : t.tagName) || [],
                 status: initialData.status,
                 thumbnail: initialData.media?.url || '', // Set thumbnail for validation
             });
@@ -78,7 +78,13 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
         });
     };
 
-    const handleSubmit = async (values: any) => {
+    const handleSubmit = async (values: {
+        title: string;
+        description: string;
+        content: string;
+        category: string | string[];
+        status: PostStatus;
+    }) => {
         try {
             setLoading(true);
 

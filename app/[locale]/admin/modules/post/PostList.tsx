@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { Post, PostStatus, PostCategory } from '@/types/common';
+import { Post, PostStatus, PostCategory, Tag, PostMedia } from '@/types/common';
 import { postService } from './postApiService';
 import { ROUTES } from '@/constants/routes';
 import DataTable from '@/crema/core/DataTable';
@@ -31,8 +31,9 @@ export default function PostList() {
             });
             setPosts(result.data);
             setTotal(result.total);
-        } catch (error: any) {
-            notifyError(error?.message || 'Không thể tải danh sách bài viết. Vui lòng thử lại!');
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : (error as { message?: string })?.message;
+            notifyError(errorMessage || 'Không thể tải danh sách bài viết. Vui lòng thử lại!');
         } finally {
             setLoading(false);
         }
@@ -68,8 +69,9 @@ export default function PostList() {
             notifySuccess('Xóa bài viết thành công!');
             loadPosts(currentPage, searchText);
             setDeleteId(null);
-        } catch (error: any) {
-            notifyError(error?.message || 'Có lỗi xảy ra khi xóa bài viết. Vui lòng thử lại!');
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : (error as { message?: string })?.message;
+            notifyError(errorMessage || 'Có lỗi xảy ra khi xóa bài viết. Vui lòng thử lại!');
         }
     };
 
@@ -97,14 +99,14 @@ export default function PostList() {
         );
     };
 
-    const getTagsBadge = (tags: any[]) => {
+    const getTagsBadge = (tags: (Tag | string)[]) => {
         if (!tags || !Array.isArray(tags)) return null;
 
         return (
             <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                 {tags.map((tag, index) => (
                     <span key={index} className={styles.categoryBadge}>
-                        {tag.tagName || tag}
+                        {typeof tag === 'string' ? tag : tag.tagName}
                     </span>
                 ))}
             </div>
@@ -132,7 +134,7 @@ export default function PostList() {
             dataIndex: 'media',
             key: 'media',
             width: 100,
-            render: (media: any) => (
+            render: (media: PostMedia | undefined) => (
                 media?.url ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img

@@ -29,8 +29,9 @@ export default function EditPostPage() {
         try {
             const data = await postService.getById(id);
             setPost(data);
-        } catch (error: any) {
-            notifyError(error?.message || 'Không tìm thấy bài viết!');
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : (error as { message?: string })?.message;
+            notifyError(errorMessage || 'Không tìm thấy bài viết!');
             router.push(ROUTES.POST.LIST);
         } finally {
             setLoading(false);
@@ -42,8 +43,9 @@ export default function EditPostPage() {
             await postService.update(id, data);
             notifySuccess('Cập nhật bài viết thành công!');
             router.push(ROUTES.POST.LIST);
-        } catch (error: any) {
-            notifyError(error?.message || 'Có lỗi xảy ra khi cập nhật bài viết. Vui lòng thử lại!');
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : (error as { message?: string })?.message;
+            notifyError(errorMessage || 'Có lỗi xảy ra khi cập nhật bài viết. Vui lòng thử lại!');
         }
     };
 
