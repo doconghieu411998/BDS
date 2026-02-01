@@ -25,6 +25,7 @@ import { ROUTES } from '@/constants/routes';
 import type { User } from '@/types/common';
 import styles from './DashboardLayout.module.css';
 import { authService } from '@/services/authService';
+import { authStorage } from '@/utils/auth';
 
 const { Header, Sider, Content } = AntLayout;
 const { Text } = AntTypography;
@@ -93,11 +94,16 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     };
 
     // Handle logout
-    const handleLogout = () => {
-        authService.logout();
-        Cookies.remove('token');
-        Cookies.remove('user');
-        router.push(ROUTES.LOGIN);
+    const handleLogout = async () => {
+        try {
+            await authService.logout();
+        } catch (error) {
+            console.error('Logout error:', error);
+        } finally {
+            // Luôn clear cookies và redirect bất kể API thành công hay thất bại
+            authStorage.clearAuth();
+            router.push(ROUTES.LOGIN);
+        }
     };
 
     // Dropdown menu cho avatar

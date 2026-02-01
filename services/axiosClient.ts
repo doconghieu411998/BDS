@@ -14,24 +14,44 @@ const getBaseUrl = () => {
         return process.env.NEXT_PUBLIC_API_URL || '/api';
     }
 
-    // 2. Server-side: MUST be absolute
-    const url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+    // 2. Server-side
 
-    // Check if it's explicitly strictly relative (starts with /)
-    if (url.startsWith('/')) {
-        // Prepend localhost if relative
-        // Try to get dynamic port if available, else default to 3000
-        const port = process.env.PORT || 3000;
-        return `http://localhost:${port}${url}`;
+    // If NEXT_PUBLIC_API_URL is fully qualified (absolute), use directly
+    if (process.env.NEXT_PUBLIC_API_URL && /^https?:\/\//.test(process.env.NEXT_PUBLIC_API_URL)) {
+        return process.env.NEXT_PUBLIC_API_URL;
     }
 
-    return url;
+    // Otherwise (if relative or undefined), in Standalone mode/SSR, 
+    // it's safer to call the backend directly to avoid localhost loopback issues (port mismatch, etc.)
+
+    // Default matching route.ts
+    const REMOTE_SERVER_URL = process.env.REMOTE_SERVER_URL || 'http://103.82.23.181:5000';
+
+    // Ensure we append /api if the backend expects it (matching route.ts proxy logic)
+    // route.ts proxies /api/path -> REMOTE/api/path
+    return `${REMOTE_SERVER_URL}/api`;
 };
 
 // Debug log for server-side
 if (typeof window === 'undefined') {
-    console.log('Server-side axios baseURL:', getBaseUrl());
+    // console.log('Server-side axios baseURL:', getBaseUrl());
 }
+
+// Flag & Queue to handle multiple 401s
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+    failedQueue.forEach(prom => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    });
+
+    failedQueue = [];
+};
 
 const axiosClient: AxiosInstance = axios.create({
     baseURL: getBaseUrl(),
@@ -70,12 +90,80 @@ axiosClient.interceptors.response.use(
             const requestUrl = error.config?.url || '';
 
             // Xử lý lỗi 401 - Unauthorized (Token hết hạn hoặc không hợp lệ)
-            // Không xử lý 401 cho endpoint login vì đó là lỗi sai credentials
-            if (status === 401 && !requestUrl.includes('/auth/login')) {
-                // Clear toàn bộ auth data
-                authStorage.clearAuth();
+            // Không xử lý 401 cho endpoint login hoặc refreshtoken vì đó là lỗi sai credentials hoặc expired refresh token
+            if (status === 401 && !requestUrl.includes('/auth/login') && !requestUrl.includes('/auth/refreshtoken')) {
+                const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-                // Chỉ redirect về trang login nếu đang ở admin area
+                if (!originalRequest._retry) {
+                    if (isRefreshing) {
+                        return new Promise(function (resolve, reject) {
+                            failedQueue.push({ resolve, reject });
+                        }).then(token => {
+                            if (originalRequest.headers) {
+                                originalRequest.headers['Authorization'] = 'Bearer ' + token;
+                            }
+                            return axiosClient(originalRequest);
+                        }).catch(err => {
+                            return Promise.reject(err);
+                        });
+                    }
+
+                    originalRequest._retry = true;
+                    isRefreshing = true;
+
+                    const refreshToken = authStorage.getRefreshToken();
+
+                    if (refreshToken) {
+                        return new Promise((resolve, reject) => {
+                            // Use a clean axios instance to avoid infinite loops if this call 401s
+                            axios.post(getBaseUrl() + '/auth/refreshtoken', { refreshToken })
+                                .then(({ data }: { data: { accessToken: string, refreshToken?: string } }) => {
+                                    // Normally response data structure might be wrapped.
+                                    // Based on authService, response is LoginResponse.
+                                    // Assuming direct data return or checking structure.
+                                    // Our axiosClient typically unwraps, but here we use raw axios.
+                                    // Raw axios returns { data: ... }.
+                                    // If backend returns ApiResponse wrapper, we need to handle it.
+                                    // Let's assume standard format matching LoginResponse.
+
+                                    const newAccessToken = data.accessToken || (data as any).data?.accessToken;
+                                    const newRefreshToken = data.refreshToken || (data as any).data?.refreshToken;
+
+                                    if (newAccessToken) {
+                                        authStorage.setAuth(newAccessToken, newRefreshToken || refreshToken); // Keep old refresh token if not rotated
+                                        axiosClient.defaults.headers.common['Authorization'] = 'Bearer ' + newAccessToken;
+                                        if (originalRequest.headers) {
+                                            originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
+                                        }
+                                        processQueue(null, newAccessToken);
+                                        resolve(axiosClient(originalRequest));
+                                    } else {
+                                        // Failed to get token
+                                        processQueue(new Error('No access token returned'), null);
+                                        authStorage.clearAuth();
+                                        if (typeof window !== 'undefined' && window.location.pathname.includes('/admin')) {
+                                            window.location.href = '/admin'; // Redirect to login
+                                        }
+                                        reject(error);
+                                    }
+                                })
+                                .catch((err) => {
+                                    processQueue(err, null);
+                                    authStorage.clearAuth();
+                                    if (typeof window !== 'undefined' && window.location.pathname.includes('/admin')) {
+                                        window.location.href = '/admin';
+                                    }
+                                    reject(err);
+                                })
+                                .finally(() => {
+                                    isRefreshing = false;
+                                });
+                        });
+                    }
+                }
+
+                // If no refresh token or retry failed, clear auth and redirect
+                authStorage.clearAuth();
                 if (typeof window !== 'undefined' && window.location.pathname.includes('/admin')) {
                     window.location.href = '/admin';
                 }

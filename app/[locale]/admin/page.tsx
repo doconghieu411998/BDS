@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Login from '@admin/login/login';
+
 import { authStorage } from '@/utils/auth';
 import { ROUTES } from '@/constants/routes';
 
@@ -16,12 +16,11 @@ export default function Admin() {
     if (accessToken) {
       // Redirect to dashboard if already authenticated
       router.replace(ROUTES.DASHBOARD);
+    } else {
+      // Redirect to login page
+      router.replace(ROUTES.LOGIN);
     }
   }, [router]);
 
-  return (
-    <>
-      <Login />
-    </>
-  );
+  return null; // Or a loading spinner
 }

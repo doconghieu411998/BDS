@@ -1,6 +1,8 @@
 import { LoginRequest, LoginResponse, ApiResponse } from "@/types/common";
 import axiosClient from "./axiosClient";
 
+import { authStorage } from "@/utils/auth";
+
 export const authService = {
   async login(data: LoginRequest): Promise<LoginResponse> {
     const response = await axiosClient.post<LoginResponse>("/auth/login", data);
@@ -8,7 +10,14 @@ export const authService = {
   },
 
   async logout(): Promise<void> {
-    await axiosClient.post("/auth/logout");
+    const refreshToken = authStorage.getRefreshToken();
+    // Some backends require refreshToken in body to invalidate it
+    await axiosClient.post("/auth/logout", { refreshToken });
+  },
+
+  async refreshToken(refreshToken: string): Promise<LoginResponse> {
+    const response = await axiosClient.post<LoginResponse>("/auth/refreshtoken", { refreshToken });
+    return response.data;
   },
 
   async getProfile() {
