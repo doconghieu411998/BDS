@@ -4,6 +4,7 @@ import React from 'react';
 import { AntCard, AntRow, AntCol, AntStatistic } from '@/crema/components';
 import { UserOutlined, EyeOutlined } from '@ant-design/icons';
 import { t } from '@/utils/i18n';
+import ContactInfo from './ContactInfo';
 import styles from './page.module.css';
 
 export default function DashboardPage() {
@@ -38,7 +39,8 @@ export default function DashboardPage() {
 
             <AntRow gutter={[16, 16]} className={styles.statsGrid}>
                 <AntCol span={24}>
-                    <AntCard title="Hoạt động gần đây" className={styles.activityCard}>
+                    <AntCard title="Thông tin liên hệ" className={styles.activityCard}>
+                        <ContactInfo />
                     </AntCard>
                 </AntCol>
             </AntRow>

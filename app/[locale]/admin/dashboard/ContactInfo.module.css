@@ -1,0 +1,21 @@
+.container {
+    padding: 0;
+}
+
+.formWrapper {
+    max-width: 600px;
+}
+
+.form {
+    width: 100%;
+}
+
+.actions {
+    margin-top: 8px;
+}
+
+.editActions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}

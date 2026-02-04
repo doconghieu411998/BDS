@@ -1,6 +1,7 @@
 // app/[locale]/tin-tuc/[slug]/views/tag-list-view.tsx
 import Image from 'next/image';
 import Link from 'next/link';
+import slugify from 'slugify';
 import styles from './tags-article.module.css';
 import { NewsItem } from '@/models/news';
 
@@ -30,7 +31,7 @@ export default function TagArticleList({ tagSlug, tagName, articles, locale }: T
                         <article key={item.id} className={styles.articleItem}>
                             {/* Cột trái: Hình ảnh */}
                             <div className={styles.imageWrapper}>
-                                <Link href={``}>
+                                <Link href={`/${locale}/client/${slugify(item.title, { lower: true, strict: true })}-${item.id}.html`}>
                                     <Image
                                         src={item.banner || '/images/placeholder.jpg'} // Fallback ảnh
                                         alt={item.title}
@@ -44,7 +45,7 @@ export default function TagArticleList({ tagSlug, tagName, articles, locale }: T
                             {/* Cột phải: Nội dung */}
                             <div className={styles.contentWrapper}>
                                 <div className={styles.metaRow}>
-                                    <Link href={``} style={{ textDecoration: 'none' }}>
+                                    <Link href={`/${locale}/client/${slugify(item.title, { lower: true, strict: true })}-${item.id}.html`} style={{ textDecoration: 'none' }}>
                                         <h3 className={styles.title}>{item.title}</h3>
                                     </Link>
                                 </div>
