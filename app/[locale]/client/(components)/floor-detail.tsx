@@ -104,7 +104,7 @@ export default function FloorDetail() {
         <div className={styles.mapWrapper}>
           {/* Map Image */}
           <Image
-            src={withBasePath("images/aerial-view-luxury-resort-master-plan-map-with-bui.jpg")}
+            src={withBasePath("images/map-point.svg")}
             alt="Master Plan Map"
             fill
             className={styles.mapImage}
@@ -142,7 +142,7 @@ export default function FloorDetail() {
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className={styles.tooltipWrapper}
                   >
-                    <div className={styles.tooltipArrow} />
+
                     <div className={styles.tooltipCard}>
                       <div className={styles.thumbnailWrapper}>
                         <Image
