@@ -1,0 +1,158 @@
+.section {
+  width: 100%;
+  background-color: #f1f5f9;
+  padding: 4rem 1rem;
+}
+
+.wrapper {
+  max-width: var(--width-container);
+  margin: 0 auto;
+  position: relative;
+}
+
+.title {
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(2rem, 3vw, 3.5rem);
+  color: #333333;
+  margin-bottom: 2.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tabGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.tabButton {
+  padding: 0.75rem 2rem;
+  font-size: 1.15rem;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-weight: 600;
+  color: #333333;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tabButtonActive {
+  background-color: #0079BE;
+  color: #ffffff;
+}
+
+.tabButton:not(.tabButtonActive):hover {
+  background-color: rgba(0, 121, 190, 0.1);
+  color: #0079BE;
+}
+
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 700;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.carouselWrapper :global(.ant-carousel) {
+  width: 100%;
+  height: 100%;
+}
+
+.carouselWrapper :global(.slick-slider),
+.carouselWrapper :global(.slick-list),
+.carouselWrapper :global(.slick-track) {
+  height: 100%;
+}
+
+.carouselSlide {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 700;
+}
+
+.slideImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.prevArrow,
+.nextArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.prevArrow {
+  left: 2rem;
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.prevArrow:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.nextArrow {
+  right: 2rem;
+  background-color: #00AEEF;
+}
+
+.nextArrow:hover {
+  background-color: #0088cc;
+}
+
+@media (max-width: 1024px) {
+  .carouselWrapper, .carouselSlide {
+    aspect-ratio: 16 / 9;
+  }
+  .prevArrow, .nextArrow {
+    width: 45px;
+    height: 45px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tabGroup {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tabButton {
+    flex: 1 1 40%;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  .prevArrow {
+    left: 1rem;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  .nextArrow {
+    right: 1rem;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+}

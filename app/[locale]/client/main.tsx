@@ -12,8 +12,9 @@ import FloorDetail from './(components)/floor-detail';
 import CarouselCommon from './(common)/carousel';
 import ConsultationPopup from './(components)/consultation-popup';
 import VideoHeroSection from './(components)/video-hero-section';
+import DesignSamplesSection from './(components)/design-samples-section';
 
-const HERO_BG = "images/home.jpg";
+const HERO_BG = "images/home.png";
 
 export default function Main() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -77,9 +78,7 @@ export default function Main() {
 
       <CarouselCommon title='Tiện Ích' />
 
-      <HighlightSection />
-
-      <CarouselCommon title='Nhà Mẫu' />
+      <DesignSamplesSection />
 
       <NewsSection />
 

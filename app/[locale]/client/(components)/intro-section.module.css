@@ -1,173 +1,78 @@
-.container {
+.section {
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 80px 20px;
-  background-color: #fff;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+  font-size: 1.25rem;
+}
+
+.headerHighlight {
+  color: #0079BE;
+  font-weight: 500;
+}
+
+.headerItem {
+  color: #666666;
+  font-weight: 400;
+}
+
+.headerSeparator {
+  color: #cccccc;
+  font-weight: 300;
+}
+
+.wrapper {
+  max-width: var(--width-container);
+  margin: auto;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
-/* --- QUAN TRỌNG: Thiết lập Grid chung cho cả 2 phần --- */
-/* Áp dụng cùng tỉ lệ cột và khoảng cách cho cả Top và Image để thẳng hàng */
-.topSection,
-.imageSection {
-  display: grid;
-  /* Tỉ lệ: Cột trái 1.5 phần - Cột phải 1 phần (tương đương 60% - 40%) */
-  grid-template-columns: 1.5fr 1fr;
-  /* Gap phải giống hệt nhau ở cả 2 phần */
-  gap: 40px;
-  align-items: start;
-}
-
-/* --- Phần 1: Tiêu đề và nội dung trên --- */
-.topSection {
-  margin-bottom: 60px;
-}
-
-.leftCol {
-  position: relative;
-  /* Bỏ flex vì đã dùng grid cha */
-}
-
-/* Họa tiết ngôi sao/lá mờ */
-.decorBg {
-  position: absolute;
-  top: -50px;
-  left: -30px;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, #f9f5ec 60%, transparent 100%);
-  opacity: 0.6;
-  z-index: 0;
+.blueCard {
+  width: calc(997 / 1200 * 100%);
+  aspect-ratio: 997 / 520;
+  background-color: #0079BE;
+  border-radius: 10px;
+  z-index: 1;
+  padding: 0 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .textContent {
-  position: relative;
-  z-index: 1;
+  width: 50%;
+  color: #ffffff;
 }
 
-.titleMain {
-  font-family: "Times New Roman", serif;
-  color: #6d4c41;
-  font-size: 36px;
-  line-height: 1.2;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin: 0;
-}
-
-.subTitle {
-  display: block;
-  margin-top: 20px;
-  font-family: sans-serif;
-  font-size: 13px;
-  color: #a0a0a0;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.rightCol {
-  padding-top: 10px;
-}
-
-.introTitle {
-  font-family: sans-serif;
-  font-weight: bold;
-  color: #a0a0a0;
-  margin-bottom: 20px;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.description {
-  font-family: sans-serif;
-  color: #666;
-  font-size: 15px;
-  line-height: 1.7;
-  margin-bottom: 20px;
-  text-align: justify;
-}
-
-/* --- Phần 2: Hình ảnh --- */
-.imageSection {
-  margin-bottom: 80px;
-  /* grid-template-columns và gap đã được định nghĩa gộp ở trên cùng .topSection */
+.imageCard {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(692 / 1200 * 100%);
+  aspect-ratio: 692 / 400;
+  z-index: 2;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 11;
-  overflow: hidden;
+  height: 100%;
 }
 
 .image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.imageWrapper:hover .image {
-  transform: scale(1.05);
-}
-
-/* --- Phần 3: Trích dẫn (Quotes) - Giữ nguyên --- */
-.quoteSection {
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 60px 0;
-  position: relative;
-}
-
-.quoteBg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 400px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z' fill='%23f9f5ec'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 0;
-  opacity: 0.5;
-}
-
-.quoteText {
-  position: relative;
-  z-index: 1;
-  font-family: "Times New Roman", serif;
-  font-style: italic;
-  color: #555;
-  font-size: 18px;
-  line-height: 1.8;
-  margin-bottom: 30px;
-}
-
-/* --- Responsive --- */
-@media (max-width: 1024px) {
-  .titleMain {
-    font-size: 28px;
-  }
-}
-
-@media (max-width: 768px) {
-
-  /* Khi về mobile, chuyển cả 2 section về 1 cột */
-  .topSection,
-  .imageSection {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .quoteText {
-    font-size: 16px;
-    padding: 0 15px;
-  }
-
-  .decorBg {
-    width: 150px;
-    height: 150px;
-  }
 }

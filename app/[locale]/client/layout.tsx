@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName: "Greenhill Village Quy Nhơn",
       images: [
         {
-          url: '/images/home.jpg',
+          url: '/images/home.png',
           width: 1200,
           height: 630,
           alt: "Greenhill Village Quy Nhơn",
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title: title,
       description: description,
-      images: ['/images/home.jpg'],
+      images: ['/images/home.png'],
     },
     alternates: {
       canonical: `/${locale}/client`,
