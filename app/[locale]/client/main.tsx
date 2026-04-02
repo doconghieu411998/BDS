@@ -9,14 +9,18 @@ import PinSpace from './(components)/pin-space-section';
 import NewsSection from './(components)/news-section';
 import { withBasePath } from '@/services/commonService';
 import FloorDetail from './(components)/floor-detail';
-import CarouselCommon from './(common)/carousel';
+import RegionalArchitectureSection from './(components)/regional-architecture-section';
 import ConsultationPopup from './(components)/consultation-popup';
 import VideoHeroSection from './(components)/video-hero-section';
 import DesignSamplesSection from './(components)/design-samples-section';
+import OutstandingArchitectureSection from './(components)/outstanding-architecture-section';
+import { useTranslations } from 'next-intl';
+import { HOME_KEYS } from '@/constants/localeKeys';
 
 const HERO_BG = "images/home.png";
 
 export default function Main() {
+  const t = useTranslations()
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
@@ -42,10 +46,10 @@ export default function Main() {
 
         <div className={styles.contentWrapper}>
           <h1 className={styles.title}>
-            GREENHILL VILLAGE QUY NHƠN
+            {t(HOME_KEYS.HOME_TITLE)}
           </h1>
           <p className={styles.subtitle}>
-            MỘT SẢN PHẨM THUỘC MST GROUP
+            {t(HOME_KEYS.HOME_DESCRIPTION)}
           </p>
         </div>
 
@@ -74,9 +78,9 @@ export default function Main() {
 
       <FloorDetail />
 
-      {/* <PinSpace /> */}
+      <OutstandingArchitectureSection />
 
-      <CarouselCommon title='Tiện Ích' />
+      <RegionalArchitectureSection />
 
       <DesignSamplesSection />
 

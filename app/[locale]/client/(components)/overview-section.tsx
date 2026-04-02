@@ -3,25 +3,29 @@ import Image from "next/image"
 import { RightOutlined } from "@ant-design/icons"
 import styles from "./overview-section.module.css"
 import { withBasePath } from '@/services/commonService'
+import { useTranslations } from 'next-intl'
+import { HOME_KEYS } from '@/constants/localeKeys'
 
 const PANORAMA_IMG = "images/over-view.png"
 
 const OverviewSection = () => {
+  const t = useTranslations()
+
   const overviewData = [
-    { label: "Tên khu vực", value: "The Hera Resort Quy Nhon" },
-    { label: "Vị trí", value: "Quốc lộ 1D tuyến đường Quy Nhơn – Sông Cầu, P. Ghềnh Ráng, TP. Quy Nhơn, T. Bình Định" },
-    { label: "Nhà phát triển", value: "Công Ty Cổ Phần MST - MST Group" },
-    { label: "Diện tích khu phức hợp", value: "81.940m²" },
-    { label: "Quy mô dự án", value: "16,62 Ha chia thành 2 phân khu" },
-    { label: "Số lượng nhà cửa", value: "143 căn Villa, 500 căn Condotel" },
-    { label: "Số lượng tiện ích", value: "18 tiện ích" },
-    { label: "Tiện ích nổi bật", value: "Nhà hàng, Khu phức hợp giải trí/cắm trại đa năng ngoài trời, Khu vực công viên chủ đề, Bến thuyền, Bể bơi giữa biển, Khu vực lưu trú, Cánh đồng hoa" },
+    { label: t(HOME_KEYS.HOME_OVERVIEW_NAME), value: t(HOME_KEYS.HOME_OVERVIEW_NAME_VALUE) },
+    { label: t(HOME_KEYS.HOME_OVERVIEW_LOCATION), value: t(HOME_KEYS.HOME_OVERVIEW_LOCATION_VALUE) },
+    { label: t(HOME_KEYS.HOME_OVERVIEW_DEVELOPER), value: t(HOME_KEYS.HOME_OVERVIEW_DEVELOPER_VALUE) },
+    { label: t(HOME_KEYS.HOME_OVERVIEW_OPERATOR), value: t(HOME_KEYS.HOME_OVERVIEW_OPERATOR_VALUE) },
+    { label: t(HOME_KEYS.HOME_OVERVIEW_SCALE), value: t(HOME_KEYS.HOME_OVERVIEW_SCALE_VALUE) },
+    { label: t(HOME_KEYS.HOME_OVERVIEW_INVENTORY), value: t(HOME_KEYS.HOME_OVERVIEW_INVENTORY_VALUE) },
+    { label: t(HOME_KEYS.HOME_OVERVIEW_AMENITIES_COUNT), value: t(HOME_KEYS.HOME_OVERVIEW_AMENITIES_COUNT_VALUE) },
+    { label: t(HOME_KEYS.HOME_OVERVIEW_HIGHLIGHTS), value: t(HOME_KEYS.HOME_OVERVIEW_HIGHLIGHTS_VALUE) },
   ]
 
   return (
     <section id="overview-section" className={styles.section}>
       <div className={styles.wrapper}>
-        
+
         {/* Khối Hình Ảnh */}
         <div className={styles.imageBanner}>
           <Image

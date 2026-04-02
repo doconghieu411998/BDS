@@ -1,0 +1,160 @@
+.section {
+  width: 100%;
+  background-color: #0A3F74;
+  padding: 4rem 1rem;
+}
+
+.wrapper {
+  max-width: var(--width-container, 1440px);
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(2rem, 3vw, 3.5rem);
+  color: #ffffff;
+  margin-bottom: 2.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contentContainer {
+  display: flex;
+  gap: 20px;
+  height: 600px;
+}
+
+.leftCol {
+  width: 350px;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.leftCol :global(.ant-carousel),
+.leftCol :global(.slick-slider),
+.leftCol :global(.slick-list) {
+  height: 100%;
+  width: 100%;
+}
+
+.leftCol :global(.slick-list) {
+  margin: -10px 0;
+}
+
+.leftCol :global(.slick-slide > div) {
+  padding: 10px 0;
+}
+
+.thumbnailWrapper {
+  cursor: pointer;
+  outline: none;
+}
+
+.thumbnailCard {
+  position: relative;
+  width: 100%;
+  height: 180px; 
+  border-radius: 8px;
+  overflow: hidden;
+  border: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.thumbnailActive {
+  border-color: #00AEEF;
+}
+
+.rightCol {
+  flex-grow: 1;
+  position: relative;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mainImageCard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  padding: 4rem;
+  text-align: center;
+  color: #fff;
+  z-index: 10;
+}
+
+.mainImageCard:hover .overlay {
+  opacity: 1;
+}
+
+.overlayTitle {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.overlayDesc {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .contentContainer {
+    flex-direction: column;
+    height: auto;
+  }
+  .leftCol {
+    width: 100%;
+    height: 400px;
+  }
+  .thumbnailCard {
+    height: 120px;
+  }
+  .rightCol {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .overlayTitle {
+    font-size: 2.5rem;
+  }
+  .overlayDesc {
+    font-size: 1rem;
+  }
+  .overlay {
+    padding: 2rem;
+  }
+  .leftCol {
+    height: 350px;
+  }
+  .rightCol {
+    height: 300px;
+  }
+}
