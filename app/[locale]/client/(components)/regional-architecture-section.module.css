@@ -91,6 +91,44 @@
   background-color: #0088cc;
 }
 
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  padding: 4rem;
+  text-align: center;
+  color: #fff;
+  z-index: 10;
+}
+
+.carouselSlide:hover .overlay {
+  opacity: 1;
+}
+
+.overlayTitle {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.overlayDesc {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 @media (max-width: 1024px) {
   .carouselWrapper, .carouselSlide {
     aspect-ratio: 16 / 9;
@@ -114,5 +152,14 @@
     width: 35px;
     height: 35px;
     font-size: 1rem;
+  }
+  .overlayTitle {
+    font-size: 2.5rem;
+  }
+  .overlayDesc {
+    font-size: 1rem;
+  }
+  .overlay {
+    padding: 2rem;
   }
 }

@@ -1,101 +1,113 @@
+'use client';
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { Carousel } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import styles from './design-samples-section.module.css';
 import { withBasePath } from '@/services/commonService';
+import { IntroduceImage, IntroduceImageType } from '@/models/introduce-image';
+import { useLocale } from 'next-intl';
 
 const TABS = [
-  { id: 'villa', label: 'Villa' },
-  { id: 'nha_luu_tru', label: 'Nhà lưu trú' },
-  { id: 'villa_bo_dong', label: 'Villa bờ đông' },
+  { id: 'villa', typeId: IntroduceImageType.VILLA },
+  { id: 'nha_luu_tru', typeId: IntroduceImageType.ACCOMMODATION },
+  { id: 'villa_bo_dong', typeId: IntroduceImageType.EAST_COAST_VILLA },
 ];
 
-const MOCK_IMAGES: Record<string, string[]> = {
-  villa: [
-    'images/over-view.png',
-    'images/intro.png',
-    'https://images.unsplash.com/photo-1542314831-c6a4d14fff88?w=1400&q=80',
-  ],
-  nha_luu_tru: [
-    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1400&q=80',
-    'https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1400&q=80',
-  ],
-  villa_bo_dong: [
-    'https://images.unsplash.com/photo-1600607688969-a5bfcd64bd40?w=1400&q=80',
-    'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1400&q=80',
-  ],
-};
-
-const DesignSamplesSection = () => {
+const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) => {
   const [activeTab, setActiveTab] = useState<string>(TABS[0].id);
   const carouselRef = useRef<any>(null);
+  const locale = useLocale();
 
-  const images = MOCK_IMAGES[activeTab] || [];
-  const activeTabLabel = TABS.find(t => t.id === activeTab)?.label || '';
-
-  const next = () => {
-    carouselRef.current?.next();
+  const labels: Record<string, string> = {
+    villa: 'Villa',
+    nha_luu_tru: locale === 'en' ? 'Accommodation' : 'Nhà lưu trú',
+    villa_bo_dong: locale === 'en' ? 'East Coast Villa' : 'Villa bờ đông',
   };
 
-  const prev = () => {
-    carouselRef.current?.prev();
+  const getImagesForTab = (tabId: string) => {
+    const tab = TABS.find(t => t.id === tabId);
+    if (!tab) return [];
+
+    return images
+      .filter(img => img.type === tab.typeId && img.imageUrl)
+      .map(img => ({
+        url: img.imageUrl as string,
+        title: locale === 'en' ? img.titleEn : img.titleVi,
+        description: locale === 'en' ? img.descriptionEn : img.descriptionVi,
+      }));
   };
+
+  const currentImages = getImagesForTab(activeTab);
+  const activeTabLabel = labels[activeTab] || '';
+
+  const next = () => { carouselRef.current?.next(); };
+  const prev = () => { carouselRef.current?.prev(); };
 
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
-    setTimeout(() => {
-      carouselRef.current?.goTo(0, true);
-    }, 10);
+    setTimeout(() => { carouselRef.current?.goTo(0, true); }, 10);
   };
 
   return (
     <section id="design-samples" className={styles.section}>
       <div className={styles.wrapper}>
-        <h2 className={`${styles.title} global-title`}>CÁC MẪU THIẾT KẾ</h2>
-        
+        <h2 className={`${styles.title} global-title`}>
+          {locale === 'en' ? 'DESIGN SAMPLES' : 'CÁC MẪU THIẾT KẾ'}
+        </h2>
+
         <div className={styles.tabGroup}>
           {TABS.map((tab) => (
-             <button
-                key={tab.id}
-                className={`${styles.tabButton} ${activeTab === tab.id ? styles.tabButtonActive : ''}`}
-                onClick={() => handleTabChange(tab.id)}
-             >
-               {tab.label}
-             </button>
+            <button
+              key={tab.id}
+              className={`${styles.tabButton} ${activeTab === tab.id ? styles.tabButtonActive : ''}`}
+              onClick={() => handleTabChange(tab.id)}
+            >
+              {labels[tab.id]}
+            </button>
           ))}
         </div>
 
         <div className={styles.carouselWrapper}>
           <button className={styles.prevArrow} onClick={prev} aria-label="Hình trước">
-             <LeftOutlined />
+            <LeftOutlined />
           </button>
-          
-          <Carousel ref={carouselRef} dots={false}>
-            {images.map((url, idx) => {
-               const isExternal = url.startsWith('http');
-               const imgSrc = isExternal ? url : withBasePath(url);
 
-               return (
-                 <div key={`${activeTab}-${idx}`} className={styles.carouselSlide}>
-                   <Image
-                     src={imgSrc}
-                     alt={`Mẫu thiết kế ${activeTabLabel} - ${idx + 1}`}
-                     fill
-                     style={{ objectFit: 'cover' }}
-                     className={styles.slideImage}
-                     unoptimized={isExternal}
-                     sizes="(max-width: 768px) 100vw, (max-width: 1440px) 90vw, 1440px"
-                   />
-                 </div>
-               )
+          <Carousel ref={carouselRef} dots={false}>
+            {currentImages.map((item, idx) => {
+              const isExternal = item.url.startsWith('http') || item.url.startsWith('blob:');
+              const imgSrc = isExternal ? item.url : withBasePath(item.url);
+
+              return (
+                <div key={`${activeTab}-${idx}`} className={styles.carouselSlide}>
+                  <Image
+                    src={imgSrc}
+                    alt={item.title || `${activeTabLabel} - ${idx + 1}`}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    className={styles.slideImage}
+                    unoptimized={isExternal}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1440px) 90vw, 1440px"
+                  />
+                  <div className={styles.overlay}>
+                    <h3 className={styles.overlayTitle}>{item.title}</h3>
+                    <p className={styles.overlayDesc}>{item.description}</p>
+                  </div>
+                </div>
+              );
             })}
           </Carousel>
-          
+
           <button className={styles.nextArrow} onClick={next} aria-label="Hình tiếp theo">
-             <RightOutlined />
+            <RightOutlined />
           </button>
         </div>
+
+        {currentImages.length === 0 && (
+          <p style={{ textAlign: 'center', color: '#999', padding: '3rem' }}>
+            {locale === 'en' ? 'No images available.' : 'Chưa có hình ảnh.'}
+          </p>
+        )}
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './main.module.css';
 import IntroSection from './(components)/intro-section';
@@ -16,12 +16,37 @@ import DesignSamplesSection from './(components)/design-samples-section';
 import OutstandingArchitectureSection from './(components)/outstanding-architecture-section';
 import { useTranslations } from 'next-intl';
 import { HOME_KEYS } from '@/constants/localeKeys';
+import { getAllIntroduceImages, filterImagesByType } from '@/api/introduceImageApiService';
+import { IntroduceImage, IntroduceImageType } from '@/models/introduce-image';
 
 const HERO_BG = "images/home.png";
 
 export default function Main() {
   const t = useTranslations()
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [allImages, setAllImages] = useState<IntroduceImage[]>([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const data = await getAllIntroduceImages();
+        data.sort((a, b) => a.id - b.id);
+        setAllImages(data);
+      } catch (err) {
+        console.error("Failed to load introduce images:", err);
+      }
+    };
+    fetchImages();
+  }, []);
+
+  const utilityImages = filterImagesByType(allImages, IntroduceImageType.CAROUSEL_UTILITY);
+  const regionalImages = filterImagesByType(allImages, IntroduceImageType.CAROUSEL_SHOWHOUSE);
+  const floorImages = filterImagesByType(allImages, IntroduceImageType.MAP_POINT);
+  const designImages = allImages.filter(img => 
+    img.type === IntroduceImageType.VILLA || 
+    img.type === IntroduceImageType.ACCOMMODATION || 
+    img.type === IntroduceImageType.EAST_COAST_VILLA
+  );
 
   return (
     <main className={styles.main}>
@@ -76,13 +101,13 @@ export default function Main() {
 
       <VideoHeroSection />
 
-      <FloorDetail />
+      <FloorDetail images={floorImages} />
 
-      <OutstandingArchitectureSection />
+      <OutstandingArchitectureSection images={utilityImages} />
 
-      <RegionalArchitectureSection />
+      <RegionalArchitectureSection images={regionalImages} />
 
-      <DesignSamplesSection />
+      <DesignSamplesSection images={designImages} />
 
       <NewsSection />
 

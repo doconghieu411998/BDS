@@ -3,6 +3,9 @@ export enum IntroduceImageType {
     CAROUSEL_UTILITY = 0,
     CAROUSEL_SHOWHOUSE = 1,
     MAP_POINT = 2,
+    VILLA = 3,
+    ACCOMMODATION = 4,
+    EAST_COAST_VILLA = 5,
 }
 
 // API Response Types
@@ -55,8 +58,7 @@ function getMetadataValue(metadatas: IntroduceImageMetadata[], keyName: string, 
     return metadata?.value || '';
 }
 
-// Helper function to extract type-specific key prefix
-function getTypePrefixByType(type: IntroduceImageType): string {
+function getTypePrefixByType(type: IntroduceImageType | number): string {
     switch (type) {
         case IntroduceImageType.CAROUSEL_UTILITY:
             return 'carousel_utility';
@@ -64,8 +66,14 @@ function getTypePrefixByType(type: IntroduceImageType): string {
             return 'carousel_showhouse';
         case IntroduceImageType.MAP_POINT:
             return 'map_point';
+        case IntroduceImageType.VILLA:
+            return 'villa';
+        case IntroduceImageType.ACCOMMODATION:
+            return 'accommodation';
+        case IntroduceImageType.EAST_COAST_VILLA:
+            return 'east_coast_villa';
         default:
-            return '';
+            return 'design_sample';
     }
 }
 
@@ -127,28 +135,40 @@ export function mapIntroduceImageResponses(responses: IntroduceImageResponse[]):
 }
 
 // Helper to get type label in Vietnamese
-export function getTypeLabel(type: IntroduceImageType, language: 'vi' | 'en' = 'vi'): string {
+export function getTypeLabel(type: IntroduceImageType | number, language: 'vi' | 'en' = 'vi'): string {
     if (language === 'vi') {
         switch (type) {
             case IntroduceImageType.CAROUSEL_UTILITY:
-                return 'Carousel - Tiện ích';
+                return 'Tiện ích nổi bật';
             case IntroduceImageType.CAROUSEL_SHOWHOUSE:
-                return 'Carousel - Nhà mẫu';
+                return 'Kiến trúc khu vực';
             case IntroduceImageType.MAP_POINT:
-                return 'Map Point';
+                return 'Chi tiết mặt bằng';
+            case IntroduceImageType.VILLA:
+                return 'Villa';
+            case IntroduceImageType.ACCOMMODATION:
+                return 'Nhà lưu trú';
+            case IntroduceImageType.EAST_COAST_VILLA:
+                return 'Villa bờ đông';
             default:
-                return 'Không xác định';
+                return 'Hình ảnh khác';
         }
     } else {
         switch (type) {
             case IntroduceImageType.CAROUSEL_UTILITY:
-                return 'Carousel - Utilities';
+                return 'Outstanding Utilities';
             case IntroduceImageType.CAROUSEL_SHOWHOUSE:
-                return 'Carousel - Show Houses';
+                return 'Regional Architecture';
             case IntroduceImageType.MAP_POINT:
-                return 'Map Point';
+                return 'Floor Plan Details';
+            case IntroduceImageType.VILLA:
+                return 'Villa';
+            case IntroduceImageType.ACCOMMODATION:
+                return 'Accommodation';
+            case IntroduceImageType.EAST_COAST_VILLA:
+                return 'East Coast Villa';
             default:
-                return 'Unknown';
+                return 'Other Images';
         }
     }
 }

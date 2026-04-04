@@ -16,50 +16,9 @@ interface Location {
   description: string
 }
 
-const LOCATIONS: Location[] = [
-  {
-    id: "1",
-    x: 20,
-    y: 25,
-    title: "Bird Nest Museum",
-    image: "images/luxury-museum-building-with-modern-architecture.jpg",
-    description: "Bảo tàng kiến trúc độc đáo với thiết kế hiện đại, mang đến không gian nghệ thuật và văn hóa đẳng cấp cho cộng đồng cư dân.",
-  },
-  {
-    id: "2",
-    x: 45,
-    y: 40,
-    title: "Central Lake Park",
-    image: "images/beautiful-lake-park-with-gardens-and-walkways.jpg",
-    description: "Công viên hồ nước rộng lớn với lối đi bộ xanh mát, tạo không gian thư giãn lý tưởng giữa thiên nhiên trong lòng đô thị.",
-  },
-  {
-    id: "3",
-    x: 70,
-    y: 30,
-    title: "Wellness Spa Resort",
-    image: "images/luxury-spa-resort-with-pool-and-palm-trees.jpg",
-    description: "Khu nghỉ dưỡng spa cao cấp với hồ bơi vô cực và dịch vụ chăm sóc sức khỏe toàn diện, mang đến trải nghiệm thư giãn tuyệt vời.",
-  },
-  {
-    id: "4",
-    x: 30,
-    y: 65,
-    title: "Golf Course Clubhouse",
-    image: "images/premium-golf-clubhouse-with-green-fairway.jpg",
-    description: "Câu lạc bộ golf đẳng cấp với sân golf chuyên nghiệp, phục vụ nhu cầu giải trí và giao lưu của cư dân yêu thể thao.",
-  },
-  {
-    id: "5",
-    x: 75,
-    y: 70,
-    title: "Beachfront Villas",
-    image: "images/luxury-beachfront-villas-with-ocean-view.jpg",
-    description: "Biệt thự ven biển sang trọng với tầm nhìn toàn cảnh đại dương, mang đến không gian sống riêng tư và đẳng cấp bậc nhất.",
-  },
-]
+import { IntroduceImage } from "@/models/introduce-image"
 
-export default function FloorDetail() {
+export default function FloorDetail({ images = [] }: { images?: IntroduceImage[] }) {
   // State cho Tooltip (Desktop hover)
   const [activeLocation, setActiveLocation] = useState<string | null>(null)
 
@@ -96,92 +55,135 @@ export default function FloorDetail() {
     setModalLocation(location)
   }
 
+  const LEGEND_ITEMS = [
+    "LỐI VÀO", "LỐI VÀO HẦM ĐI BỘ", "BÃI ĐỖ XE", "LỐI VÀO CONDOTEL", "LỐI XUỐNG BẾN THUYỀN", "LỐI VÀO NHÀ HÀNG",
+    "BẾN THUYỀN", "KHU BIỆT THỰ NGHỈ DƯỠNG", "CONDOTEL", "NHÀ HÀNG", "BUNGALOW", "VILLA BỜ ĐÔNG",
+    "SÂN CHƠI GIẢI TRÍ ĐA NĂNG", "KHU CHỜI NGHỈ + CẮM TRẠI", "CÔNG VIÊN GLAMPING & CAMPING", "MÔ HÌNH CHECK IN CHỦ ĐỀ 1",
+    "MÔ HÌNH CHECK IN CHỦ ĐỀ 2", "BÃI ĐÁP KINH KHÍ CẦU", "CÔNG VIÊN THUỢNG NGUỒN SUỐI", "BÃI ĐÁP CONDOTEL",
+    "CÔNG VIÊN DỌC SUỐI", "ĐÀI PHUN NƯỚC CẢNH QUAN", "KHU LƯU TRÚ", "THÁP VỌNG CẢNH", "CÔNG VIÊN HẠ NGUỒN SUỐI",
+    "HỒ CHỨA HẠ NGUỒN", "CÁNH ĐỒNG HOA", "BỂ BƠI NỐI GIỮA BIỂN"
+  ]
+
+  const ALL_PINS = [
+    { id: "1", x: 2, y: 63, label: "1" },
+    { id: "1prime", x: 10, y: 24, label: "1'" },
+    { id: "2a", x: 10, y: 45, label: "2" },
+    { id: "2b", x: 43, y: 22, label: "2" },
+    { id: "3", x: 49, y: 56, label: "3" },
+    { id: "4", x: 79, y: 60, label: "4" },
+    { id: "5", x: 83, y: 65, label: "5" },
+    { id: "6", x: 88, y: 39, label: "6" },
+    { id: "7a", x: 25, y: 67, label: "7" },
+    { id: "7b", x: 34, y: 54, label: "7" },
+    { id: "8", x: 57, y: 55, label: "8", title: "THE HERA RESORT", image: "images/design-sample-1.png", special: true, color: "blue" },
+    { id: "9", x: 85, y: 53, label: "9" },
+    { id: "10", x: 90, y: 60, label: "10" },
+    { id: "11", x: 92, y: 53, label: "11" },
+    { id: "12", x: 7, y: 70, label: "12" },
+    { id: "13", x: 13, y: 77, label: "13" },
+    { id: "14", x: 30, y: 83, label: "14" },
+    { id: "15", x: 37, y: 70, label: "15" },
+    { id: "16", x: 44, y: 89, label: "16" },
+    { id: "17", x: 40, y: 76, label: "17" },
+    { id: "18", x: 52, y: 73, label: "18" },
+    { id: "19a", x: 66, y: 54, label: "19" },
+    { id: "19b", x: 64, y: 44, label: "19" },
+    { id: "20", x: 60, y: 70, label: "20" },
+    { id: "21", x: 65, y: 82, label: "21" },
+    { id: "22", x: 75, y: 80, label: "22" },
+    { id: "23", x: 86, y: 74, label: "23" },
+    { id: "24", x: 74, y: 44, label: "24", title: "Central Lake Park", image: "images/design-sample-2.png", special: true, color: "green", status: "Mở bán" },
+    { id: "25", x: 78, y: 71, label: "25" },
+    { id: "26", x: 40, y: 35, label: "26" },
+    { id: "27", x: 84, y: 25, label: "27" },
+  ]
+
   return (
     <section id="floor-detail-section" className={styles.section}>
-      <div className={styles.container}>
-        <h2 className={styles.title}>Giới Thiệu Chi Tiết Mặt Bằng</h2>
+      <div className={styles.header}>
+        <span className={styles.subtitle}>Giới Thiệu</span>
+        <h2 className={`${styles.title} global-title`}>Chi Tiết Mặt Bằng</h2>
+      </div>
 
-        <div className={styles.mapWrapper}>
-          {/* Map Image */}
-          <Image
-            src={withBasePath("images/map-point.svg")}
-            alt="Master Plan Map"
-            fill
-            className={styles.mapImage}
-            priority
-          />
+      <div className={styles.mapWrapper}>
+        <Image
+          src={withBasePath("images/floor-plan.png")}
+          alt="Master Plan Map"
+          fill
+          className={styles.mapImage}
+          priority
+        />
 
-          <div className={styles.overlay} />
+        <div className={styles.overlay} />
 
-          {/* Hotspot Pins */}
-          {LOCATIONS.map((location) => (
-            <div
-              key={location.id}
-              className={styles.pinContainer}
-              style={{
-                left: `${location.x}%`,
-                top: `${location.y}%`,
-              }}
-              onMouseEnter={() => handleMouseEnter(location.id)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => handlePinClick(location)} // Thêm sự kiện Click
-            >
-              <div className={styles.pin}>
-                <span className={styles.pinOuterRing} />
-                <span className={styles.pinMiddleRing} />
-                <span className={styles.pinInnerDot} />
+        {/* Dynamic Pins based on the image */}
+        {ALL_PINS.map((pin) => (
+          <div
+            key={pin.id}
+            className={styles.pinContainer}
+            style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
+            onMouseEnter={() => pin.special && handleMouseEnter(pin.id)}
+            onMouseLeave={handleMouseLeave}
+          >
+            {pin.special ? (
+              <div className={`${styles.pin} ${styles[pin.color || 'blue']}`}>
+                <div className={styles.pinIcon}>{pin.label}</div>
               </div>
+            ) : (
+              <div className={`${styles.simplePin} ${styles.blue}`}>
+                <span className={styles.pinLabel}>{pin.label}</span>
+              </div>
+            )}
 
-              {/* Tooltip Card - Chỉ hiện trên Desktop (!isMobile) */}
-              <AnimatePresence>
-                {activeLocation === location.id && !isMobile && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.85, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.85, y: 10 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className={styles.tooltipWrapper}
-                  >
+            <AnimatePresence>
+              {activeLocation === pin.id && !isMobile && pin.special && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                  className={styles.tooltipCard}
+                >
+                  {pin.status && <div className={styles.statusBadge}>{pin.status}</div>}
+                  <div className={styles.cardImage}>
+                    <Image src={withBasePath(pin.image || '')} alt={pin.title || ''} fill style={{ objectFit: 'cover' }} />
+                  </div>
+                  <div className={`${styles.cardTitle} ${styles[(pin.color || 'blue') + 'Bar']}`}>
+                    {pin.title}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        ))}
+      </div>
 
-                    <div className={styles.tooltipCard}>
-                      <div className={styles.thumbnailWrapper}>
-                        <Image
-                          src={withBasePath(location.image)}
-                          alt={location.title}
-                          fill
-                          className={styles.thumbnailImage}
-                        />
-                      </div>
-                      <div className={styles.tooltipContent}>
-                        <h3 className={styles.tooltipTitle}>{location.title}</h3>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+      <div className={styles.wrapper}>
+        {/* Legend Grid Section */}
+        <div className={styles.legendContainer}>
+          <div className={styles.legendGrid}>
+            {LEGEND_ITEMS.map((item, index) => (
+              <div key={index} className={styles.legendItem}>
+                <div className={styles.legendIcon}>
+                  {index === 0 ? "1" : index === 1 ? "1'" : index}
+                </div>
+                <span className={styles.legendText}>{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* --- ANT DESIGN MODAL CHO MOBILE --- */}
       <Modal
         open={!!modalLocation}
         onCancel={() => setModalLocation(null)}
-        footer={null} // Ẩn footer mặc định
+        footer={null}
         centered
-        className="custom-modal" // Class global nếu muốn override sâu hơn
-        styles={{ body: { padding: 0, overflow: 'hidden', borderRadius: '8px' } }}
+        styles={{ body: { padding: 0, overflow: 'hidden', borderRadius: '12px' } }}
       >
         {modalLocation && (
           <div className={styles.modalContent}>
             <div className={styles.modalImageWrapper}>
-              <Image
-                src={withBasePath(modalLocation.image)}
-                alt={modalLocation.title}
-                fill
-                className={styles.modalImage}
-              />
+              <Image src={withBasePath(modalLocation.image)} alt={modalLocation.title} fill className={styles.modalImage} />
             </div>
             <div className={styles.modalInfo}>
               <h3 className={styles.modalTitle}>{modalLocation.title}</h3>
