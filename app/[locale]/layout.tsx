@@ -2,6 +2,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { Montserrat } from 'next/font/google';
 import "../globals.css";
 import { Metadata } from 'next';
 
@@ -11,10 +12,10 @@ export function generateStaticParams() {
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Greenhill Village Quy Nhơn",
-    default: "Greenhill Village Quy Nhơn - Resort & Luxury Villas",
+    template: "%s | The Hera Resort Quy Nhon",
+    default: "The Hera Resort Quy Nhon - Resort & Luxury Villas",
   },
-  description: "Tựa như một ốc đảo xanh giữa lòng thành phố biển, GreenHill Village Quy Nhơn kiến tạo không gian sống giao hòa giữa thiên nhiên và hiện đại. Vị trí đắt giá, thiết kế thông minh và tiện ích toàn diện.",
+  description: "Tựa như một ốc đảo xanh giữa lòng thành phố biển, The Hera Resort Quy Nhon kiến tạo không gian sống giao hòa giữa thiên nhiên và hiện đại. Vị trí đắt giá, thiết kế thông minh và tiện ích toàn diện.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://greenhillvillage.vn'),
   alternates: {
     canonical: '/',
@@ -36,6 +37,13 @@ export const metadata: Metadata = {
   },
 };
 
+const montserrat = Montserrat({
+  subsets: ['latin', 'vietnamese'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
+
 export default async function RootLayout({
   children,
   params
@@ -51,8 +59,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body>
+    <html lang={locale} className={montserrat.variable}>
+      <body className="antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

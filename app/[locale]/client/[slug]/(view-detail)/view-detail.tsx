@@ -63,17 +63,24 @@ export default async function NewsDetailView({ item, locale }: Props) {
             dangerouslySetInnerHTML={{ __html: processedContent }}
           />
 
+        </article>
+      </div>
+
+      <section className={styles.relatedSection}>
+        <div className={styles.relatedWrapper}>
+          <h2 className={styles.relatedTitle}>Bài viết liên quan</h2>
+
           {item.tags && item.tags.length > 0 && (
-            <div className={styles.tagSection}>
-              <span className={styles.tagLabel}>CHỦ ĐỀ:</span>
-              <div className={styles.tagList}>
+            <div className={styles.relatedTagContainer}>
+              <span className={styles.tagPrefix}>Tag:</span>
+              <div className={styles.relatedTagList}>
                 {item.tags.map((tag, index) => {
                   const tagSlug = `${convertSlugUrl(tag.tagName, locale)}-t${tag.id}.html`;
                   return (
                     <Link
                       key={index}
                       href={`/client/${tagSlug}` as any}
-                      className={styles.tagItem}
+                      className={styles.relatedTagItem}
                     >
                       {tag.tagName}
                     </Link>
@@ -82,17 +89,21 @@ export default async function NewsDetailView({ item, locale }: Props) {
               </div>
             </div>
           )}
-        </article>
 
-        {/* Pass tag IDs instead of tag names to NewsList */}
-        <NewsList
-          relatedTags={item.tags.map(t => t.id)}
-          excludeId={item.id}
-          limit={4}
-          showPagination={true}
-          className={styles.relatedNews}
-        />
-      </div>
+          <NewsList
+            relatedTags={item.tags.map(t => t.id)}
+            excludeId={item.id}
+            limit={3}
+            showPagination={false}
+          />
+
+          <div className={styles.seeMoreWrapper}>
+            <Link href="/client/news" className={styles.seeMoreBtn}>
+              Xem thêm
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <ArticleTracker newsId={String(item.id)} locale={locale} />
     </main>

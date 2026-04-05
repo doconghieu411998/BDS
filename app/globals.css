@@ -45,18 +45,21 @@ body {
 
 /* GLOBAL CONTAINER SETTINGS */
 :root {
-  --width-container: 1400px;
+  --width-container: 1268px;
 }
+
 @media (min-width: 1700px) {
   :root {
     --width-container: 1496px;
   }
 }
+
 @media (min-width: 1920px) {
   :root {
     --width-container: 1690px;
   }
 }
+
 @media (min-width: 2560px) {
   :root {
     --width-container: 2254px;
@@ -68,6 +71,7 @@ body {
   font-size: 3rem;
   line-height: 1.2;
 }
+
 .global-text {
   font-size: 1rem;
   line-height: 1.5;

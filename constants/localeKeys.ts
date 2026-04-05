@@ -29,12 +29,14 @@ export const HEADER_KEYS = {
     HEADER_MENU_DESIGN_INSPIRATION: 'header_menu_design_inspiration',
     HEADER_MENU_FLOOR_PLAN: 'header_menu_floor_plan',
     HEADER_MENU_NEWS: 'header_menu_news',
-    HEADER_MENU_CONTACT: 'header_menu_contact',
+    HEADER_MENU_CURATED_ANEMITIES: 'header_menu_curated_anemities',
     HEADER_MENU_LOGO_ALT: 'header_menu_logo_alt',
     HEADER_ARIA_OPEN_MENU: 'header_aria_open_menu',
     HEADER_ARIA_CLOSE_MENU: 'header_aria_close_menu',
     HEADER_MENU_ARIA_LABEL: 'header_menu_aria_label',
-    HEADER_MENU_TEXT: 'header_menu_text'
+    HEADER_MENU_TEXT: 'header_menu_text',
+    HEADER_MENU_ARCHITECTURE: 'header_menu_architecture',
+    HEADER_MENU_DESIGN_COLLECTIONS: 'header_menu_design_collections',
 } as const;
 
 export const HOME_KEYS = {
@@ -57,6 +59,25 @@ export const HOME_KEYS = {
     HOME_OVERVIEW_INVENTORY_VALUE: 'home_overview_inventory_value',
     HOME_OVERVIEW_AMENITIES_COUNT_VALUE: 'home_overview_amenities_count_value',
     HOME_OVERVIEW_HIGHLIGHTS_VALUE: 'home_overview_highlights_value',
+    HEADER_BTN_SUBSCRIBE_LABEL: 'header_btn_subscribe_label',
+} as const;
+
+export const INFRASTRUCTURE_KEYS = {
+    TITLE: 'infrastructure_title',
+    SUBTITLE: 'infrastructure_subtitle',
+    DESCRIPTION: 'infrastructure_description',
+    // Carousel items
+    ITEM_1_TIME: 'infrastructure_item_1_time',
+    ITEM_1_TITLE: 'infrastructure_item_1_title',
+    ITEM_2_TIME: 'infrastructure_item_2_time',
+    ITEM_2_TITLE: 'infrastructure_item_2_title',
+    ITEM_3_TIME: 'infrastructure_item_3_time',
+    ITEM_3_TITLE: 'infrastructure_item_3_title',
+    ITEM_4_TIME: 'infrastructure_item_4_time',
+    ITEM_4_TITLE: 'infrastructure_item_4_title',
+    ITEM_5_TIME: 'infrastructure_item_5_time',
+    ITEM_5_TITLE: 'infrastructure_item_5_title',
+    UNIT_PHUT: 'infrastructure_unit_phut',
 } as const;
 
 // Type for consultation keys

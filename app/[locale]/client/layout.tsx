@@ -8,16 +8,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
 
   const title = locale === 'vi'
-    ? "Greenhill Village Quy Nhơn | Dự án biệt thự nghỉ dưỡng cao cấp"
-    : "Greenhill Village Quy Nhon | Luxury Resort & Villas Project";
+    ? "The Hera Resort Quy Nhon | Dự án biệt thự nghỉ dưỡng cao cấp"
+    : "The Hera Resort Quy Nhon | Luxury Resort & Villas Project";
 
   const description = locale === 'vi'
-    ? "Khám phá Greenhill Village Quy Nhơn - Tổ hợp biệt thự và căn hộ nghỉ dưỡng đẳng cấp 5 sao tại Ghềnh Ráng. Vị trí tựa sơn hướng thủy, tiện ích thượng lưu, cơ hội đầu tư bền vững."
-    : "Discover Greenhill Village Quy Nhon - A 5-star luxury resort villa and apartment complex in Ghenh Rang. Prime location, world-class amenities, sustainable investment opportunity.";
+    ? "Khám phá The Hera Resort Quy Nhon - Tổ hợp biệt thự và căn hộ nghỉ dưỡng đẳng cấp 5 sao tại Ghềnh Ráng. Vị trí tựa sơn hướng thủy, tiện ích thượng lưu, cơ hội đầu tư bền vững."
+    : "Discover The Hera Resort Quy Nhon - A 5-star luxury resort villa and apartment complex in Ghenh Rang. Prime location, world-class amenities, sustainable investment opportunity.";
 
   const keywords = locale === 'vi'
-    ? ["bất động sản Quy Nhơn", "Greenhill Village", "biệt thự Quy Nhơn", "căn hộ nghỉ dưỡng", "Ghềnh Ráng Quy Nhơn", "dự án Greenhill", "đầu tư bất động sản"]
-    : ["Quy Nhon real estate", "Greenhill Village", "Quy Nhon villas", "resort apartments", "Ghenh Rang Quy Nhon", "Greenhill project", "property investment"];
+    ? ["bất động sản Quy Nhơn", "The Hera Resort Quy Nhon", "biệt thự Quy Nhơn", "căn hộ nghỉ dưỡng", "Ghềnh Ráng Quy Nhơn", "dự án The Hera", "đầu tư bất động sản"]
+    : ["Quy Nhon real estate", "The Hera Resort Quy Nhon", "Quy Nhon villas", "resort apartments", "Ghenh Rang Quy Nhon", "The Hera project", "property investment"];
 
   return {
     title: title,
@@ -27,13 +27,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       title: title,
       description: description,
       url: `/${locale}/client`,
-      siteName: "Greenhill Village Quy Nhơn",
+      siteName: "The Hera Resort Quy Nhon",
       images: [
         {
           url: '/images/home.png',
           width: 1200,
           height: 630,
-          alt: "Greenhill Village Quy Nhơn",
+          alt: "The Hera Resort Quy Nhon",
         },
       ],
       locale: locale === 'vi' ? 'vi_VN' : 'en_US',

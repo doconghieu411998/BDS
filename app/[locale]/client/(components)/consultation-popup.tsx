@@ -1,12 +1,14 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Modal, Form, Input, Button, type InputRef } from "antd"
+import { Modal, Form, Input, Button, Checkbox, message, type InputRef } from "antd"
+import { UserOutlined, PhoneOutlined, MailOutlined, MessageOutlined, SendOutlined } from "@ant-design/icons"
 import { useTranslations } from "next-intl"
 import { CONSULTATION_KEYS } from "@/constants/localeKeys"
 import styles from "./consultation-popup.module.css"
 import { ConsultationRequest } from "@/models/consultation"
 import { consultationApiService } from "@/api/consultationApiService"
+import { withBasePath } from "@/services/commonService"
 
 interface ConsultationPopupProps {
     isOpen: boolean
@@ -18,6 +20,7 @@ interface FormValues {
     phone: string
     email: string
     message?: string
+    consent?: boolean
 }
 
 const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
@@ -25,6 +28,9 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
     const fullNameRef = useRef<InputRef>(null)
+
+    // Watch the consent field to enable/disable submit button
+    const isConsentChecked = Form.useWatch('consent', form);
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout
@@ -48,10 +54,12 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
 
             await consultationApiService.submit(payload);
 
+            message.success(t(CONSULTATION_KEYS.SUCCESS) || "Submit success!");
             form.resetFields();
             onClose();
         } catch (error) {
             console.error("Gửi thông tin thất bại:", error)
+            message.error("Gửi thông tin thất bại, vui lòng thử lại sau.");
         } finally {
             setLoading(false)
         }
@@ -62,85 +70,132 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
             open={isOpen}
             onCancel={onClose}
             footer={null}
-            width={500}
+            width={900}
             className={styles.modalCustom}
             destroyOnHidden
             centered
+            closeIcon={null}
         >
             <div className={styles.container}>
-                <h2 className={styles.title}>{t(CONSULTATION_KEYS.TITLE)}</h2>
-                <p className={styles.description}>
-                    {t(CONSULTATION_KEYS.DESCRIPTION)}
-                </p>
+                {/* LEFT: Project Image */}
+                <div className={styles.leftSection}>
+                    <div 
+                        className={styles.bgImage} 
+                        style={{ backgroundImage: `url(${withBasePath("images/image-bg-form.png")})` }}
+                    />
+                </div>
 
-                <Form
-                    form={form}
-                    layout="vertical"
-                    onFinish={handleSubmit}
-                    requiredMark={false}
-                    size="large"
-                >
-                    <Form.Item
-                        name="fullName"
-                        rules={[{ required: true, message: t(CONSULTATION_KEYS.ERROR_FULL_NAME_REQUIRED) }]}
-                        className={styles.formItem}
+                {/* RIGHT: Registration Form */}
+                <div className={styles.rightSection}>
+                    <button className={styles.closeBtn} onClick={onClose}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <h2 className={styles.title}>{t(CONSULTATION_KEYS.TITLE)}</h2>
+
+                    <Form
+                        form={form}
+                        layout="vertical"
+                        onFinish={handleSubmit}
+                        requiredMark={false}
+                        size="large"
+                        initialValues={{ consent: false }}
                     >
-                        <Input
-                            ref={fullNameRef}
-                            placeholder={t(CONSULTATION_KEYS.FULL_NAME)}
-                            variant="borderless"
-                            style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0 }}
-                        />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="phone"
-                        rules={[
-                            { required: true, message: t(CONSULTATION_KEYS.ERROR_PHONE_REQUIRED) },
-                            { pattern: /^[0-9]{10,11}$/, message: t(CONSULTATION_KEYS.ERROR_PHONE_INVALID) }
-                        ]}
-                        className={styles.formItem}
-                    >
-                        <Input placeholder={t(CONSULTATION_KEYS.PHONE)} variant="borderless" style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0 }} />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="email"
-                        rules={[
-                            { required: true, message: t(CONSULTATION_KEYS.ERROR_EMAIL_REQUIRED) },
-                            { type: "email", message: t(CONSULTATION_KEYS.ERROR_EMAIL_INVALID) }
-                        ]}
-                        className={styles.formItem}
-                    >
-                        <Input placeholder={t(CONSULTATION_KEYS.EMAIL)} variant="borderless" style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0 }} />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="message"
-                        className={styles.formItem}
-                    >
-                        <Input.TextArea
-                            placeholder={t(CONSULTATION_KEYS.MESSAGE)}
-                            autoSize={{ minRows: 1, maxRows: 4 }}
-                            variant="borderless"
-                            style={{ borderBottom: '1px solid #ddd', borderRadius: 0, paddingLeft: 0, resize: 'none' }}
-                        />
-                    </Form.Item>
-
-                    <Form.Item style={{ marginBottom: 0 }}>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            loading={loading}
-                            className={styles.submitBtn}
+                        <Form.Item
+                            name="fullName"
+                            rules={[{ required: true, message: t(CONSULTATION_KEYS.ERROR_FULL_NAME_REQUIRED) }]}
+                            className={styles.formItem}
                         >
-                            {t(CONSULTATION_KEYS.SUBMIT)}
-                        </Button>
-                    </Form.Item>
-                </Form>
+                            <div className={styles.inputWrapper}>
+                                <UserOutlined className={styles.inputIcon} />
+                                <div className={styles.divider} />
+                                <Input
+                                    ref={fullNameRef}
+                                    placeholder={t(CONSULTATION_KEYS.FULL_NAME)}
+                                    variant="borderless"
+                                    className={styles.customInput}
+                                />
+                            </div>
+                        </Form.Item>
 
-                <div className={styles.privacyText}>
-                    {t(CONSULTATION_KEYS.PRIVACY)} <a href="#" className={styles.privacyLink}>{t(CONSULTATION_KEYS.PRIVACY_LINK)}</a>
+                        <Form.Item
+                            name="phone"
+                            rules={[
+                                { required: true, message: t(CONSULTATION_KEYS.ERROR_PHONE_REQUIRED) },
+                                { pattern: /^[0-9]{10,11}$/, message: t(CONSULTATION_KEYS.ERROR_PHONE_INVALID) }
+                            ]}
+                            className={styles.formItem}
+                        >
+                            <div className={styles.inputWrapper}>
+                                <PhoneOutlined className={styles.inputIcon} />
+                                <div className={styles.divider} />
+                                <Input 
+                                    placeholder={t(CONSULTATION_KEYS.PHONE)} 
+                                    variant="borderless" 
+                                    className={styles.customInput}
+                                />
+                            </div>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="email"
+                            rules={[
+                                { required: true, message: t(CONSULTATION_KEYS.ERROR_EMAIL_REQUIRED) },
+                                { type: "email", message: t(CONSULTATION_KEYS.ERROR_EMAIL_INVALID) }
+                            ]}
+                            className={styles.formItem}
+                        >
+                            <div className={styles.inputWrapper}>
+                                <MailOutlined className={styles.inputIcon} />
+                                <div className={styles.divider} />
+                                <Input 
+                                    placeholder={t(CONSULTATION_KEYS.EMAIL)} 
+                                    variant="borderless" 
+                                    className={styles.customInput}
+                                />
+                            </div>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="message"
+                            className={styles.formItem}
+                        >
+                            <div className={styles.inputWrapper}>
+                                <MessageOutlined className={styles.inputIcon} />
+                                <div className={styles.divider} />
+                                <Input.TextArea
+                                    placeholder={t(CONSULTATION_KEYS.MESSAGE)}
+                                    autoSize={{ minRows: 1, maxRows: 4 }}
+                                    variant="borderless"
+                                    className={styles.customInput}
+                                    style={{ resize: 'none' }}
+                                />
+                            </div>
+                        </Form.Item>
+
+                        <Form.Item style={{ marginBottom: 20 }}>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                loading={loading}
+                                disabled={!isConsentChecked}
+                                className={styles.submitBtn}
+                                icon={<SendOutlined />}
+                            >
+                                {t(CONSULTATION_KEYS.SUBMIT)}
+                            </Button>
+                        </Form.Item>
+
+                        <Form.Item name="consent" valuePropName="checked" className={styles.consentItem}>
+                            <Checkbox className={styles.checkbox}>
+                                <span className={styles.privacyText}>
+                                    Bằng việc gửi thông tin cho chúng tôi, Quý khách hàng đã xác nhận đồng ý với Chính sách bảo mật từ dữ liệu cá nhân của Tập đoàn Masterise theo đường <a href="#" className={styles.privacyLink}>link này</a>
+                                </span>
+                            </Checkbox>
+                        </Form.Item>
+                    </Form>
                 </div>
             </div>
         </Modal>

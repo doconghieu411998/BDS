@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styles from './main.module.css';
 import IntroSection from './(components)/intro-section';
 import OverviewSection from './(components)/overview-section';
-import LocationSection from './(components)/location-section';
+import InfrastructureConnectivitySection from './(components)/infrastructure-connectivity-section';
 import HighlightSection from './(components)/highlight-section';
 import PinSpace from './(components)/pin-space-section';
 import NewsSection from './(components)/news-section';
@@ -42,9 +42,9 @@ export default function Main() {
   const utilityImages = filterImagesByType(allImages, IntroduceImageType.CAROUSEL_UTILITY);
   const regionalImages = filterImagesByType(allImages, IntroduceImageType.CAROUSEL_SHOWHOUSE);
   const floorImages = filterImagesByType(allImages, IntroduceImageType.MAP_POINT);
-  const designImages = allImages.filter(img => 
-    img.type === IntroduceImageType.VILLA || 
-    img.type === IntroduceImageType.ACCOMMODATION || 
+  const designImages = allImages.filter(img =>
+    img.type === IntroduceImageType.VILLA ||
+    img.type === IntroduceImageType.ACCOMMODATION ||
     img.type === IntroduceImageType.EAST_COAST_VILLA
   );
 
@@ -76,30 +76,24 @@ export default function Main() {
           <p className={styles.subtitle}>
             {t(HOME_KEYS.HOME_DESCRIPTION)}
           </p>
-        </div>
 
-        <button
-          className={styles.ctaBtn}
-          type="button"
-          onClick={() => setIsPopupOpen(true)}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M7 7H17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M7 12H17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M7 17H13" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          ĐĂNG KÝ NHẬN TIN
-        </button>
+          <button
+            className={styles.ctaBtn}
+            type="button"
+            onClick={() => setIsPopupOpen(true)}
+          >
+            {t(HOME_KEYS.HEADER_BTN_SUBSCRIBE_LABEL)}
+          </button>
+        </div>
       </section>
 
       <IntroSection />
 
       <OverviewSection />
 
-      <LocationSection />
-
       <VideoHeroSection />
+
+      <InfrastructureConnectivitySection />
 
       <FloorDetail images={floorImages} />
 

@@ -8,12 +8,21 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  /* UPDATED */
   align-items: center;
-  padding: 30px 50px;
   z-index: 1000;
   background-color: transparent;
-  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 15px 0;
+  transition: all 0.4s ease;
+}
+
+
+.headerWrapper {
+  width: 100%;
+  max-width: var(--width-container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
 }
 
 .header.sticky {
@@ -24,39 +33,41 @@
 
 /* Renamed sections for clarity */
 .logoSection {
-  /* flex: 1; REMOVED */
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.menuSection {
-  position: absolute;
-  left: 50px;
-  /* UPDATED */
-  right: auto;
-  /* UPDATED */
+.leftSection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.rightSection {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 /* ==================== MENU BUTTON ==================== */
 .menuBtn {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background-color: #d19f58;
+  gap: 8px;
+  background-color: #00b8dc;
   color: white;
   border: none;
-  padding: 10px 24px;
   border-radius: 50px;
   cursor: pointer;
   font-weight: 700;
-  font-family: "Segoe UI", sans-serif;
   letter-spacing: 1px;
   transition: background-color 0.3s ease;
-  overflow: hidden;
+  padding: 12.5px 2.5rem;
 }
 
 .menuBtn:hover {
-  background-color: #b08d55;
+  background-color: #009dbb;
 }
 
 .menuBtn:focus-visible {
@@ -128,7 +139,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 9999;
-  background: linear-gradient(135deg, #c59d5f 0%, #d2a45d 100%);
+  background: #00b8dc;
   display: flex;
   flex-direction: column;
   visibility: hidden;
@@ -138,6 +149,15 @@
   will-change: clip-path, opacity;
   /* Ensure no scroll on menu itself */
   overflow: hidden;
+}
+
+.menuWrapper {
+  width: 100%;
+  max-width: var(--width-container);
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  position: relative;
 }
 
 .fullScreenMenu.open {
@@ -150,10 +170,9 @@
 /* ==================== CLOSE BUTTON ==================== */
 .closeBtn {
   position: absolute;
-  top: 40px;
-  left: 50px;
-  width: 50px;
-  height: 50px;
+  top: 50px;
+  width: 4.5rem;
+  height: 4.5rem;
   background-color: #5e463d;
   border: none;
   cursor: pointer;
@@ -216,7 +235,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 15%;
   position: relative;
   z-index: 10;
   list-style: none;
@@ -225,7 +243,7 @@
 
 .navItem {
   font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 20px;
+  font-size: 28px;
   color: #fff;
   text-decoration: none;
   margin-bottom: 25px;
@@ -322,6 +340,8 @@
     position: relative;
     /* UPDATED */
     left: auto;
+    /* UPDATED */
+    right: auto;
     /* UPDATED */
     transform: none;
     /* UPDATED */

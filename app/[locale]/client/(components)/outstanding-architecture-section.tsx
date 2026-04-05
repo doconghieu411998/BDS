@@ -25,12 +25,12 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
   const activeImageUrl = activeItem.imageUrl || '';
 
   return (
-    <section className={styles.section}>
+    <section id="curated-anemities" className={styles.section}>
       <div className={styles.wrapper}>
-         <h2 className={`${styles.title} global-title`}>
-           {locale === 'en' ? 'OUTSTANDING UTILITIES' : 'TIỆN ÍCH NỔI BẬT'}
-         </h2>
-        
+        <h2 className={`${styles.title} global-title`}>
+          {locale === 'en' ? 'OUTSTANDING UTILITIES' : 'TIỆN ÍCH NỔI BẬT'}
+        </h2>
+
         <div className={styles.contentContainer}>
           <div className={styles.leftCol}>
             <Carousel
@@ -57,41 +57,41 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
 
                 return (
                   <div key={item.id} className={styles.thumbnailWrapper} onClick={() => handleCardClick(idx)}>
-                     <div className={`${styles.thumbnailCard} ${isActive ? styles.thumbnailActive : ''}`}>
-                       {imgStr ? (
-                         <Image
-                           src={imgSrc}
-                           alt={title || 'Tiện ích'}
-                           fill
-                           style={{ objectFit: 'cover' }}
-                           unoptimized={isExternal}
-                         />
-                       ) : (
-                         <div style={{ width: '100%', height: '100%', backgroundColor: '#eee' }} />
-                       )}
-                     </div>
+                    <div className={`${styles.thumbnailCard} ${isActive ? styles.thumbnailActive : ''}`}>
+                      {imgStr ? (
+                        <Image
+                          src={imgSrc}
+                          alt={title || 'Tiện ích'}
+                          fill
+                          style={{ objectFit: 'cover' }}
+                          unoptimized={isExternal}
+                        />
+                      ) : (
+                        <div style={{ width: '100%', height: '100%', backgroundColor: '#eee' }} />
+                      )}
+                    </div>
                   </div>
                 );
               })}
             </Carousel>
           </div>
-          
+
           <div className={styles.rightCol}>
             {activeItem && activeImageUrl && (
-               <div className={styles.mainImageCard}>
-                 <Image
-                   src={activeImageUrl.startsWith('http') || activeImageUrl.startsWith('blob:') ? activeImageUrl : withBasePath(activeImageUrl)}
-                   alt={activeTitle || 'Tiện ích'}
-                   fill
-                   style={{ objectFit: 'cover' }}
-                   unoptimized={activeImageUrl.startsWith('http') || activeImageUrl.startsWith('blob:')}
-                   className={styles.mainImage}
-                 />
-                 <div className={styles.overlay}>
-                   <h3 className={styles.overlayTitle}>{activeTitle}</h3>
-                   <p className={styles.overlayDesc}>{activeDescription}</p>
-                 </div>
-               </div>
+              <div className={styles.mainImageCard}>
+                <Image
+                  src={activeImageUrl.startsWith('http') || activeImageUrl.startsWith('blob:') ? activeImageUrl : withBasePath(activeImageUrl)}
+                  alt={activeTitle || 'Tiện ích'}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  unoptimized={activeImageUrl.startsWith('http') || activeImageUrl.startsWith('blob:')}
+                  className={styles.mainImage}
+                />
+                <div className={styles.overlay}>
+                  <h3 className={styles.overlayTitle}>{activeTitle}</h3>
+                  <p className={styles.overlayDesc}>{activeDescription}</p>
+                </div>
+              </div>
             )}
           </div>
         </div>

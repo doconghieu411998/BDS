@@ -18,6 +18,7 @@ interface NewsListProps {
     title?: string;
     sortByDate?: boolean;
     className?: string; // Support custom class
+    variant?: 'grid' | 'horizontal';
 }
 
 const NewsList = ({
@@ -27,39 +28,46 @@ const NewsList = ({
     showPagination = true,
     title,
     sortByDate = false,
-    className
+    className,
+    variant = 'grid'
 }: NewsListProps) => {
     const locale = useLocale();
     const [items, setItems] = useState<NewsItem[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
-    const PAGE_SIZE = limit || 4;
+    const PAGE_SIZE = limit || 3;
 
     useEffect(() => {
         const fetchNews = async () => {
-            // Use Client Service
-            const response = await ClientPostApiService.getPosts(currentPage, PAGE_SIZE);
+            // If relatedTags is provided, fetch a larger set to find enough items after filtering/merging
+            const fetchLimit = relatedTags && relatedTags.length > 0 ? 15 : PAGE_SIZE;
+            const response = await ClientPostApiService.getPosts(currentPage, fetchLimit);
             let data = response.data;
 
-            // Client-side filter by tag IDs (for related posts in detail page)
+            // Smart merging logic for related posts
             if (relatedTags && relatedTags.length > 0) {
-                data = data.filter(item =>
+                // Filter out current item first
+                const available = data.filter(item => (excludeId ? item.id !== excludeId : true));
+
+                // Find items with same tags
+                const related = available.filter(item =>
                     item.tags.some(tag => relatedTags.includes(tag.id))
                 );
-            }
 
-            if (excludeId) {
-                data = data.filter(item => item.id !== excludeId);
+                // Find items without same tags (fallback pool)
+                const others = available.filter(item =>
+                    !related.some(r => r.id === item.id)
+                );
+
+                // Prioritize related, then fill with newest general posts
+                data = [...related, ...others].slice(0, PAGE_SIZE);
+            } else if (excludeId) {
+                data = data.filter(item => item.id !== excludeId).slice(0, PAGE_SIZE);
             }
 
             // Sort by date if requested (Newest First)
             if (sortByDate) {
                 data.sort((a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
-            }
-
-            // Limit if needed
-            if (limit) {
-                data = data.slice(0, limit);
             }
 
             setItems(data);
@@ -68,7 +76,7 @@ const NewsList = ({
 
         fetchNews();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
+    }, [currentPage, limit, relatedTags, excludeId, sortByDate]);
 
     if (!items || items.length === 0) return null;
 
@@ -76,10 +84,45 @@ const NewsList = ({
         <div className={`${styles.newsSectionWrapper} ${className || ''}`}>
             {title && <h2 className={styles.sectionTitle}>{title}</h2>}
 
-            <div className={styles.newsGrid}>
+            <div className={variant === 'grid' ? styles.newsGrid : styles.newsListHorizontal}>
                 {items.map((item) => {
                     const urlSlug = `${convertSlugUrl(item.title, locale)}-${item.id}.html`;
                     const formattedDate = new Date(item.createDate).toLocaleDateString('vi-VN');
+
+                    if (variant === 'horizontal') {
+                        return (
+                            <div key={item.id} className={styles.newsCardHorizontal}>
+                                <div className={styles.imageWrapperHorizontal}>
+                                    <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }}>
+                                        <Image src={item.banner || '/images/placeholder.jpg'} alt={item.title} fill className={styles.image} />
+                                    </Link>
+                                    {item.tags.length > 0 && (
+                                        <span className={styles.floatingTag}>{item.tags[0].tagName}</span>
+                                    )}
+                                </div>
+
+                                <div className={styles.cardBodyHorizontal}>
+                                    <div className={styles.cardHeaderHorizontal}>
+                                         {item.tags.length > 0 && (
+                                            <span className={styles.categoryBadge}>{item.tags[0].tagName}</span>
+                                        )}
+                                        <h3 className={styles.cardTitleHorizontal}>
+                                            <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }}>
+                                                {item.title}
+                                            </Link>
+                                        </h3>
+                                        <p className={styles.descriptionHorizontal}>{item.description}</p>
+                                    </div>
+
+                                    <div className={styles.cardFooterHorizontal}>
+                                        <span className={styles.metaItem}>Ngày đăng: {formattedDate}</span>
+                                        <span className={styles.separator}>|</span>
+                                        <span className={styles.metaItem}>Lượt xem: {item.viewCount || 0}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    }
 
                     return (
                         <div key={item.id} className={styles.newsCard}>
@@ -103,9 +146,11 @@ const NewsList = ({
                                 <div className={styles.cardFooter}>
                                     <span className={styles.date}>{formattedDate}</span>
                                     <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }} className={styles.arrowBtn}>
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
+                                        <div className={styles.circleArrow}>
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                                <path d="M5 12h14M12 5l7 7-7 7" />
+                                            </svg>
+                                        </div>
                                     </Link>
                                 </div>
                             </div>

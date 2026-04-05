@@ -1,80 +1,184 @@
 .modalCustom :global(.ant-modal-content) {
-    padding: 40px;
+    padding: 0 !important;
     border-radius: 4px;
-    max-width: 500px;
+    overflow: hidden;
 }
 
-.modalCustom :global(.ant-modal-close) {
+.container {
+    display: flex;
+    flex-direction: row;
+    min-height: 550px;
+    background: #fff;
+}
+
+.leftSection {
+    flex: 1.1;
+    display: block;
+}
+
+.bgImage {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.rightSection {
+    flex: 1.4;
+    padding: 30px 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.closeBtn {
+    position: absolute;
     top: 20px;
     right: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: opacity 0.2s;
+}
+
+.closeBtn:hover {
+    opacity: 0.6;
 }
 
 .title {
-    color: #c59b5f;
-    /* Gold color */
-    font-size: 28px;
-    font-weight: 400;
-    /* Looks somewhat thin/regular in the image */
-    margin-bottom: 16px;
-    line-height: 1.2;
+    color: #00b8dc;
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-.description {
-    color: #555;
-    margin-bottom: 30px;
-    font-size: 15px;
-    line-height: 1.5;
+.formItem {
+    margin-bottom: 25px !important;
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #00b8dc;
+    padding-bottom: 8px;
+    transition: border-color 0.3s;
+}
+
+.inputWrapper:focus-within {
+    border-bottom-color: #009dbb;
+}
+
+.inputIcon {
+    font-size: 20px;
+    color: #00b8dc;
+    margin-right: 15px;
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background-color: #00b8dc;
+    margin-right: 15px;
+    opacity: 0.5;
+}
+
+.customInput {
+    padding: 0 !important;
+    font-size: 18px;
+    color: #333;
+}
+
+.customInput::placeholder {
+    color: #999;
 }
 
 .submitBtn {
-    background-color: #ba8d47 !important;
-    border-color: #ba8d47 !important;
+    background-color: #00b8dc !important;
+    border-color: #00b8dc !important;
     color: white !important;
-    min-width: 100px;
-    height: 48px;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-radius: 2px;
-    font-size: 16px;
+    width: 100%;
+    height: 50px;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     margin-top: 10px;
-    box-shadow: none;
+    box-shadow: 0 4px 15px rgba(0, 184, 220, 0.2);
 }
 
 .submitBtn:hover {
-    background-color: #a67c3b !important;
-    border-color: #a67c3b !important;
-    opacity: 0.9;
+    background-color: #009dbb !important;
+    border-color: #009dbb !important;
+    transform: translateY(-1px);
+}
+
+.consentItem {
+    margin-bottom: 0 !important;
+}
+
+.checkbox {
+    display: flex !important;
+    align-items: flex-start !important;
+    cursor: pointer;
+}
+
+.checkbox :global(.ant-checkbox) {
+    margin-top: 5px !important;
+}
+
+.checkbox :global(.ant-checkbox-checked .ant-checkbox-inner) {
+    background-color: #00b8dc;
+    border-color: #00b8dc;
+}
+
+.submitBtn:disabled {
+    background-color: #ccc !important;
+    border-color: #ccc !important;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .privacyText {
-    font-size: 13px;
-    color: #888;
-    font-style: italic;
-    margin-top: 24px;
+    font-size: 14px;
+    color: #666;
     line-height: 1.6;
+    display: inline-block;
+    margin-left: 8px;
 }
 
 .privacyLink {
-    color: #a84832;
-    /* Reddish brown as seen in image */
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
+    color: #00b8dc;
+    text-decoration: underline;
+    font-weight: 500;
 }
 
 .privacyLink:hover {
-    text-decoration: underline;
+    color: #009dbb;
 }
 
-/* Customize form inputs to match design (underline only or minimal border) */
-/* The design shows underlines. Antd Input is boxed by default. 
-   We can use variant="borderless" and add bottom border, or customize. */
-.customInput {
-    border-radius: 0;
-    padding-left: 0;
+/* Responsive */
+@media (max-width: 900px) {
+    .modalCustom :global(.ant-modal) {
+        width: 95% !important;
+        max-width: 500px;
+    }
 }
 
-/* Or simpler, override antd input styles in this scope */
-.formItem {
-    margin-bottom: 20px;
+@media (max-width: 768px) {
+    .leftSection {
+        display: none;
+    }
+    .rightSection {
+        padding: 40px 30px;
+    }
 }

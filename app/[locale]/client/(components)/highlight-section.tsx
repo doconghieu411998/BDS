@@ -49,7 +49,7 @@ const HighlightSection = () => {
         <span className={styles.bigNumber}>3</span>
         <div className={styles.titleGroup}>
           <p className={styles.subTitle}>PHONG CÁCH HỘI TỤ</p>
-          <h2 className={styles.mainTitle}>NGHỈ DƯỠNG VÀ HƯỞNG THỤ TẠI GREENHILL VILLAGE</h2>
+          <h2 className={styles.mainTitle}>NGHỈ DƯỠNG VÀ HƯỞNG THỤ TẠI THE HERA RESORT QUY NHON</h2>
         </div>
       </div>
 

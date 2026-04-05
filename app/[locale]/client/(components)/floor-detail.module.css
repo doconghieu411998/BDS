@@ -123,7 +123,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ef4444; /* Red color from image */
+  background-color: #ef4444;
+  /* Red color from image */
   color: white;
   transition: all 0.2s ease;
   cursor: default;

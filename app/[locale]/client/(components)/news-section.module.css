@@ -23,3 +23,31 @@
 .newsContainer {
   width: 100%;
 }
+
+.seeMoreWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.seeMoreBtn {
+  background-color: #00BCD4;
+  color: #ffffff;
+  padding: 0.8rem 2.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 50px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 12rem;
+}
+
+.seeMoreBtn:hover {
+  background-color: #111;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}

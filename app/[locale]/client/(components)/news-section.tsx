@@ -2,6 +2,7 @@
 import React from 'react';
 import styles from './news-section.module.css';
 import NewsList from '../(common)/news-list';
+import { Link } from '@/i18n/navigation';
 
 const NewsSection = () => {
   return (
@@ -10,8 +11,8 @@ const NewsSection = () => {
         <h2 className={`${styles.title} global-title`}>TIN TỨC</h2>
         <div className={styles.newsContainer}>
           <NewsList
-            limit={4}
-            showPagination={false}
+            limit={3}
+            showPagination={true}
             sortByDate={true}
           />
         </div>

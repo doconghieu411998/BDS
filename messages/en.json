@@ -13,5 +13,19 @@
     "consultation_error_phone_required": "Please enter your phone number",
     "consultation_error_phone_invalid": "Invalid phone number",
     "consultation_error_email_required": "Please enter your email",
-    "consultation_error_email_invalid": "Invalid email address"
+    "consultation_error_email_invalid": "Invalid email address",
+    "infrastructure_title": "INFRASTRUCTURE",
+    "infrastructure_subtitle": "MULTI-CONNECTIVITY",
+    "infrastructure_description": "The Hera Resort Quy Nhon boasts a convenient location right on National Highway 1D, adjacent to the poetic Ghenh Rang coast. It takes only about 10 minutes (approx. 10km) to reach Quy Nhon city center and 35-40 minutes to connect to Phu Cat Airport, ensuring quick access for both domestic and international tourists. Notably, the surrounding area gathers many beautiful beaches such as Quy Hoa, Bai Xep, Bai Rang, creating a diverse tourism ecosystem and increasing vacation value for the entire area.",
+    "infrastructure_item_1_time": "20",
+    "infrastructure_item_1_title": "QUY NHON CITY CENTER",
+    "infrastructure_item_2_time": "35-40",
+    "infrastructure_item_2_title": "PHU CAT AIRPORT",
+    "infrastructure_item_3_time": "05",
+    "infrastructure_item_3_title": "QUY HOA BEACH",
+    "infrastructure_item_4_time": "15",
+    "infrastructure_item_4_title": "BAI TRUNG - GHENH RANG",
+    "infrastructure_item_5_time": "05",
+    "infrastructure_item_5_title": "BAI XEP BEACH",
+    "infrastructure_unit_phut": "Minutes"
 }

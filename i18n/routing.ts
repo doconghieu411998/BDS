@@ -6,12 +6,16 @@ export const routing = defineRouting({
 
   pathnames: {
     '/client': {
-      vi: '/greenhill-village-quy-nhon',
-      en: '/greenhill-village-quy-nhon',
+      vi: '/the-hera-resort-quy-nhon',
+      en: '/the-hera-resort-quy-nhon',
     },
     '/client/[slug]': {
-      vi: '/greenhill-village-quy-nhon/[slug]',
-      en: '/greenhill-village-quy-nhon/[slug]'
+      vi: '/the-hera-resort-quy-nhon/[slug]',
+      en: '/the-hera-resort-quy-nhon/[slug]'
+    },
+    '/client/news': {
+      vi: '/the-hera-resort-quy-nhon/tin-tuc',
+      en: '/the-hera-resort-quy-nhon/news'
     }
   }
 });

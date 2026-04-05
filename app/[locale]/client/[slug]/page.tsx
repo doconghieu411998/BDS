@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: Props) {
             ? 'Bài viết theo danh mục'
             : 'Articles by Category';
         const tagDescription = locale === 'vi'
-            ? 'Khám phá các bài viết liên quan đến danh mục này tại Greenhill Village Quy Nhon'
-            : 'Explore related articles in this category at Greenhill Village Quy Nhon';
+            ? 'Khám phá các bài viết liên quan đến danh mục này tại The Hera Resort Quy Nhon'
+            : 'Explore related articles in this category at The Hera Resort Quy Nhon';
 
         return {
-            title: `${tagTitle} | Greenhill Village Quy Nhon`,
+            title: `${tagTitle} | The Hera Resort Quy Nhon`,
             description: tagDescription,
             alternates: {
                 canonical: currentUrl,
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props) {
                 title: tagTitle,
                 description: tagDescription,
                 url: currentUrl,
-                siteName: 'Greenhill Village Quy Nhon',
+                siteName: 'The Hera Resort Quy Nhon',
                 locale: locale === 'vi' ? 'vi_VN' : 'en_US',
                 type: 'website',
             },
@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: Props) {
         };
 
         return {
-            title: `${newsItem?.title} | Greenhill Village Quy Nhon`,
+            title: `${newsItem?.title} | The Hera Resort Quy Nhon`,
             description: newsItem?.description,
             alternates: {
                 canonical: currentUrl,
@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: Props) {
                 title: newsItem.title,
                 description: newsItem?.description,
                 url: currentUrl,
-                siteName: 'Greenhill Village Quy Nhon',
+                siteName: 'The Hera Resort Quy Nhon',
                 images: [
                     {
                         url: newsItem?.banner,

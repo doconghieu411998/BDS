@@ -1,0 +1,232 @@
+.section {
+    position: relative;
+    width: 100%;
+    padding-top: calc(100 / 1440 * var(--width-container, 1440px));
+    overflow: hidden;
+}
+
+.mapBackground {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(1113 / 1440 * var(--width-container, 1440px));
+    height: calc(788 / 1440 * var(--width-container, 1440px));
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: var(--width-container);
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.topContent {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* Positioning the carousel top such that its center is at 788px */
+    /* map_bottom = 788. card_center = 788. card_top = 628. */
+    /* padding_top(100) + text_height(approx 258) + margin_bottom(H) = 788. H = 430. */
+    /* Then pull up by 160px via margin-top on carouselWrapper. */
+    margin-bottom: calc(430 / 1440 * var(--width-container, 1440px));
+}
+
+.textSide {
+    width: calc(586 / 1440 * var(--width-container, 1440px));
+    font-size: 1.5rem;
+    max-width: 100%;
+}
+
+.titleWrapper {
+    margin-bottom: 24px;
+}
+
+.label {
+    font-size: 48px;
+    font-weight: 300;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.mainTitle {
+    font-size: 48px;
+    font-weight: 700;
+    color: #0077b6;
+    /* Project's primary blue */
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #4a4a4a;
+    text-align: justify;
+}
+
+/* Carousel Styles */
+.carouselWrapper {
+    width: 100%;
+    /* Pull up so card 06-08 centers are at map border */
+    margin-top: calc(-160 / 1440 * var(--width-container, 1440px));
+    position: relative;
+    z-index: 2;
+}
+
+.carouselItemContainer {
+    padding: 0 10px;
+}
+
+.carouselCard {
+    position: relative;
+    width: calc(420 / 1440 * var(--width-container));
+    height: calc(320 / 1440 * var(--width-container));
+    background-color: #0076B7;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.cardHovered {
+    transform: translateY(calc(-10 / 1440 * var(--width-container, 1440px)));
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.cardBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.bgVisible {
+    opacity: 1;
+}
+
+.grayPlaceholder {
+    width: 100%;
+    height: 100%;
+    background-color: #7a7a7a;
+}
+
+.cardContent {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: calc(40 / 1440 * var(--width-container, 1440px));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(0deg, rgba(0, 118, 183, 0.4) 0%, rgba(0, 118, 183, 0) 100%);
+    transition: background 0.5s ease;
+}
+
+.contentHovered {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+.timeWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.timeValue {
+    font-size: calc(96 / 1440 * var(--width-container, 1440px));
+    font-weight: 700;
+    line-height: 0.8;
+    font-family: 'Times New Roman', Times, serif;
+    color: #fff;
+}
+
+.timeUnit {
+    font-size: calc(16 / 1440 * var(--width-container, 1440px));
+    font-weight: 400;
+    margin-top: calc(5 / 1440 * var(--width-container, 1440px));
+    margin-left: calc(8 / 1440 * var(--width-container, 1440px));
+    color: #fff;
+    text-transform: capitalize;
+}
+
+.cardFooter {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.itemTitle {
+    font-size: calc(14 / 1440 * var(--width-container, 1440px));
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: left;
+    max-width: 80%;
+    line-height: 1.4;
+    color: #fff;
+}
+
+.pinIcon {
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+
+    .label,
+    .mainTitle {
+        font-size: 36px;
+    }
+
+    .topContent {
+        flex-direction: column;
+    }
+
+    .textSide {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 40px 0;
+    }
+
+    .label,
+    .mainTitle {
+        font-size: 32px;
+    }
+
+    .timeValue {
+        font-size: 60px;
+    }
+}
+
+/* Smooth Carousel Fixes */
+.carousel :global(.slick-track) {
+    display: flex !important;
+    transition-timing-function: linear !important;
+    will-change: transform;
+}
+
+.carousel :global(.slick-slide) {
+    height: auto;
+    display: flex !important;
+    justify-content: center;
+}

@@ -13,14 +13,14 @@ const BG_ITEMS = [
   "images/location-bg-6.png"
 ];
 
-const VerticalCarousel = () => {
+const VerticalCarousel = ({ isActive = false }: { isActive?: boolean }) => {
   // Nhân đôi mảng ảnh để tạo vòng lặp không vết nối
   const LOOP_ITEMS = [...BG_ITEMS, ...BG_ITEMS];
 
   return (
     <div className={styles.container}>
       {/* Khối này sẽ trôi lên bằng CSS */}
-      <div className={styles.marqueeTrack}>
+      <div className={`${styles.marqueeTrack} ${isActive ? styles.running : ""}`}>
         {LOOP_ITEMS.map((src, index) => (
           <div key={index} className={styles.slideItem}>
             <Image

@@ -65,37 +65,37 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
   ]
 
   const ALL_PINS = [
-    { id: "1", x: 2, y: 63, label: "1" },
-    { id: "1prime", x: 10, y: 24, label: "1'" },
-    { id: "2a", x: 10, y: 45, label: "2" },
-    { id: "2b", x: 43, y: 22, label: "2" },
-    { id: "3", x: 49, y: 56, label: "3" },
-    { id: "4", x: 79, y: 60, label: "4" },
-    { id: "5", x: 83, y: 65, label: "5" },
-    { id: "6", x: 88, y: 39, label: "6" },
-    { id: "7a", x: 25, y: 67, label: "7" },
-    { id: "7b", x: 34, y: 54, label: "7" },
-    { id: "8", x: 57, y: 55, label: "8", title: "THE HERA RESORT", image: "images/design-sample-1.png", special: true, color: "blue" },
-    { id: "9", x: 85, y: 53, label: "9" },
-    { id: "10", x: 90, y: 60, label: "10" },
-    { id: "11", x: 92, y: 53, label: "11" },
-    { id: "12", x: 7, y: 70, label: "12" },
-    { id: "13", x: 13, y: 77, label: "13" },
-    { id: "14", x: 30, y: 83, label: "14" },
-    { id: "15", x: 37, y: 70, label: "15" },
-    { id: "16", x: 44, y: 89, label: "16" },
-    { id: "17", x: 40, y: 76, label: "17" },
-    { id: "18", x: 52, y: 73, label: "18" },
-    { id: "19a", x: 66, y: 54, label: "19" },
-    { id: "19b", x: 64, y: 44, label: "19" },
-    { id: "20", x: 60, y: 70, label: "20" },
-    { id: "21", x: 65, y: 82, label: "21" },
-    { id: "22", x: 75, y: 80, label: "22" },
-    { id: "23", x: 86, y: 74, label: "23" },
-    { id: "24", x: 74, y: 44, label: "24", title: "Central Lake Park", image: "images/design-sample-2.png", special: true, color: "green", status: "Mở bán" },
-    { id: "25", x: 78, y: 71, label: "25" },
-    { id: "26", x: 40, y: 35, label: "26" },
-    { id: "27", x: 84, y: 25, label: "27" },
+    { id: "1", x: 2, y: 63, label: "1", title: "Lối Vào Chính", description: "Lối vào chính của dự án, kết nối trực tiếp với trục đường lớn.", image: "images/intro.png" },
+    { id: "1prime", x: 10, y: 24, label: "1'", title: "Lối Vào Phụ", description: "Lối vào phụ dành cho cư dân và xe dịch vụ.", image: "images/intro.png" },
+    { id: "2a", x: 10, y: 45, label: "2", title: "Bãi Đỗ Xe A", description: "Khu vực đỗ xe rộng rãi, an ninh 24/7.", image: "images/intro.png" },
+    { id: "2b", x: 43, y: 22, label: "2", title: "Bãi Đỗ Xe B", description: "Bãi đỗ xe lộ thiên gần khu vực tiện ích.", image: "images/intro.png" },
+    { id: "3", x: 49, y: 56, label: "3", title: "Sảnh Đón Condotel", description: "Không gian đón tiếp sang trọng cho khách hàng Condotel.", image: "images/intro.png" },
+    { id: "4", x: 79, y: 60, label: "4", title: "Nhà Hàng Biển", description: "Thưởng thức ẩm thực đẳng cấp với tầm nhìn panorama biển Quy Nhơn.", image: "images/intro.png" },
+    { id: "5", x: 83, y: 65, label: "5", title: "Bến Du Thuyền", description: "Nơi neo đậu của những du thuyền hạng sang.", image: "images/intro.png" },
+    { id: "6", x: 88, y: 39, label: "6", title: "Khu Biệt Thự", description: "Những căn biệt thự đơn lập với thiết kế hiện đại.", image: "images/intro.png" },
+    { id: "7a", x: 25, y: 67, label: "7", title: "Công Viên Nội Khu", description: "Lá phổi xanh của dự án với hệ thực vật phong phú.", image: "images/intro.png" },
+    { id: "7b", x: 34, y: 54, label: "7", title: "Đường Dạo Bộ", description: "Con đường rợp bóng cây cho những buổi tối lãng mạn.", image: "images/intro.png" },
+    { id: "8", x: 57, y: 55, label: "8", title: "THE HERA RESORT QUY NHON", description: "Biểu tượng kiến trúc của dự án với đầy đủ tiện ích 5 sao.", image: "images/intro.png", special: true, color: "blue" },
+    { id: "9", x: 85, y: 53, label: "9", title: "Khu Vui Chơi", description: "Khu vui chơi trẻ em an toàn và sáng tạo.", image: "images/intro.png" },
+    { id: "10", x: 90, y: 60, label: "10", title: "Bể Bơi Vô Cực", description: "Bể bơi tràn bờ nối liền bầu trời và mặt biển.", image: "images/intro.png" },
+    { id: "11", x: 92, y: 53, label: "11", title: "Bar Bãi Biển", description: "Tận hưởng những ly cocktail dưới ánh hoàng hôn.", image: "images/intro.png" },
+    { id: "12", x: 7, y: 70, label: "12", title: "Sân Tennis", description: "Sân tennis tiêu chuẩn quốc tế phục vụ cư dân.", image: "images/intro.png" },
+    { id: "13", x: 13, y: 77, label: "13", title: "Khu Gym & Spa", description: "Trung tâm chăm sóc sức khỏe và làm đẹp hiện đại.", image: "images/intro.png" },
+    { id: "14", x: 30, y: 83, label: "14", title: "Khu BBQ", description: "Khu vực nướng ngoài trời cho những buổi tụ tập gia đình.", image: "images/intro.png" },
+    { id: "15", x: 37, y: 70, label: "15", title: "Vườn Thiền", description: "Không gian yên tĩnh để tĩnh tâm và tái tạo năng lượng.", image: "images/intro.png" },
+    { id: "16", x: 44, y: 89, label: "16", title: "Cổng Phụ", description: "Lối vào phụ từ phía công viên.", image: "images/intro.png" },
+    { id: "17", x: 40, y: 76, label: "17", title: "Chốt Bảo Vệ", description: "Bảo vệ túc trực 24/7 đảm bảo an toàn tuyệt đối.", image: "images/intro.png" },
+    { id: "18", x: 52, y: 73, label: "18", title: "Đài Phun Nước", description: "Điểm nhấn cảnh quan tại trung tâm quảng trường.", image: "images/intro.png" },
+    { id: "19a", x: 66, y: 54, label: "19", title: "Công Viên Ánh Sáng", description: "Bữa tiệc ánh sáng mỗi tối tại khu vực trung tâm.", image: "images/intro.png" },
+    { id: "19b", x: 64, y: 44, label: "19", title: "Vòng Quay Mặt Trời", description: "Ngắm nhìn toàn cảnh dự án từ trên cao.", image: "images/intro.png" },
+    { id: "20", x: 69, y: 61, label: "20", title: "Khu Yoga", description: "Không gian mở lý tưởng cho các bài tập yoga buổi sáng.", image: "images/intro.png" },
+    { id: "21", x: 65, y: 82, label: "21", title: "Suối Cảnh Quan", description: "Dòng suối nhân tạo mang lại sự tươi mát.", image: "images/intro.png" },
+    { id: "22", x: 75, y: 80, label: "22", title: "Tháp Cảnh Quan", description: "Điểm check-in không thể bỏ qua tại dự án.", image: "images/intro.png" },
+    { id: "23", x: 86, y: 74, label: "23", title: "Khu Lưu Trú", description: "Khu vực lưu trú dành cho khách tham quan.", image: "images/intro.png" },
+    { id: "24", x: 74, y: 44, label: "24", title: "Central Lake Park", description: "Công viên hồ trung tâm với diện tích mặt nước rộng lớn.", image: "images/intro.png", special: true, color: "green", status: "Mở bán" },
+    { id: "25", x: 78, y: 71, label: "25", title: "Đồi Vọng Cảnh", description: "Nơi lý tưởng để ngắm nhìn bình minh trên biển.", image: "images/intro.png" },
+    { id: "26", x: 40, y: 35, label: "26", title: "Vườn Hoa", description: "Vườn hoa bốn mùa khoe sắc thắm.", image: "images/intro.png" },
+    { id: "27", x: 84, y: 25, label: "27", title: "Khu Camping", description: "Trải nghiệm kỳ nghỉ thú vị cùng gia đình tại khu cắm trại.", image: "images/intro.png" },
   ]
 
   return (
@@ -122,8 +122,9 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
             key={pin.id}
             className={styles.pinContainer}
             style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
-            onMouseEnter={() => pin.special && handleMouseEnter(pin.id)}
+            onMouseEnter={() => handleMouseEnter(pin.id)}
             onMouseLeave={handleMouseLeave}
+            onClick={() => handlePinClick(pin as any)}
           >
             {pin.special ? (
               <div className={`${styles.pin} ${styles[pin.color || 'blue']}`}>
@@ -136,7 +137,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
             )}
 
             <AnimatePresence>
-              {activeLocation === pin.id && !isMobile && pin.special && (
+              {activeLocation === pin.id && !isMobile && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}

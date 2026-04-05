@@ -13,5 +13,19 @@
     "consultation_error_phone_required": "Vui lòng nhập số điện thoại",
     "consultation_error_phone_invalid": "Số điện thoại không hợp lệ",
     "consultation_error_email_required": "Vui lòng nhập email",
-    "consultation_error_email_invalid": "Email không hợp lệ"
+    "consultation_error_email_invalid": "Email không hợp lệ",
+    "infrastructure_title": "HẠ TẦNG",
+    "infrastructure_subtitle": "ĐA KẾT NỐI",
+    "infrastructure_description": "The Hera Resort Quy Nhon sở hữu vị trí kết nối thuận tiện khi tọa lạc ngay trên trục Quốc lộ 1D, liền kề bờ biển Ghềnh Ráng thơ mộng. Từ dự án, chỉ mất khoảng 10 phút di chuyển (khoảng 10km) để đến trung tâm thành phố Quy Nhơn và 35-40 phút để kết nối tới sân bay Phù Cát, đảm bảo khả năng tiếp cận nhanh chóng cho cả du khách nội địa lẫn quốc tế. Đặc biệt, khu vực xung quanh còn hội tụ nhiều bãi biển đẹp như Quy Hòa, Bãi Xếp, Bãi Rạng, tạo nên hệ sinh thái du lịch đa dạng và gia tăng giá trị nghỉ dưỡng cho toàn khu.",
+    "infrastructure_item_1_time": "20",
+    "infrastructure_item_1_title": "TRUNG TÂM THÀNH PHỐ QUY NHƠN",
+    "infrastructure_item_2_time": "35-40",
+    "infrastructure_item_2_title": "SÂN BAY PHÙ CÁT",
+    "infrastructure_item_3_time": "05",
+    "infrastructure_item_3_title": "BÃI BIỂN QUY HÒA",
+    "infrastructure_item_4_time": "15",
+    "infrastructure_item_4_title": "BÃI TRỨNG - GHỀNH RÁNG",
+    "infrastructure_item_5_time": "05",
+    "infrastructure_item_5_title": "BÃI XẾP",
+    "infrastructure_unit_phut": "Phút"
 }

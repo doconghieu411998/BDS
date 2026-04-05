@@ -23,20 +23,22 @@
 .contentContainer {
   display: flex;
   gap: 20px;
-  height: 600px;
+  height: calc(891 / 1440 * var(--width-container, 1440px));
+  overflow: hidden;
 }
 
 .leftCol {
-  width: 350px;
+  width: calc(284 / 1440 * var(--width-container, 1440px));
   flex-shrink: 0;
   height: 100%;
 }
 
 .leftCol :global(.ant-carousel),
 .leftCol :global(.slick-slider),
-.leftCol :global(.slick-list) {
-  height: 100%;
-  width: 100%;
+.leftCol :global(.slick-list),
+.leftCol :global(.slick-track) {
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .leftCol :global(.slick-list) {
@@ -55,7 +57,7 @@
 .thumbnailCard {
   position: relative;
   width: 100%;
-  height: 180px; 
+  height: calc(277 / 1440 * var(--width-container, 1440px));
   border-radius: 8px;
   overflow: hidden;
   border: 4px solid transparent;
@@ -129,13 +131,16 @@
     flex-direction: column;
     height: auto;
   }
+
   .leftCol {
     width: 100%;
     height: 400px;
   }
+
   .thumbnailCard {
     height: 120px;
   }
+
   .rightCol {
     height: 400px;
   }
@@ -145,15 +150,19 @@
   .overlayTitle {
     font-size: 2.5rem;
   }
+
   .overlayDesc {
     font-size: 1rem;
   }
+
   .overlay {
     padding: 2rem;
   }
+
   .leftCol {
     height: 350px;
   }
+
   .rightCol {
     height: 300px;
   }

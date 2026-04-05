@@ -50,7 +50,7 @@ const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) =>
   };
 
   return (
-    <section id="design-samples" className={styles.section}>
+    <section id="design-collections" className={styles.section}>
       <div className={styles.wrapper}>
         <h2 className={`${styles.title} global-title`}>
           {locale === 'en' ? 'DESIGN SAMPLES' : 'CÁC MẪU THIẾT KẾ'}
