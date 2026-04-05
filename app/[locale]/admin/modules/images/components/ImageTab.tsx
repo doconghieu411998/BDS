@@ -3,7 +3,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Spin, Image as AntImage, Row, Col, Upload, message } from 'antd';
 import { EditOutlined, UploadOutlined } from '@ant-design/icons';
-import { IntroduceImage, getTypeLabel, buildUpdatePayload } from '@/models/introduce-image';
+import {
+    IntroduceImage,
+    IntroduceStatus,
+    getStatusLabel,
+    getTypeLabel,
+    buildUpdatePayload,
+} from '@/models/introduce-image';
 import {
     getAllIntroduceImages,
     updateIntroduceImage,
@@ -15,6 +21,7 @@ import {
     AntModal,
     AntForm,
     AntInput,
+    AntSelect,
 } from '@/crema/components';
 import type { ColumnType } from 'antd/es/table';
 import styles from '../ImageListBase.module.css';
@@ -61,6 +68,7 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
             titleEn: item.titleEn || '',
             descriptionVi: item.descriptionVi || '',
             descriptionEn: item.descriptionEn || '',
+            status: item.status || '',
             imageUrl: item.imageUrl || '',
         });
         setModalVisible(true);
@@ -124,7 +132,8 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
                     titleVi: values.titleVi,
                     titleEn: values.titleEn,
                     descriptionVi: values.descriptionVi,
-                    descriptionEn: values.descriptionEn
+                    descriptionEn: values.descriptionEn,
+                    status: values.status,
                 },
                 imageBase64
             );
@@ -150,6 +159,15 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
             key: 'id',
             width: 70,
             align: 'center',
+        },
+        {
+            title: 'Trạng thái',
+            dataIndex: 'status',
+            key: 'status',
+            width: 140,
+            align: 'center',
+            ellipsis: true,
+            render: (status: IntroduceStatus) => getStatusLabel(status),
         },
         {
             title: 'Tiêu đề (VI)',
@@ -214,6 +232,12 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
         if (!editingItem) return 'Cập nhật hình ảnh';
         return `Cập nhật ${getTypeLabel(editingItem.type, 'vi')} #${editingItem.id}`;
     };
+
+    const statusOptions = [
+        { label: getStatusLabel(IntroduceStatus.NotForSale, 'vi'), value: IntroduceStatus.NotForSale },
+        { label: getStatusLabel(IntroduceStatus.ForSale, 'vi'), value: IntroduceStatus.ForSale },
+        { label: getStatusLabel(IntroduceStatus.Sold, 'vi'), value: IntroduceStatus.Sold },
+    ];
 
     return (
         <div>
@@ -307,6 +331,17 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
 
                             <AntForm.Item name="imageUrl" rules={[{ required: true, message: 'Vui lòng upload ảnh' }]} hidden>
                                 <input type="hidden" />
+                            </AntForm.Item>
+
+                            <AntForm.Item
+                                label="Trạng thái"
+                                name="status"
+                                rules={[{ required: true, message: 'Vui lòng chọn trạng thái' }]}
+                            >
+                                <AntSelect
+                                    options={statusOptions}
+                                    placeholder="Chọn trạng thái"
+                                />
                             </AntForm.Item>
 
                             <Row gutter={12}>

@@ -8,6 +8,12 @@ export enum IntroduceImageType {
     EAST_COAST_VILLA = 5,
 }
 
+export enum IntroduceStatus {
+    NotForSale = 0,
+    ForSale = 1,
+    Sold = 2,
+}
+
 // API Response Types
 export interface IntroduceImageMetadata {
     id: number;
@@ -30,6 +36,7 @@ export interface IntroduceImageMedia {
 export interface IntroduceImageResponse {
     id: number;
     type: IntroduceImageType;
+    status?: IntroduceStatus;
     createdAt: string;
     updatedAt: string;
     metadatas: IntroduceImageMetadata[];
@@ -41,6 +48,7 @@ export interface IntroduceImage {
     [key: string]: unknown; // Index signature for Ant Design Table compatibility
     id: number;
     type: IntroduceImageType;
+    status: IntroduceStatus;
     titleVi: string;
     titleEn: string;
     descriptionVi: string;
@@ -117,6 +125,7 @@ export function mapIntroduceImageResponse(response: IntroduceImageResponse): Int
     return {
         id: response.id,
         type: response.type,
+        status: response.status ?? IntroduceStatus.NotForSale,
         titleVi,
         titleEn,
         descriptionVi,
@@ -127,6 +136,32 @@ export function mapIntroduceImageResponse(response: IntroduceImageResponse): Int
         createdAt: response.createdAt,
         updatedAt: response.updatedAt,
     };
+}
+
+export function getStatusLabel(status: IntroduceStatus | number, language: 'vi' | 'en' = 'vi'): string {
+    if (language === 'vi') {
+        switch (status) {
+            case IntroduceStatus.NotForSale:
+                return 'Chưa mở bán';
+            case IntroduceStatus.ForSale:
+                return 'Đang mở bán';
+            case IntroduceStatus.Sold:
+                return 'Đã bán';
+            default:
+                return '';
+        }
+    }
+
+    switch (status) {
+        case IntroduceStatus.NotForSale:
+            return 'Not for sale';
+        case IntroduceStatus.ForSale:
+            return 'For sale';
+        case IntroduceStatus.Sold:
+            return 'Sold';
+        default:
+            return '';
+    }
 }
 
 // Map multiple responses
@@ -177,6 +212,7 @@ export function getTypeLabel(type: IntroduceImageType | number, language: 'vi' |
 export interface UpdateIntroduceImagePayload {
     id?: number;
     type?: number;
+    status?: number;
     metadatas?: {
         id?: number;
         group: number;
@@ -203,6 +239,7 @@ export function buildUpdatePayload(
         titleEn: string;
         descriptionVi: string;
         descriptionEn: string;
+        status: IntroduceStatus;
     },
     imageBase64?: string | null
 ): UpdateIntroduceImagePayload {
@@ -218,6 +255,7 @@ export function buildUpdatePayload(
     const payload: UpdateIntroduceImagePayload = {
         id: item.id,
         type: item.type,
+        status: formValues.status,
         metadatas: [
             {
                 id: item.metadataIds[`${titleKey}_0`] || 0,
