@@ -18,7 +18,7 @@ const VerticalCarousel = ({ isActive = false }: { isActive?: boolean }) => {
   const LOOP_ITEMS = [...BG_ITEMS, ...BG_ITEMS];
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isActive ? styles.visible : ""}`}>
       {/* Khối này sẽ trôi lên bằng CSS */}
       <div className={`${styles.marqueeTrack} ${isActive ? styles.running : ""}`}>
         {LOOP_ITEMS.map((src, index) => (
