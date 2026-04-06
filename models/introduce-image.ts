@@ -182,7 +182,7 @@ export function getTypeLabel(type: IntroduceImageType | number, language: 'vi' |
             case IntroduceImageType.VILLA:
                 return 'Villa';
             case IntroduceImageType.ACCOMMODATION:
-                return 'Nhà lưu trú';
+                return 'Villa lưu trú';
             case IntroduceImageType.EAST_COAST_VILLA:
                 return 'Villa bờ đông';
             default:

@@ -43,7 +43,7 @@ export default function ImagesManagement() {
                     },
                     {
                         key: '5',
-                        label: 'Nhà lưu trú',
+                        label: 'Villa lưu trú',
                         children: <AccommodationImageTab />
                     },
                     {

@@ -101,23 +101,28 @@
   }
 }
 
+/* Compact Mobile Floating Style for Safari iOS */
 @media (max-width: 768px) {
   .toggleBtn {
-    padding: 8px 1.2rem;
-    min-width: 100px;
+    padding: 0 8px;
+    min-width: 65px;
+    height: 42px;
     background-color: #ffffff !important;
     border-color: #e0e0e0 !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transform: none !important; /* Block transform lift on mobile for stability */
   }
 
   .langLabel {
-    font-size: 14px;
+    font-size: 13px;
     color: #1a1a1a;
+    font-weight: 700;
+    letter-spacing: 0.5px;
   }
 
   .divider {
-    height: 18px;
-    margin: 0 10px;
+    height: 16px;
+    margin: 0 4px;
     background-color: #e0e0e0;
   }
 

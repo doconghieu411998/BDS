@@ -2,6 +2,7 @@
   width: 100%;
   margin-bottom: 2rem;
   margin-top: 2rem;
+  background-color: #ffffff; /* Explicit background for Safari iOS stability */
 }
 
 .sectionHeader {
