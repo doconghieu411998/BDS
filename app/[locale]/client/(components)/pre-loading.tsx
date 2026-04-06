@@ -3,6 +3,8 @@
 import { useLayoutEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import styles from "./pre-loading.module.css"
+import { withBasePath } from "@/services/commonService"
+import Image from "next/image"
 
 export default function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -112,17 +114,14 @@ export default function Preloader() {
   return (
     <div ref={containerRef} className={styles.preloader}>
       <div ref={logoRef} className={styles.logoContainer}>
-        <svg className={styles.logo} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M12 2L2 7L12 12L22 7L12 2Z"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path d="M2 17L12 22L22 17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M2 12L12 17L22 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <Image
+          src={withBasePath("images/logo-preloading.png")}
+          alt="Masteri Logo"
+          width={280}
+          height={80}
+          className={styles.logo}
+          priority
+        />
       </div>
     </div>
   )

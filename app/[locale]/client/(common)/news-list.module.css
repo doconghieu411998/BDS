@@ -13,12 +13,11 @@
     letter-spacing: 1px;
 }
 
-/* Hiển thị 3 item trên 1 hàng (Updated for Design) */
+/* --- GRID LAYOUT --- */
 .newsGrid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: calc(40 / 1440 * 100vw);
-    /* Proportional gap matching design */
     width: 100%;
     justify-content: center;
 }
@@ -29,27 +28,23 @@
     flex-direction: column;
     border: 1px solid #E5E7EB;
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-    /* Specific sizing from design: 387x377 @ 1440px */
     width: 100%;
     max-width: calc(387 / 1440 * 100vw);
     height: calc(377 / 1440 * 100vw);
-    min-height: 300px;
-    /* Safety fallback */
+    min-height: 280px;
     overflow: hidden;
 }
 
 .newsCard:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-    border-color: #004b91;
+    border-color: #0076B7;
 }
 
 .imageWrapper {
     position: relative;
     width: 100%;
     height: 65%;
-    /* Allocate 65% for the image */
     overflow: hidden;
 }
 
@@ -91,7 +86,7 @@
 }
 
 .cardTitle a:hover {
-    color: #004b91;
+    color: #0076B7;
 }
 
 .cardFooter {
@@ -108,11 +103,6 @@
     color: #999;
 }
 
-.arrowBtn {
-    color: #004b91;
-    transition: transform 0.3s ease;
-}
-
 .circleArrow {
     display: flex;
     align-items: center;
@@ -120,107 +110,38 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1.5px solid #004b91;
+    border: 1.5px solid #0076B7;
     transition: all 0.3s ease;
+    color: #0076B7;
 }
 
 .newsCard:hover .circleArrow {
-    background-color: #004b91;
+    background-color: #0076B7;
     color: #fff;
     transform: scale(1.1);
 }
 
-.newsCard:hover .arrowBtn {
-    transform: none;
-    /* Removed the previous translateX shift */
-}
-
-/* Ant Design Pagination Styling (Match image: Square + Blue) */
-.paginationWrapper {
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-}
-
-/* Ant Design Pagination Styling (Match image: Square + Blue) */
-.paginationWrapper :global(.ant-pagination-item) {
-    border-radius: 0 !important;
-    border: 1px solid #d9d9d9 !important;
-    margin: 0 !important;
-    min-width: 38px !important;
-    height: 38px !important;
-    line-height: 36px !important;
-    transition: all 0.3s ease !important;
-}
-
-.paginationWrapper :global(.ant-pagination-item a) {
-    color: #444 !important;
-    font-weight: 500 !important;
-}
-
-.paginationWrapper :global(.ant-pagination-item-active) {
-    background-color: #004b91 !important;
-    border-color: #004b91 !important;
-}
-
-.paginationWrapper :global(.ant-pagination-item-active a) {
-    color: #ffffff !important;
-}
-
-.paginationWrapper :global(.ant-pagination-prev),
-.paginationWrapper :global(.ant-pagination-next) {
-    border-radius: 0 !important;
-    min-width: 38px !important;
-    height: 38px !important;
-    line-height: 36px !important;
-    margin: 0 !important;
-}
-
-.paginationWrapper :global(.ant-pagination-prev .ant-pagination-item-link),
-.paginationWrapper :global(.ant-pagination-next .ant-pagination-item-link) {
-    border-radius: 0 !important;
-    border: 1px solid #d9d9d9 !important;
-    color: #444 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-.paginationWrapper :global(.ant-pagination-item:hover) {
-    border-color: #004b91 !important;
-}
-
-.paginationWrapper :global(.ant-pagination-item:hover a) {
-    color: #004b91 !important;
-}
-
-.paginationWrapper :global(.ant-pagination-item-active:hover a) {
-    color: #fff !important;
-}
-
-/* --- HORIZONTAL LAYOUT (View All Page) --- */
+/* --- HORIZONTAL LAYOUT --- */
 .newsListHorizontal {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
     width: 100%;
 }
 
 .newsCardHorizontal {
     display: flex;
     background: #ffffff;
-    border: 1px solid #f0f0f0;
-    border-radius: 4px;
+    border: 1px solid #f1f5f9;
+    border-radius: 8px;
     overflow: hidden;
     transition: all 0.3s ease;
     width: 100%;
-    height: calc(320 / 1440 * var(--width-container, 1440px));
 }
 
 .newsCardHorizontal:hover {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    border-color: #00BCD4;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    border-color: #0076B7;
 }
 
 .imageWrapperHorizontal {
@@ -228,61 +149,56 @@
     flex: 0 0 35%;
     width: 35%;
     overflow: hidden;
+    aspect-ratio: 16 / 9;
 }
 
 .cardBodyHorizontal {
     flex: 1;
-    padding: 1.5rem 2rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-}
-
-.cardHeaderHorizontal {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    justify-content: center;
 }
 
 .categoryBadge {
     display: inline-block;
-    background: #00BCD4;
+    background: #0076B7;
     color: #fff;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.625rem;
+    padding: 4px 12px;
+    font-size: 0.7rem;
     font-weight: 800;
     text-transform: uppercase;
     width: fit-content;
-    border-radius: 2px;
-    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
 
 .cardTitleHorizontal {
-    font-family: var(--font-serif), "Times New Roman", Times, serif;
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
     line-height: 1.3;
+    color: #1e293b;
 }
 
 .cardTitleHorizontal a {
-    color: #00BCD4;
+    color: inherit;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .cardTitleHorizontal a:hover {
-    color: #008ba3;
+    color: #0076B7;
 }
 
 .descriptionHorizontal {
-    font-size: 0.875rem;
-    color: #666;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.7;
     margin-top: 1rem;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -291,37 +207,84 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 0.75rem;
-    color: #999;
+    font-size: 0.8rem;
+    color: #94a3b8;
     margin-top: 1.5rem;
 }
 
-.separator {
-    color: #ddd;
+/* --- PAGINATION --- */
+.paginationWrapper {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
 }
 
-/* Responsive: 4 -> 2 -> 1 cột (Grid Layout) */
+.paginationWrapper :global(.ant-pagination-item) {
+    border-radius: 4px;
+}
+
+.paginationWrapper :global(.ant-pagination-item-active) {
+    background-color: #0076B7;
+    border-color: #0076B7;
+}
+
+.paginationWrapper :global(.ant-pagination-item-active a) {
+    color: #ffffff !important;
+}
+
+/* --- RESPONSIVE --- */
 @media (max-width: 1100px) {
     .newsGrid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+    /* Grid Mobile */
     .newsGrid {
         grid-template-columns: 1fr;
+        gap: 30px;
+        justify-items: center;
     }
-}
 
-/* Mobile adjustments for horizontal layout */
-@media (max-width: 768px) {
+    .newsCard {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .imageWrapper {
+        aspect-ratio: 16 / 9;
+        height: auto;
+    }
+
+    .cardBody {
+        padding: 20px;
+    }
+
+    .cardTitle {
+        font-size: 1.15rem;
+    }
+
+    /* Horizontal Mobile */
     .newsCardHorizontal {
         flex-direction: column;
-        min-height: auto;
     }
 
     .imageWrapperHorizontal {
-        flex: 0 0 200px;
         width: 100%;
+        flex: none;
+    }
+
+    .cardBodyHorizontal {
+        padding: 1.5rem;
+    }
+
+    .cardTitleHorizontal {
+        font-size: 1.25rem;
+    }
+
+    .descriptionHorizontal {
+        margin-top: 0.75rem;
+        -webkit-line-clamp: 3;
     }
 }

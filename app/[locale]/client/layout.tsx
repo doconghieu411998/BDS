@@ -71,8 +71,6 @@ export default function ClientLayout({
         {children}
       </main>
 
-      <LanguageSwitcher />
-
       <Footer />
     </div>
   );

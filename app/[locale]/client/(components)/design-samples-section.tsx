@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Carousel } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -16,8 +16,18 @@ const TABS = [
 
 const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) => {
   const [activeTab, setActiveTab] = useState<string>(TABS[0].id);
+  const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef<any>(null);
   const locale = useLocale();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const labels: Record<string, string> = {
     villa: 'Villa',
@@ -69,38 +79,44 @@ const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) =>
         </div>
 
         <div className={styles.carouselWrapper}>
-          <button className={styles.prevArrow} onClick={prev} aria-label="Hình trước">
-            <LeftOutlined />
-          </button>
+          {!isMobile && (
+            <button className={styles.prevArrow} onClick={prev} aria-label="Hình trước">
+              <LeftOutlined />
+            </button>
+          )}
 
-          <Carousel ref={carouselRef} dots={false}>
+          <Carousel ref={carouselRef} dots={isMobile} infinite draggable={isMobile} swipe={isMobile}>
             {currentImages.map((item, idx) => {
               const isExternal = item.url.startsWith('http') || item.url.startsWith('blob:');
               const imgSrc = isExternal ? item.url : withBasePath(item.url);
 
               return (
                 <div key={`${activeTab}-${idx}`} className={styles.carouselSlide}>
-                  <Image
-                    src={imgSrc}
-                    alt={item.title || `${activeTabLabel} - ${idx + 1}`}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    className={styles.slideImage}
-                    unoptimized={isExternal}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1440px) 90vw, 1440px"
-                  />
-                  <div className={styles.overlay}>
-                    <h3 className={styles.overlayTitle}>{item.title}</h3>
-                    <p className={styles.overlayDesc}>{item.description}</p>
+                  <div className={styles.imageContainer}>
+                    <Image
+                      src={imgSrc}
+                      alt={item.title || `${activeTabLabel} - ${idx + 1}`}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      className={styles.slideImage}
+                      unoptimized={isExternal}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1440px) 90vw, 1440px"
+                    />
+                    <div className={styles.overlay}>
+                      <h3 className={styles.overlayTitle}>{item.title}</h3>
+                      <p className={styles.overlayDesc}>{item.description}</p>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </Carousel>
 
-          <button className={styles.nextArrow} onClick={next} aria-label="Hình tiếp theo">
-            <RightOutlined />
-          </button>
+          {!isMobile && (
+            <button className={styles.nextArrow} onClick={next} aria-label="Hình tiếp theo">
+              <RightOutlined />
+            </button>
+          )}
         </div>
 
         {currentImages.length === 0 && (

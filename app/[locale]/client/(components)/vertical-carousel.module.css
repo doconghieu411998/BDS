@@ -2,44 +2,51 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* Căn giữa dọc - cho phép fade mờ 2 đầu */
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
   position: relative;
+  
+  /* Start hidden to avoid lag during initial menu expansion */
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: opacity;
+}
+
+.ready {
+  opacity: 1; /* Fade in once the menu is fully expanded */
 }
 
 .marqueeTrack {
   width: 100%;
-  /* Không set height, để nó tự giãn theo nội dung con */
-
-  /* ANIMATION QUAN TRỌNG */
-  animation: scrollUp 60s linear infinite;
-  /* 60s là thời gian chạy hết 1 vòng (càng to càng chậm) */
-
-  /* Báo cho trình duyệt dùng Card đồ họa để render -> Siêu mượt */
+  /* Animation is paused until ready class is applied */
+  animation: scrollUp 80s linear infinite -pause; /* Default paused or just not running */
   will-change: transform;
+}
+
+.marqueeTrack.running {
+    animation-play-state: running;
+    animation: scrollUp 80s linear infinite; /* Adjusted to 80s for an even smoother, calmer look */
 }
 
 /* Định nghĩa chuyển động */
 @keyframes scrollUp {
   0% {
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
   }
-
   100% {
-    /* Di chuyển lên 50% chiều cao (vì mình nhân đôi data, nên 50% là hết list gốc) */
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateZ(0); /* Using 3D helper for GPU optimization */
   }
 }
 
 .slideItem {
   width: calc(590 / 1440 * var(--width-container, 1440px));
   height: calc(376 / 1440 * var(--width-container, 1440px));
-  margin-bottom: 40px; /* Gap between items */
-  border-radius: 24px; /* Rounded corners */
-  border: 2px solid rgba(255, 255, 255, 0.8); /* White border */
+  margin-bottom: 40px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Thinner border for a more elegant look */
   overflow: hidden;
   position: relative;
+  background-color: rgba(255, 255, 255, 0.05); /* Placeholder background during load */
 }
 
 .bgImage {
@@ -50,9 +57,8 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  /* Gradient hòa trộn sang menu bên trái - CYAN #00b8dc (Làm mờ hơn để ko ám xanh) */
   background: linear-gradient(to right,
-      rgba(0, 184, 220, 0.35) 0%,
-      rgba(0, 184, 220, 0.15) 30%,
+      rgba(0, 184, 220, 0.45) 0%,
+      rgba(0, 184, 220, 0.15) 40%,
       transparent 100%);
 }

@@ -3,7 +3,6 @@
 /* ==================== HEADER BAR ==================== */
 .header {
   position: fixed;
-  top: 0;
   left: 0;
   width: 100%;
   display: flex;
@@ -11,8 +10,9 @@
   align-items: center;
   z-index: 1000;
   background-color: transparent;
-  padding: 15px 0;
-  transition: all 0.4s ease;
+  padding: 30px 0 45px;
+  /* Deeper bottom padding for "full" initial look */
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 
@@ -26,9 +26,20 @@
 }
 
 .header.sticky {
-  background-color: #ffffff;
-  padding: 15px 40px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  /* Semi-transparent white */
+  backdrop-filter: blur(12px);
+  /* "Mờ mờ" glass effect */
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 40px;
+  /* Slimmer "bé tí" background */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.header.sticky .logo {
+  transform: scale(0.85);
+  /* More noticeable shrink for the slim design */
 }
 
 /* Renamed sections for clarity */
@@ -48,6 +59,10 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.subscribeBtnMobile {
+  display: none;
 }
 
 /* ==================== MENU BUTTON ==================== */
@@ -117,8 +132,10 @@
 
 /* ==================== LOGO ==================== */
 .logo {
+  width: 160px;
   height: auto;
   object-fit: contain;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .logoLink {
@@ -209,6 +226,7 @@
 
 /* ==================== OVERLAY LOGO ==================== */
 .overlayLogo {
+  display: none; /* Hidden by default (Desktop) */
   position: absolute;
   top: 40px;
   left: 50%;
@@ -216,10 +234,15 @@
   z-index: 20;
   opacity: 0;
   transition: opacity 0.5s ease 0.4s;
+  pointer-events: none;
 }
 
 .fullScreenMenu.open .overlayLogo {
-  opacity: 0.8;
+  opacity: 1;
+}
+
+.menuBrandingImg {
+    object-fit: contain;
 }
 
 /* ==================== MENU CONTAINER ==================== */
@@ -328,88 +351,117 @@
 /* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 768px) {
   .header {
-    padding: 15px 20px;
-    /* UPDATED */
-    height: 70px;
+    padding: 0 15px;
+    background-color: transparent;
+  }
+
+  .header.sticky {
+    background-color: #ffffff;
+    padding: 0 15px;
+  }
+
+  .headerWrapper {
+    display: flex;
     justify-content: space-between;
-    /* ADDED */
+    align-items: center;
+    height: 100%;
   }
 
-  /* Fix logo alignment - center on mobile */
+  /* Logo on the left */
   .logoSection {
-    position: relative;
-    /* UPDATED */
-    left: auto;
-    /* UPDATED */
-    right: auto;
-    /* UPDATED */
-    transform: none;
-    /* UPDATED */
     order: 1;
-    /* ADDED */
-  }
-
-  /* Menu button stays on right */
-  .menuSection {
-    position: relative;
-    /* UPDATED */
-    left: auto;
-    /* UPDATED */
-    right: auto;
-    /* UPDATED */
-    order: 2;
-    /* ADDED */
+    justify-content: flex-start;
   }
 
   .logo {
-    width: 90px;
+    width: 100px;
     height: auto;
   }
 
-  .menuBtn {
+  /* Sticky Actions on the RIGHT edge */
+  .rightSection {
+    position: fixed;
+    right: 0;
+    top: 70%;
+    transform: translateY(-50%);
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+    z-index: 1001;
+    margin: 0;
+    padding-right: 15px;
+  }
+
+  .subscribeBtnMobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 45px;
     height: 45px;
+    background-color: #00b8dc;
+    /* Cyan consistent with header */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 184, 220, 0.3);
+    transition: transform 0.2s;
+  }
+
+  .subscribeBtnMobile:active {
+    transform: scale(0.9);
+  }
+
+  .subscribeIcon {
+    font-size: 20px;
+  }
+
+  /* Menu Icon on the far right of top bar */
+  .leftSection {
+    order: 2;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .menuBtn {
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     padding: 0;
     justify-content: center;
+    background-color: #00b8dc;
+  }
+
+  .menuIcon {
+    font-size: 16px;
   }
 
   .menuTextOverflow {
     display: none !important;
   }
 
-  .menuIcon {
-    margin: 0;
-  }
-
-  /* Fullscreen menu mobile */
+  /* Fullscreen menu mobile - Slide from LEFT */
   .fullScreenMenu {
-    background-color: #d2a45d;
+    clip-path: inset(0 100% 0 0);
+    background-color: #00b8dc;
   }
 
-  .overlayLogo {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    transform: none;
-    width: 100px;
+  .fullScreenMenu.open {
+    clip-path: inset(0 0 0 0);
   }
 
-  .overlayLogo img {
-    width: 100%;
-    height: auto;
-    max-width: 100px;
-    object-fit: contain;
+  .menuWrapper {
+    flex-direction: column;
+    padding: 20px;
   }
 
   .closeBtn {
-    position: absolute;
-    top: 35px;
-    /* UPDATED */
-    right: 25px;
+    top: 25px;
+    right: 20px;
     left: auto;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.1);
   }
@@ -417,7 +469,18 @@
   .menuContainer {
     flex-direction: column;
     justify-content: center;
-    padding-top: 80px;
+    padding-top: 60px;
+  }
+
+  .overlayLogo {
+    display: block; /* Show only on mobile */
+    top: 25px;
+    opacity: 1 !important;
+  }
+
+  .menuBrandingImg {
+      width: 130px !important;
+      height: auto !important;
   }
 
   .bgDecoration {
@@ -425,28 +488,20 @@
   }
 
   .navLinks {
+    padding-left: 10px;
     align-items: flex-start;
-    width: 100%;
-    padding-left: 25px;
-    padding-right: 20px;
   }
 
   .navItem {
     font-size: 18px;
+    margin-bottom: 25px;
     font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    width: 100%;
   }
 }
 
-/* NEW BREAKPOINT ADDED */
+/* TABLET TRANSITION */
 @media (max-width: 1024px) and (min-width: 769px) {
   .header {
-    padding: 20px 30px;
-  }
-
-  .menuSection {
-    left: 30px;
+    padding: 15px 40px;
   }
 }

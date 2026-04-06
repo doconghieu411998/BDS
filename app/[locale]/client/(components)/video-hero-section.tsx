@@ -102,12 +102,6 @@ const VideoHeroSection: React.FC<VideoHeroSectionProps> = ({
                         </svg>
                     </button>
                 </div>
-
-                {/* Scroll Indicator (Optional) */}
-                <div className={styles.scrollIndicator} aria-hidden="true">
-                    <div className={styles.scrollLine}></div>
-                    <span className={styles.scrollText}>Cuộn xuống</span>
-                </div>
             </div>
         </section>
     );

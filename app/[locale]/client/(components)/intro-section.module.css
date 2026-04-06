@@ -112,3 +112,81 @@
   height: 100%;
   object-fit: cover;
 }
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .section {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .sectionHeader {
+    gap: 0.8rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    padding: 0 15px;
+    justify-content: center;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    padding: 0;
+    align-items: center;
+  }
+
+  .blueCard {
+    width: 100%;
+    aspect-ratio: auto;
+    padding: 50px 25px 120px 25px;
+    /* Deeper bottom padding for overlap */
+    border-radius: 0;
+    /* Full bleed for modern feel */
+    margin: 0;
+  }
+
+  .textContent {
+    width: 100%;
+    gap: 1.25rem;
+    text-align: left;
+  }
+
+  .titleMain {
+    font-size: 1.8rem;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+    margin: -0.5rem 0 0 0;
+    opacity: 0.85;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .imageCard {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 90%;
+    /* Slightly narrower for artistic overlap effect */
+    margin-top: -80px;
+    /* Strong overlap effect */
+    aspect-ratio: 16 / 10;
+    z-index: 2;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: 5%;
+    /* Shift to right slightly for asymmetry */
+  }
+
+  .imageWrapper {
+    height: 100%;
+  }
+}

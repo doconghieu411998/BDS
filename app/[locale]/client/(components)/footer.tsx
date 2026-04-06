@@ -13,15 +13,14 @@ const Footer = () => {
           <div className={styles.logoCol}>
             <div className={styles.logo}>
               <div className={styles.logoIcon}>
-                {/* SVG Floral Placeholder */}
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="currentColor">
-                   <path d="M50 10C50 10 35 40 50 50C65 40 50 10 50 10Z" opacity="0.8"/>
-                   <path d="M50 90C50 90 65 60 50 50C35 60 50 90 50 90Z" opacity="0.8"/>
-                   <path d="M10 50C10 50 40 65 50 50C40 35 10 50 10 50Z" opacity="0.8"/>
-                   <path d="M90 50C90 50 60 35 50 50C60 65 90 50 90 50Z" opacity="0.8"/>
-                </svg>
+                <Image
+                  src="/images/logo-preloading.png"
+                  alt="The Hera Resort Logo"
+                  width={200}
+                  height={80}
+                  className={styles.footerLogoImg}
+                />
               </div>
-              <div className={styles.logoText}>THE HERA RESORT QUY NHON</div>
             </div>
           </div>
 

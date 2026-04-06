@@ -98,10 +98,11 @@
   font-family: "Times New Roman", Times, serif;
 }
 
+/* ==================== TABLET RESPONSIVE ==================== */
 @media (max-width: 1024px) {
   .contentBox {
     flex-direction: column-reverse;
-    gap: 4rem;
+    gap: 3rem;
   }
 
   .leftCol,
@@ -112,6 +113,54 @@
   }
 
   .infoItem {
+    justify-content: flex-start;
+  }
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .imageBanner {
+    aspect-ratio: 16 / 10;
+  }
+
+  .infoStrip {
+    padding: 60px 20px;
+  }
+
+  .contentBox {
+    gap: 2.5rem;
+  }
+
+  .titleInfo {
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .titleOverview {
+    font-size: 2.6rem;
+  }
+
+  .infoList {
+    width: 100%;
+  }
+
+  .infoItem {
+    padding: 1.2rem 0;
+    justify-content: flex-start;
     text-align: left;
+  }
+
+  .iconBox {
+    margin-right: 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .label {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .value {
+    font-size: 1.25rem;
   }
 }

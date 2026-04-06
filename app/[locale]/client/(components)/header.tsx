@@ -4,19 +4,22 @@ import Image from "next/image"
 import Link from "next/link"
 import styles from "./header.module.css"
 import { useEffect, useRef, useState, useCallback, useMemo } from "react"
-import { MenuOutlined, CloseOutlined } from "@ant-design/icons"
+import { MenuOutlined, CloseOutlined, FileTextOutlined } from "@ant-design/icons"
 import VerticalCarousel from "./vertical-carousel"
 import { withBasePath } from "@/services/commonService"
 import { useTranslations } from "next-intl"
-import { HEADER_KEYS } from "@/constants/localeKeys"
+import { HEADER_KEYS, HOME_KEYS } from "@/constants/localeKeys"
 import LanguageSwitcher from "./language-switcher"
+import ConsultationPopup from "./consultation-popup"
+import { usePathname } from "next/navigation"
 
 // Logo sources
-const LOGO_SRC = "images/logo.png"
-const LOGO_WHITE = "https://placehold.co/600x400.png"
+const LOGO_WHITE = "images/logo-white-text.png"
+const LOGO_BLACK = "images/logo-black-text.png"
 
 const Header = () => {
   const t = useTranslations()
+  const pathname = usePathname()
   const headerRef = useRef<HTMLElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
@@ -24,6 +27,14 @@ const Header = () => {
 
   const [isSticky, setIsSticky] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
+
+  // Pages that have white backgrounds and need a dark logo by default
+  const isLightPage = useMemo(() => {
+    return pathname.includes("/tin-tuc") || 
+           pathname.includes("/news") || 
+           pathname.includes("/tags-article");
+  }, [pathname]);
 
   // Menu items configuration
   const MENU_ITEMS = useMemo(() => [
@@ -31,7 +42,7 @@ const Header = () => {
     { label: t(HEADER_KEYS.HEADER_MENU_OVERVIEW), href: "#", scrollTo: "overview-section" },
     { label: t(HEADER_KEYS.HEADER_MENU_CURATED_ANEMITIES), href: "#", scrollTo: "curated-anemities" },
     { label: t(HEADER_KEYS.HEADER_MENU_ARCHITECTURE), href: "#", scrollTo: "regional-architecture" },
-    { label: t(HEADER_KEYS.HEADER_MENU_DESIGN_INSPIRATION), href: "#", scrollTo: "design-collections" },
+    { label: t(HEADER_KEYS.HEADER_MENU_DESIGN_COLLECTIONS), href: "#", scrollTo: "design-collections" },
     { label: t(HEADER_KEYS.HEADER_MENU_NEWS), href: "#", scrollTo: "news-section" },
   ], [t])
 
@@ -47,16 +58,13 @@ const Header = () => {
 
   useEffect(() => {
     if (isMenuOpen) {
-      // Store current scroll position
       const scrollY = window.scrollY
       document.body.style.position = "fixed"
       document.body.style.top = `-${scrollY}px`
       document.body.style.width = "100%"
       document.body.style.overflow = "hidden"
-      // Focus the close button when menu opens (accessibility)
       setTimeout(() => closeBtnRef.current?.focus(), 100)
     } else {
-      // Restore scroll position
       const scrollY = document.body.style.top
       document.body.style.position = ""
       document.body.style.top = ""
@@ -75,7 +83,6 @@ const Header = () => {
     }
   }, [isMenuOpen])
 
-  // Keyboard navigation: Escape to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isMenuOpen) {
@@ -87,11 +94,10 @@ const Header = () => {
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [isMenuOpen])
 
-  // Smooth scroll to section
   const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      const headerOffset = 80 // Fixed header height
+      const headerOffset = 80
       const elementPosition = element.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset
 
@@ -102,32 +108,31 @@ const Header = () => {
     }
   }, [])
 
-  // Handle menu item click
   const handleMenuClick = useCallback((item: typeof MENU_ITEMS[0], e: React.MouseEvent) => {
     if (item.scrollTo) {
       e.preventDefault()
       closeMenu()
-      // Delay scroll slightly for smoother UX after menu closes
       setTimeout(() => scrollToSection(item.scrollTo!), 300)
     } else {
       closeMenu()
     }
-  }, [scrollToSection])
+  }, [scrollToSection, MENU_ITEMS]) // Corrected dependencies
 
-  // Open menu handler
   const openMenu = useCallback(() => {
     setIsMenuOpen(true)
   }, [])
 
-  // Close menu handler
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false)
   }, [])
 
+  // Use dark logo if sticky OR if on a light-background page
+  const displayLogo = isSticky || isLightPage ? LOGO_BLACK : LOGO_WHITE;
+
   return (
     <>
       {/* HEADER BAR */}
-      <header ref={headerRef} className={`${styles.header} ${isSticky ? styles.sticky : ""}`} role="banner">
+      <header ref={headerRef} className={`${styles.header} ${isSticky ? styles.sticky : ""} ${isLightPage ? styles.lightPageHeader : ""}`} role="banner">
         <div className={styles.headerWrapper}>
           {/* LEFT: Menu button */}
           <div className={styles.leftSection}>
@@ -140,7 +145,6 @@ const Header = () => {
               aria-label={t(HEADER_KEYS.HEADER_ARIA_OPEN_MENU)}
             >
               <MenuOutlined className={styles.menuIcon} />
-              {/* Sliding text effect */}
               <span className={styles.menuTextOverflow}>
                 <span className={styles.menuTextPrimary}>{t(HEADER_KEYS.HEADER_MENU_TEXT)}</span>
                 <span className={styles.menuTextSecondary}>{t(HEADER_KEYS.HEADER_MENU_TEXT)}</span>
@@ -148,23 +152,30 @@ const Header = () => {
             </button>
           </div>
 
-          {/* CENTER: Logo section */}
+          {/* CENTER: Logo section - Using displayLogo for adaptive visibility */}
           <div className={styles.logoSection}>
             <Link href="/" className={styles.logoLink} aria-label={t(HEADER_KEYS.HEADER_MENU_LOGO_ALT)}>
               <Image
-                src={withBasePath(LOGO_SRC)}
+                src={withBasePath(displayLogo)}
                 alt="Masteri Logo"
-                width={120}
-                height={50}
+                width={160}
+                height={65}
                 className={styles.logo}
                 priority
               />
             </Link>
           </div>
 
-          {/* RIGHT: Language Switcher or potential secondary action */}
+          {/* RIGHT: Language Switcher and Subscribe button */}
           <div className={styles.rightSection}>
-            <LanguageSwitcher />
+            <button
+              className={styles.subscribeBtnMobile}
+              onClick={() => setIsPopupOpen(true)}
+              aria-label={t(HOME_KEYS.HEADER_BTN_SUBSCRIBE_LABEL)}
+            >
+              <FileTextOutlined className={styles.subscribeIcon} />
+            </button>
+            <LanguageSwitcher isSticky={isSticky || isLightPage} />
           </div>
         </div>
       </header>
@@ -180,6 +191,18 @@ const Header = () => {
         aria-hidden={!isMenuOpen}
       >
         <div className={styles.menuWrapper}>
+          {/* Official Branding Logo for Menu - Restricted to Mobile via CSS */}
+          <div className={styles.overlayLogo}>
+             <Image 
+                src={withBasePath("images/logo-preloading.png")} 
+                alt="Masteri Branding" 
+                width={180} 
+                height={50} 
+                className={styles.menuBrandingImg}
+                priority
+             />
+          </div>
+
           {/* Close button */}
           <div className={styles.closeBtnWrapper}>
             <button
@@ -191,11 +214,6 @@ const Header = () => {
             >
               <CloseOutlined className={styles.closeIcon} />
             </button>
-          </div>
-
-          {/* Overlay logo */}
-          <div className={styles.overlayLogo}>
-            <Image src={LOGO_WHITE || "/placeholder.svg"} alt="Masteri Logo" width={150} height={80} />
           </div>
 
           {/* Menu container */}
@@ -222,6 +240,10 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <ConsultationPopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+      />
     </>
   )
 }

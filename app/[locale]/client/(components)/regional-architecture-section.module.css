@@ -1,56 +1,50 @@
 .section {
   width: 100%;
-  background-color: #ffffff;
-  padding: 4rem 1rem;
+  background-color: #f1f5f9;
+  padding: 80px 0;
+  font-family: var(--font-montserrat), sans-serif;
 }
 
 .wrapper {
-  max-width: var(--width-container, 1440px);
+  max-width: var(--width-container);
   margin: 0 auto;
+  padding: 0 20px;
   position: relative;
 }
 
 .title {
   text-align: center;
-  font-family: "Times New Roman", Times, serif;
   font-size: clamp(2rem, 3vw, 3.5rem);
-  color: #333333;
+  color: #0076B7;
   margin-bottom: 2.5rem;
-  font-weight: 500;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
 .carouselWrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 1440 / 700;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 }
 
-.carouselWrapper :global(.ant-carousel) {
-  width: 100%;
-  height: 100%;
-}
-
-.carouselWrapper :global(.slick-slider),
-.carouselWrapper :global(.slick-list),
-.carouselWrapper :global(.slick-track) {
-  height: 100%;
-}
-
-.carouselSlide {
+.imageContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 1440 / 700;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .slideImage {
-  object-fit: cover;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.imageContainer:hover .slideImage {
+  transform: scale(1.05);
 }
 
 .prevArrow,
@@ -58,108 +52,127 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
-  width: 65px;
-  height: 65px;
+  z-index: 20;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: white;
   transition: all 0.3s ease;
 }
 
 .prevArrow {
-  left: 2rem;
-  background-color: rgba(0, 0, 0, 0.45);
-  border: 2px solid rgba(255, 255, 255, 0.7);
-}
-
-.prevArrow:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  left: -30px;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .nextArrow {
-  right: 2rem;
+  right: -30px;
   background-color: #00AEEF;
+  box-shadow: 0 10px 20px rgba(0, 174, 239, 0.3);
 }
 
+.prevArrow:hover,
 .nextArrow:hover {
-  background-color: #0088cc;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   opacity: 0;
   transition: opacity 0.4s ease;
-  padding: 4rem;
+  padding: 40px;
   text-align: center;
   color: #fff;
   z-index: 10;
+  backdrop-filter: blur(6px);
 }
 
-.carouselSlide:hover .overlay {
+/* Hiện thông tin khi hover (máy tính) hoặc tap/active (di động) */
+.imageContainer:hover .overlay,
+.imageContainer:active .overlay {
   opacity: 1;
 }
 
 .overlayTitle {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 4rem;
-  font-weight: 700;
+  font-size: 3rem;
+  font-weight: 800;
   margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .overlayDesc {
-  font-family: var(--font-sans), Arial, sans-serif;
   font-size: 1.1rem;
-  line-height: 1.6;
+  line-height: 1.8;
   max-width: 800px;
   margin: 0 auto;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+@media (max-width: 1200px) {
+  .prevArrow {
+    left: 10px;
+  }
+
+  .nextArrow {
+    right: 10px;
+  }
 }
 
 @media (max-width: 1024px) {
-  .carouselWrapper, .carouselSlide {
-    aspect-ratio: 16 / 9;
+  .section {
+    padding: 60px 0;
   }
-  .prevArrow, .nextArrow {
-    width: 45px;
-    height: 45px;
-    font-size: 1.25rem;
+
+  .title {
+    font-size: 1.8rem; /* Giảm nhẹ để sang hơn */
+    letter-spacing: 1px;
+  }
+
+  .imageContainer {
+    aspect-ratio: 4 / 3;
+    /* Tỷ lệ ảnh tốt hơn cho di động */
+  }
+
+  .overlayTitle {
+    font-size: 1.4rem; /* Giảm đáng kể theo yêu cầu (quá to) */
+    margin-bottom: 10px;
+  }
+
+  .overlayDesc {
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 }
 
 @media (max-width: 768px) {
-  .prevArrow {
-    left: 1rem;
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-  }
-  .nextArrow {
-    right: 1rem;
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-  }
-  .overlayTitle {
-    font-size: 2.5rem;
-  }
-  .overlayDesc {
-    font-size: 1rem;
-  }
   .overlay {
-    padding: 2rem;
+    padding: 20px;
   }
+}
+
+/* Slick points styling for mobile */
+.carouselWrapper :global(.ant-carousel .slick-dots li button) {
+  background: white;
+  opacity: 0.3;
+}
+
+.carouselWrapper :global(.ant-carousel .slick-dots li.slick-active button) {
+  background: #00AEEF;
+  opacity: 1;
 }

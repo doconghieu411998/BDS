@@ -7,78 +7,122 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(84/1440 * var(--width-container, 1440px));
-  height: calc(30/1440 * var(--width-container, 1440px));
-  border-radius: 40px;
+  padding: 12.5px 2rem; 
+  border-radius: 50px;
+  min-width: 140px;
+  
   cursor: pointer;
-  background-color: #ffffff;
-  border: 1.5px solid #d9d9d9;
-  transition: all 0.3s ease;
-  padding: 0 8px;
+  background-color: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  
+  /* Optimized transitions: avoid 'all' to prevent stutter during scroll */
+  transition: 
+    background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    
   position: relative;
+  
+  /* Performance optimization for scroll/hover transitions */
+  will-change: background-color, border-color, transform;
+  backface-visibility: hidden;
+}
+
+.toggleBtn.sticky {
+  background-color: #ffffff !important;
+  border-color: #e0e0e0 !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .toggleBtn:hover {
-  border-color: #00b8dc;
-  background: #fdfdfd;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: #00b8dc !important;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.toggleBtn.sticky:hover {
+  background: #f8f8f8 !important;
+  border-color: #00b8dc !important;
 }
 
 .langLabel {
-  font-family: var(--font-serif), "Times New Roman", Times, serif;
-  font-size: 17px;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
   user-select: none;
-  flex: 1;
-  text-align: center;
-  margin-right: -4px;
-  /* Optical adjustment */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.4s ease;
+}
+
+.toggleBtn.sticky .langLabel {
+  color: #1a1a1a;
 }
 
 .divider {
   width: 1px;
   height: 20px;
-  background-color: #d9d9d9;
-  margin: 0 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 15px;
+  transition: background-color 0.4s ease;
+}
+
+.toggleBtn.sticky .divider {
+  background-color: #e0e0e0;
 }
 
 .iconWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1;
 }
 
 .globeIcon {
-  font-size: 20px;
+  font-size: 18px;
+  color: #ffffff;
+  transition: color 0.4s ease, transform 0.5s ease;
+}
+
+.toggleBtn.sticky .globeIcon {
   color: #00b8dc;
-  transition: transform 0.4s ease;
 }
 
 .toggleBtn:hover .globeIcon {
-  transform: rotate(25deg);
+  transform: rotate(45deg);
 }
 
-/* Mobile responsive adjustment */
+/* Ensure no layout jump by keeping dimensions rock-solid between states */
+@media (max-width: 1024px) {
+  .toggleBtn {
+    padding: 10px 1.5rem;
+    min-width: 120px;
+  }
+}
+
 @media (max-width: 768px) {
   .toggleBtn {
-    width: 72px;
-    height: 36px;
-    padding: 0 8px;
+    padding: 8px 1.2rem;
+    min-width: 100px;
+    background-color: #ffffff !important;
+    border-color: #e0e0e0 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
 
   .langLabel {
-    font-size: 15px;
+    font-size: 14px;
+    color: #1a1a1a;
   }
 
   .divider {
     height: 18px;
-    margin: 0 2px;
+    margin: 0 10px;
+    background-color: #e0e0e0;
   }
 
   .globeIcon {
-    font-size: 18px;
+    font-size: 16px;
+    color: #00b8dc;
   }
 }

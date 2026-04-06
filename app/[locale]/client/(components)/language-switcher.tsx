@@ -7,7 +7,11 @@ import styles from "./language-switcher.module.css"
 const LOCALES = ["vi", "en"] as const
 type Locale = (typeof LOCALES)[number]
 
-const LanguageSwitcher = () => {
+interface LanguageSwitcherProps {
+  isSticky?: boolean
+}
+
+const LanguageSwitcher = ({ isSticky = false }: LanguageSwitcherProps) => {
   const router = useRouter()
   const pathname = usePathname()
 
@@ -42,7 +46,7 @@ const LanguageSwitcher = () => {
   return (
     <div className={styles.container}>
       <button
-        className={styles.toggleBtn}
+        className={`${styles.toggleBtn} ${isSticky ? styles.sticky : ""}`}
         onClick={handleToggle}
         title={`Switch to ${isEnglish ? "Vietnamese" : "English"}`}
         aria-label={`Chuyển sang ${isEnglish ? "Tiếng Việt" : "English"}`}

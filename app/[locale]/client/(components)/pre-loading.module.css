@@ -5,14 +5,15 @@
   width: 100vw;
   height: 100vh;
   /* Đảm bảo preloader che hết mọi thứ và không scroll được */
-  height: 100dvh; /* Dynamic viewport height cho mobile */
+  height: 100dvh;
+  /* Dynamic viewport height cho mobile */
   z-index: 99999;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(135deg, #00b8dc 0%, #008eb4 100%);
 
   /* Chặn scroll và touch trong preloader */
   overflow: hidden;
@@ -25,12 +26,13 @@
 }
 
 .logoContainer {
-  opacity: 0;
-  transform: scale(0.8);
+  opacity: 1;
+  transform: scale(1);
 }
 
 .logo {
-  width: 120px;
+  width: 280px;
+  max-width: 80vw;
   height: auto;
-  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
 }

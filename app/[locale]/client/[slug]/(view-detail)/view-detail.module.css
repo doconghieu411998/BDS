@@ -2,6 +2,7 @@
     width: 100%;
     margin: 0 auto;
     background-color: #ffffff;
+    font-family: var(--font-montserrat), sans-serif;
 }
 
 /* --- BANNER --- */
@@ -14,7 +15,7 @@
 
 .bannerImage {
     object-fit: cover;
-    filter: brightness(0.55);
+    filter: brightness(0.6);
 }
 
 /* --- CONTENT OVERLAP --- */
@@ -24,6 +25,7 @@
     position: relative;
     z-index: 10;
     padding: 0 1rem;
+    clear: both;
 }
 
 /* --- HEADER & TYPOGRAPHY --- */
@@ -47,97 +49,86 @@
 }
 
 .title {
-    font-family: var(--font-serif), "Times New Roman", Times, serif;
     font-size: 3rem;
     line-height: 1.2;
-    font-weight: 700;
+    font-weight: 800;
     color: #111;
     margin: 0 0 1rem 0;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
 }
 
-/* Tinh chỉnh phần Meta giống ảnh mẫu của bạn */
 .meta {
     color: #888;
-    font-size: 1rem;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
 }
 
-.meta span {
-    display: flex;
-    align-items: center;
-}
-
 .separator {
     color: #ddd;
-    font-size: 0.75rem;
 }
 
 /* --- ARTICLE BODY --- */
 .articleBody {
     width: 100%;
+    overflow: hidden; /* Clearfix for floated content within articles */
+    clear: both;
 }
 
 .description {
-    font-size: 1.375rem;
+    font-size: 1.25rem;
     font-weight: 500;
     line-height: 1.7;
     color: #333;
     margin-bottom: 2.5rem;
     padding-left: 1.5rem;
-    border-left: 4px solid #4a3a35;
+    border-left: 4px solid #00BCD4;
 }
 
 .htmlContent {
-    font-size: 1.125rem;
+    font-size: 1.1rem;
     line-height: 1.9;
     color: #444;
 }
 
-/* Fix layout for images from editor */
-.htmlContent img {
+/* Targeting images and their potential wrappers from Editor */
+.htmlContent img,
+.htmlContent :global(.image),
+.htmlContent figure,
+.htmlContent table {
     max-width: 100%;
     height: auto !important;
-    float: none !important;
-    /* Disable legacy align="left" */
-    display: block;
-    margin: 20px auto 12px;
+    display: block !important;
+    margin: 30px auto !important;
+    float: none !important; /* Force center and break floats */
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    /* Shadow nhẹ */
 }
 
-/* Style for auto-generated captions */
-.htmlContent :global(.img-caption) {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    color: #555;
+.htmlContent img {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.htmlContent :global(.img-caption),
+.htmlContent figcaption {
+    font-size: 0.85rem;
+    color: #777;
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 30px;
+    margin-top: -20px;
+    margin-bottom: 40px;
     font-style: italic;
-    line-height: 1.5;
-    background: transparent;
-    padding: 0 20px;
     display: block;
     width: 100%;
 }
 
-.htmlContent .image {
-    text-align: center !important;
-    width: 100%;
-    margin: 30px 0;
-    max-width: 100%;
-}
-
-/* --- TAG SECTION (LÀM LẠI CHO ĐẸP) --- */
+/* --- RELATED SECTION --- */
 .relatedSection {
-    margin-top: 6rem;
-    padding: 6rem 0;
-    background-color: #ffffff;
+    margin-top: 4rem;
+    padding: 4rem 0;
+    background-color: #f8fafc;
+    clear: both; /* Crucial: ensures this starts below the article regardless of floats */
+    width: 100%;
 }
 
 .relatedWrapper {
@@ -148,96 +139,138 @@
 
 .relatedTitle {
     text-align: center;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 3rem;
-    color: #333333;
-    margin-bottom: 1rem;
-    font-weight: 700;
+    font-size: 2.5rem;
+    color: #111;
+    margin-bottom: 3rem;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
 .relatedTagContainer {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 2.5rem;
-    gap: 0.75rem;
-    font-size: 0.875rem;
-    color: #888;
+    margin-bottom: 3rem;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .tagPrefix {
-    font-weight: 500;
-    font-size: 1.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #111;
+    text-transform: uppercase;
 }
 
 .relatedTagList {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
 
 .relatedTagItem {
-    background-color: #f0f0f0;
-    color: #666;
-    height: 1.75rem;
-    padding: 1.5rem;
-    display: inline-flex;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: 500;
+    background-color: #fff;
+    color: #475569;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
     border-radius: 50px;
+    border: 1px solid #e2e8f0;
     text-decoration: none;
     transition: all 0.3s ease;
+}
+
+.relatedTagItem:hover {
+    border-color: #00BCD4;
+    color: #00BCD4;
+    transform: translateY(-2px);
 }
 
 .seeMoreWrapper {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 .seeMoreBtn {
-    background-color: #00BCD4;
+    background-color: #0076B7;
     color: #ffffff;
-    height: 2.5rem;
-    padding: 0 2.2rem;
-    width: calc(200 / 1440 * var(--width-container, 1440px));
+    padding: 12px 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
     border-radius: 50px;
-    text-transform: none;
     text-decoration: none;
     transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 118, 183, 0.2);
 }
 
 .seeMoreBtn:hover {
-    background-color: #00ACC1;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0, 188, 212, 0.2);
+    background-color: #005f94;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(0, 118, 183, 0.3);
 }
 
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-    .contentWrapper {
-        padding: 40px 20px;
-        margin-top: -60px;
-    }
-}
-
-/* Mobile */
+/* --- RESPONSIVE --- */
 @media (max-width: 1024px) {
-    .contentWrapper {
-        padding: 40px;
-        margin-top: -80px;
+    .bannerWrapper {
+        height: 25rem;
     }
 
     .title {
-        font-size: 32px;
+        font-size: 2.25rem;
+    }
+
+    .relatedTitle {
+        font-size: 2rem;
     }
 }
 
-.relatedNews {
-    margin-top: 80px;
+@media (max-width: 768px) {
+    .bannerWrapper {
+        height: 18rem;
+    }
+
+    .contentWrapper {
+        margin-top: 2.5rem;
+        padding: 0 1.25rem;
+    }
+
+    .header {
+        margin-bottom: 25px;
+        padding-bottom: 25px;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .description {
+        font-size: 1.1rem;
+        padding-left: 1rem;
+    }
+
+    .htmlContent {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .relatedSection {
+        margin-top: 3rem;
+        padding: 3rem 0;
+    }
+
+    .relatedTitle {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .relatedTagContainer {
+        margin-bottom: 2rem;
+    }
+
+    .tagPrefix {
+        font-size: 0.9rem;
+    }
 }
