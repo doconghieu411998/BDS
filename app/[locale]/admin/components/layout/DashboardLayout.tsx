@@ -20,7 +20,6 @@ import {
 import { useRouter, usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { MENU_ITEMS } from '@/constants/menu';
-import { t } from '@/utils/i18n';
 import { ROUTES } from '@/constants/routes';
 import type { User } from '@/types/common';
 import styles from './DashboardLayout.module.css';
@@ -40,6 +39,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const router = useRouter();
     const pathname = usePathname();
 
+    const normalizePath = (path: string) => {
+        // app/[locale]/... => bỏ locale để so khớp với ROUTES (không chứa locale)
+        const segments = path.split('/').filter(Boolean);
+        if (segments.length > 0 && segments[0].length <= 5) {
+            return `/${segments.slice(1).join('/')}`;
+        }
+        return path;
+    };
+
+    const normalizedPathname = normalizePath(pathname);
+
     // Lấy thông tin user từ cookie
     const userStr = Cookies.get('user');
     const user: User | null = userStr ? JSON.parse(userStr) : null;
@@ -51,21 +61,43 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         return () => clearTimeout(timer);
     }, []);
 
-    // Tìm selected key dựa trên pathname
+    // Tìm selected key dựa trên URL hiện tại (hỗ trợ route con như create/edit/:id)
     const getSelectedKeys = () => {
-        const findKey = (items: typeof MENU_ITEMS): string[] => {
+        type MatchResult = { key: string; pathLength: number } | null;
+
+        const findBestMatch = (items: typeof MENU_ITEMS): MatchResult => {
+            let bestMatch: MatchResult = null;
+
             for (const item of items) {
-                if (item.path === pathname) {
-                    return [item.key];
+                if (item.path) {
+                    const isExactMatch = normalizedPathname === item.path;
+                    const isChildMatch = normalizedPathname.startsWith(`${item.path}/`);
+
+                    if (isExactMatch || isChildMatch) {
+                        const currentMatch: MatchResult = {
+                            key: item.key,
+                            pathLength: item.path.length,
+                        };
+
+                        if (!bestMatch || currentMatch.pathLength > bestMatch.pathLength) {
+                            bestMatch = currentMatch;
+                        }
+                    }
                 }
+
                 if (item.children) {
-                    const childKey = findKey(item.children);
-                    if (childKey.length > 0) return childKey;
+                    const childMatch = findBestMatch(item.children);
+                    if (childMatch && (!bestMatch || childMatch.pathLength > bestMatch.pathLength)) {
+                        bestMatch = childMatch;
+                    }
                 }
             }
-            return [];
+
+            return bestMatch;
         };
-        return findKey(MENU_ITEMS);
+
+        const bestMatch = findBestMatch(MENU_ITEMS);
+        return bestMatch ? [bestMatch.key] : [];
     };
 
     // Tìm open keys cho submenu
@@ -79,7 +111,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             }
             return [];
         };
-        return findParentKey(MENU_ITEMS, pathname);
+        return findParentKey(MENU_ITEMS, normalizedPathname);
     };
 
     // Convert menu items cho Ant Design Menu
