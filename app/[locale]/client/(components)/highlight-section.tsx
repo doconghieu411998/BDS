@@ -1,9 +1,9 @@
-"use client";
-
 import React, { useRef, useState, useLayoutEffect } from 'react';
 import Image from 'next/image';
 import styles from './highlight-section.module.css';
 import gsap from 'gsap';
+import { useTranslations } from 'next-intl';
+import { HIGHLIGHT_KEYS } from '@/constants/localeKeys';
 
 // ID định danh cho 2 thẻ
 const CARD_IDS = {
@@ -12,6 +12,7 @@ const CARD_IDS = {
 };
 
 const HighlightSection = () => {
+  const t = useTranslations();
   // Mặc định thẻ IMAGE nằm trên (active)
   const [activeCard, setActiveCard] = useState(CARD_IDS.IMAGE);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -48,8 +49,8 @@ const HighlightSection = () => {
       <div className={styles.header}>
         <span className={styles.bigNumber}>3</span>
         <div className={styles.titleGroup}>
-          <p className={styles.subTitle}>PHONG CÁCH HỘI TỤ</p>
-          <h2 className={styles.mainTitle}>NGHỈ DƯỠNG VÀ HƯỞNG THỤ TẠI THE HERA RESORT QUY NHON</h2>
+          <p className={styles.subTitle}>{t(HIGHLIGHT_KEYS.TTL_SUB)}</p>
+          <h2 className={styles.mainTitle}>{t(HIGHLIGHT_KEYS.TTL_MAIN)}</h2>
         </div>
       </div>
 
@@ -63,14 +64,14 @@ const HighlightSection = () => {
         >
           <Image
             src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80"
-            alt="Kiến trúc resort cao cấp"
+            alt={t(HIGHLIGHT_KEYS.ALT_ARCH)}
             fill
             className={styles.cardImage}
             sizes="(max-width: 992px) 100vw, 60vw"
           />
           {/* Text trang trí trên ảnh */}
           <div className={styles.imageOverlayText}>
-            <h3>Thiết Kế Đẳng Cấp</h3>
+            <h3>{t(HIGHLIGHT_KEYS.TTL_DESIGN)}</h3>
           </div>
         </div>
 
@@ -80,10 +81,10 @@ const HighlightSection = () => {
           onClick={() => setActiveCard(CARD_IDS.TEXT)}
         >
           <div className={styles.textContent}>
-            <h3 className={styles.textTitle}>CẢM HỨNG THIẾT KẾ KIẾN TRÚC</h3>
+            <h3 className={styles.textTitle}>{t(HIGHLIGHT_KEYS.TTL_CONCEPT)}</h3>
             <div className={styles.divider}></div>
             <p className={styles.textDesc}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum doloremque ipsum rerum omnis saepe officia adipisci. A voluptates quasi optio dolorum magni cumque nulla, velit magnam eos, vitae doloribus quia?
+              {t(HIGHLIGHT_KEYS.DSC_CONCEPT)}
             </p>
           </div>
         </div>
@@ -92,22 +93,22 @@ const HighlightSection = () => {
 
       {/* Grid dưới giữ nguyên */}
       <div className={styles.bottomGrid}>
-        <h3 className={styles.gridHeading}>CẢM HỨNG THIẾT KẾ CẢNH QUAN</h3>
+        <h3 className={styles.gridHeading}>{t(HIGHLIGHT_KEYS.TTL_LANDSCAPE)}</h3>
         <div className={styles.gridContainer}>
           <div className={styles.gridItem}>
-            <h4>SOUTHERN SQUARE</h4>
-            <p className={styles.tagline}>TRỌN NHỊP SỐNG NĂNG ĐỘNG</p>
-            <p className={styles.desc}>Phân khu Southern Square mang đến không gian sống lý tưởng...</p>
+            <h4>{t(HIGHLIGHT_KEYS.TTL_SOUTHERN)}</h4>
+            <p className={styles.tagline}>{t(HIGHLIGHT_KEYS.TAG_SOUTHERN)}</p>
+            <p className={styles.desc}>{t(HIGHLIGHT_KEYS.DSC_SOUTHERN)}</p>
           </div>
           <div className={styles.gridItem}>
-            <h4>CENTRAL SQUARE</h4>
-            <p className={styles.tagline}>KẾT NỐI ĐA PHONG CÁCH</p>
-            <p className={styles.desc}>Lấy cảm hứng từ những thảm cỏ xanh mát mắt...</p>
+            <h4>{t(HIGHLIGHT_KEYS.TTL_CENTRAL)}</h4>
+            <p className={styles.tagline}>{t(HIGHLIGHT_KEYS.TAG_CENTRAL)}</p>
+            <p className={styles.desc}>{t(HIGHLIGHT_KEYS.DSC_CENTRAL)}</p>
           </div>
           <div className={styles.gridItem}>
-            <h4>NORTHERN SQUARE</h4>
-            <p className={styles.tagline}>CÂN BẰNG VỚI THIÊN NHIÊN</p>
-            <p className={styles.desc}>Thiết kế của Northern Square hướng đến sự giao hòa...</p>
+            <h4>{t(HIGHLIGHT_KEYS.TTL_NORTHERN)}</h4>
+            <p className={styles.tagline}>{t(HIGHLIGHT_KEYS.TAG_NORTHERN)}</p>
+            <p className={styles.desc}>{t(HIGHLIGHT_KEYS.DSC_NORTHERN)}</p>
           </div>
         </div>
       </div>

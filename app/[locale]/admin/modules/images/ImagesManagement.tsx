@@ -13,7 +13,7 @@ export default function ImagesManagement() {
     return (
         <div className={styles.container}>
             <h1 style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 24 }}>
-                Quản lý Hình ảnh Giới thiệu
+                Quản Lý Hình Ảnh
             </h1>
 
             <Tabs

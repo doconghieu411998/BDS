@@ -2,7 +2,7 @@
   width: 100%;
   background-color: #e6ecf4;
   padding: 80px 0;
-  font-family: var(--font-montserrat), sans-serif;
+  overflow: hidden; /* Prevent animation-related horizontal scroll */
 }
 
 .wrapper {
@@ -18,7 +18,7 @@
 }
 
 .title {
-  font-size: 3.5rem;
+  font-size: var(--size-section-title);
   font-weight: 900;
   color: #333333; /* Chuyển sang màu tối để nổi bật trên nền sáng */
   text-transform: uppercase;
@@ -146,14 +146,14 @@
 }
 
 .overlayTitle {
-  font-size: 3rem;
+  font-size: var(--size-sub-title);
   font-weight: 800;
   margin-bottom: 20px;
   text-transform: uppercase;
 }
 
 .overlayDesc {
-  font-size: 1.1rem;
+  font-size: var(--size-content);
   line-height: 1.6;
   max-width: 800px;
   margin: 0 auto;
@@ -177,13 +177,11 @@
   }
 
   .title {
-    font-size: 1.8rem;
     /* Giảm để tinh tế hơn */
     letter-spacing: 1px;
   }
 
   .subtitle {
-    font-size: 0.9rem;
     letter-spacing: 4px;
   }
 
@@ -193,13 +191,11 @@
   }
 
   .overlayTitle {
-    font-size: 1.5rem;
     /* Giảm nhẹ để vừa vặn hơn */
     font-weight: 700;
   }
 
   .overlayDesc {
-    font-size: 0.9rem;
     line-height: 1.5;
   }
 }

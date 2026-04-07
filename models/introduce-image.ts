@@ -93,8 +93,7 @@ function getTitleDescKeys(metadatas: IntroduceImageMetadata[]): { titleKey: stri
 
     // Extract the prefix (e.g., "carousel_utility_1" from "carousel_utility_1_title")
     const titleKey = titleMeta.keyName;
-    const prefix = titleKey.replace('_title', '');
-    const descKey = `${prefix}_desc`;
+    const descKey = titleKey.replace('_title', '_description');
 
     return { titleKey, descKey };
 }

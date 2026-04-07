@@ -1,6 +1,7 @@
 .section {
   width: 100%;
   background-color: #ffffff;
+  overflow: hidden; /* Prevent animation-related horizontal scroll */
 }
 
 .imageBanner {
@@ -65,12 +66,12 @@
 .label {
   color: #0079BE;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: var(--size-sub-title);
 }
 
 .value {
   color: #555555;
-  font-size: 1.2rem;
+  font-size: var(--size-content);
   line-height: 1.4;
 }
 
@@ -83,20 +84,20 @@
 }
 
 .titleInfo {
-  font-size: clamp(2rem, 2.5vw, 4rem);
+  font-size: var(--size-sub-title);
   color: #333333;
   font-weight: 700;
-  margin-bottom: 0.5rem;
-  line-height: 1;
+  margin-bottom: 0rem;
+  line-height: 1.2;
   text-transform: uppercase;
 }
 
 .titleOverview {
-  font-size: clamp(3rem, 4vw, 6rem);
+  font-size: var(--size-section-title);
   color: #003B6B;
   font-weight: 700;
-  line-height: 1;
-  font-family: "Times New Roman", Times, serif;
+  line-height: 1.1;
+  text-transform: uppercase;
 }
 
 /* ==================== TABLET RESPONSIVE ==================== */
@@ -133,12 +134,7 @@
   }
 
   .titleInfo {
-    font-size: 1.8rem;
     margin-bottom: 0.25rem;
-  }
-
-  .titleOverview {
-    font-size: 2.6rem;
   }
 
   .infoList {
@@ -157,11 +153,6 @@
   }
 
   .label {
-    font-size: 1.1rem;
     letter-spacing: 0.5px;
-  }
-
-  .value {
-    font-size: 1.25rem;
   }
 }

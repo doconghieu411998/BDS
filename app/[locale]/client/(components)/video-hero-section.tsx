@@ -3,6 +3,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styles from './video-hero-section.module.css';
 import { withBasePath } from '@/services/commonService';
+import { useTranslations } from 'next-intl';
+import { VIDEO_KEYS } from '@/constants/localeKeys';
 
 interface VideoHeroSectionProps {
     videoSrc?: string;
@@ -15,12 +17,18 @@ interface VideoHeroSectionProps {
 const VideoHeroSection: React.FC<VideoHeroSectionProps> = ({
     videoSrc = 'videos/background-video.mp4', // Moved to public root
     youtubeUrl = 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID',
-    title = 'TRẢI NGHIỆM CUỘC SỐNG ĐỈNH CAO',
-    subtitle = 'Khám phá không gian nghỉ dưỡng sang trọng bên bãi biển Quy Nhơn',
-    ctaText = 'Khám Phá Ngay'
+    title,
+    subtitle,
+    ctaText
 }) => {
+    const t = useTranslations();
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+
+    // Use translations for defaults
+    const displayTitle = title || t(VIDEO_KEYS.HOME_VIDEO_TITLE);
+    const displaySubtitle = subtitle || t(VIDEO_KEYS.HOME_VIDEO_DESCRIPTION);
+    const displayCta = ctaText || t(VIDEO_KEYS.HOME_VIDEO_BTN_LABEL);
 
     useEffect(() => {
         const videoElement = videoRef.current;
@@ -54,7 +62,7 @@ const VideoHeroSection: React.FC<VideoHeroSectionProps> = ({
     };
 
     return (
-        <section className={styles.container} aria-label="Video Hero Section">
+        <section className={styles.container} aria-label={t(VIDEO_KEYS.HOME_VIDEO_ARIA_LABEL)}>
             {/* Background Video */}
             <div className={styles.videoWrapper}>
                 <video
@@ -68,7 +76,7 @@ const VideoHeroSection: React.FC<VideoHeroSectionProps> = ({
                     aria-hidden="true"
                 >
                     <source src={withBasePath(videoSrc)} type="video/mp4" />
-                    Your browser does not support the video tag.
+                    {t(VIDEO_KEYS.HOME_VIDEO_ERR_BROWSER)}
                 </video>
 
                 {/* Overlay Gradient for Readability */}
@@ -78,16 +86,16 @@ const VideoHeroSection: React.FC<VideoHeroSectionProps> = ({
             {/* Content on Top of Video */}
             <div className={styles.content}>
                 <div className={styles.textWrapper}>
-                    <h1 className={styles.title}>{title}</h1>
-                    <p className={styles.subtitle}>{subtitle}</p>
+                    <h1 className={styles.title}>{displayTitle}</h1>
+                    <p className={styles.subtitle}>{displaySubtitle}</p>
 
                     {/* CTA Button */}
                     <button
                         className={styles.ctaButton}
                         onClick={handleCTAClick}
-                        aria-label={`${ctaText} - Opens YouTube video in new tab`}
+                        aria-label={`${displayCta} - ${t(VIDEO_KEYS.HOME_VIDEO_ARIA_BTN)}`}
                     >
-                        <span className={styles.ctaText}>{ctaText}</span>
+                        <span className={styles.ctaText}>{displayCta}</span>
                         <svg
                             className={styles.playIcon}
                             viewBox="0 0 24 24"

@@ -6,7 +6,8 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import styles from './design-samples-section.module.css';
 import { withBasePath } from '@/services/commonService';
 import { IntroduceImage, IntroduceImageType } from '@/models/introduce-image';
-import { useLocale } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { DESIGN_KEYS } from '@/constants/localeKeys';
 
 const TABS = [
   { id: 'villa', typeId: IntroduceImageType.VILLA },
@@ -15,6 +16,7 @@ const TABS = [
 ];
 
 const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) => {
+  const t = useTranslations();
   const [activeTab, setActiveTab] = useState<string>(TABS[0].id);
   const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef<any>(null);
@@ -30,9 +32,9 @@ const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) =>
   }, []);
 
   const labels: Record<string, string> = {
-    villa: 'Villa',
-    nha_luu_tru: locale === 'en' ? 'Accommodation' : 'Nhà lưu trú',
-    villa_bo_dong: locale === 'en' ? 'East Coast Villa' : 'Villa bờ đông',
+    villa: t(DESIGN_KEYS.HOME_DESIGN_TAB_VILLA_TITLE),
+    nha_luu_tru: t(DESIGN_KEYS.HOME_DESIGN_TAB_STAY_TITLE),
+    villa_bo_dong: t(DESIGN_KEYS.HOME_DESIGN_TAB_EAST_TITLE),
   };
 
   const getImagesForTab = (tabId: string) => {
@@ -62,9 +64,9 @@ const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) =>
   return (
     <section id="design-collections" className={styles.section}>
       <div className={styles.wrapper}>
-        <h2 className={`${styles.title} global-title`}>
-          {locale === 'en' ? 'DESIGN SAMPLES' : 'CÁC MẪU THIẾT KẾ'}
-        </h2>
+        {/* <h2 className={`${styles.title} global-title`}>
+          {t(DESIGN_KEYS.TTL_MAIN)}
+        </h2> */}
 
         <div className={styles.tabGroup}>
           {TABS.map((tab) => (
@@ -80,7 +82,7 @@ const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) =>
 
         <div className={styles.carouselWrapper}>
           {!isMobile && (
-            <button className={styles.prevArrow} onClick={prev} aria-label="Hình trước">
+            <button className={styles.prevArrow} onClick={prev}>
               <LeftOutlined />
             </button>
           )}
@@ -113,17 +115,11 @@ const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) =>
           </Carousel>
 
           {!isMobile && (
-            <button className={styles.nextArrow} onClick={next} aria-label="Hình tiếp theo">
+            <button className={styles.nextArrow} onClick={next}>
               <RightOutlined />
             </button>
           )}
         </div>
-
-        {currentImages.length === 0 && (
-          <p style={{ textAlign: 'center', color: '#999', padding: '3rem' }}>
-            {locale === 'en' ? 'No images available.' : 'Chưa có hình ảnh.'}
-          </p>
-        )}
       </div>
     </section>
   );

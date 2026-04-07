@@ -4,22 +4,22 @@ import { RightOutlined } from "@ant-design/icons"
 import styles from "./overview-section.module.css"
 import { withBasePath } from '@/services/commonService'
 import { useTranslations } from 'next-intl'
-import { HOME_KEYS } from '@/constants/localeKeys'
+import { INTRO_KEYS, FLOOR_KEYS, OVERVIEW_KEYS } from '@/constants/localeKeys'
 
-const PANORAMA_IMG = "images/over-view.png"
+const PANORAMA_IMG = "images/overview.png"
 
 const OverviewSection = () => {
   const t = useTranslations()
 
   const overviewData = [
-    { label: t(HOME_KEYS.HOME_OVERVIEW_NAME), value: t(HOME_KEYS.HOME_OVERVIEW_NAME_VALUE) },
-    { label: t(HOME_KEYS.HOME_OVERVIEW_LOCATION), value: t(HOME_KEYS.HOME_OVERVIEW_LOCATION_VALUE) },
-    { label: t(HOME_KEYS.HOME_OVERVIEW_DEVELOPER), value: t(HOME_KEYS.HOME_OVERVIEW_DEVELOPER_VALUE) },
-    { label: t(HOME_KEYS.HOME_OVERVIEW_OPERATOR), value: t(HOME_KEYS.HOME_OVERVIEW_OPERATOR_VALUE) },
-    { label: t(HOME_KEYS.HOME_OVERVIEW_SCALE), value: t(HOME_KEYS.HOME_OVERVIEW_SCALE_VALUE) },
-    { label: t(HOME_KEYS.HOME_OVERVIEW_INVENTORY), value: t(HOME_KEYS.HOME_OVERVIEW_INVENTORY_VALUE) },
-    { label: t(HOME_KEYS.HOME_OVERVIEW_AMENITIES_COUNT), value: t(HOME_KEYS.HOME_OVERVIEW_AMENITIES_COUNT_VALUE) },
-    { label: t(HOME_KEYS.HOME_OVERVIEW_HIGHLIGHTS), value: t(HOME_KEYS.HOME_OVERVIEW_HIGHLIGHTS_VALUE) },
+    { label: t(OVERVIEW_KEYS.HOME_OVERVIEW_NAME), value: t(OVERVIEW_KEYS.HOME_OVERVIEW_NAME_VALUE) },
+    { label: t(OVERVIEW_KEYS.HOME_OVERVIEW_LOCATION), value: t(OVERVIEW_KEYS.HOME_OVERVIEW_LOCATION_VALUE) },
+    { label: t(OVERVIEW_KEYS.HOME_OVERVIEW_DEVELOPER), value: t(OVERVIEW_KEYS.HOME_OVERVIEW_DEVELOPER_VALUE) },
+    { label: t(OVERVIEW_KEYS.HOME_OVERVIEW_OPERATOR), value: t(OVERVIEW_KEYS.HOME_OVERVIEW_OPERATOR_VALUE) },
+    { label: t(OVERVIEW_KEYS.HOME_OVERVIEW_SCALE), value: t(OVERVIEW_KEYS.HOME_OVERVIEW_SCALE_VALUE) },
+    { label: t(OVERVIEW_KEYS.HOME_OVERVIEW_INVENTORY), value: t(OVERVIEW_KEYS.HOME_OVERVIEW_INVENTORY_VALUE) },
+    { label: t(OVERVIEW_KEYS.HOME_OVERVIEW_AMENITIES_COUNT), value: t(OVERVIEW_KEYS.HOME_OVERVIEW_AMENITIES_COUNT_VALUE) },
+    { label: t(OVERVIEW_KEYS.HOME_OVERVIEW_HIGHLIGHTS), value: t(OVERVIEW_KEYS.HOME_OVERVIEW_HIGHLIGHTS_VALUE) },
   ]
 
   return (
@@ -30,7 +30,7 @@ const OverviewSection = () => {
         <div className={styles.imageBanner}>
           <Image
             src={withBasePath(PANORAMA_IMG)}
-            alt="Tổng quan dự án"
+            alt={t(FLOOR_KEYS.HOME_FLOOR_ALT_MAP)}
             fill
             className={styles.image}
             unoptimized
@@ -61,10 +61,10 @@ const OverviewSection = () => {
           {/* Phải: Tiêu đề */}
           <div className={styles.rightCol}>
             <h2 className={styles.titleInfo}>
-              THÔNG TIN
+              {t(OVERVIEW_KEYS.HOME_OVERVIEW_TITLE_INFO)}
             </h2>
             <h1 className={styles.titleOverview}>
-              TỔNG QUAN
+              {t(OVERVIEW_KEYS.HOME_OVERVIEW_TITLE_OVERVIEW)}
             </h1>
           </div>
         </div>

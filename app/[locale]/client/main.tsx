@@ -14,6 +14,7 @@ import ConsultationPopup from './(components)/consultation-popup';
 import VideoHeroSection from './(components)/video-hero-section';
 import DesignSamplesSection from './(components)/design-samples-section';
 import OutstandingArchitectureSection from './(components)/outstanding-architecture-section';
+import ScrollReveal from './(common)/ScrollReveal';
 import { useTranslations } from 'next-intl';
 import { HOME_KEYS } from '@/constants/localeKeys';
 import { getAllIntroduceImages, filterImagesByType } from '@/api/introduceImageApiService';
@@ -82,28 +83,46 @@ export default function Main() {
             type="button"
             onClick={() => setIsPopupOpen(true)}
           >
-            {t(HOME_KEYS.HEADER_BTN_SUBSCRIBE_LABEL)}
+            {t(HOME_KEYS.HOME_BTN_SUBSCRIBE_LABEL)}
           </button>
         </div>
       </section>
 
-      <IntroSection />
+      <ScrollReveal direction="up">
+        <IntroSection />
+      </ScrollReveal>
 
-      <OverviewSection />
+      <ScrollReveal direction="left">
+        <OverviewSection />
+      </ScrollReveal>
 
-      <VideoHeroSection />
+      <ScrollReveal direction="up">
+        <VideoHeroSection />
+      </ScrollReveal>
 
-      <InfrastructureConnectivitySection />
+      <ScrollReveal direction="right">
+        <InfrastructureConnectivitySection />
+      </ScrollReveal>
 
-      <FloorDetail images={floorImages} />
+      <ScrollReveal direction="up">
+        <FloorDetail images={floorImages} />
+      </ScrollReveal>
 
-      <OutstandingArchitectureSection images={utilityImages} />
+      <ScrollReveal direction="left">
+        <OutstandingArchitectureSection images={utilityImages} />
+      </ScrollReveal>
 
-      <RegionalArchitectureSection images={regionalImages} />
+      <ScrollReveal direction="right">
+        <RegionalArchitectureSection images={regionalImages} />
+      </ScrollReveal>
 
-      <DesignSamplesSection images={designImages} />
+      <ScrollReveal direction="up">
+        <DesignSamplesSection images={designImages} />
+      </ScrollReveal>
 
-      <NewsSection />
+      <ScrollReveal direction="up">
+        <NewsSection />
+      </ScrollReveal>
 
     </main>
   );

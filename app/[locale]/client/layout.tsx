@@ -3,18 +3,16 @@ import Header from "./(components)/header";
 import LanguageSwitcher from "./(components)/language-switcher";
 import Preloader from "./(components)/pre-loading";
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { META_KEYS } from '@/constants/localeKeys';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
 
-  const title = locale === 'vi'
-    ? "The Hera Resort Quy Nhon | Dự án biệt thự nghỉ dưỡng cao cấp"
-    : "The Hera Resort Quy Nhon | Luxury Resort & Villas Project";
+  const t = await getTranslations({ locale });
 
-  const description = locale === 'vi'
-    ? "Khám phá The Hera Resort Quy Nhon - Tổ hợp biệt thự và căn hộ nghỉ dưỡng đẳng cấp 5 sao tại Ghềnh Ráng. Vị trí tựa sơn hướng thủy, tiện ích thượng lưu, cơ hội đầu tư bền vững."
-    : "Discover The Hera Resort Quy Nhon - A 5-star luxury resort villa and apartment complex in Ghenh Rang. Prime location, world-class amenities, sustainable investment opportunity.";
-
+  const title = t(META_KEYS.HOME_META_TITLE);
+  const description = t(META_KEYS.HOME_META_DESC);
   const keywords = locale === 'vi'
     ? ["bất động sản Quy Nhơn", "The Hera Resort Quy Nhon", "biệt thự Quy Nhơn", "căn hộ nghỉ dưỡng", "Ghềnh Ráng Quy Nhơn", "dự án The Hera", "đầu tư bất động sản"]
     : ["Quy Nhon real estate", "The Hera Resort Quy Nhon", "Quy Nhon villas", "resort apartments", "Ghenh Rang Quy Nhon", "The Hera project", "property investment"];
@@ -33,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: '/images/home.png',
           width: 1200,
           height: 630,
-          alt: "The Hera Resort Quy Nhon",
+          alt: "Hera Resort Quy Nhon",
         },
       ],
       locale: locale === 'vi' ? 'vi_VN' : 'en_US',
@@ -67,9 +65,9 @@ export default function ClientLayout({
 
       <Header />
 
-      <main className="content-fade-in">
+      <div className="content-fade-in">
         {children}
-      </main>
+      </div>
 
       <Footer />
     </div>

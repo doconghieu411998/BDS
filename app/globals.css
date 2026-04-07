@@ -3,13 +3,28 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-serif: "Times New Roman", Times, serif;
+
+  /* GLOBAL CONTAINER SETTINGS - Default (Desktop Standard) */
+  --width-container: 1268px;
+
+  /* Proportional Typography - Dynamic Scaling */
+  /* Title: 32px to 80px (clamp at 5rem) */
+  --size-section-title: clamp(2rem, 3.5vw, 5rem);
+  
+  /* Sub-title: 20px to 40px (clamp at 2.5rem) */
+  --size-sub-title: clamp(1.25rem, 2vw, 2.5rem);
+  
+  /* Content: 16px to 22.4px (clamp at 1.4rem) */
+  --size-content: clamp(1rem, 1.25vw, 1.4rem);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-montserrat);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-serif);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,7 +37,20 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scrolls from animations */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+p {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: var(--size-content); /* Ensure content text scales globally */
+  line-height: 1.6;
 }
 
 ::-webkit-scrollbar {
@@ -43,11 +71,7 @@ body {
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* GLOBAL CONTAINER SETTINGS */
-:root {
-  --width-container: 1268px;
-}
-
+/* RESPONSIVE SCALING - WIDTH ONLY */
 @media (min-width: 1700px) {
   :root {
     --width-container: 1496px;
@@ -66,13 +90,33 @@ body {
   }
 }
 
+/* MOBILE ADJUSTMENTS - SMALLER MINIMUMS */
+@media (max-width: 768px) {
+  :root {
+    --size-section-title: clamp(1.5rem, 6vw, 2.5rem);
+    --size-sub-title: clamp(1rem, 4vw, 1.5rem);
+    --size-content: clamp(0.875rem, 3.5vw, 1rem);
+  }
+}
+
 /* GLOBAL TEXT STYLES */
 .global-title {
-  font-size: 3rem;
+  font-family: var(--font-serif);
+  font-size: var(--size-section-title);
+  line-height: 1.1;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.global-subtitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: var(--size-sub-title);
   line-height: 1.2;
+  font-weight: 500;
 }
 
 .global-text {
-  font-size: 1rem;
-  line-height: 1.5;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: var(--size-content);
+  line-height: 1.6;
 }

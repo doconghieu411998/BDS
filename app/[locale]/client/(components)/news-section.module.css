@@ -2,6 +2,7 @@
   width: 100%;
   background-color: #ffffff;
   padding: 4rem 1rem;
+  overflow: hidden; /* Prevent animation-related horizontal scroll */
 }
 
 .wrapper {
@@ -11,8 +12,7 @@
 
 .title {
   text-align: center;
-  font-family: "Times New Roman", Times, serif;
-  font-size: clamp(2rem, 3vw, 3.5rem);
+  font-size: var(--size-section-title);
   color: #333333;
   margin-bottom: 2.5rem;
   font-weight: 500;

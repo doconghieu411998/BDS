@@ -54,12 +54,12 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
 
             await consultationApiService.submit(payload);
 
-            message.success(t(CONSULTATION_KEYS.SUCCESS) || "Submit success!");
+            message.success(t(CONSULTATION_KEYS.HOME_CONSULTATION_SUCCESS) || "Submit success!");
             form.resetFields();
             onClose();
         } catch (error) {
-            console.error("Gửi thông tin thất bại:", error)
-            message.error("Gửi thông tin thất bại, vui lòng thử lại sau.");
+            console.error(t(CONSULTATION_KEYS.HOME_CONSULTATION_ERROR_SUBMIT) || "Submission failed:", error)
+            message.error(t(CONSULTATION_KEYS.HOME_CONSULTATION_ERROR_SUBMIT_DETAIL) || "Submission failed, please try again later.");
         } finally {
             setLoading(false)
         }
@@ -79,8 +79,8 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
             <div className={styles.container}>
                 {/* LEFT: Project Image */}
                 <div className={styles.leftSection}>
-                    <div 
-                        className={styles.bgImage} 
+                    <div
+                        className={styles.bgImage}
                         style={{ backgroundImage: `url(${withBasePath("images/image-bg-form.png")})` }}
                     />
                 </div>
@@ -89,11 +89,11 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                 <div className={styles.rightSection}>
                     <button className={styles.closeBtn} onClick={onClose}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 6L6 18M6 6L18 18" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M18 6L6 18M6 6L18 18" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     </button>
 
-                    <h2 className={styles.title}>{t(CONSULTATION_KEYS.TITLE)}</h2>
+                    <h2 className={styles.title}>{t(CONSULTATION_KEYS.HOME_CONSULTATION_TITLE)}</h2>
 
                     <Form
                         form={form}
@@ -105,7 +105,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                     >
                         <Form.Item
                             name="fullName"
-                            rules={[{ required: true, message: t(CONSULTATION_KEYS.ERROR_FULL_NAME_REQUIRED) }]}
+                            rules={[{ required: true, message: t(CONSULTATION_KEYS.HOME_CONSULTATION_ERROR_FULL_NAME_REQUIRED) }]}
                             className={styles.formItem}
                         >
                             <div className={styles.inputWrapper}>
@@ -113,7 +113,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                                 <div className={styles.divider} />
                                 <Input
                                     ref={fullNameRef}
-                                    placeholder={t(CONSULTATION_KEYS.FULL_NAME)}
+                                    placeholder={t(CONSULTATION_KEYS.HOME_CONSULTATION_FULL_NAME)}
                                     variant="borderless"
                                     className={styles.customInput}
                                 />
@@ -123,17 +123,17 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                         <Form.Item
                             name="phone"
                             rules={[
-                                { required: true, message: t(CONSULTATION_KEYS.ERROR_PHONE_REQUIRED) },
-                                { pattern: /^[0-9]{10,11}$/, message: t(CONSULTATION_KEYS.ERROR_PHONE_INVALID) }
+                                { required: true, message: t(CONSULTATION_KEYS.HOME_CONSULTATION_ERROR_PHONE_REQUIRED) },
+                                { pattern: /^[0-9]{10,11}$/, message: t(CONSULTATION_KEYS.HOME_CONSULTATION_ERROR_PHONE_INVALID) }
                             ]}
                             className={styles.formItem}
                         >
                             <div className={styles.inputWrapper}>
                                 <PhoneOutlined className={styles.inputIcon} />
                                 <div className={styles.divider} />
-                                <Input 
-                                    placeholder={t(CONSULTATION_KEYS.PHONE)} 
-                                    variant="borderless" 
+                                <Input
+                                    placeholder={t(CONSULTATION_KEYS.HOME_CONSULTATION_PHONE)}
+                                    variant="borderless"
                                     className={styles.customInput}
                                 />
                             </div>
@@ -142,17 +142,17 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                         <Form.Item
                             name="email"
                             rules={[
-                                { required: true, message: t(CONSULTATION_KEYS.ERROR_EMAIL_REQUIRED) },
-                                { type: "email", message: t(CONSULTATION_KEYS.ERROR_EMAIL_INVALID) }
+                                { required: true, message: t(CONSULTATION_KEYS.HOME_CONSULTATION_ERROR_EMAIL_REQUIRED) },
+                                { type: "email", message: t(CONSULTATION_KEYS.HOME_CONSULTATION_ERROR_EMAIL_INVALID) }
                             ]}
                             className={styles.formItem}
                         >
                             <div className={styles.inputWrapper}>
                                 <MailOutlined className={styles.inputIcon} />
                                 <div className={styles.divider} />
-                                <Input 
-                                    placeholder={t(CONSULTATION_KEYS.EMAIL)} 
-                                    variant="borderless" 
+                                <Input
+                                    placeholder={t(CONSULTATION_KEYS.HOME_CONSULTATION_EMAIL)}
+                                    variant="borderless"
                                     className={styles.customInput}
                                 />
                             </div>
@@ -166,7 +166,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                                 <MessageOutlined className={styles.inputIcon} />
                                 <div className={styles.divider} />
                                 <Input.TextArea
-                                    placeholder={t(CONSULTATION_KEYS.MESSAGE)}
+                                    placeholder={t(CONSULTATION_KEYS.HOME_CONSULTATION_MESSAGE)}
                                     autoSize={{ minRows: 1, maxRows: 4 }}
                                     variant="borderless"
                                     className={styles.customInput}
@@ -184,14 +184,15 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                                 className={styles.submitBtn}
                                 icon={<SendOutlined />}
                             >
-                                {t(CONSULTATION_KEYS.SUBMIT)}
+                                {t(CONSULTATION_KEYS.HOME_CONSULTATION_BTN_SUBMIT_LABEL)}
                             </Button>
                         </Form.Item>
 
                         <Form.Item name="consent" valuePropName="checked" className={styles.consentItem}>
                             <Checkbox className={styles.checkbox}>
                                 <span className={styles.privacyText}>
-                                    Bằng việc gửi thông tin cho chúng tôi, Quý khách hàng đã xác nhận đồng ý với Chính sách bảo mật từ dữ liệu cá nhân của Tập đoàn Masterise theo đường <a href="#" className={styles.privacyLink}>link này</a>
+                                    {t(CONSULTATION_KEYS.HOME_CONSULTATION_PRIVACY)}
+
                                 </span>
                             </Checkbox>
                         </Form.Item>

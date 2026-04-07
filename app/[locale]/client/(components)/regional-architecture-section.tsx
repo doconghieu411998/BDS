@@ -5,10 +5,12 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import styles from './regional-architecture-section.module.css';
 import { withBasePath } from '@/services/commonService';
 import { IntroduceImage } from '@/models/introduce-image';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { REGIONAL_KEYS } from '@/constants/localeKeys';
 
 const RegionalArchitectureSection = ({ images = [] }: { images?: IntroduceImage[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const t = useTranslations();
   const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef<any>(null);
   const locale = useLocale();
@@ -39,7 +41,7 @@ const RegionalArchitectureSection = ({ images = [] }: { images?: IntroduceImage[
     <section id="regional-architecture" className={styles.section}>
       <div className={styles.wrapper}>
         <h2 className={`${styles.title} global-title`}>
-          {locale === 'en' ? 'REGIONAL ARCHITECTURE' : 'KIẾN TRÚC KHU VỰC'}
+          {t(REGIONAL_KEYS.HOME_REGIONAL_TITLE_MAIN)}
         </h2>
 
         <div className={styles.carouselWrapper}>

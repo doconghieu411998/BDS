@@ -2,36 +2,40 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from './intro-section.module.css';
 import { withBasePath } from '@/services/commonService';
+import { useTranslations } from 'next-intl';
+import { INTRO_KEYS } from '@/constants/localeKeys';
 
 const IMG_RIGHT = "images/intro.png";
 
-const CONTENT = {
-  INTRO: {
-    title: "THE HERA RESORT QUY NHON",
-    tagline: "Sea Flow(ers) Through Mountains",
-    description: [
-      "The Hera Resort không chỉ là điểm đến của nghỉ dưỡng, mà là nơi con người tìm lại sự cân bằng nội tại. Ở đây, thiên nhiên không chỉ hiện diện bên ngoài cửa sổ, mà thở cùng từng nhịp sống. Sự hùng vĩ của núi mang lại cảm giác được chở che. Sự bao la của biển mở ra tự do và hồi phục.",
-      "Tại nơi giao thoa giữa biển và núi, The Hera Resort hiện diện tựa một tinh thần sống trong từng đường cong kiến trúc, từng nhành hoa, từng mảng xanh len qua khối đá trắng, từng khoảng lặng của ánh sáng cuối ngày. Dòng chảy của thiên nhiên hùng vĩ mà nên thơ được dẫn dắt tinh tế, để mọi khoảnh khắc ở nơi đây được lưu giữ trọn vẹn."
-    ]
-  },
-  INVESTOR: {
-    title: "CHỦ ĐẦU TƯ",
-    tagline: "",
-    description: [
-      "Sunshine Group với chiến lược mũi nhọn là đầu tư kinh doanh bất động sản, đã và đang tập trung phát triển hơn 20 dự án hạng sang trên khắp cả nước. Năm 2018, Sunshine Group chính thức chào sân thị trường TP. Hồ Chí Minh với dự án quy mô cực khủng Sunshine City Sài Gòn."
-    ]
-  },
-  MANAGER: {
-    title: "ĐƠN VỊ QUẢN LÝ",
-    tagline: "Global Professional Standards",
-    description: [
-      "Hỗ trợ quản lý chuyên nghiệp theo tiêu chuẩn quốc tế, đảm bảo giá trị tài sản và trải nghiệm dịch vụ đẳng cấp cho cư dân và du khách."
-    ]
-  }
-};
-
 const IntroSection = () => {
+  const t = useTranslations();
   const [activeTab, setActiveTab] = useState<'INTRO' | 'INVESTOR' | 'MANAGER'>('INTRO');
+
+  const CONTENT = {
+    INTRO: {
+      title: t(INTRO_KEYS.HOME_INTRO_TITLE_INTRO),
+      tagline: t(INTRO_KEYS.HOME_INTRO_TAGLINE_INTRO),
+      description: [
+        t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_1),
+        t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_2)
+      ]
+    },
+    INVESTOR: {
+      title: t(INTRO_KEYS.HOME_INTRO_TITLE_INVESTOR),
+      tagline: "",
+      description: [
+        t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_INVESTOR)
+      ]
+    },
+    MANAGER: {
+      title: t(INTRO_KEYS.HOME_INTRO_TITLE_MANAGER),
+      tagline: t(INTRO_KEYS.HOME_INTRO_TAGLINE_MANAGER),
+      description: [
+        t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_MANAGER)
+      ]
+    }
+  };
+
   const current = CONTENT[activeTab];
 
   return (
@@ -41,21 +45,21 @@ const IntroSection = () => {
           className={`${styles.headerItem} ${activeTab === 'INTRO' ? styles.active : ''}`}
           onClick={() => setActiveTab('INTRO')}
         >
-          Giới thiệu
+          {t(INTRO_KEYS.HOME_INTRO_TAB_INTRO)}
         </span>
         <span className={styles.headerSeparator}>|</span>
         <span
           className={`${styles.headerItem} ${activeTab === 'INVESTOR' ? styles.active : ''}`}
           onClick={() => setActiveTab('INVESTOR')}
         >
-          Chủ đầu tư
+          {t(INTRO_KEYS.HOME_INTRO_TAB_INVESTOR)}
         </span>
         <span className={styles.headerSeparator}>|</span>
         <span
           className={`${styles.headerItem} ${activeTab === 'MANAGER' ? styles.active : ''}`}
           onClick={() => setActiveTab('MANAGER')}
         >
-          Đơn vị quản lý
+          {t(INTRO_KEYS.HOME_INTRO_TAB_MANAGER)}
         </span>
       </div>
 

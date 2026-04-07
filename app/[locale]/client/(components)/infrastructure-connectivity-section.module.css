@@ -44,26 +44,28 @@
 }
 
 .label {
-    font-size: 48px;
+    font-size: var(--size-sub-title);
     font-weight: 300;
     color: #1a1a1a;
     line-height: 1.2;
     margin: 0;
     letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .mainTitle {
-    font-size: 48px;
+    font-size: var(--size-section-title);
     font-weight: 700;
     color: #0077b6;
     /* Project's primary blue */
-    line-height: 1.2;
+    line-height: 1.1;
     margin: 0;
     letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .description {
-    font-size: 16px;
+    font-size: var(--size-content);
     line-height: 1.6;
     color: #4a4a4a;
     text-align: justify;
@@ -92,7 +94,7 @@
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.cardHovered {
+.carouselCard:hover {
     transform: translateY(calc(-10 / 1440 * var(--width-container, 1440px)));
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
@@ -108,7 +110,7 @@
     transition: opacity 0.8s ease-in-out;
 }
 
-.bgVisible {
+.carouselCard:hover .cardBg {
     opacity: 1;
 }
 
@@ -133,7 +135,7 @@
     transition: background 0.5s ease;
 }
 
-.contentHovered {
+.carouselCard:hover .cardContent {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%);
 }
 
@@ -188,12 +190,6 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-
-    .label,
-    .mainTitle {
-        font-size: 36px;
-    }
-
     .topContent {
         flex-direction: column;
     }
@@ -206,11 +202,6 @@
 @media (max-width: 768px) {
     .section {
         padding: 40px 0;
-    }
-
-    .label,
-    .mainTitle {
-        font-size: 32px;
     }
 
     .timeValue {

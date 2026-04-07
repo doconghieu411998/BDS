@@ -2,9 +2,11 @@
 import { useState, useRef } from 'react';
 import { Carousel } from 'antd';
 import type { CarouselRef } from 'antd/es/carousel';
-import { ArrowRightOutlined } from '@ant-design/icons'; // Bạn có thể dùng icon của antd hoặc svg tùy ý
+import { ArrowRightOutlined } from '@ant-design/icons';
 import styles from './carousel.module.css';
 import { withBasePath } from '@/services/commonService';
+import { useTranslations } from 'next-intl';
+import { COMMON_KEYS } from '@/constants/localeKeys';
 
 // 1. Gộp dữ liệu để dễ quản lý
 const CAROUSEL_DATA = [
@@ -45,6 +47,7 @@ interface CarouselCommonProps {
 }
 
 const CarouselCommon: React.FC<CarouselCommonProps> = ({ title }) => {
+  const t = useTranslations();
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<CarouselRef>(null);
 
@@ -98,11 +101,11 @@ const CarouselCommon: React.FC<CarouselCommonProps> = ({ title }) => {
                   style={{ backgroundImage: `url(${withBasePath(item.image)})` }}
                 >
                   <div className={styles.cardContent}>
-                    <h3 className={styles.cardTitle}>{item.title}</h3>
-                    <p className={styles.cardDesc}>{item.description}</p>
+                    <h3 className={styles.cardTitle}>{t(`home_cmn_car_ttl_${index}`)}</h3>
+                    <p className={styles.cardDesc}>{t(`home_cmn_car_dsc_${index}`)}</p>
 
                     <div className={styles.cardFooter}>
-                      <span className={styles.exploreText}>Khám phá</span>
+                      <span className={styles.exploreText}>{t(COMMON_KEYS.EXPLORE)}</span>
                       <ArrowRightOutlined className={styles.arrowIcon} />
                     </div>
                   </div>

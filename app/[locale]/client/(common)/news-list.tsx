@@ -9,6 +9,8 @@ import { Link } from '@/i18n/navigation';
 import { Pagination } from 'antd';
 import { NewsItem } from '@/models/news';
 import { ClientPostApiService } from '@/api/clientPostApiService';
+import { useTranslations } from 'next-intl';
+import { COMMON_KEYS } from '@/constants/localeKeys';
 
 interface NewsListProps {
     relatedTags?: number[];  // Changed from string[] to number[] for tag IDs
@@ -31,6 +33,7 @@ const NewsList = ({
     className,
     variant = 'grid'
 }: NewsListProps) => {
+    const t = useTranslations();
     const locale = useLocale();
     const [items, setItems] = useState<NewsItem[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -87,7 +90,7 @@ const NewsList = ({
             <div className={variant === 'grid' ? styles.newsGrid : styles.newsListHorizontal}>
                 {items.map((item) => {
                     const urlSlug = `${convertSlugUrl(item.title, locale)}-${item.id}.html`;
-                    const formattedDate = new Date(item.createDate).toLocaleDateString('vi-VN');
+                    const formattedDate = new Date(item.createDate).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US');
 
                     if (variant === 'horizontal') {
                         return (
@@ -115,9 +118,9 @@ const NewsList = ({
                                     </div>
 
                                     <div className={styles.cardFooterHorizontal}>
-                                        <span className={styles.metaItem}>Ngày đăng: {formattedDate}</span>
+                                        <span className={styles.metaItem}>{t(COMMON_KEYS.DATE_LABEL)} {formattedDate}</span>
                                         <span className={styles.separator}>|</span>
-                                        <span className={styles.metaItem}>Lượt xem: {item.viewCount || 0}</span>
+                                        <span className={styles.metaItem}>{t(COMMON_KEYS.VIEW_LABEL)} {item.viewCount || 0}</span>
                                     </div>
                                 </div>
                             </div>

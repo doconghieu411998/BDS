@@ -2,7 +2,7 @@
   width: 100%;
   background-color: #0A3F74;
   padding: 4rem 1rem;
-  font-family: var(--font-montserrat), sans-serif;
+  overflow: hidden; /* Prevent animation-related horizontal scroll */
 }
 
 .wrapper {
@@ -12,7 +12,7 @@
 
 .title {
   text-align: center;
-  font-size: clamp(2rem, 3vw, 3.5rem);
+  font-size: var(--size-section-title);
   color: #ffffff;
   margin-bottom: 2.5rem;
   font-weight: 800;
@@ -133,7 +133,7 @@
 }
 
 .overlayDesc {
-  font-size: 1.15rem;
+  font-size: var(--size-content);
   line-height: 1.8;
   max-width: 800px;
   margin: 0 auto;
@@ -185,7 +185,7 @@
 }
 
 .mobileTitle {
-  font-size: 1.5rem;
+  font-size: var(--size-sub-title);
   font-weight: 700;
   margin-bottom: 20px;
   text-transform: uppercase;
@@ -193,7 +193,7 @@
 }
 
 .mobileDesc {
-  font-size: 0.95rem;
+  font-size: var(--size-content);
   line-height: 1.5;
   opacity: 0.9;
   font-weight: 300;
@@ -213,10 +213,6 @@
 @media (max-width: 768px) {
   .mobileCard {
     height: 380px;
-  }
-
-  .mobileTitle {
-    font-size: 1.2rem;
   }
 }
 

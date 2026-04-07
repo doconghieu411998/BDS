@@ -3,7 +3,6 @@
   min-height: 100vh;
   min-height: -webkit-fill-available; /* Safari specific fix */
   position: relative;
-  overflow-x: hidden;
   background-color: #ffffff;
 }
 
@@ -54,22 +53,34 @@
 
 .title {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 4.5rem;
+  /* Reduced multiplier from 1.2 to 1.15 and optimized clamp for large screens */
+  font-size: calc(var(--size-section-title) * 1.15);
   font-weight: 700;
-  letter-spacing: 6px;
+  /* Fluid letter-spacing to prevent word wrap on medium-large screens */
+  letter-spacing: clamp(2px, 0.4vw, 6px);
   text-transform: uppercase;
   margin-bottom: 12px;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  /* Ensure brand name stays on one line for common desktop widths */
+  white-space: nowrap;
+}
+@media (max-width: 1200px) {
+  .title {
+    white-space: normal;
+  }
 }
 
 .subtitle {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 1.5rem;
+  font-size: var(--size-sub-title);
   font-weight: 700;
-  letter-spacing: 2px;
+  /* Fluid letter-spacing for refined look on large screens */
+  letter-spacing: clamp(1px, 0.2vw, 2px);
   opacity: 0.95;
   margin-bottom: 32px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  max-width: 900px;
+  line-height: 1.4;
 }
 
 .ctaBtn {
@@ -128,19 +139,15 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .title {
-    font-size: 3.5rem;
-  }
+  /* Let global variables handle sizing */
 }
 
 @media (max-width: 768px) {
   .title {
-    font-size: 2.2rem;
     letter-spacing: 3px;
   }
 
   .subtitle {
-    font-size: 1rem;
     letter-spacing: 1px;
     margin-bottom: 24px;
   }

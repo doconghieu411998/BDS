@@ -7,8 +7,11 @@ import styles from './outstanding-architecture-section.module.css';
 import { withBasePath } from '@/services/commonService';
 import { IntroduceImage } from '@/models/introduce-image';
 import { useLocale } from 'next-intl';
+import { ARCHITECTURE_KEYS } from '@/constants/localeKeys';
+import { useTranslations } from 'next-intl';
 
 const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }) => {
+  const t = useTranslations();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef<any>(null);
@@ -39,7 +42,7 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
     <section id="curated-anemities" className={styles.section}>
       <div className={styles.wrapper}>
         <h2 className={`${styles.title} global-title`}>
-          {locale === 'en' ? 'OUTSTANDING UTILITIES' : 'TIỆN ÍCH NỔI BẬT'}
+          {t(ARCHITECTURE_KEYS.HOME_ARCHITECTURE_TITLE_MAIN)}
         </h2>
 
         {isMobile ? (

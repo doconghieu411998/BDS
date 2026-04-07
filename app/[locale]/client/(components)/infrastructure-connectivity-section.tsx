@@ -6,41 +6,44 @@ import { Carousel } from 'antd';
 import { withBasePath } from '@/services/commonService';
 import styles from './infrastructure-connectivity-section.module.css';
 
+import { useTranslations } from 'next-intl';
+import { INFRASTRUCTURE_KEYS } from '@/constants/localeKeys';
+
 const InfrastructureConnectivitySection = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const t = useTranslations();
 
   const MAP_IMG = "images/ha-tang-da-ket-noi.png";
 
   const connectivityItems = [
     {
       time: "20",
-      unit: "Phút",
-      title: "TO QUY NHON CITY CENTER",
-      image: "images/city-center.png",
+      unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
+      title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_1_TITLE),
+      image: "images/banner-1.png",
     },
     {
       time: "35",
-      unit: "Phút",
-      title: "TO PHU CAT AIRPORT",
-      image: "images/airport.png",
+      unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
+      title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_2_TITLE),
+      image: "images/banner-2.png",
     },
     {
       time: "05",
-      unit: "Phút",
-      title: "TO QUY HOA BEACH",
-      image: "images/quy-hoa.png",
+      unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
+      title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_3_TITLE),
+      image: "images/banner-3.png",
     },
     {
       time: "15",
-      unit: "Phút",
-      title: "TO BAI TRUNG – GHENH RANG",
-      image: "images/bai-trung.png",
+      unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
+      title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_4_TITLE),
+      image: "images/banner-4.png",
     },
     {
       time: "05",
-      unit: "Phút",
-      title: "TO BAI XEP BEACH",
-      image: "images/bai-xep.png",
+      unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
+      title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_5_TITLE),
+      image: "images/banner-5.png",
     },
   ];
 
@@ -57,15 +60,14 @@ const InfrastructureConnectivitySection = () => {
       </div>
 
       <div className={styles.container}>
-        {/* Top Part: Text */}
         <div className={styles.topContent}>
           <div className={styles.textSide}>
             <div className={styles.titleWrapper}>
-              <h2 className={styles.label}>HẠ TẦNG</h2>
-              <h1 className={styles.mainTitle}>ĐA KẾT NỐI</h1>
+              <h2 className={styles.label}>{t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_TITLE)}</h2>
+              <h1 className={styles.mainTitle}>{t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_SUBTITLE)}</h1>
             </div>
             <p className={styles.description}>
-              The Hera Resort Quy Nhơn sở hữu vị trí kết nối thuận tiện khi tọa lạc ngay trên trục Quốc lộ 1D, liền kề bờ biển Ghềnh Ráng thơ mộng. Từ dự án, chỉ mất khoảng 10 phút di chuyển (khoảng 10km) để đến trung tâm thành phố Quy Nhơn và 35–40 phút để kết nối tới sân bay Phù Cát, đảm bảo khả năng tiếp cận nhanh chóng cho cả du khách nội địa lẫn quốc tế. Đặc biệt, khu vực xung quanh còn hội tụ nhiều bãi biển đẹp như Quy Hòa, Bãi Xếp, Bãi Rạng, tạo nên hệ sinh thái du lịch đa dạng và gia tăng giá trị nghỉ dưỡng cho toàn khu.
+              {t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_DESCRIPTION)}
             </p>
           </div>
         </div>
@@ -112,12 +114,10 @@ const InfrastructureConnectivitySection = () => {
             <div
               key={index}
               className={styles.carouselItemContainer}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
             >
-              <div className={`${styles.carouselCard} ${hoveredIndex === index ? styles.cardHovered : ''}`}>
+              <div className={styles.carouselCard}>
                 {/* Background Image on Hover */}
-                <div className={`${styles.cardBg} ${hoveredIndex === index ? styles.bgVisible : ''}`}>
+                <div className={styles.cardBg}>
                   {item.image ? (
                     <Image
                       src={withBasePath(item.image)}
@@ -136,7 +136,7 @@ const InfrastructureConnectivitySection = () => {
                   )}
                 </div>
 
-                <div className={`${styles.cardContent} ${hoveredIndex === index ? styles.contentHovered : ''}`}>
+                <div className={styles.cardContent}>
                   <div className={styles.timeWrapper}>
                     <span className={styles.timeValue}>{item.time}</span>
                     <span className={styles.timeUnit}>{item.unit}</span>

@@ -3,6 +3,7 @@
   margin-bottom: 2rem;
   margin-top: 2rem;
   background-color: #ffffff; /* Explicit background for Safari iOS stability */
+  overflow: hidden; /* Prevent animation-related horizontal scroll */
 }
 
 .sectionHeader {
@@ -18,6 +19,7 @@
   color: #666666;
   font-weight: 400;
   cursor: pointer;
+  text-transform: uppercase;
   transition: all 0.3s ease;
 }
 
@@ -65,14 +67,15 @@
 
 .titleMain {
   margin: 0;
-  font-size: 2.25rem;
-  line-height: 1.2;
+  font-size: var(--size-section-title);
+  line-height: 1.1;
+  text-transform: uppercase;
 }
 
 .tagline {
   font-family: var(--font-serif), "Times New Roman", Times, serif;
   font-style: italic;
-  font-size: 1.25rem;
+  font-size: var(--size-content);
   color: rgba(255, 255, 255, 0.9);
   margin: -0.5rem 0 0 0;
   letter-spacing: 0.5px;
@@ -88,6 +91,7 @@
   margin: 0;
   opacity: 0.9;
   line-height: 1.6;
+  font-size: var(--size-content);
 }
 
 .imageCard {
@@ -152,7 +156,6 @@
   }
 
   .titleMain {
-    font-size: 1.8rem;
     line-height: 1.2;
     letter-spacing: 0.5px;
   }
@@ -164,7 +167,6 @@
   }
 
   .description {
-    font-size: 0.9rem;
     line-height: 1.6;
     opacity: 0.9;
   }

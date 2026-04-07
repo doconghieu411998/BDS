@@ -8,7 +8,7 @@ import { MenuOutlined, CloseOutlined, FileTextOutlined } from "@ant-design/icons
 import VerticalCarousel from "./vertical-carousel"
 import { withBasePath } from "@/services/commonService"
 import { useTranslations } from "next-intl"
-import { HEADER_KEYS, HOME_KEYS } from "@/constants/localeKeys"
+import { COMMON_KEYS, HOME_KEYS } from "@/constants/localeKeys"
 import LanguageSwitcher from "./language-switcher"
 import ConsultationPopup from "./consultation-popup"
 import { usePathname } from "next/navigation"
@@ -31,19 +31,19 @@ const Header = () => {
 
   // Pages that have white backgrounds and need a dark logo by default
   const isLightPage = useMemo(() => {
-    return pathname.includes("/tin-tuc") || 
-           pathname.includes("/news") || 
-           pathname.includes("/tags-article");
+    return pathname.includes("/tin-tuc") ||
+      pathname.includes("/news") ||
+      pathname.includes("/tags-article");
   }, [pathname]);
 
   // Menu items configuration
   const MENU_ITEMS = useMemo(() => [
-    { label: t(HEADER_KEYS.HEADER_MENU_ABOUT), href: "#", scrollTo: "intro-section" },
-    { label: t(HEADER_KEYS.HEADER_MENU_OVERVIEW), href: "#", scrollTo: "overview-section" },
-    { label: t(HEADER_KEYS.HEADER_MENU_CURATED_ANEMITIES), href: "#", scrollTo: "curated-anemities" },
-    { label: t(HEADER_KEYS.HEADER_MENU_ARCHITECTURE), href: "#", scrollTo: "regional-architecture" },
-    { label: t(HEADER_KEYS.HEADER_MENU_DESIGN_COLLECTIONS), href: "#", scrollTo: "design-collections" },
-    { label: t(HEADER_KEYS.HEADER_MENU_NEWS), href: "#", scrollTo: "news-section" },
+    { label: t(HOME_KEYS.HOME_MENU_ABOUT), href: "#", scrollTo: "intro-section" },
+    { label: t(HOME_KEYS.HOME_MENU_OVERVIEW), href: "#", scrollTo: "overview-section" },
+    { label: t(HOME_KEYS.HOME_MENU_CURATED_ANEMITIES), href: "#", scrollTo: "curated-anemities" },
+    { label: t(HOME_KEYS.HOME_MENU_ARCHITECTURE), href: "#", scrollTo: "regional-architecture" },
+    { label: t(HOME_KEYS.HOME_MENU_DESIGN_COLLECTIONS), href: "#", scrollTo: "design-collections" },
+    { label: t(HOME_KEYS.HOME_MENU_NEWS), href: "#", scrollTo: "news-section" },
   ], [t])
 
   // Handle scroll for sticky header
@@ -127,7 +127,7 @@ const Header = () => {
   }, [])
 
   // Use dark logo if sticky OR if on a light-background page
-  const displayLogo = isSticky || isLightPage ? LOGO_BLACK : LOGO_WHITE;
+  const isDarkLogo = isSticky || isLightPage;
 
   return (
     <>
@@ -142,27 +142,36 @@ const Header = () => {
               onClick={openMenu}
               aria-expanded={isMenuOpen}
               aria-controls="fullscreen-menu"
-              aria-label={t(HEADER_KEYS.HEADER_ARIA_OPEN_MENU)}
+              aria-label={t(HOME_KEYS.HOME_BTN_MENU_LABEL)}
             >
               <MenuOutlined className={styles.menuIcon} />
               <span className={styles.menuTextOverflow}>
-                <span className={styles.menuTextPrimary}>{t(HEADER_KEYS.HEADER_MENU_TEXT)}</span>
-                <span className={styles.menuTextSecondary}>{t(HEADER_KEYS.HEADER_MENU_TEXT)}</span>
+                <span className={styles.menuTextPrimary}>{t(HOME_KEYS.HOME_BTN_MENU_LABEL)}</span>
+                <span className={styles.menuTextSecondary}>{t(HOME_KEYS.HOME_BTN_MENU_LABEL)}</span>
               </span>
             </button>
           </div>
 
-          {/* CENTER: Logo section - Using displayLogo for adaptive visibility */}
           <div className={styles.logoSection}>
-            <Link href="/" className={styles.logoLink} aria-label={t(HEADER_KEYS.HEADER_MENU_LOGO_ALT)}>
-              <Image
-                src={withBasePath(displayLogo)}
-                alt="Masteri Logo"
-                width={160}
-                height={65}
-                className={styles.logo}
-                priority
-              />
+            <Link href="/" className={styles.logoLink} aria-label={t(HOME_KEYS.HOME_MENU_LOGO_ALT)}>
+              <div className={styles.logoContainer}>
+                <Image
+                  src={withBasePath(LOGO_WHITE)}
+                  alt={t(HOME_KEYS.HOME_MENU_LOGO_ALT)}
+                  width={380}
+                  height={155}
+                  className={`${styles.logo} ${styles.logoWhite} ${!isDarkLogo ? styles.active : ""}`}
+                  priority
+                />
+                <Image
+                  src={withBasePath(LOGO_BLACK)}
+                  alt={t(HOME_KEYS.HOME_MENU_LOGO_ALT)}
+                  width={380}
+                  height={155}
+                  className={`${styles.logo} ${styles.logoBlack} ${isDarkLogo ? styles.active : ""}`}
+                  priority
+                />
+              </div>
             </Link>
           </div>
 
@@ -171,7 +180,7 @@ const Header = () => {
             <button
               className={styles.subscribeBtnMobile}
               onClick={() => setIsPopupOpen(true)}
-              aria-label={t(HOME_KEYS.HEADER_BTN_SUBSCRIBE_LABEL)}
+              aria-label={t(HOME_KEYS.HOME_BTN_SUBSCRIBE_LABEL)}
             >
               <FileTextOutlined className={styles.subscribeIcon} />
             </button>
@@ -187,20 +196,20 @@ const Header = () => {
         className={`${styles.fullScreenMenu} ${isMenuOpen ? styles.open : ""}`}
         role="dialog"
         aria-modal="true"
-        aria-label="Menu điều hướng"
+        aria-label={t(COMMON_KEYS.LANGUAGE_ARIA)}
         aria-hidden={!isMenuOpen}
       >
         <div className={styles.menuWrapper}>
           {/* Official Branding Logo for Menu - Restricted to Mobile via CSS */}
           <div className={styles.overlayLogo}>
-             <Image 
-                src={withBasePath("images/logo-preloading.png")} 
-                alt="Masteri Branding" 
-                width={180} 
-                height={50} 
-                className={styles.menuBrandingImg}
-                priority
-             />
+            <Image
+              src={withBasePath("images/logo-preloading.png")}
+              alt={t(HOME_KEYS.HOME_MENU_LOGO_ALT)}
+              width={180}
+              height={50}
+              className={styles.menuBrandingImg}
+              priority
+            />
           </div>
 
           {/* Close button */}
@@ -209,7 +218,7 @@ const Header = () => {
               ref={closeBtnRef}
               className={styles.closeBtn}
               onClick={closeMenu}
-              aria-label={t(HEADER_KEYS.HEADER_ARIA_CLOSE_MENU)}
+              aria-label={t(HOME_KEYS.HOME_ARIA_CLOSE_MENU)}
               tabIndex={isMenuOpen ? 0 : -1}
             >
               <CloseOutlined className={styles.closeIcon} />
@@ -219,7 +228,7 @@ const Header = () => {
           {/* Menu container */}
           <div className={styles.menuContainer}>
             {/* Navigation links */}
-            <nav className={styles.navLinks} aria-label={t(HEADER_KEYS.HEADER_MENU_ARIA_LABEL)}>
+            <nav className={styles.navLinks} aria-label={t(HOME_KEYS.HOME_MENU_ARIA_LABEL)}>
               {MENU_ITEMS.map((item, index) => (
                 <Link
                   key={item.label}
