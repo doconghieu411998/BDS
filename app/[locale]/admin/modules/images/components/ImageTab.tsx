@@ -32,6 +32,7 @@ interface ImageTabProps {
 }
 
 export default function ImageTab({ title, filterCondition }: ImageTabProps) {
+    const MAX_IMAGE_SIZE_MB = 20;
     const [items, setItems] = useState<IntroduceImage[]>([]);
     const [loading, setLoading] = useState(false);
 
@@ -84,6 +85,12 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
     };
 
     const handleImageSelect = async (file: File) => {
+        const isLt20MB = file.size / 1024 / 1024 <= MAX_IMAGE_SIZE_MB;
+        if (!isLt20MB) {
+            message.error(`Kích thước ảnh phải nhỏ hơn ${MAX_IMAGE_SIZE_MB}MB!`);
+            return Upload.LIST_IGNORE;
+        }
+
         try {
             setUploading(true);
             const base64String = await convertFileToBase64(file);
@@ -304,7 +311,7 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
 
                     <Col span={14}>
                         <AntForm form={form} layout="vertical">
-                            <AntForm.Item label="Upload Ảnh" extra="Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Tối đa 5MB.">
+                            <AntForm.Item label="Upload Ảnh" extra="Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Tối đa 20MB.">
                                 <Upload
                                     name="image"
                                     listType="picture-card"

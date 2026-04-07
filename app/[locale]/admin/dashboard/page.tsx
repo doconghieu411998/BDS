@@ -12,7 +12,7 @@ export default function DashboardPage() {
         <div>
             <h1 className={styles.dashboardTitle}>Trang chủ</h1>
 
-            <AntRow gutter={[16, 16]} className={styles.statsGrid}>
+            {/* <AntRow gutter={[16, 16]} className={styles.statsGrid}>
 
                 <AntCol xs={24} sm={12} lg={6}>
                     <AntCard className={styles.statCard}>
@@ -35,7 +35,7 @@ export default function DashboardPage() {
                         />
                     </AntCard>
                 </AntCol>
-            </AntRow>
+            </AntRow> */}
 
             <AntRow gutter={[16, 16]} className={styles.statsGrid}>
                 <AntCol span={24}>

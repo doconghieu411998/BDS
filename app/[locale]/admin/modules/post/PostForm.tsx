@@ -8,7 +8,8 @@ import { AntInput } from '@/crema/components/AntInput';
 import { AntButton } from '@/crema/components/AntButton';
 import { AntSelect } from '@/crema/components/AntSelect';
 import { AntUpload } from '@/crema/components/AntUpload';
-import { Image } from 'antd';
+import { AntMessage } from '@/crema/components/AntMessage';
+import { Image, Upload } from 'antd';
 import dynamic from 'next/dynamic';
 const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), {
     ssr: false,
@@ -16,7 +17,7 @@ const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor')
 });
 
 import { UploadOutlined } from '@ant-design/icons';
-import type { UploadFile } from 'antd';
+import type { UploadFile, UploadProps } from 'antd';
 import styles from './PostForm.module.css';
 
 interface PostFormProps {
@@ -26,11 +27,21 @@ interface PostFormProps {
 }
 
 export default function PostForm({ initialData, isEdit = false, onSubmit }: PostFormProps) {
+    const MAX_IMAGE_SIZE_MB = 20;
     const [form] = AntForm.useForm();
     const [loading, setLoading] = useState(false);
     const [thumbnailUrl, setThumbnailUrl] = useState<string | undefined>(initialData?.media?.url);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [tags, setTags] = useState<Tag[]>([]);
+
+    const validateImageBeforeUpload: NonNullable<UploadProps['beforeUpload']> = (file) => {
+        const isLt20MB = file.size / 1024 / 1024 <= MAX_IMAGE_SIZE_MB;
+        if (!isLt20MB) {
+            AntMessage.error(`Kích thước ảnh phải nhỏ hơn ${MAX_IMAGE_SIZE_MB}MB!`);
+            return Upload.LIST_IGNORE;
+        }
+        return false;
+    };
 
     useEffect(() => {
         TagApiService.getTags().then((data) => {
@@ -212,7 +223,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                     {/* Ảnh đại diện */}
                     <AntForm.Item
                         label="Ảnh đại diện"
-                        extra="Click vào ảnh để xem toàn màn hình. Chỉ chấp nhận JPG, PNG, GIF (Tối đa 5MB)."
+                        extra="Click vào ảnh để xem toàn màn hình. Chỉ chấp nhận JPG, PNG, GIF (Tối đa 20MB)."
                     >
                         <div style={{
                             border: '1px solid #d9d9d9',
@@ -255,7 +266,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                                                 reader.readAsDataURL(fileList[0].originFileObj as File);
                                             }
                                         }}
-                                        beforeUpload={() => false}
+                                        beforeUpload={validateImageBeforeUpload}
                                         maxCount={1}
                                         accept="image/*"
                                         showUploadList={false}
@@ -283,7 +294,7 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                                             reader.readAsDataURL(fileList[0].originFileObj as File);
                                         }
                                     }}
-                                    beforeUpload={() => false}
+                                    beforeUpload={validateImageBeforeUpload}
                                     maxCount={1}
                                     accept="image/*"
                                     listType="picture-card"
