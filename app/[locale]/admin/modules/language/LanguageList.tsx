@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Spin } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { LanguageItem, LanguagePair } from '@/models/language';
@@ -27,10 +27,28 @@ interface UpdateModalData {
 export default function LanguageList() {
     const [languagePairs, setLanguagePairs] = useState<LanguagePair[]>([]);
     const [loading, setLoading] = useState(false);
+    const [pageSize, setPageSize] = useState(10);
+    const [searchText, setSearchText] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [saving, setSaving] = useState(false);
     const [selectedPair, setSelectedPair] = useState<UpdateModalData | null>(null);
     const [form] = AntForm.useForm();
+
+    const handlePageSizeChange = (_current: number, size: number) => {
+        setPageSize(size);
+    };
+
+    const filteredLanguagePairs = useMemo(() => {
+        const keyword = searchText.trim().toLowerCase();
+        if (!keyword) return languagePairs;
+
+        return languagePairs.filter((pair) => {
+            const key = pair.key?.toLowerCase() || '';
+            const enValue = pair.en?.value?.toLowerCase() || '';
+            const viValue = pair.vi?.value?.toLowerCase() || '';
+            return key.includes(keyword) || enValue.includes(keyword) || viValue.includes(keyword);
+        });
+    }, [languagePairs, searchText]);
 
     const loadLanguages = useCallback(async () => {
         setLoading(true);
@@ -209,13 +227,25 @@ export default function LanguageList() {
                     </h1>
                 </div>
 
+                <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'flex-end' }}>
+                    <AntInput
+                        allowClear
+                        placeholder="Tìm theo khóa, tiếng Anh, tiếng Việt"
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        style={{ width: '50%' }}
+                    />
+                </div>
+
                 <AntTable
                     columns={columns}
-                    dataSource={languagePairs}
+                    dataSource={filteredLanguagePairs}
                     rowKey="key"
+                    scroll={{ y: 600 }}
                     pagination={{
-                        pageSize: 10,
+                        pageSize,
                         showSizeChanger: true,
+                        onShowSizeChange: handlePageSizeChange,
                         showTotal: (total) => `Total ${total} items`,
                     }}
                     bordered
@@ -262,7 +292,7 @@ export default function LanguageList() {
                         ]}
                         style={{ marginBottom: 16 }}
                     >
-                        <AntInput placeholder="Nhập bản dịch tiếng Anh" />
+                        <AntInput.TextArea placeholder="Nhập bản dịch tiếng Anh" rows={4} />
                     </AntForm.Item>
 
                     <AntForm.Item
@@ -274,7 +304,7 @@ export default function LanguageList() {
                         ]}
                         style={{ marginBottom: 0 }}
                     >
-                        <AntInput placeholder="Nhập bản dịch tiếng Việt" />
+                        <AntInput.TextArea placeholder="Nhập bản dịch tiếng Việt" rows={4} />
                     </AntForm.Item>
                 </AntForm>
             </AntModal>
