@@ -183,7 +183,7 @@ axiosClient.interceptors.response.use(
             if (status === 400) {
                 if (typeof window !== 'undefined') {
                     notifyError({
-                        message: 'Yêu cầu không hợp lệ',
+                        message: data?.message || 'Yêu cầu không hợp lệ',
                         description: data?.message || 'Dữ liệu gửi lên không hợp lệ!',
                     });
                 }
@@ -193,7 +193,7 @@ axiosClient.interceptors.response.use(
             if (status === 404) {
                 if (typeof window !== 'undefined') {
                     notifyError({
-                        message: 'Không tìm thấy',
+                        message: data?.message || 'Không tìm thấy',
                         description: data?.message || 'Dữ liệu không tồn tại hoặc đã bị xóa!',
                     });
                 }
@@ -213,7 +213,7 @@ axiosClient.interceptors.response.use(
             if (status === 422) {
                 if (typeof window !== 'undefined') {
                     notifyError({
-                        message: 'Dữ liệu không hợp lệ',
+                        message: data?.message || 'Dữ liệu không hợp lệ',
                         description: data?.message || 'Vui lòng kiểm tra lại thông tin đã nhập!',
                     });
                 }

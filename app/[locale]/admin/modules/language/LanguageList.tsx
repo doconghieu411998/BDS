@@ -29,6 +29,7 @@ export default function LanguageList() {
     const [loading, setLoading] = useState(false);
     const [pageSize, setPageSize] = useState(10);
     const [searchText, setSearchText] = useState('');
+    const [searchInput, setSearchInput] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [saving, setSaving] = useState(false);
     const [selectedPair, setSelectedPair] = useState<UpdateModalData | null>(null);
@@ -36,6 +37,10 @@ export default function LanguageList() {
 
     const handlePageSizeChange = (_current: number, size: number) => {
         setPageSize(size);
+    };
+
+    const handleSearch = (value: string) => {
+        setSearchText(value.trim());
     };
 
     const filteredLanguagePairs = useMemo(() => {
@@ -227,12 +232,19 @@ export default function LanguageList() {
                     </h1>
                 </div>
 
-                <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'flex-end' }}>
-                    <AntInput
+                <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'flex-start' }}>
+                    <AntInput.Search
                         allowClear
                         placeholder="Tìm theo khóa, tiếng Anh, tiếng Việt"
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
+                        value={searchInput}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setSearchInput(value);
+                            if (!value) {
+                                handleSearch('');
+                            }
+                        }}
+                        onSearch={handleSearch}
                         style={{ width: '50%' }}
                     />
                 </div>
