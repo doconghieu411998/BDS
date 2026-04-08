@@ -3,6 +3,7 @@
     width: 100%;
     padding-top: calc(100 / 1440 * var(--width-container, 1440px));
     overflow: hidden;
+    background-color: #ccffff;
 }
 
 .mapBackground {
