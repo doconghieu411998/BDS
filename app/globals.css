@@ -143,7 +143,7 @@ p {
 @media (min-width: 1920px) {
   :root {
     --width-container: 1690px;
-    --size-section-title: 3.25rem;
+    --size-section-title: 3.5rem;
     --size-card-title: 3.0rem;
     --size-sub-title: 1.8rem;
     --size-content: 1.2rem;
@@ -154,7 +154,7 @@ p {
   :root {
     --width-container: 2254px;
     --size-section-title: 4.2rem;
-    --size-card-title: 3.5rem;
+    --size-card-title: 3.25rem;
     --size-sub-title: 2.2rem;
     --size-content: 1.3rem;
   }
