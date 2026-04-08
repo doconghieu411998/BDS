@@ -3,6 +3,7 @@ export interface ConsultationRequest {
   phoneNumber: string;
   email: string;
   content: string;
+  createdAt: string;
 }
 
 export interface ConsultationResponse {

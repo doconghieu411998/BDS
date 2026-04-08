@@ -29,9 +29,10 @@ import styles from '../ImageListBase.module.css';
 interface ImageTabProps {
     title: string;
     filterCondition: (item: IntroduceImage) => boolean;
+    showStatus?: boolean;
 }
 
-export default function ImageTab({ title, filterCondition }: ImageTabProps) {
+export default function ImageTab({ title, filterCondition, showStatus = false }: ImageTabProps) {
     const MAX_IMAGE_SIZE_MB = 20;
     const [items, setItems] = useState<IntroduceImage[]>([]);
     const [loading, setLoading] = useState(false);
@@ -69,7 +70,7 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
             titleEn: item.titleEn || '',
             descriptionVi: item.descriptionVi || '',
             descriptionEn: item.descriptionEn || '',
-            status: item.status || '',
+            status: item.status ?? '',
             imageUrl: item.imageUrl || '',
         });
         setModalVisible(true);
@@ -159,81 +160,94 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
         }
     };
 
-    const getColumns = (): ColumnType<IntroduceImage>[] => [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-            width: 70,
-            align: 'center',
-        },
-        {
-            title: 'Trạng thái',
-            dataIndex: 'status',
-            key: 'status',
-            width: 140,
-            align: 'center',
-            ellipsis: true,
-            render: (status: IntroduceStatus) => getStatusLabel(status),
-        },
-        {
-            title: 'Tiêu đề (VI)',
-            dataIndex: 'titleVi',
-            key: 'titleVi',
-            width: 200,
-            ellipsis: true,
-        },
-        {
-            title: 'Tiêu đề (EN)',
-            dataIndex: 'titleEn',
-            key: 'titleEn',
-            width: 200,
-            ellipsis: true,
-        },
-        {
-            title: 'Mô tả (VI)',
-            dataIndex: 'descriptionVi',
-            key: 'descriptionVi',
-            ellipsis: true,
-        },
-        {
-            title: 'Mô tả (EN)',
-            dataIndex: 'descriptionEn',
-            key: 'descriptionEn',
-            ellipsis: true,
-        },
-        {
-            title: 'Ảnh',
-            dataIndex: 'imageUrl',
-            key: 'imageUrl',
-            width: 100,
-            align: 'center',
-            render: (imageUrl: string | null) => {
-                if (!imageUrl) return <span style={{ color: '#999' }}>Không có ảnh</span>;
-                return (
-                    <AntImage
-                        src={imageUrl}
-                        alt="Preview"
-                        className={styles.imagePreview}
-                        preview={{ mask: 'Xem' }}
-                    />
-                );
+    const getColumns = (): ColumnType<IntroduceImage>[] => {
+        const cols: ColumnType<IntroduceImage>[] = [
+            {
+                title: 'STT',
+                key: 'stt',
+                width: 70,
+                align: 'center',
+                render: (_: unknown, __: unknown, index: number) => index + 1,
             },
-        },
-        {
-            title: 'Thao tác',
-            key: 'action',
-            width: 80,
-            align: 'center',
-            render: (_: unknown, record: IntroduceImage) => (
-                <AntButton
-                    type="link"
-                    icon={<EditOutlined />}
-                    onClick={() => handleEdit(record)}
-                />
-            ),
-        },
-    ];
+        ];
+
+        if (showStatus) {
+            cols.push({
+                title: 'Trạng thái',
+                dataIndex: 'status',
+                key: 'status',
+                width: 140,
+                align: 'center',
+                ellipsis: true,
+                render: (status: IntroduceStatus) => {
+                    const label = getStatusLabel(status);
+                    return label === '-' ? <span style={{ color: '#ccc' }}>-</span> : label;
+                },
+            });
+        }
+
+        cols.push(
+            {
+                title: 'Tiêu đề (VI)',
+                dataIndex: 'titleVi',
+                key: 'titleVi',
+                width: 200,
+                ellipsis: true,
+            },
+            {
+                title: 'Tiêu đề (EN)',
+                dataIndex: 'titleEn',
+                key: 'titleEn',
+                width: 200,
+                ellipsis: true,
+            },
+            {
+                title: 'Mô tả (VI)',
+                dataIndex: 'descriptionVi',
+                key: 'descriptionVi',
+                ellipsis: true,
+            },
+            {
+                title: 'Mô tả (EN)',
+                dataIndex: 'descriptionEn',
+                key: 'descriptionEn',
+                ellipsis: true,
+            },
+            {
+                title: 'Ảnh',
+                dataIndex: 'imageUrl',
+                key: 'imageUrl',
+                width: 100,
+                align: 'center',
+                render: (imageUrl: string | null) => {
+                    if (!imageUrl) return <span style={{ color: '#999' }}>Không có ảnh</span>;
+                    return (
+                        <AntImage
+                            src={imageUrl}
+                            alt="Preview"
+                            className={styles.imagePreview}
+                            preview={{ mask: 'Xem' }}
+                        />
+                    );
+                },
+            },
+            {
+                title: 'Thao tác',
+                key: 'action',
+                width: 80,
+                align: 'center',
+                render: (_: unknown, record: IntroduceImage) => (
+                    <AntButton
+                        type="link"
+                        icon={<EditOutlined />}
+                        onClick={() => handleEdit(record)}
+                    />
+                ),
+            }
+        );
+
+        return cols;
+    };
 
     const getModalTitle = () => {
         if (!editingItem) return 'Cập nhật hình ảnh';
@@ -241,7 +255,7 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
     };
 
     const statusOptions = [
-        { label: getStatusLabel(IntroduceStatus.NotForSale, 'vi'), value: IntroduceStatus.NotForSale },
+        { label: 'Không có trạng thái', value: IntroduceStatus.NotForSale },
         { label: getStatusLabel(IntroduceStatus.ForSale, 'vi'), value: IntroduceStatus.ForSale },
         { label: getStatusLabel(IntroduceStatus.Sold, 'vi'), value: IntroduceStatus.Sold },
     ];
@@ -340,16 +354,18 @@ export default function ImageTab({ title, filterCondition }: ImageTabProps) {
                                 <input type="hidden" />
                             </AntForm.Item>
 
-                            <AntForm.Item
-                                label="Trạng thái"
-                                name="status"
-                                rules={[{ required: true, message: 'Vui lòng chọn trạng thái' }]}
-                            >
-                                <AntSelect
-                                    options={statusOptions}
-                                    placeholder="Chọn trạng thái"
-                                />
-                            </AntForm.Item>
+                            {showStatus && (
+                                <AntForm.Item
+                                    label="Trạng thái"
+                                    name="status"
+                                    rules={[{ required: true, message: 'Vui lòng chọn trạng thái' }]}
+                                >
+                                    <AntSelect
+                                        options={statusOptions}
+                                        placeholder="Chọn trạng thái"
+                                    />
+                                </AntForm.Item>
+                            )}
 
                             <Row gutter={12}>
                                 <Col span={12}>

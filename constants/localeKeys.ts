@@ -115,6 +115,8 @@ export const FLOOR_KEYS = {
     HOME_FLOOR_LEG: 'home_floor_leg_',
     HOME_FLOOR_PIN_TITLE: 'home_floor_pin_title_',
     HOME_FLOOR_PIN_DESCRIPTION: 'home_floor_pin_description_',
+    HOME_FLOOR_STATUS_SALE: 'home_floor_status_sale',
+    HOME_FLOOR_STATUS_NOT_SALE: 'home_floor_status_not_sale',
 } as const;
 
 

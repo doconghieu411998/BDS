@@ -42,6 +42,21 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
         return () => clearTimeout(timeoutId)
     }, [isOpen])
 
+    const formatDateToDatetime2 = (date: Date): string => {
+        const pad = (num: number, size: number = 2) => String(num).padStart(size, '0');
+
+        const year = date.getFullYear();
+        const month = pad(date.getMonth() + 1);
+        const day = pad(date.getDate());
+        const hours = pad(date.getHours());
+        const minutes = pad(date.getMinutes());
+        const seconds = pad(date.getSeconds());
+        const milliseconds = pad(date.getMilliseconds(), 3);
+
+        // datetime2 format: YYYY-MM-DD HH:mm:ss.SSSSSSS
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}0000`;
+    };
+
     const handleSubmit = async (values: FormValues) => {
         setLoading(true)
         try {
@@ -50,6 +65,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                 phoneNumber: values.phone,
                 email: values.email,
                 content: values.message || "",
+                createdAt: formatDateToDatetime2(new Date()),
             }
 
             await consultationApiService.submit(payload);

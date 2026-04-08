@@ -133,7 +133,7 @@ export default function PostList() {
             title: 'Ảnh đại diện',
             dataIndex: 'media',
             key: 'media',
-            width: 100,
+            width: 200,
             render: (media: PostMedia | undefined) => (
                 media?.url ? (
                     // eslint-disable-next-line @next/next/no-img-element

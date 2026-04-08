@@ -162,7 +162,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
                 const colorBar = status === 2 ? 'greenBar' : (status === 1 ? 'blueBar' : '');
 
                 // Status mapping string (Optional fallback for tooltip badge)
-                const statusStr = status === 2 ? 'Mở Bán' : (status === 1 ? 'Chưa Bán' : null);
+                const statusStr = status === 2 ? t(FLOOR_KEYS.HOME_FLOOR_STATUS_SALE) : (status === 1 ? t(FLOOR_KEYS.HOME_FLOOR_STATUS_NOT_SALE) : null);
 
                 return (
                   <motion.div
@@ -172,7 +172,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
                     className={styles.tooltipCard}
                   >
                     {statusStr && (
-                      <div className={styles.statusBadge} style={status === 1 ? { background: '#2563eb' } : {}}>
+                      <div className={styles.statusBadge} style={status === 1 ? { background: '#000000' } : {}}>
                         {statusStr}
                       </div>
                     )}
@@ -233,10 +233,17 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
           const item = images.find((img) => img.id === mappedId);
           const title = locale === 'en' ? item?.titleEn : item?.titleVi;
           const description = locale === 'en' ? item?.descriptionEn : item?.descriptionVi;
+          const status = item?.status || 0;
+          const statusStr = status === 2 ? t(FLOOR_KEYS.HOME_FLOOR_STATUS_SALE) : (status === 1 ? t(FLOOR_KEYS.HOME_FLOOR_STATUS_NOT_SALE) : null);
 
           return (
             <div className={styles.modalContent}>
               <div className={styles.modalImageWrapper}>
+                {statusStr && (
+                  <div className={styles.statusBadge} style={status === 1 ? { background: '#000000' } : {}}>
+                    {statusStr}
+                  </div>
+                )}
                 <Image
                   src={item?.imageUrl}
                   alt={title || ''}

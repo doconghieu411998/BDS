@@ -55,7 +55,7 @@ export interface IntroduceImage {
     descriptionEn: string;
     imageUrl: string | null;
     mediaId: number; // Media ID for updates
-    metadataIds: { [key: string]: number }; // Map of keyName+group to metadata ID
+    metadatas: IntroduceImageMetadata[]; // Store original metadata array for flexible updates
     createdAt: string;
     updatedAt: string;
 }
@@ -66,34 +66,21 @@ function getMetadataValue(metadatas: IntroduceImageMetadata[], keyName: string, 
     return metadata?.value || '';
 }
 
-function getTypePrefixByType(type: IntroduceImageType | number): string {
-    switch (type) {
-        case IntroduceImageType.CAROUSEL_UTILITY:
-            return 'carousel_utility';
-        case IntroduceImageType.CAROUSEL_SHOWHOUSE:
-            return 'carousel_showhouse';
-        case IntroduceImageType.MAP_POINT:
-            return 'map_point';
-        case IntroduceImageType.VILLA:
-            return 'villa';
-        case IntroduceImageType.ACCOMMODATION:
-            return 'accommodation';
-        case IntroduceImageType.EAST_COAST_VILLA:
-            return 'east_coast_villa';
-        default:
-            return 'design_sample';
-    }
-}
 
-// Helper function to get title and description keys
-function getTitleDescKeys(metadatas: IntroduceImageMetadata[]): { titleKey: string; descKey: string } | null {
-    // Find the first metadata that contains "_title" in keyName
-    const titleMeta = metadatas.find(m => m.keyName.includes('_title'));
+function getTitleDescKeys(metadatas: IntroduceImageMetadata[]): { titleKey: string; descKey: string | null } | null {
+    // Dynamically find keys that contain title
+    const titleMeta = metadatas.find(m => m.keyName.toLowerCase().includes('_title'));
     if (!titleMeta) return null;
 
-    // Extract the prefix (e.g., "carousel_utility_1" from "carousel_utility_1_title")
     const titleKey = titleMeta.keyName;
-    const descKey = titleKey.replace('_title', '_description');
+
+    // Find description key (can be "_description" or "_desc")
+    const descMeta = metadatas.find(m =>
+        m.keyName.toLowerCase().includes('_description') ||
+        m.keyName.toLowerCase().includes('_desc')
+    );
+
+    const descKey = descMeta ? descMeta.keyName : null;
 
     return { titleKey, descKey };
 }
@@ -110,8 +97,10 @@ export function mapIntroduceImageResponse(response: IntroduceImageResponse): Int
     if (keys) {
         titleVi = getMetadataValue(response.metadatas, keys.titleKey, 0);
         titleEn = getMetadataValue(response.metadatas, keys.titleKey, 1);
-        descriptionVi = getMetadataValue(response.metadatas, keys.descKey, 0);
-        descriptionEn = getMetadataValue(response.metadatas, keys.descKey, 1);
+        if (keys.descKey) {
+            descriptionVi = getMetadataValue(response.metadatas, keys.descKey, 0);
+            descriptionEn = getMetadataValue(response.metadatas, keys.descKey, 1);
+        }
     }
 
     // Build metadata IDs map
@@ -131,7 +120,7 @@ export function mapIntroduceImageResponse(response: IntroduceImageResponse): Int
         descriptionEn,
         imageUrl: response.media?.url || null,
         mediaId: response.media?.id || 0,
-        metadataIds,
+        metadatas: response.metadatas,
         createdAt: response.createdAt,
         updatedAt: response.updatedAt,
     };
@@ -141,11 +130,11 @@ export function getStatusLabel(status: IntroduceStatus | number, language: 'vi' 
     if (language === 'vi') {
         switch (status) {
             case IntroduceStatus.NotForSale:
-                return 'Chưa mở bán';
+                return '-';
             case IntroduceStatus.ForSale:
-                return 'Đang mở bán';
+                return 'Chưa bán';
             case IntroduceStatus.Sold:
-                return 'Đã bán';
+                return 'Mở bán';
             default:
                 return '';
         }
@@ -153,11 +142,11 @@ export function getStatusLabel(status: IntroduceStatus | number, language: 'vi' 
 
     switch (status) {
         case IntroduceStatus.NotForSale:
-            return 'Not for sale';
+            return '-';
         case IntroduceStatus.ForSale:
-            return 'For sale';
+            return 'Not for sale';
         case IntroduceStatus.Sold:
-            return 'Sold';
+            return 'For sale';
         default:
             return '';
     }
@@ -242,49 +231,29 @@ export function buildUpdatePayload(
     },
     imageBase64?: string | null
 ): UpdateIntroduceImagePayload {
-    // Extract prefix from existing metadata keys
-    const typePrefix = getTypePrefixByType(item.type);
+    const updatedMetadatas = item.metadatas.map(meta => {
+        const keyName = meta.keyName.toLowerCase();
+        let newValue = meta.value;
 
-    // We need to find the numeric suffix (e.g., "1" from "carousel_utility_1_title")
-    // For simplicity, we'll use the item's id as the suffix
-    const suffix = item.id;
-    const titleKey = `${typePrefix}_${suffix}_title`;
-    const descKey = `${typePrefix}_${suffix}_desc`;
+        // Logic to identify which field to update from form values
+        if (keyName.includes('_title')) {
+            newValue = meta.group === 0 ? formValues.titleVi : formValues.titleEn;
+        } else if (keyName.includes('_desc') || keyName.includes('_description')) {
+            newValue = meta.group === 0 ? formValues.descriptionVi : formValues.descriptionEn;
+        }
+
+        return {
+            ...meta,
+            value: newValue,
+            isUpdate: true
+        };
+    });
 
     const payload: UpdateIntroduceImagePayload = {
         id: item.id,
         type: item.type,
         status: formValues.status,
-        metadatas: [
-            {
-                id: item.metadataIds[`${titleKey}_0`] || 0,
-                group: 0,
-                keyName: titleKey,
-                value: formValues.titleVi,
-                isUpdate: true
-            },
-            {
-                id: item.metadataIds[`${titleKey}_1`] || 0,
-                group: 1,
-                keyName: titleKey,
-                value: formValues.titleEn,
-                isUpdate: true
-            },
-            {
-                id: item.metadataIds[`${descKey}_0`] || 0,
-                group: 0,
-                keyName: descKey,
-                value: formValues.descriptionVi,
-                isUpdate: true
-            },
-            {
-                id: item.metadataIds[`${descKey}_1`] || 0,
-                group: 1,
-                keyName: descKey,
-                value: formValues.descriptionEn,
-                isUpdate: true
-            }
-        ]
+        metadatas: updatedMetadatas
     };
 
     // Always include media object with existing id and url
