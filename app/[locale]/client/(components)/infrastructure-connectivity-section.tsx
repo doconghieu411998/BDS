@@ -19,31 +19,31 @@ const InfrastructureConnectivitySection = () => {
       time: "20",
       unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
       title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_1_TITLE),
-      image: "images/banner-1.png",
+      image: "images/tp_quy_nhon_bg.png",
     },
     {
       time: "35",
       unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
       title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_2_TITLE),
-      image: "images/banner-2.png",
+      image: "images/san_bay_phu_cat_bg.png",
     },
     {
       time: "05",
       unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
       title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_3_TITLE),
-      image: "images/banner-3.png",
+      image: "images/quy_hoa_bg.png",
     },
     {
       time: "15",
       unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
       title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_4_TITLE),
-      image: "images/banner-4.png",
+      image: "images/bai_trung_bg.png",
     },
     {
       time: "05",
       unit: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_UNIT_PHUT),
       title: t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_ITEM_5_TITLE),
-      image: "images/banner-5.png",
+      image: "images/bai_xep_bg.png",
     },
   ];
 
@@ -79,14 +79,14 @@ const InfrastructureConnectivitySection = () => {
           slidesToScroll={1}
           dots={false}
           infinite={true}
-          draggable
+          draggable={true}
+          swipe={true}
           autoplay={true}
           autoplaySpeed={4000}
           speed={10000}
           cssEase="linear"
-          pauseOnHover={false}
+          pauseOnHover={true}
           pauseOnFocus={false}
-          swipe={false}
           variableWidth={true}
           responsive={[
             {

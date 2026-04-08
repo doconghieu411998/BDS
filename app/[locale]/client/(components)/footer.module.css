@@ -14,7 +14,7 @@
 
 .mainGrid {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1.2fr 1fr 1fr;
   gap: 40px;
   margin-bottom: 60px;
   align-items: flex-start;
@@ -47,17 +47,19 @@
 
 /* Info Styling */
 .heading {
-  font-size: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 1.5vw, 1.8rem);
   font-weight: 600;
   margin-bottom: 25px;
   text-transform: uppercase;
 }
 
 .text {
-  font-size: 0.9rem;
+  font-size: clamp(0.95rem, 1vw, 1.15rem);
   margin-bottom: 12px;
-  opacity: 0.8;
+  opacity: 0.85;
   font-weight: 400;
+  line-height: 1.6;
 }
 
 /* Social Icons */
@@ -67,8 +69,8 @@
 }
 
 .iconCircle {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.4);
   display: flex;
@@ -76,7 +78,7 @@
   justify-content: center;
   color: white;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 20px;
   transition: all 0.3s ease;
 }
 
@@ -97,9 +99,9 @@
 }
 
 .legalText {
-  font-size: 0.85rem;
+  font-size: clamp(0.85rem, 0.9vw, 1.05rem);
   line-height: 1.8;
-  opacity: 0.6;
+  opacity: 0.7;
   text-align: justify;
   font-weight: 400;
 }

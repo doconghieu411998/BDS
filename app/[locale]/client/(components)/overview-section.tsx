@@ -60,10 +60,10 @@ const OverviewSection = () => {
 
           {/* Phải: Tiêu đề */}
           <div className={styles.rightCol}>
-            <h2 className={styles.titleInfo}>
+            <h2 className={`${styles.titleInfo} global-title`}>
               {t(OVERVIEW_KEYS.HOME_OVERVIEW_TITLE_INFO)}
             </h2>
-            <h1 className={styles.titleOverview}>
+            <h1 className={`${styles.titleOverview} global-title`}>
               {t(OVERVIEW_KEYS.HOME_OVERVIEW_TITLE_OVERVIEW)}
             </h1>
           </div>

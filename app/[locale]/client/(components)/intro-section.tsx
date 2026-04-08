@@ -4,8 +4,7 @@ import styles from './intro-section.module.css';
 import { withBasePath } from '@/services/commonService';
 import { useTranslations } from 'next-intl';
 import { INTRO_KEYS } from '@/constants/localeKeys';
-
-const IMG_RIGHT = "images/intro.png";
+import { motion, AnimatePresence } from 'framer-motion';
 
 const IntroSection = () => {
   const t = useTranslations();
@@ -18,21 +17,24 @@ const IntroSection = () => {
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_1),
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_2)
-      ]
+      ],
+      image: "images/intro.png"
     },
     INVESTOR: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_INVESTOR),
       tagline: "",
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_INVESTOR)
-      ]
+      ],
+      image: "images/investor_bg.png"
     },
     MANAGER: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_MANAGER),
       tagline: t(INTRO_KEYS.HOME_INTRO_TAGLINE_MANAGER),
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_MANAGER)
-      ]
+      ],
+      image: "images/intro.png"
     }
   };
 
@@ -66,33 +68,51 @@ const IntroSection = () => {
       <div className={styles.wrapper}>
         <div className={styles.blueCard}>
           <div className={styles.decorBg}></div>
-          <div className={styles.textContent}>
-            <h2 className={`${styles.titleMain} global-title`}>
-              {current.title}
-            </h2>
-            {current.tagline && (
-              <p className={styles.tagline}>{current.tagline}</p>
-            )}
-            <div className={styles.descriptionWrapper}>
-              {current.description.map((p, idx) => (
-                <p key={idx} className={`${styles.description} global-text`}>
-                  {p}
-                </p>
-              ))}
-            </div>
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.4 }}
+              className={styles.textContent}
+            >
+              <h2 className={`${styles.titleMain} global-title`}>
+                {current.title}
+              </h2>
+              {current.tagline && (
+                <p className={styles.tagline}>{current.tagline}</p>
+              )}
+              <div className={styles.descriptionWrapper}>
+                {current.description.map((p, idx) => (
+                  <p key={idx} className={`${styles.description} global-text`}>
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         <div className={styles.imageCard}>
-          <div className={styles.imageWrapper}>
-            <Image
-              src={withBasePath(IMG_RIGHT)}
-              alt={current.title}
-              fill
-              className={styles.image}
-              sizes="(max-width: 992px) 100vw, 50vw"
-            />
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className={styles.imageWrapper}
+            >
+              <Image
+                src={withBasePath(current.image)}
+                alt={current.title}
+                fill
+                className={styles.image}
+                sizes="(max-width: 992px) 100vw, 50vw"
+              />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
