@@ -83,7 +83,7 @@ const IntroSection = () => {
               <h2 className={`${styles.titleMain} global-title`}>
                 <div className={styles.mainLine}>{current.title}</div>
                 {current.subtitle && (
-                  <div className={styles.subLine}>{current.subtitle}</div>
+                  <div className={activeTab === 'INTRO' ? styles.subLineIntro : styles.subLineInvestor}>{current.subtitle}</div>
                 )}
               </h2>
               {current.tagline && (

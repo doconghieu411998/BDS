@@ -5,21 +5,14 @@
   --foreground: #171717;
   --font-serif: "Times New Roman", Times, serif;
 
-  /* GLOBAL CONTAINER SETTINGS - Default (Desktop Standard) */
-  --width-container: 1268px;
+  /* GLOBAL CONTAINER SETTINGS - Default (Mobile) */
+  --width-container: 92%;
 
-  /* Proportional Typography - Dynamic Scaling */
-  /* Title: 32px to 80px (clamp at 5rem) */
-  --size-section-title: clamp(2rem, 3.5vw, 5rem);
-
-  /* Card Title: 32px to 64px - for titles inside narrow cards/panels */
-  --size-card-title: clamp(2rem, 3vw, 4rem);
-
-  /* Sub-title: 20px to 40px (clamp at 2.5rem) */
-  --size-sub-title: clamp(1.25rem, 2vw, 2.5rem);
-
-  /* Content: 16px to 22.4px (clamp at 1.4rem) */
-  --size-content: clamp(1rem, 1.25vw, 1.4rem);
+  /* Step-based Typography Scaling */
+  --size-section-title: 1.5rem;
+  --size-card-title: 1.4rem;
+  --size-sub-title: 1.0rem;
+  --size-content: 0.875rem;
 }
 
 @theme inline {
@@ -81,7 +74,40 @@ p {
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* RESPONSIVE SCALING - WIDTH ONLY */
+/* RESPONSIVE SCALING - MOBILE / TABLET */
+@media (min-width: 481px) {
+  :root {
+    --width-container: 90%;
+    --size-section-title: 1.8rem;
+    --size-card-title: 1.6rem;
+    --size-sub-title: 1.1rem;
+    --size-content: 0.95rem;
+  }
+}
+
+/* LAPTOP / SMALL SCREEN (1024px - 1280px) */
+@media (min-width: 769px) {
+  :root {
+    --width-container: 1140px;
+    --size-section-title: 2.0rem;
+    --size-card-title: 1.8rem;
+    --size-sub-title: 1.2rem;
+    --size-content: 1.0rem;
+  }
+}
+
+/* 1366px DESKTOP (Common Small Laptops) */
+@media (min-width: 1281px) {
+  :root {
+    --width-container: 1200px;
+    --size-section-title: 2.2rem;
+    --size-card-title: 2.0rem;
+    --size-sub-title: 1.25rem;
+    --size-content: 1.0rem;
+  }
+}
+
+/* STANDARD DESKTOP (1440px) */
 @media (min-width: 1440px) {
   :root {
     --width-container: 1380px;
@@ -92,6 +118,7 @@ p {
   }
 }
 
+/* LARGE DESKTOP (1600px) */
 @media (min-width: 1600px) {
   :root {
     --width-container: 1520px;
@@ -102,10 +129,11 @@ p {
   }
 }
 
+/* ULTRA-WIDE DESKTOP (1700px+) */
 @media (min-width: 1700px) {
   :root {
     --width-container: 1600px;
-    --size-section-title: 3rem;
+    --size-section-title: 3.0rem;
     --size-card-title: 2.75rem;
     --size-sub-title: 1.6rem;
     --size-content: 1.15rem;
@@ -115,24 +143,24 @@ p {
 @media (min-width: 1920px) {
   :root {
     --width-container: 1690px;
+    --size-section-title: 3.25rem;
+    --size-card-title: 3.0rem;
+    --size-sub-title: 1.8rem;
+    --size-content: 1.2rem;
   }
 }
 
 @media (min-width: 2560px) {
   :root {
     --width-container: 2254px;
+    --size-section-title: 4.2rem;
+    --size-card-title: 3.5rem;
+    --size-sub-title: 2.2rem;
+    --size-content: 1.3rem;
   }
 }
 
-/* MOBILE ADJUSTMENTS - SMALLER MINIMUMS */
-@media (max-width: 768px) {
-  :root {
-    --size-section-title: clamp(1.5rem, 6vw, 2.5rem);
-    --size-card-title: clamp(1.5rem, 5.5vw, 2.5rem);
-    --size-sub-title: clamp(1rem, 4vw, 1.5rem);
-    --size-content: clamp(0.875rem, 3.5vw, 1rem);
-  }
-}
+
 
 /* GLOBAL TEXT STYLES */
 .global-title {

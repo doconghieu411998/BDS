@@ -2,8 +2,10 @@
   width: 100%;
   margin-bottom: 2rem;
   margin-top: 2rem;
-  background-color: #ffffff; /* Explicit background for Safari iOS stability */
-  overflow: hidden; /* Prevent animation-related horizontal scroll */
+  background-color: #ffffff;
+  /* Explicit background for Safari iOS stability */
+  overflow: hidden;
+  /* Prevent animation-related horizontal scroll */
 }
 
 .sectionHeader {
@@ -68,7 +70,7 @@
 .titleMain {
   margin: 0;
   font-size: var(--size-card-title);
-  line-height: 1.2;
+  line-height: 1.1;
   text-transform: uppercase;
 }
 
@@ -76,9 +78,18 @@
   display: block;
 }
 
-.subLine {
+.subLineIntro {
   display: block;
-  font-size: 0.65em; /* Thu nhỏ khoảng 65% so với thẻ h2 gốc */
+  font-size: 0.6em;
+  font-style: italic;
+  font-family: var(--font-serif), "Times New Roman", Times, serif;
+  margin-top: 0.3rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.subLineInvestor {
+  display: block;
   margin-top: 0.2rem;
 }
 
