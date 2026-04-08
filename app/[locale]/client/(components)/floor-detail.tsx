@@ -129,8 +129,8 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
             onMouseLeave={handleMouseLeave}
             onClick={() => handlePinClick({
               ...pin,
-              title: t(`${FLOOR_KEYS.HOME_FLOOR_PIN_TITLE}${pin.id + 1}_TTL`),
-              description: t(`${FLOOR_KEYS.HOME_FLOOR_PIN_DESCRIPTION}${pin.id + 1}_DSC`),
+              title: t(`${FLOOR_KEYS.HOME_FLOOR_PIN_TITLE}${pin.id + 1}`),
+              description: t(`${FLOOR_KEYS.HOME_FLOOR_PIN_DESCRIPTION}${pin.id + 1}`),
             } as any)}
           >
             {pin.special ? (
