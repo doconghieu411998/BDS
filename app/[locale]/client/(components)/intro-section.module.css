@@ -68,8 +68,18 @@
 .titleMain {
   margin: 0;
   font-size: var(--size-card-title);
-  line-height: 1.1;
+  line-height: 1.2;
   text-transform: uppercase;
+}
+
+.mainLine {
+  display: block;
+}
+
+.subLine {
+  display: block;
+  font-size: 0.65em; /* Thu nhỏ khoảng 65% so với thẻ h2 gốc */
+  margin-top: 0.2rem;
 }
 
 .tagline {

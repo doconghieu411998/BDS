@@ -13,6 +13,7 @@ const IntroSection = () => {
   const CONTENT = {
     INTRO: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_INTRO),
+      subtitle: t(INTRO_KEYS.HOME_INTRO_TITLE_INTRO_SUB),
       tagline: t(INTRO_KEYS.HOME_INTRO_TAGLINE_INTRO),
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_1),
@@ -22,6 +23,7 @@ const IntroSection = () => {
     },
     INVESTOR: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_INVESTOR),
+      subtitle: t(INTRO_KEYS.HOME_INTRO_TITLE_INVESTOR_SUB),
       tagline: "",
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_INVESTOR)
@@ -30,6 +32,7 @@ const IntroSection = () => {
     },
     MANAGER: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_MANAGER),
+      subtitle: "",
       tagline: t(INTRO_KEYS.HOME_INTRO_TAGLINE_MANAGER),
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_MANAGER)
@@ -78,7 +81,10 @@ const IntroSection = () => {
               className={styles.textContent}
             >
               <h2 className={`${styles.titleMain} global-title`}>
-                {current.title}
+                <div className={styles.mainLine}>{current.title}</div>
+                {current.subtitle && (
+                  <div className={styles.subLine}>{current.subtitle}</div>
+                )}
               </h2>
               {current.tagline && (
                 <p className={styles.tagline}>{current.tagline}</p>

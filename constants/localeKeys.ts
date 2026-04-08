@@ -64,6 +64,8 @@ export const INTRO_KEYS = {
     HOME_INTRO_TITLE_MANAGER: 'home_intro_title_manager',
     HOME_INTRO_TAGLINE_MANAGER: 'home_intro_tagline_manager',
     HOME_INTRO_DESCRIPTION_MANAGER: 'home_intro_description_manager',
+    HOME_INTRO_TITLE_INVESTOR_SUB: 'home_intro_title_investor_sub',
+    HOME_INTRO_TITLE_INTRO_SUB: 'home_intro_title_intro_sub',
 } as const;
 
 export const OVERVIEW_KEYS = {
@@ -125,7 +127,7 @@ export const REGIONAL_KEYS = {
 } as const;
 
 export const DESIGN_KEYS = {
-    TTL_MAIN: 'home_design_title_main',
+    HOME_DESIGN_TITLE_MAIN: 'home_design_title_main',
     HOME_DESIGN_TAB_VILLA_TITLE: 'home_design_tab_villa_title',
     HOME_DESIGN_TAB_STAY_TITLE: 'home_design_tab_stay_title',
     HOME_DESIGN_TAB_EAST_TITLE: 'home_design_tab_east_title',

@@ -64,9 +64,9 @@ const DesignSamplesSection = ({ images = [] }: { images?: IntroduceImage[] }) =>
   return (
     <section id="design-collections" className={styles.section}>
       <div className={styles.wrapper}>
-        {/* <h2 className={`${styles.title} global-title`}>
-          {t(DESIGN_KEYS.TTL_MAIN)}
-        </h2> */}
+        <h2 className={`${styles.title} global-title`}>
+          {t(DESIGN_KEYS.HOME_DESIGN_TITLE_MAIN)}
+        </h2>
 
         <div className={styles.tabGroup}>
           {TABS.map((tab) => (
