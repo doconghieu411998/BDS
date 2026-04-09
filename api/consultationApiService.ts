@@ -45,9 +45,14 @@ export const consultationApiService = {
         return response.data;
     },
 
-    async exportExcel(): Promise<{ success: boolean , message: string}> {
-        const response = await axiosClient.post(`${BASE_URL}/exportexcel`, {});
+    async exportExcel(): Promise<Blob> {
+        const response = await axiosClient.post(`${BASE_URL}/exportexcel`, {}, {
+            responseType: 'blob',
+            headers: {
+                accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/octet-stream',
+            },
+        });
 
-        return response.data;
+        return response.data as Blob;
     }
 };

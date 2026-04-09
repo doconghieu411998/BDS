@@ -73,22 +73,16 @@ export default function ConsultationList() {
   const exportExcel = async () => {
     setLoading(true);
     try {
-      const result = await consultationApiService.exportExcel();
-      const binaryString = result.message;
-
-      const byteArray = new Uint8Array(
-        [...binaryString].map((ch) => ch.charCodeAt(0))
-      );
-
-      const blob = new Blob([byteArray], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
+      const blob = await consultationApiService.exportExcel();
 
       const blobURL = window.URL.createObjectURL(blob);
       const tempLink = document.createElement("a");
       tempLink.style.display = "none";
       tempLink.href = blobURL;
-      tempLink.setAttribute("download", new Date().toISOString() + ".xlsx");
+      tempLink.setAttribute(
+        "download",
+        `consultations-${new Date().toISOString().replace(/[.:]/g, "-")}.xlsx`
+      );
 
       if (typeof tempLink.download === "undefined") {
         tempLink.setAttribute("target", "_blank");
@@ -101,7 +95,7 @@ export default function ConsultationList() {
         window.URL.revokeObjectURL(blobURL);
       }, 100);
 
-      notifySuccess("Tải lại dữ liệu thành công");
+      notifySuccess("Xuất Excel thành công");
     } catch {
       notifyError("Đã có lỗi xảy ra");
     } finally {

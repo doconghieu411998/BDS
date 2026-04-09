@@ -72,7 +72,7 @@ async function proxyRequest(request: NextRequest, method: string) {
         }
 
         // Handle success responses
-        const responseContentType = response.headers.get('content-type');
+        const responseContentType = response.headers.get('content-type') || '';
 
         // Try to parse as JSON if content-type indicates JSON
         if (responseContentType?.includes('application/json')) {
@@ -83,6 +83,34 @@ async function proxyRequest(request: NextRequest, method: string) {
                 // If JSON parse fails, return success anyway
                 return NextResponse.json({ success: true });
             }
+        }
+
+        // Pass through binary responses (xlsx, pdf, zip, octet-stream, images, etc.)
+        // to avoid corruption from text decoding.
+        const isTextLike =
+            responseContentType.includes('text/') ||
+            responseContentType.includes('application/xml') ||
+            responseContentType.includes('application/xhtml+xml') ||
+            responseContentType.includes('application/javascript');
+
+        if (!isTextLike) {
+            const buffer = await response.arrayBuffer();
+            const passThroughHeaders = new Headers();
+
+            const contentType = response.headers.get('content-type');
+            const contentDisposition = response.headers.get('content-disposition');
+            const cacheControl = response.headers.get('cache-control');
+            const contentLength = response.headers.get('content-length');
+
+            if (contentType) passThroughHeaders.set('content-type', contentType);
+            if (contentDisposition) passThroughHeaders.set('content-disposition', contentDisposition);
+            if (cacheControl) passThroughHeaders.set('cache-control', cacheControl);
+            if (contentLength) passThroughHeaders.set('content-length', contentLength);
+
+            return new NextResponse(buffer, {
+                status: response.status,
+                headers: passThroughHeaders,
+            });
         }
 
         // For non-JSON responses, try to read as text
