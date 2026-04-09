@@ -1,7 +1,8 @@
 .main {
   width: 100%;
   min-height: 100vh;
-  min-height: -webkit-fill-available; /* Safari specific fix */
+  min-height: -webkit-fill-available;
+  /* Safari specific fix */
   position: relative;
   background-color: #ffffff;
 }
@@ -10,11 +11,13 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for Safari address bar */
+  height: 100dvh;
+  /* Dynamic viewport height for Safari address bar */
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Solid flex centering for stability */
+  justify-content: center;
+  /* Solid flex centering for stability */
   align-items: center;
 }
 
@@ -39,7 +42,8 @@
 }
 
 .contentWrapper {
-  position: relative; /* Switch from absolute to relative for flex stability */
+  position: relative;
+  /* Switch from absolute to relative for flex stability */
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -64,6 +68,7 @@
   /* Ensure brand name stays on one line for common desktop widths */
   white-space: nowrap;
 }
+
 @media (max-width: 1200px) {
   .title {
     white-space: normal;
@@ -153,9 +158,9 @@
   }
 
   .contentWrapper {
-     /* No transform needed with flex centering */
-     transform: none;
-     padding-top: 60px;
+    /* No transform needed with flex centering */
+    transform: none;
+    padding-top: 60px;
   }
 
   .ctaBtn {
@@ -163,5 +168,49 @@
     font-size: 14px;
     /* Display on mobile to fill the empty space the user mentioned earlier */
     display: flex;
+  }
+
+  .floatingActions {
+    position: fixed;
+    right: 15px;
+    top: 60%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    z-index: 1001;
+  }
+
+  .floatingSubscribeBtn {
+    width: 45px;
+    height: 45px;
+    background-color: #00b8dc;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(0, 184, 220, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .floatingSubscribeBtn:active {
+    transform: scale(0.9);
+  }
+
+  .floatingLang {
+    /* Safe container for language switcher animation */
+    pointer-events: auto;
+  }
+}
+
+/* Hide floating actions on desktop */
+@media (min-width: 769px) {
+  .floatingActions {
+    display: none;
   }
 }

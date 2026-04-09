@@ -306,7 +306,8 @@
   z-index: 10;
   list-style: none;
   margin: 0;
-  padding-top: 120px; /* Thêm khoảng an toàn phía trên để không bao giờ chạm nút đóng absolute */
+  padding-top: 120px;
+  /* Thêm khoảng an toàn phía trên để không bao giờ chạm nút đóng absolute */
 }
 
 @media (max-width: 1024px) {
@@ -436,6 +437,7 @@
   .logoSection {
     order: 1;
     justify-content: flex-start;
+    min-width: unset;
   }
 
   .logo {
@@ -447,20 +449,7 @@
   /* Sticky Actions on the RIGHT edge */
   /* Floating Actions Positioned to stay away from Menu/Notch */
   .rightSection {
-    position: fixed;
-    right: 20px;
-    bottom: 30px;
-    /* Shifted to Bottom-Right for modern iOS UX */
-    top: auto;
-    transform: none;
-    display: flex !important;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 12px;
-    z-index: 1001;
-    margin: 0;
-    padding-right: 0px;
-    padding-bottom: env(safe-area-inset-bottom, 10px);
+    display: none !important;
   }
 
   .subscribeBtnMobile {
@@ -567,6 +556,10 @@
     font-size: 18px;
     margin-bottom: 25px;
     font-weight: 600;
+  }
+
+  .logoContainer {
+    width: 130px;
   }
 }
 

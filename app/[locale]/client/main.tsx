@@ -17,6 +17,8 @@ import OutstandingArchitectureSection from './(components)/outstanding-architect
 import ScrollReveal from './(common)/ScrollReveal';
 import { useTranslations } from 'next-intl';
 import { HOME_KEYS } from '@/constants/localeKeys';
+import LanguageSwitcher from './(components)/language-switcher';
+import { FileTextOutlined } from '@ant-design/icons';
 import { getAllIntroduceImages, filterImagesByType } from '@/api/introduceImageApiService';
 import { IntroduceImage, IntroduceImageType } from '@/models/introduce-image';
 
@@ -85,6 +87,20 @@ export default function Main() {
           >
             {t(HOME_KEYS.HOME_BTN_SUBSCRIBE_LABEL)}
           </button>
+        </div>
+
+        {/* MOBILE FLOATING ACTIONS - Positioned below title */}
+        <div className={styles.floatingActions}>
+          <button
+            className={styles.floatingSubscribeBtn}
+            onClick={() => setIsPopupOpen(true)}
+            aria-label={t(HOME_KEYS.HOME_BTN_SUBSCRIBE_LABEL)}
+          >
+            <FileTextOutlined />
+          </button>
+          <div className={styles.floatingLang}>
+            <LanguageSwitcher isSticky={true} />
+          </div>
         </div>
       </section>
 

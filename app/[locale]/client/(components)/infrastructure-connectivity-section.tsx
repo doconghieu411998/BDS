@@ -85,8 +85,6 @@ const InfrastructureConnectivitySection = () => {
           autoplaySpeed={4000}
           speed={10000}
           cssEase="linear"
-          pauseOnHover={true}
-          pauseOnFocus={false}
           variableWidth={true}
           responsive={[
             {

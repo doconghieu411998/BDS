@@ -3,7 +3,7 @@
     width: 100%;
     padding-top: calc(100 / 1440 * var(--width-container, 1440px));
     overflow: hidden;
-    background-color: #ccffff;
+    background-color: #ffffff;
 }
 
 .mapBackground {
@@ -76,7 +76,7 @@
 .carouselWrapper {
     width: 100%;
     /* Pull up so card 06-08 centers are at map border */
-    margin-top: calc(-160 / 1440 * var(--width-container, 1440px));
+    margin-top: calc(-50 / 1440 * var(--width-container, 1440px));
     position: relative;
     z-index: 2;
 }
@@ -202,11 +202,64 @@
 
 @media (max-width: 768px) {
     .section {
-        padding: 40px 0;
+        padding: 60px 0 40px;
+        padding-top: 80px;
+        /* Account for fixed header */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mapBackground {
+        position: relative;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1113 / 788;
+        margin-top: 30px;
+        order: 2;
+        /* Move map below text */
+    }
+
+    .container {
+        padding: 0 20px;
+        order: 1;
+        /* Keep text on top */
+    }
+
+    .topContent {
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+    .textSide {
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    .carouselWrapper {
+        margin-top: 30px;
+        order: 3;
+        /* Carousel at the bottom */
+    }
+
+    .carouselCard {
+        width: 280px;
+        height: 220px;
+    }
+
+    .cardContent {
+        padding: 20px;
     }
 
     .timeValue {
-        font-size: 60px;
+        font-size: 48px;
+    }
+
+    .timeUnit {
+        font-size: 14px;
+    }
+
+    .itemTitle {
+        font-size: 12px;
     }
 }
 
