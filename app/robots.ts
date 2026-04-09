@@ -1,12 +1,13 @@
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://greenhillvillage.vn';
   return {
     rules: {
       userAgent: '*',
       allow: '/',
       disallow: '/admin',
     },
-    sitemap: 'http://greenhillvillage.vn/sitemap.xml',
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

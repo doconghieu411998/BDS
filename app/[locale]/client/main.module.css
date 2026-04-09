@@ -57,16 +57,23 @@
 
 .title {
   font-family: var(--font-montserrat), sans-serif;
-  /* Reduced multiplier from 1.2 to 1.15 and optimized clamp for large screens */
-  font-size: calc(var(--size-section-title) * 1.15);
+  /* Unified larger font size as requested */
+  font-size: calc(var(--size-section-title) * 1.5);
   font-weight: 700;
-  /* Fluid letter-spacing to prevent word wrap on medium-large screens */
   letter-spacing: clamp(2px, 0.4vw, 6px);
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  /* Ensure brand name stays on one line for common desktop widths */
+  line-height: 1.2;
+  /* Allow normal wrapping but child spans handle internal grouping */
+  white-space: normal;
+  width: 100%;
+}
+
+.nowrap {
+  /* Key requirement: ensure Quy Nhơn never breaks and moves as a unit */
   white-space: nowrap;
+  display: inline-block;
 }
 
 @media (max-width: 1200px) {
@@ -179,7 +186,7 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 12px;
-    z-index: 1001;
+    z-index: 99; /* Lowered to stay behind modals */
   }
 
   .floatingSubscribeBtn {

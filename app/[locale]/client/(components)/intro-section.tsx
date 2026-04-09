@@ -86,15 +86,17 @@ const IntroSection = () => {
                   <div className={activeTab === 'INTRO' ? styles.subLineIntro : styles.subLineInvestor}>{current.subtitle}</div>
                 )}
               </h2>
-              {current.tagline && (
-                <p className={styles.tagline}>{current.tagline}</p>
-              )}
-              <div className={styles.descriptionWrapper}>
-                {current.description.map((p, idx) => (
-                  <p key={idx} className={`${styles.description} global-text`}>
-                    {p}
-                  </p>
-                ))}
+              <div className={styles.contentBottom}>
+                {current.tagline && (
+                  <p className={styles.tagline}>{current.tagline}</p>
+                )}
+                <div className={styles.descriptionWrapper}>
+                  {current.description.map((p, idx) => (
+                    <p key={idx} className={`${styles.description} global-text`}>
+                      {p}
+                    </p>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>

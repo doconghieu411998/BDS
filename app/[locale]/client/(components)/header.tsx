@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation"
 
 // Logo sources
 const LOGO_WHITE = "images/logo-white.png"
-const LOGO_BLACK = "images/logo-black.png"
+const LOGO_BLACK = "images/logo.png"
 
 const Header = () => {
   const t = useTranslations()

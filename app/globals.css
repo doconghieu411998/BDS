@@ -82,7 +82,7 @@ p {
     --size-section-title: 1.8rem;
     --size-card-title: 1.6rem;
     --size-sub-title: 1.1rem;
-    --size-content: 0.75rem;
+    --size-content: 0.65rem;
     --size-hero-number: 3.2rem;
   }
 }
@@ -94,7 +94,7 @@ p {
     --size-section-title: 2.0rem;
     --size-card-title: 1.8rem;
     --size-sub-title: 1.2rem;
-    --size-content: 0.8rem;
+    --size-content: 0.7rem;
     --size-hero-number: 3.8rem;
   }
 }
@@ -106,7 +106,7 @@ p {
     --size-section-title: 2.2rem;
     --size-card-title: 2.0rem;
     --size-sub-title: 1.25rem;
-    --size-content: 0.85rem;
+    --size-content: 0.75rem;
     --size-hero-number: 4.5rem;
   }
 }
@@ -118,7 +118,7 @@ p {
     --size-section-title: 2.5rem;
     --size-card-title: 2.25rem;
     --size-sub-title: 1.4rem;
-    --size-content: 0.9rem;
+    --size-content: 0.8rem;
     --size-hero-number: 5.5rem;
   }
 }
@@ -130,7 +130,7 @@ p {
     --size-section-title: 2.75rem;
     --size-card-title: 2.5rem;
     --size-sub-title: 1.5rem;
-    --size-content: 0.95rem;
+    --size-content: 0.85rem;
     --size-hero-number: 6.0rem;
   }
 }
@@ -142,7 +142,7 @@ p {
     --size-section-title: 3.0rem;
     --size-card-title: 2.75rem;
     --size-sub-title: 1.6rem;
-    --size-content: 1.0rem;
+    --size-content: 0.9rem;
     --size-hero-number: 6.5rem;
   }
 }
@@ -153,7 +153,7 @@ p {
     --size-section-title: 3.5rem;
     --size-card-title: 3.0rem;
     --size-sub-title: 1.8rem;
-    --size-content: 1.05rem;
+    --size-content: 0.95rem;
     --size-hero-number: 7.2rem;
   }
 }
@@ -164,7 +164,7 @@ p {
     --size-section-title: 4.2rem;
     --size-card-title: 3.25rem;
     --size-sub-title: 2.2rem;
-    --size-content: 1.15rem;
+    --size-content: 1.05rem;
     --size-hero-number: 8.5rem;
   }
 }

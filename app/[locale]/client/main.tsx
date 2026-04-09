@@ -15,7 +15,7 @@ import VideoHeroSection from './(components)/video-hero-section';
 import DesignSamplesSection from './(components)/design-samples-section';
 import OutstandingArchitectureSection from './(components)/outstanding-architecture-section';
 import ScrollReveal from './(common)/ScrollReveal';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { HOME_KEYS } from '@/constants/localeKeys';
 import LanguageSwitcher from './(components)/language-switcher';
 import { FileTextOutlined } from '@ant-design/icons';
@@ -25,7 +25,8 @@ import { IntroduceImage, IntroduceImageType } from '@/models/introduce-image';
 const HERO_BG = "images/home.png";
 
 export default function Main() {
-  const t = useTranslations()
+  const t = useTranslations();
+  const locale = useLocale();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [allImages, setAllImages] = useState<IntroduceImage[]>([]);
 
@@ -63,7 +64,7 @@ export default function Main() {
         <div className={styles.bgWrap}>
           <Image
             src={withBasePath(HERO_BG)}
-            alt="Phối cảnh dự án Masteri Trinity Square"
+            alt={t(HOME_KEYS.HOME_TITLE)}
             fill
             style={{ objectFit: 'cover' }}
             quality={90}
@@ -74,7 +75,10 @@ export default function Main() {
 
         <div className={styles.contentWrapper}>
           <h1 className={styles.title}>
-            {t(HOME_KEYS.HOME_TITLE)}
+            THE HERA RESORT{' '}
+            <span className={styles.nowrap}>
+              {locale === 'vi' ? 'QUY NHƠN' : 'QUY NHON'}
+            </span>
           </h1>
           <p className={styles.subtitle}>
             {t(HOME_KEYS.HOME_DESCRIPTION)}

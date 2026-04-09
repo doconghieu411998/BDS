@@ -167,7 +167,7 @@ const InfrastructureConnectivitySection = () => {
           <div className={styles.textSide}>
             <div className={styles.titleWrapper}>
               <h2 className={styles.label}>{t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_TITLE)}</h2>
-              <h1 className={styles.mainTitle}>{t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_SUBTITLE)}</h1>
+              <h2 className={styles.mainTitle}>{t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_SUBTITLE)}</h2>
             </div>
             <p className={styles.description}>
               {t(INFRASTRUCTURE_KEYS.HOME_INFRASTRUCTURE_DESCRIPTION)}

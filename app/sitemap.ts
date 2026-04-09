@@ -1,9 +1,8 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'http://greenhillvillage.vn';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://greenhillvillage.vn';
     const locales = ['vi', 'en'];
-
     const routes = ['', '/client'];
 
     const sitemapEntries: MetadataRoute.Sitemap = [];
