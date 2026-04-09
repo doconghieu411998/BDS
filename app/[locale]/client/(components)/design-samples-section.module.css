@@ -177,26 +177,12 @@
   }
 
   .title {
-    /* Giảm để tinh tế hơn */
     letter-spacing: 1px;
   }
 
-  .subtitle {
-    letter-spacing: 4px;
-  }
-
   .imageContainer {
-    aspect-ratio: 4 / 3;
-    /* Tỷ lệ ảnh tốt hơn cho di động */
-  }
-
-  .overlayTitle {
-    /* Giảm nhẹ để vừa vặn hơn */
-    font-weight: 700;
-  }
-
-  .overlayDesc {
-    line-height: 1.5;
+    height: 380px; /* Standardize with Outstanding Architecture */
+    aspect-ratio: auto;
   }
 }
 
@@ -208,6 +194,24 @@
 
   .overlay {
     padding: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlayDesc {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .imageContainer {
+    height: 320px;
   }
 }
 

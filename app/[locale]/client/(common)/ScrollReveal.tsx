@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 interface ScrollRevealProps {
@@ -23,10 +23,27 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   once = true,
 }) => {
   const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
 
-  // If the user prefers reduced motion, we disable the transform animations
-  if (shouldReduceMotion) {
-    return <div className={className}>{children}</div>;
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // If the user prefers reduced motion or is on mobile, we disable animations
+  if (shouldReduceMotion || isMobile) {
+    return (
+      <div 
+        className={className}
+        style={{ opacity: 1, transform: 'none' }}
+      >
+        {children}
+      </div>
+    );
   }
 
   const variants = {
@@ -53,7 +70,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
       viewport={{ once, amount: 0.15 }}
       variants={variants}
       className={className}
-      style={{ overflow: "visible" }} // Explicitly allow visible overflow but sections should hide it if needed
+      style={{ overflow: "visible" }}
     >
       {children}
     </motion.div>

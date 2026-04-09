@@ -2,7 +2,8 @@
   width: 100%;
   background-color: #0A3F74;
   padding: 4rem 1rem;
-  overflow: hidden; /* Prevent animation-related horizontal scroll */
+  overflow: hidden;
+  /* Prevent animation-related horizontal scroll */
 }
 
 .wrapper {
@@ -169,7 +170,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  opacity: 0; /* Mặc định ẩn */
+  opacity: 0;
+  /* Mặc định ẩn */
   transition: opacity 0.4s ease;
   padding: 40px 20px;
   text-align: center;
@@ -194,15 +196,15 @@
 
 .mobileDesc {
   font-size: var(--size-content);
-  line-height: 1.5;
-  opacity: 0.9;
+  line-height: 1.6;
+  opacity: 0.95;
   font-weight: 300;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  /* Standard property for compatibility */
+  -webkit-line-clamp: 6; /* Increased to 6 lines */
+  line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-align: center;
 }
 
 /* Hide default Antd arrows if they appear */

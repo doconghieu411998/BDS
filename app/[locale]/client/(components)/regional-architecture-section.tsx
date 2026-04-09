@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Carousel } from 'antd';
@@ -51,7 +52,13 @@ const RegionalArchitectureSection = ({ images = [] }: { images?: IntroduceImage[
             </button>
           )}
 
-          <Carousel ref={carouselRef} dots={isMobile} infinite draggable={isMobile} swipe={isMobile}>
+          <Carousel 
+            ref={carouselRef} 
+            dots={isMobile} 
+            infinite 
+            draggable={isMobile} 
+            swipe={isMobile}
+          >
             {dataToRender.map((item, idx) => {
               const url = item.url as string;
               const isExternal = url.startsWith('http') || url.startsWith('blob:');
@@ -59,7 +66,9 @@ const RegionalArchitectureSection = ({ images = [] }: { images?: IntroduceImage[
 
               return (
                 <div key={idx} className={styles.carouselSlide}>
-                  <div className={styles.imageContainer}>
+                  <div 
+                    className={styles.imageContainer}
+                  >
                     <Image
                       src={imgSrc}
                       alt={item.title || `Kiến trúc khu vực - ${idx + 1}`}
@@ -71,7 +80,9 @@ const RegionalArchitectureSection = ({ images = [] }: { images?: IntroduceImage[
                     />
                     <div className={styles.overlay}>
                       <h3 className={styles.overlayTitle}>{item.title}</h3>
-                      <p className={styles.overlayDesc}>{item.description}</p>
+                      <p className={styles.overlayDesc}>
+                        {item.description}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -89,5 +100,6 @@ const RegionalArchitectureSection = ({ images = [] }: { images?: IntroduceImage[
     </section>
   );
 };
+
 
 export default RegionalArchitectureSection;

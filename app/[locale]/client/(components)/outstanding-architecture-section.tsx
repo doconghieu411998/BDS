@@ -56,7 +56,9 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
               swipe
               autoplay
               autoplaySpeed={4000}
-              beforeChange={(current, next) => setActiveIndex(next)}
+              beforeChange={(current, next) => {
+                setActiveIndex(next);
+              }}
               className={styles.mobileCarousel}
             >
               {images.map((item, idx) => {

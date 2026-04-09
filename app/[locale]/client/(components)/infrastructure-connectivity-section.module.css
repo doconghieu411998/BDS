@@ -72,32 +72,55 @@
     text-align: justify;
 }
 
-/* Carousel Styles */
+/* Carousel Styles - Custom Native implementation */
 .carouselWrapper {
     width: 100%;
-    /* Pull up so card 06-08 centers are at map border */
     margin-top: calc(-50 / 1440 * var(--width-container, 1440px));
     position: relative;
     z-index: 2;
 }
 
-.carouselItemContainer {
-    padding: 0 10px;
+.carouselContainer {
+    width: 100%;
+    overflow: hidden;
+    /* Viewport masks the outer items */
+    position: relative;
+    cursor: grab;
+    user-select: none;
+}
+
+.carouselContainer.grabbing {
+    cursor: grabbing;
+}
+
+.carouselTrack {
+    display: flex;
+    will-change: transform;
+}
+
+.carouselSlide {
+    padding: 0 5px;
+    /* Consistent "sát sát" gap */
+    box-sizing: border-box;
 }
 
 .carouselCard {
     position: relative;
-    width: calc(420 / 1440 * var(--width-container));
-    height: calc(320 / 1440 * var(--width-container));
+    width: 100%;
+    aspect-ratio: 1.2 / 1;
+    /* Slightly squarer for smaller count */
     background-color: #0076B7;
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .carouselCard:hover {
-    transform: translateY(calc(-10 / 1440 * var(--width-container, 1440px)));
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10;
 }
 
 .cardBg {
@@ -142,26 +165,30 @@
 
 .timeWrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
     margin-bottom: 20px;
+    gap: 8px;
+    /* Noticeable gap as per reference image */
 }
 
 .timeValue {
-    font-size: calc(96 / 1440 * var(--width-container, 1440px));
+    font-size: var(--size-hero-number);
     font-weight: 700;
-    line-height: 0.8;
+    line-height: 0.85;
+    /* Tightened line-height to align with units */
     font-family: 'Times New Roman', Times, serif;
     color: #fff;
 }
 
 .timeUnit {
-    font-size: calc(16 / 1440 * var(--width-container, 1440px));
+    font-size: calc(var(--size-sub-title) * 0.7);
     font-weight: 400;
-    margin-top: calc(5 / 1440 * var(--width-container, 1440px));
-    margin-left: calc(8 / 1440 * var(--width-container, 1440px));
+    margin-top: 4px;
+    /* Align with top of the large digits */
     color: #fff;
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 
 .cardFooter {
@@ -242,8 +269,9 @@
     }
 
     .carouselCard {
-        width: 280px;
-        height: 220px;
+        width: 100%;
+        aspect-ratio: 1.2 / 1;
+        height: auto;
     }
 
     .cardContent {
@@ -263,11 +291,9 @@
     }
 }
 
-/* Smooth Carousel Fixes */
+/* Standard Carousel Behavior */
 .carousel :global(.slick-track) {
     display: flex !important;
-    transition-timing-function: linear !important;
-    will-change: transform;
 }
 
 .carousel :global(.slick-slide) {
