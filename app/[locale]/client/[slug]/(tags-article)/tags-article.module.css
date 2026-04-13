@@ -1,7 +1,6 @@
 .container {
     width: 100%;
     margin: 0 auto;
-    padding: 120px 20px 80px;
     background-color: #ffffff;
     min-height: 60vh;
     font-family: var(--font-montserrat), sans-serif;
@@ -10,6 +9,7 @@
 .wrapper {
     max-width: var(--width-container, 1440px);
     margin: 0 auto;
+    padding: 80px 20px;
 }
 
 .emptyState {
@@ -24,6 +24,26 @@
     padding: 40px;
     text-align: center;
     border: 1px dashed #e2e8f0;
+}
+
+/* --- Banner Section --- */
+.bannerWrapper {
+    position: relative;
+    width: 100%;
+    height: 35rem;
+}
+
+.bannerImage {
+    object-fit: cover;
+}
+
+.bannerOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
 }
 
 /* --- Header Section --- */
@@ -146,14 +166,22 @@
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
-    .container {
-        padding: 100px 20px 60px;
+    .wrapper {
+        padding: 50px 20px;
+    }
+
+    .bannerWrapper {
+        height: 25rem;
     }
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 80px 16px 40px;
+    .wrapper {
+        padding: 60px 20px;
+    }
+
+    .bannerWrapper {
+        height: 18rem;
     }
 
     .headerWrapper {

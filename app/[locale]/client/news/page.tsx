@@ -10,8 +10,8 @@ const NewsListingPage = () => {
         <div className={styles.container}>
             {/* Top Banner */}
             <div className={styles.bannerWrapper}>
-                <Image 
-                    src={withBasePath('images/home.png')} 
+                <Image
+                    src={withBasePath('images/home_bg_1.png')}
                     alt="Latest News"
                     fill
                     className={styles.bannerImage}
@@ -24,9 +24,9 @@ const NewsListingPage = () => {
             {/* News List Section */}
             <div className={styles.contentWrapper}>
                 <div className={styles.newsListContainer}>
-                    <NewsList 
-                        variant="horizontal" 
-                        limit={4} 
+                    <NewsList
+                        variant="horizontal"
+                        limit={4}
                         showPagination={true}
                         sortByDate={true}
                     />

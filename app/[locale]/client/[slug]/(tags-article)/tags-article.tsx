@@ -4,6 +4,9 @@ import { Link } from '@/i18n/navigation';
 import slugify from 'slugify';
 import styles from './tags-article.module.css';
 import { NewsItem } from '@/models/news';
+import { withBasePath } from '@/services/commonService';
+import { NEWS_DETAIL_KEYS } from '@/constants/localeKeys';
+import { useTranslations } from 'next-intl';
 
 interface TagListViewProps {
     tagSlug: string;
@@ -13,14 +16,28 @@ interface TagListViewProps {
 }
 
 export default function TagArticleList({ tagSlug, tagName, articles, locale }: TagListViewProps) {
+    const t = useTranslations();
     const displayName = tagName || tagSlug;
 
     return (
         <div className={styles.container}>
+            {/* Top Banner */}
+            <div className={styles.bannerWrapper}>
+                <Image
+                    src={withBasePath('images/home_bg_1.png')}
+                    alt="Latest News"
+                    fill
+                    className={styles.bannerImage}
+                    priority
+                />
+                <div className={styles.bannerOverlay}>
+                </div>
+            </div>
+
             <div className={styles.wrapper}>
                 <div className={styles.headerWrapper}>
                     <h1 className={styles.heading}>
-                        <span className={styles.tagLabel}>TAG:</span> {displayName}
+                        <span className={styles.tagLabel}>{t(NEWS_DETAIL_KEYS.new_detail_tag)}:</span> {displayName}
                     </h1>
                 </div>
 

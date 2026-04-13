@@ -190,6 +190,12 @@ export const COMMON_KEYS = {
     HOME_CONTACT_FACEBOOK_LINK: 'home_contact_facebook_link',
     HOME_CONTACT_YOUTUBE_LINK: 'home_contact_youtube_link',
 } as const;
+
+export const NEWS_DETAIL_KEYS = {
+    new_detail_tag: 'new_detail_tag',
+    new_detail_more_btn_label: 'new_detail_more_btn_label',
+} as const;
+
 // Type for keys
 export type ConsultationKeyType = typeof CONSULTATION_KEYS[keyof typeof CONSULTATION_KEYS];
 export type HomeKeyType = typeof HOME_KEYS[keyof typeof HOME_KEYS];

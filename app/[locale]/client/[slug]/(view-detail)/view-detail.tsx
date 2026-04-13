@@ -5,6 +5,8 @@ import NewsList from '../../(common)/news-list';
 import { NewsItem } from '@/models/news';
 import { Link } from '@/i18n/navigation';
 import { convertSlugUrl } from '@/services/commonService';
+import { NEWS_DETAIL_KEYS } from '@/constants/localeKeys';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   item: NewsItem;
@@ -25,6 +27,7 @@ const processContent = (content: string) => {
 };
 
 export default async function NewsDetailView({ item, locale }: Props) {
+  const t = useTranslations();
   const processedContent = processContent(item.content);
   return (
     <main className={styles.container}>
@@ -72,7 +75,7 @@ export default async function NewsDetailView({ item, locale }: Props) {
 
           {item.tags && item.tags.length > 0 && (
             <div className={styles.relatedTagContainer}>
-              <span className={styles.tagPrefix}>Tag:</span>
+              <span className={styles.tagPrefix}>{t(NEWS_DETAIL_KEYS.new_detail_tag)}:</span>
               <div className={styles.relatedTagList}>
                 {item.tags.map((tag, index) => {
                   const tagSlug = `${convertSlugUrl(tag.tagName, locale)}-t${tag.id}.html`;
@@ -99,7 +102,7 @@ export default async function NewsDetailView({ item, locale }: Props) {
 
           <div className={styles.seeMoreWrapper}>
             <Link href="/client/news" className={styles.seeMoreBtn}>
-              Xem thêm
+              {t(NEWS_DETAIL_KEYS.new_detail_more_btn_label)}
             </Link>
           </div>
         </div>
