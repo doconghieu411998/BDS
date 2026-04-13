@@ -21,7 +21,7 @@ export async function generateMetadata({
 
   return {
     title: {
-      template: `%s | ${t('home_overview_name_value')}`,
+      template: `${t('home_overview_name_value')}`,
       default: t('home_meta_title'),
     },
     description: t('home_meta_desc'),
@@ -35,7 +35,7 @@ export async function generateMetadata({
       },
     },
     keywords: [
-      "The Hera Resort", "Hera Resort Quy Nhon", "Biệt thự Quy Nhơn", 
+      "The Hera Resort", "Hera Resort Quy Nhon", "Biệt thự Quy Nhơn",
       "Nghỉ dưỡng Quy Nhơn", "Sunshine Group", "Bất động sản Quy Nhơn",
       "Luxury Villa Quy Nhon", "Resort Quy Nhon"
     ],

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { Spin, Image as AntImage, Row, Col, Upload, message } from 'antd';
+import { Spin, Image as AntImage, Row, Col, Upload, App } from 'antd';
 import { EditOutlined, UploadOutlined } from '@ant-design/icons';
 import {
     IntroduceImage,
@@ -30,9 +30,11 @@ interface ImageTabProps {
     title: string;
     filterCondition: (item: IntroduceImage) => boolean;
     showStatus?: boolean;
+    forcedStatus?: number;
 }
 
-export default function ImageTab({ title, filterCondition, showStatus = false }: ImageTabProps) {
+export default function ImageTab({ title, filterCondition, showStatus = false, forcedStatus }: ImageTabProps) {
+    const { message } = App.useApp();
     const MAX_IMAGE_SIZE_MB = 20;
     const [items, setItems] = useState<IntroduceImage[]>([]);
     const [loading, setLoading] = useState(false);
@@ -141,7 +143,7 @@ export default function ImageTab({ title, filterCondition, showStatus = false }:
                     titleEn: values.titleEn,
                     descriptionVi: values.descriptionVi,
                     descriptionEn: values.descriptionEn,
-                    status: values.status,
+                    status: forcedStatus ?? values.status,
                 },
                 imageBase64
             );
@@ -324,7 +326,18 @@ export default function ImageTab({ title, filterCondition, showStatus = false }:
                     </Col>
 
                     <Col span={14}>
-                        <AntForm form={form} layout="vertical">
+                        <AntForm 
+                            form={form} 
+                            layout="vertical"
+                            initialValues={{
+                                titleVi: '',
+                                titleEn: '',
+                                descriptionVi: '',
+                                descriptionEn: '',
+                                status: '',
+                                imageUrl: '',
+                            }}
+                        >
                             <AntForm.Item label="Upload Ảnh" extra="Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Tối đa 20MB.">
                                 <Upload
                                     name="image"
@@ -351,7 +364,7 @@ export default function ImageTab({ title, filterCondition, showStatus = false }:
                             </AntForm.Item>
 
                             <AntForm.Item name="imageUrl" rules={[{ required: true, message: 'Vui lòng upload ảnh' }]} hidden>
-                                <input type="hidden" />
+                                <AntInput type="hidden" />
                             </AntForm.Item>
 
                             {showStatus && (

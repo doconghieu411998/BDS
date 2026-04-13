@@ -23,6 +23,7 @@
   cursor: pointer;
   text-transform: uppercase;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .headerItem.active {
@@ -150,11 +151,19 @@
   }
 
   .sectionHeader {
-    gap: 0.8rem;
+    gap: 1rem;
     margin-bottom: 2.5rem;
     font-size: 0.95rem;
     padding: 0 15px;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+    width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .sectionHeader::-webkit-scrollbar {
+    display: none;
   }
 
   .wrapper {

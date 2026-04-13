@@ -216,6 +216,20 @@
   pointer-events: none;
 }
 
+.tooltipCard.tooltipLeftAligned {
+  left: 50%;
+  right: auto;
+  transform: translateX(-12px);
+  /* Left edge aligned with pin left edge */
+}
+
+.tooltipCard.tooltipRightAligned {
+  left: auto;
+  right: 50%;
+  transform: translateX(12px);
+  /* Right edge aligned with pin right edge */
+}
+
 .statusBadge {
   position: absolute;
   top: 10px;

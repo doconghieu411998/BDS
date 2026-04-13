@@ -2,7 +2,8 @@
   width: 100%;
   background-color: #e6ecf4;
   padding: 80px 0;
-  overflow: hidden; /* Prevent animation-related horizontal scroll */
+  overflow: hidden;
+  /* Prevent animation-related horizontal scroll */
 }
 
 .wrapper {
@@ -20,7 +21,8 @@
 .title {
   font-size: var(--size-section-title);
   font-weight: 900;
-  color: #333333; /* Chuyển sang màu tối để nổi bật trên nền sáng */
+  color: #333333;
+  /* Chuyển sang màu tối để nổi bật trên nền sáng */
   text-transform: uppercase;
   letter-spacing: 1px;
   margin: 0 0 20px 0;
@@ -52,7 +54,8 @@
 .tabButtonActive {
   background-color: #0076B7;
   color: #ffffff;
-  border-radius: 8px; /* Giữ bo góc nhẹ cho tab active */
+  border-radius: 8px;
+  /* Giữ bo góc nhẹ cho tab active */
   box-shadow: 0 4px 12px rgba(0, 118, 183, 0.2);
 }
 
@@ -181,7 +184,8 @@
   }
 
   .imageContainer {
-    height: 380px; /* Standardize with Outstanding Architecture */
+    height: 380px;
+    /* Standardize with Outstanding Architecture */
     aspect-ratio: auto;
   }
 }
@@ -224,4 +228,109 @@
 .carouselWrapper :global(.ant-carousel .slick-dots li.slick-active button) {
   background: #0076B7;
   opacity: 1;
+}
+
+/* --- NEW GRID STYLES --- */
+.carouselSlide {
+  width: 100%;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: calc(284 / 1440 * var(--width-container, 1440px)) 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  height: calc(891 / 1440 * var(--width-container, 1440px));
+}
+
+.thumbItem {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  grid-column: 1;
+}
+
+.mainImageCol {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+.thumbOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: white;
+}
+
+.thumbItem:hover .thumbOverlay {
+  opacity: 1;
+}
+
+.thumbOverlayIcon {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+/* Hover effect standardized */
+.mainImageCol:hover .slideImage,
+.thumbItem:hover .slideImage {
+  transform: scale(1.05);
+}
+
+.mainImageCol.active:hover .overlay {
+  opacity: 1;
+}
+
+/* Grid Responsiveness */
+@media (max-width: 1200px) {
+  .gridContainer {
+    height: 50vh;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 110px;
+    height: auto;
+  }
+
+  .mainImageCol {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+    height: 350px;
+  }
+
+  .thumbItem {
+    grid-column: auto;
+    grid-row: 2;
+    height: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gridContainer {
+    gap: 8px;
+    grid-template-rows: auto 80px;
+  }
+
+  .mainImageCol {
+    height: 320px;
+  }
+
+  .thumbItem {
+    height: 80px;
+  }
 }

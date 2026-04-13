@@ -1,7 +1,7 @@
 import Footer from "./(components)/footer";
 import Header from "./(components)/header";
-import LanguageSwitcher from "./(components)/language-switcher";
 import Preloader from "./(components)/pre-loading";
+import FloatingActions from "./(components)/floating-actions";
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { META_KEYS } from '@/constants/localeKeys';
@@ -62,6 +62,8 @@ export default function ClientLayout({
     <div style={{ position: 'relative' }}>
 
       <Preloader />
+
+      <FloatingActions />
 
       <Header />
 

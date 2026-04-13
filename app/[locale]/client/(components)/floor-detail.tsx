@@ -101,7 +101,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
 
       <div className={styles.mapWrapper}>
         <Image
-          src={withBasePath("images/floor-plan.png")}
+          src={withBasePath("images/floor-plan.svg")}
           alt={t(FLOOR_KEYS.HOME_FLOOR_ALT_MAP)}
           fill
           className={styles.mapImage}
@@ -164,12 +164,15 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
                 // Status mapping string (Optional fallback for tooltip badge)
                 const statusStr = status === 2 ? t(FLOOR_KEYS.HOME_FLOOR_STATUS_SALE) : (status === 1 ? t(FLOOR_KEYS.HOME_FLOOR_STATUS_NOT_SALE) : null);
 
+                // Determine tooltip alignment based on X position to prevent overflow
+                const tooltipAlignClass = pin.x > 80 ? styles.tooltipRightAligned : (pin.x < 20 ? styles.tooltipLeftAligned : '');
+
                 return (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                    className={styles.tooltipCard}
+                    className={`${styles.tooltipCard} ${tooltipAlignClass}`}
                   >
                     {statusStr && (
                       <div className={styles.statusBadge} style={status === 1 ? { background: '#000000' } : {}}>

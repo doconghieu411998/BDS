@@ -66,6 +66,10 @@ export const INTRO_KEYS = {
     HOME_INTRO_DESCRIPTION_MANAGER: 'home_intro_description_manager',
     HOME_INTRO_TITLE_INVESTOR_SUB: 'home_intro_title_investor_sub',
     HOME_INTRO_TITLE_INTRO_SUB: 'home_intro_title_intro_sub',
+    HOME_INTRO_TAB_DEVELOPER: 'home_intro_tab_developer',
+    HOME_INTRO_TITLE_DEVELOPER: 'home_intro_title_developer',
+    HOME_INTRO_TAGLINE_DEVELOPER: 'home_intro_tagline_developer',
+    HOME_INTRO_DESCRIPTION_DEVELOPER: 'home_intro_description_developer',
 } as const;
 
 export const OVERVIEW_KEYS = {
@@ -87,6 +91,12 @@ export const OVERVIEW_KEYS = {
     HOME_OVERVIEW_HIGHLIGHTS_VALUE: 'home_overview_highlights_value',
     HOME_OVERVIEW_TITLE_INFO: 'home_overview_title_info',
     HOME_OVERVIEW_TITLE_OVERVIEW: 'home_overview_title_overview',
+    HOME_OVERVIEW_INVESTOR: 'home_overview_investor',
+    HOME_OVERVIEW_INVESTOR_VALUE: 'home_overview_investor_value',
+    HOME_OVERVIEW_CONSTRUCTION_CONTRACTOR: 'home_overview_construction_contractor',
+    HOME_OVERVIEW_CONSTRUCTION_CONTRACTOR_VALUE: 'home_overview_construction_contractor_value',
+    HOME_OVERVIEW_SUPERVISION_CONSULTANT: 'home_overview_supervision_consultant',
+    HOME_OVERVIEW_SUPERVISION_CONSULTANT_VALUE: 'home_overview_supervision_consultant_value',
 } as const;
 
 export const HIGHLIGHT_KEYS = {
@@ -150,6 +160,8 @@ export const FOOTER_KEYS = {
     HOME_FOOTER_LEG_2: 'home_footer_leg_2',
     HOME_FOOTER_ALT_LOGO: 'home_footer_alt_logo',
     HOME_FOOTER_LOCATION_DESCRIPTION: 'home_footer_location_description',
+    HOME_FOOTER_CONTACT_PHONE_NUMBER: 'home_footer_contact_phone_number',
+    HOME_FOOTER_CONTACT_EMAIL: 'home_footer_contact_email',
 } as const;
 
 export const VIDEO_KEYS = {
@@ -174,8 +186,10 @@ export const COMMON_KEYS = {
     PRELOADER_ALT: 'home_cmn_preloader_alt',
     LANGUAGE_TITLE: 'home_cmn_lang_title',
     LANGUAGE_ARIA: 'home_cmn_lang_aria',
+    HOME_CONTACT_ZALO_LINK: 'home_contact_zalo_link',
+    HOME_CONTACT_FACEBOOK_LINK: 'home_contact_facebook_link',
+    HOME_CONTACT_YOUTUBE_LINK: 'home_contact_youtube_link',
 } as const;
-
 // Type for keys
 export type ConsultationKeyType = typeof CONSULTATION_KEYS[keyof typeof CONSULTATION_KEYS];
 export type HomeKeyType = typeof HOME_KEYS[keyof typeof HOME_KEYS];

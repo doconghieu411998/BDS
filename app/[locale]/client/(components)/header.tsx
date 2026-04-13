@@ -29,6 +29,30 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
+  // Configuration for auto-popup
+  const POPUP_DELAY = 30000 // 30 seconds
+  const POPUP_COOLDOWN = 2 * 60 * 60 * 1000 // 2 hours
+  const STORAGE_KEY = "lastConsultationPopupShowTime"
+
+  const handleOpenPopup = useCallback(() => {
+    setIsPopupOpen(true)
+    localStorage.setItem(STORAGE_KEY, Date.now().toString())
+  }, [])
+
+  // Auto-popup effect
+  useEffect(() => {
+    const lastShowTime = localStorage.getItem(STORAGE_KEY)
+    const now = Date.now()
+
+    if (!lastShowTime || now - Number.parseInt(lastShowTime) > POPUP_COOLDOWN) {
+      const timer = setTimeout(() => {
+        handleOpenPopup()
+      }, POPUP_DELAY)
+
+      return () => clearTimeout(timer)
+    }
+  }, [handleOpenPopup])
+
   // Pages that have white backgrounds and need a dark logo by default
   const isLightPage = useMemo(() => {
     return pathname.includes("/tin-tuc") ||
@@ -179,7 +203,7 @@ const Header = () => {
           <div className={styles.rightSection}>
             <button
               className={styles.subscribeBtnMobile}
-              onClick={() => setIsPopupOpen(true)}
+              onClick={handleOpenPopup}
               aria-label={t(HOME_KEYS.HOME_BTN_SUBSCRIBE_LABEL)}
             >
               <FileTextOutlined className={styles.subscribeIcon} />

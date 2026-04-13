@@ -12,6 +12,8 @@ export enum IntroduceStatus {
     NotForSale = 0,
     ForSale = 1,
     Sold = 2,
+    DUPLEX = 3,
+    SINGLE = 4,
 }
 
 // API Response Types
@@ -135,6 +137,10 @@ export function getStatusLabel(status: IntroduceStatus | number, language: 'vi' 
                 return 'Chưa bán';
             case IntroduceStatus.Sold:
                 return 'Mở bán';
+            case IntroduceStatus.DUPLEX:
+                return 'Song lập';
+            case IntroduceStatus.SINGLE:
+                return 'Đơn lập';
             default:
                 return '';
         }

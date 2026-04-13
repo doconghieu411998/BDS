@@ -36,6 +36,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "reactjs-tiptap-editor": "^1.0.17",
+    "sharp": "^0.34.5",
     "slugify": "^1.6.6"
   },
   "devDependencies": {

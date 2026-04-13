@@ -72,7 +72,6 @@
 .thumbnailTitleOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%);
   display: flex;
   align-items: flex-end;
   padding: 15px;
@@ -82,7 +81,6 @@
 
 .thumbTitleActive {
   opacity: 1;
-  background: linear-gradient(0deg, rgba(0, 174, 239, 0.4) 0%, rgba(0, 0, 0, 0) 50%);
 }
 
 .thumbTitleText {
@@ -200,7 +198,8 @@
   opacity: 0.95;
   font-weight: 300;
   display: -webkit-box;
-  -webkit-line-clamp: 6; /* Increased to 6 lines */
+  -webkit-line-clamp: 6;
+  /* Increased to 6 lines */
   line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;

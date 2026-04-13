@@ -36,8 +36,8 @@ const Footer = () => {
           {/* Contact Area */}
           <div className={styles.infoCol}>
             <h4 className={styles.heading}>{t(FOOTER_KEYS.HOME_FOOTER_CONTACT)}</h4>
-            <p className={styles.text}>sales@theheraresort.com</p>
-            <p className={styles.text}>(+84) 909 159 159</p>
+            <p className={styles.text}>{t(FOOTER_KEYS.HOME_FOOTER_CONTACT_EMAIL)}</p>
+            <p className={styles.text}>{t(FOOTER_KEYS.HOME_FOOTER_CONTACT_PHONE_NUMBER)}</p>
           </div>
 
           {/* Social Connect Area */}

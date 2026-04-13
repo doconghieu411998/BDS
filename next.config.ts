@@ -11,7 +11,7 @@ const config = (phase: string) => {
     basePath: "",
 
     images: {
-      unoptimized: true,
+      unoptimized: false,
       remotePatterns: [
         {
           protocol: "https",
@@ -20,6 +20,11 @@ const config = (phase: string) => {
         {
           protocol: "https",
           hostname: "images.unsplash.com",
+        },
+        {
+          protocol: "http",
+          hostname: "103.82.23.181",
+          port: "5000",
         },
       ],
       formats: ["image/avif", "image/webp"],

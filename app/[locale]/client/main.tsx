@@ -21,14 +21,39 @@ import LanguageSwitcher from './(components)/language-switcher';
 import { FileTextOutlined } from '@ant-design/icons';
 import { getAllIntroduceImages, filterImagesByType } from '@/api/introduceImageApiService';
 import { IntroduceImage, IntroduceImageType } from '@/models/introduce-image';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const HERO_BG = "images/home.png";
+const HOME_IMAGES = [
+  "images/home_bg_1.png",
+  "images/home_bg_2.png",
+  "images/home_bg_3.png",
+  "images/home_bg_4.png",
+  "images/home_bg_5.png",
+  "images/home_bg_6.png"
+];
+
+const ANIMATIONS = [
+  { initial: { opacity: 0, scale: 1.05 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0 } }, // Zoom out
+  { initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0 } },           // Slide from right
+  { initial: { opacity: 0, scale: 0.95 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0 } }, // Zoom in
+  { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 } },           // Slide from bottom
+  { initial: { opacity: 0, x: -40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0 } },          // Slide from left
+  { initial: { opacity: 0, y: -40 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 } },          // Slide from top
+];
 
 export default function Main() {
   const t = useTranslations();
   const locale = useLocale();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [allImages, setAllImages] = useState<IntroduceImage[]>([]);
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % HOME_IMAGES.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -62,14 +87,25 @@ export default function Main() {
       <section className={styles.mainSection}>
 
         <div className={styles.bgWrap}>
-          <Image
-            src={withBasePath(HERO_BG)}
-            alt={t(HOME_KEYS.HOME_TITLE)}
-            fill
-            style={{ objectFit: 'cover' }}
-            quality={90}
-            priority
-          />
+          <AnimatePresence>
+            <motion.div
+              key={currentBgIndex}
+              initial={ANIMATIONS[currentBgIndex % ANIMATIONS.length].initial}
+              animate={ANIMATIONS[currentBgIndex % ANIMATIONS.length].animate}
+              exit={ANIMATIONS[currentBgIndex % ANIMATIONS.length].exit}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className={styles.bgImageMotion}
+            >
+              <Image
+                src={withBasePath(HOME_IMAGES[currentBgIndex])}
+                alt={t(HOME_KEYS.HOME_TITLE)}
+                fill
+                style={{ objectFit: 'cover' }}
+                quality={90}
+                priority={true}
+              />
+            </motion.div>
+          </AnimatePresence>
           <div className={styles.overlay}></div>
         </div>
 
@@ -93,19 +129,6 @@ export default function Main() {
           </button>
         </div>
 
-        {/* MOBILE FLOATING ACTIONS - Positioned below title */}
-        <div className={styles.floatingActions}>
-          <button
-            className={styles.floatingSubscribeBtn}
-            onClick={() => setIsPopupOpen(true)}
-            aria-label={t(HOME_KEYS.HOME_BTN_SUBSCRIBE_LABEL)}
-          >
-            <FileTextOutlined />
-          </button>
-          <div className={styles.floatingLang}>
-            <LanguageSwitcher isSticky={true} />
-          </div>
-        </div>
       </section>
 
       <ScrollReveal direction="up">

@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const IntroSection = () => {
   const t = useTranslations();
-  const [activeTab, setActiveTab] = useState<'INTRO' | 'INVESTOR' | 'MANAGER'>('INTRO');
+  const [activeTab, setActiveTab] = useState<'INTRO' | 'INVESTOR' | 'DEVELOPER' | 'MANAGER'>('INTRO');
 
   const CONTENT = {
     INTRO: {
@@ -29,6 +29,14 @@ const IntroSection = () => {
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_INVESTOR)
       ],
       image: "images/investor_bg.png"
+    },
+    DEVELOPER: {
+      title: t(INTRO_KEYS.HOME_INTRO_TITLE_DEVELOPER),
+      subtitle: "",
+      description: [
+        t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_DEVELOPER)
+      ],
+      image: "images/intro-developer.png"
     },
     MANAGER: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_MANAGER),
@@ -58,6 +66,13 @@ const IntroSection = () => {
           onClick={() => setActiveTab('INVESTOR')}
         >
           {t(INTRO_KEYS.HOME_INTRO_TAB_INVESTOR)}
+        </span>
+        <span className={styles.headerSeparator}>|</span>
+        <span
+          className={`${styles.headerItem} ${activeTab === 'DEVELOPER' ? styles.active : ''}`}
+          onClick={() => setActiveTab('DEVELOPER')}
+        >
+          {t(INTRO_KEYS.HOME_INTRO_TAB_DEVELOPER)}
         </span>
         <span className={styles.headerSeparator}>|</span>
         <span
