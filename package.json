@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "deploy": "gh-pages -d out --nojekyll",
-    "build:standalone": "next build && node -e \"const fs = require('fs'); const copy = (s, d) => { if (fs.existsSync(s)) { if (!fs.existsSync(require('path').dirname(d))) fs.mkdirSync(require('path').dirname(d), { recursive: true }); fs.cpSync(s, d, { recursive: true, force: true }); } }; copy('.next/static', '.next/standalone/.next/static'); copy('public', '.next/standalone/public'); copy('node_modules/sharp', '.next/standalone/node_modules/sharp'); copy('node_modules/color-name', '.next/standalone/node_modules/color-name'); copy('node_modules/color-convert', '.next/standalone/node_modules/color-convert');\" && echo 'Build standalone complete!'",
+    "build:standalone": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "start:standalone": "node .next/standalone/server.js"
   },
   "dependencies": {
