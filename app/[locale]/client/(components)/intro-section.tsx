@@ -33,6 +33,7 @@ const IntroSection = () => {
     DEVELOPER: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_DEVELOPER),
       subtitle: "",
+      tagline: "",
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_DEVELOPER)
       ],
