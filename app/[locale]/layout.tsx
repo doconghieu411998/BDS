@@ -17,7 +17,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://greenhillvillage.vn';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
 
   return {
     title: {
@@ -27,11 +27,11 @@ export async function generateMetadata({
     description: t('home_meta_desc'),
     metadataBase: new URL(baseUrl),
     alternates: {
-      canonical: `/${locale}/client`,
+      canonical: `/${locale}/the-hera-resort-quy-nhon`,
       languages: {
-        'vi-VN': '/vi/client',
-        'en-US': '/en/client',
-        'x-default': '/vi/client',
+        'vi-VN': '/vi/the-hera-resort-quy-nhon',
+        'en-US': '/en/the-hera-resort-quy-nhon',
+        'x-default': '/vi/the-hera-resort-quy-nhon',
       },
     },
     keywords: [
@@ -42,7 +42,7 @@ export async function generateMetadata({
     openGraph: {
       title: t('home_meta_title'),
       description: t('home_meta_desc'),
-      url: `${baseUrl}/${locale}/client`,
+      url: `${baseUrl}/${locale}/the-hera-resort-quy-nhon`,
       siteName: t('home_overview_name_value'),
       images: [
         {

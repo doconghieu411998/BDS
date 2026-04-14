@@ -76,7 +76,6 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
                         alt={title || 'Tiện ích'}
                         fill
                         style={{ objectFit: 'cover' }}
-                        unoptimized={isExternal}
                         className={styles.mobileImg}
                       />
                       <div className={styles.mobileOverlay}>
@@ -123,7 +122,6 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
                           alt={title || 'Tiện ích'}
                           fill
                           style={{ objectFit: 'cover' }}
-                          unoptimized={isExternal}
                         />
                         <div className={`${styles.thumbnailTitleOverlay} ${isActive ? styles.thumbTitleActive : ''}`}>
                           <span className={styles.thumbTitleText}>{title}</span>
@@ -142,7 +140,6 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
                   alt={activeTitle || 'Tiện ích'}
                   fill
                   style={{ objectFit: 'cover' }}
-                  unoptimized={activeImageUrl.startsWith('http') || activeImageUrl.startsWith('blob:')}
                   className={styles.mainImage}
                 />
                 <div className={styles.overlay}>

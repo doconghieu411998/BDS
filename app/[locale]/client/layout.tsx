@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: title,
       description: description,
-      url: `/${locale}/client`,
+      url: `/${locale}/the-hera-resort-quy-nhon`,
       siteName: "The Hera Resort Quy Nhon",
       images: [
         {
@@ -44,10 +44,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       images: ['/images/home.png'],
     },
     alternates: {
-      canonical: `/${locale}/client`,
+      canonical: `/${locale}/the-hera-resort-quy-nhon`,
       languages: {
-        'vi-VN': '/vi/client',
-        'en-US': '/en/client',
+        'vi-VN': '/vi/the-hera-resort-quy-nhon',
+        'en-US': '/en/the-hera-resort-quy-nhon',
       },
     },
   };

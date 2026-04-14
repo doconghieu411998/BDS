@@ -11,17 +11,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
     const locale = await getLocale();
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://greenhillvillage.vn';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
     const { slug } = await params;
 
     // Check for tag first (tags have -tID.html pattern)
     const tagId = getTagFromSlug(slug);
 
     if (tagId) {
-        const currentUrl = `${baseUrl}/${locale}/client/${slug}`;
+        const currentUrl = `${baseUrl}/${locale}/the-hera-resort-quy-nhon/${slug}`;
         const alternatesLanguages = {
-            'vi': `${baseUrl}/vi/client/${slug}`,
-            'en': `${baseUrl}/en/client/${slug}`,
+            'vi': `${baseUrl}/vi/the-hera-resort-quy-nhon/${slug}`,
+            'en': `${baseUrl}/en/the-hera-resort-quy-nhon/${slug}`,
         };
 
         // TODO: Fetch actual tag name from API using tagId for better SEO
@@ -69,10 +69,10 @@ export async function generateMetadata({ params }: Props) {
             return notFound();
         }
 
-        const currentUrl = `${baseUrl}/${locale}/client/${slug}`;
+        const currentUrl = `${baseUrl}/${locale}/the-hera-resort-quy-nhon/${slug}`;
         const alternatesLanguages = {
-            'vi': `${baseUrl}/vi/client/${slug}`,
-            'en': `${baseUrl}/en/client/${slug}`,
+            'vi': `${baseUrl}/vi/the-hera-resort-quy-nhon/${slug}`,
+            'en': `${baseUrl}/en/the-hera-resort-quy-nhon/${slug}`,
         };
 
         return {
