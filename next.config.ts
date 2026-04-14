@@ -14,17 +14,13 @@ const config = (phase: string) => {
       unoptimized: false,
       remotePatterns: [
         {
-          protocol: "https",
-          hostname: "placehold.co",
-        },
-        {
-          protocol: "https",
-          hostname: "images.unsplash.com",
-        },
-        {
           protocol: "http",
           hostname: "103.82.23.181",
           port: "5000",
+        },
+        {
+          protocol: "https",
+          hostname: "theheraresort.com",
         },
       ],
       deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

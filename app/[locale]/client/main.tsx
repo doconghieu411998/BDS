@@ -32,14 +32,13 @@ const HOME_IMAGES = [
   "images/home_bg_6.png"
 ];
 
-const ANIMATIONS = [
-  { initial: { opacity: 0, scale: 1.05 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0 } }, // Zoom out
-  { initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0 } },           // Slide from right
-  { initial: { opacity: 0, scale: 0.95 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0 } }, // Zoom in
-  { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 } },           // Slide from bottom
-  { initial: { opacity: 0, x: -40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0 } },          // Slide from left
-  { initial: { opacity: 0, y: -40 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 } },          // Slide from top
-];
+const SLIDE_DURATION = 3000; // 3 seconds per slide
+
+const FADE_ANIMATION = {
+  initial: { opacity: 0, scale: 1.1 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 1.05 },
+};
 
 export default function Main() {
   const t = useTranslations();
@@ -51,7 +50,7 @@ export default function Main() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBgIndex((prev) => (prev + 1) % HOME_IMAGES.length);
-    }, 6000);
+    }, SLIDE_DURATION);
     return () => clearInterval(interval);
   }, []);
 
@@ -90,10 +89,10 @@ export default function Main() {
           <AnimatePresence>
             <motion.div
               key={currentBgIndex}
-              initial={ANIMATIONS[currentBgIndex % ANIMATIONS.length].initial}
-              animate={ANIMATIONS[currentBgIndex % ANIMATIONS.length].animate}
-              exit={ANIMATIONS[currentBgIndex % ANIMATIONS.length].exit}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
+              initial={FADE_ANIMATION.initial}
+              animate={FADE_ANIMATION.animate}
+              exit={FADE_ANIMATION.exit}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
               className={styles.bgImageMotion}
             >
               <Image
