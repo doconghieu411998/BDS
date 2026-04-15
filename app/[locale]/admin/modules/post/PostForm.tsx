@@ -28,18 +28,35 @@ interface PostFormProps {
 
 export default function PostForm({ initialData, isEdit = false, onSubmit }: PostFormProps) {
     const MAX_IMAGE_SIZE_MB = 20;
+    const WARNING_IMAGE_SIZE_MB = 3;
+    const WARNING_IMAGE_SIZE_BYTES = WARNING_IMAGE_SIZE_MB * 1024 * 1024;
     const [form] = AntForm.useForm();
     const [loading, setLoading] = useState(false);
     const [thumbnailUrl, setThumbnailUrl] = useState<string | undefined>(initialData?.media?.url);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [tags, setTags] = useState<Tag[]>([]);
+    const [selectedImageSize, setSelectedImageSize] = useState<number | null>(null);
+
+    const formatFileSize = (bytes: number): string => {
+        if (bytes < 1024) return `${bytes} B`;
+        const kb = bytes / 1024;
+        if (kb < 1024) return `${kb.toFixed(2)} KB`;
+        const mb = kb / 1024;
+        return `${mb.toFixed(2)} MB`;
+    };
 
     const validateImageBeforeUpload: NonNullable<UploadProps['beforeUpload']> = (file) => {
+        setSelectedImageSize(file.size);
         const isLt20MB = file.size / 1024 / 1024 <= MAX_IMAGE_SIZE_MB;
         if (!isLt20MB) {
             AntMessage.error(`Kích thước ảnh phải nhỏ hơn ${MAX_IMAGE_SIZE_MB}MB!`);
             return Upload.LIST_IGNORE;
         }
+
+        if (file.size > WARNING_IMAGE_SIZE_BYTES) {
+            AntMessage.warning(`Cảnh báo: Ảnh lớn hơn ${WARNING_IMAGE_SIZE_MB}MB (${formatFileSize(file.size)}).`);
+        }
+
         return false;
     };
 
@@ -74,6 +91,8 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                     },
                 ]);
             }
+
+            setSelectedImageSize(null);
         }
     }, [initialData, form]);
 
@@ -308,6 +327,19 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                                         </div>
                                     </div>
                                 </AntUpload>
+                            )}
+
+                            {selectedImageSize !== null && (
+                                <div
+                                    style={{
+                                        marginTop: 4,
+                                        fontSize: 12,
+                                        color: selectedImageSize > WARNING_IMAGE_SIZE_BYTES ? '#faad14' : '#52c41a',
+                                        fontWeight: 500,
+                                    }}
+                                >
+                                    Dung lượng ảnh đã chọn: {formatFileSize(selectedImageSize)}
+                                </div>
                             )}
                         </div>
                     </AntForm.Item>

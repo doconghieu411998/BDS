@@ -36,6 +36,9 @@ interface ImageTabProps {
 export default function ImageTab({ title, filterCondition, showStatus = false, forcedStatus }: ImageTabProps) {
     const { message } = App.useApp();
     const MAX_IMAGE_SIZE_MB = 20;
+    const WARNING_IMAGE_SIZE_MB = 3;
+    const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
+    const WARNING_IMAGE_SIZE_BYTES = WARNING_IMAGE_SIZE_MB * 1024 * 1024;
     const [items, setItems] = useState<IntroduceImage[]>([]);
     const [loading, setLoading] = useState(false);
 
@@ -45,7 +48,16 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
     const [uploading, setUploading] = useState(false);
     const [editingItem, setEditingItem] = useState<IntroduceImage | null>(null);
     const [imageBase64, setImageBase64] = useState<string | null>(null);
+    const [selectedImageSize, setSelectedImageSize] = useState<number | null>(null);
     const [form] = AntForm.useForm();
+
+    const formatFileSize = (bytes: number): string => {
+        if (bytes < 1024) return `${bytes} B`;
+        const kb = bytes / 1024;
+        if (kb < 1024) return `${kb.toFixed(2)} KB`;
+        const mb = kb / 1024;
+        return `${mb.toFixed(2)} MB`;
+    };
 
     const loadImages = useCallback(async () => {
         setLoading(true);
@@ -67,6 +79,7 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
     const handleEdit = (item: IntroduceImage) => {
         setEditingItem(item);
         setImageBase64(null);
+        setSelectedImageSize(null);
         form.setFieldsValue({
             titleVi: item.titleVi || '',
             titleEn: item.titleEn || '',
@@ -88,10 +101,15 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
     };
 
     const handleImageSelect = async (file: File) => {
-        const isLt20MB = file.size / 1024 / 1024 <= MAX_IMAGE_SIZE_MB;
+        setSelectedImageSize(file.size);
+        const isLt20MB = file.size <= MAX_IMAGE_SIZE_BYTES;
         if (!isLt20MB) {
             message.error(`Kích thước ảnh phải nhỏ hơn ${MAX_IMAGE_SIZE_MB}MB!`);
             return Upload.LIST_IGNORE;
+        }
+
+        if (file.size > WARNING_IMAGE_SIZE_BYTES) {
+            message.warning(`Cảnh báo: Ảnh lớn hơn ${WARNING_IMAGE_SIZE_MB}MB (${formatFileSize(file.size)}).`);
         }
 
         try {
@@ -123,6 +141,7 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
         setModalVisible(false);
         setEditingItem(null);
         setImageBase64(null);
+        setSelectedImageSize(null);
         form.resetFields();
     };
 
@@ -264,6 +283,7 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
 
     return (
         <div>
+            <h3 style={{ marginBottom: 12 }}>{title}</h3>
             <Spin spinning={loading}>
                 <AntTable
                     columns={getColumns()}
@@ -361,6 +381,18 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
                                         </div>
                                     )}
                                 </Upload>
+                                {selectedImageSize !== null && (
+                                    <div
+                                        style={{
+                                            marginTop: 4,
+                                            fontSize: 12,
+                                            color: selectedImageSize > WARNING_IMAGE_SIZE_BYTES ? '#faad14' : '#52c41a',
+                                            fontWeight: 500,
+                                        }}
+                                    >
+                                        Dung lượng ảnh đã chọn: {formatFileSize(selectedImageSize)}
+                                    </div>
+                                )}
                             </AntForm.Item>
 
                             <AntForm.Item name="imageUrl" rules={[{ required: true, message: 'Vui lòng upload ảnh' }]} hidden>
