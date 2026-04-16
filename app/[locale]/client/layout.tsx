@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName: "The Hera Resort Quy Nhon",
       images: [
         {
-          url: '/images/home.png',
+          url: '/images/og-image.png',
           width: 1200,
           height: 630,
           alt: "Hera Resort Quy Nhon",
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title: title,
       description: description,
-      images: ['/images/home.png'],
+      images: ['/images/og-image.png'],
     },
     alternates: {
       canonical: `/${locale}/the-hera-resort-quy-nhon`,

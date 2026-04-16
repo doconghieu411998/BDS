@@ -19,7 +19,7 @@ const IntroSection = () => {
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_1),
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_2)
       ],
-      image: "images/intro.png"
+      image: "images/intro_bg.png"
     },
     INVESTOR: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_INVESTOR),
@@ -37,7 +37,7 @@ const IntroSection = () => {
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_DEVELOPER)
       ],
-      image: "images/intro-developer.png"
+      image: "images/developer_bg.png"
     },
     MANAGER: {
       title: t(INTRO_KEYS.HOME_INTRO_TITLE_MANAGER),
@@ -46,7 +46,7 @@ const IntroSection = () => {
       description: [
         t(INTRO_KEYS.HOME_INTRO_DESCRIPTION_MANAGER)
       ],
-      image: "images/intro.png"
+      image: "images/manager_bg.png"
     }
   };
 

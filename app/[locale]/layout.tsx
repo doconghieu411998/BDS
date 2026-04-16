@@ -46,7 +46,7 @@ export async function generateMetadata({
       siteName: t('home_overview_name_value'),
       images: [
         {
-          url: '/images/home.png',
+          url: '/images/og-image.png',
           width: 1200,
           height: 630,
           alt: t('home_overview_name_value'),
@@ -59,7 +59,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: t('home_meta_title'),
       description: t('home_meta_desc'),
-      images: ['/images/home.png'],
+      images: ['/images/og-image.png'],
     },
     icons: {
       icon: '/favicon.png',

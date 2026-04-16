@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props) {
             : 'Explore related articles in this category at The Hera Resort Quy Nhon';
 
         return {
-            title: `${tagTitle} | The Hera Resort Quy Nhon`,
+            title: `${tagTitle}`,
             description: tagDescription,
             alternates: {
                 canonical: currentUrl,
@@ -44,13 +44,22 @@ export async function generateMetadata({ params }: Props) {
                 description: tagDescription,
                 url: currentUrl,
                 siteName: 'The Hera Resort Quy Nhon',
+                images: [
+                    {
+                        url: '/images/og-image.png',
+                        width: 1200,
+                        height: 630,
+                        alt: tagTitle,
+                    },
+                ],
                 locale: locale === 'vi' ? 'vi_VN' : 'en_US',
                 type: 'website',
             },
             twitter: {
-                card: 'summary',
+                card: 'summary_large_image',
                 title: tagTitle,
                 description: tagDescription,
+                images: ['/images/og-image.png'],
             },
             robots: {
                 index: true,
@@ -89,7 +98,7 @@ export async function generateMetadata({ params }: Props) {
                 siteName: 'The Hera Resort Quy Nhon',
                 images: [
                     {
-                        url: newsItem?.banner,
+                        url: newsItem?.banner || '/images/og-image.png',
                         width: 1200,
                         height: 630,
                         alt: newsItem?.title,
@@ -102,7 +111,7 @@ export async function generateMetadata({ params }: Props) {
                 card: 'summary_large_image',
                 title: newsItem?.title,
                 description: newsItem?.description,
-                images: [newsItem?.banner],
+                images: [newsItem?.banner || '/images/og-image.png'],
             },
             robots: {
                 index: true,
