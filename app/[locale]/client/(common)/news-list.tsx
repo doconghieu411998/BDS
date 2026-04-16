@@ -38,10 +38,12 @@ const NewsList = ({
     const [items, setItems] = useState<NewsItem[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
     const PAGE_SIZE = limit || 3;
 
     useEffect(() => {
         const fetchNews = async () => {
+            setIsLoading(true);
             // If relatedTags is provided, fetch a larger set to find enough items after filtering/merging
             const fetchLimit = relatedTags && relatedTags.length > 0 ? 15 : PAGE_SIZE;
             const response = await ClientPostApiService.getPosts(currentPage, fetchLimit);
@@ -75,11 +77,38 @@ const NewsList = ({
 
             setItems(data);
             setTotalItems(response.total);
+            setIsLoading(false);
         };
 
         fetchNews();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage, limit, relatedTags, excludeId, sortByDate]);
+
+    const renderSkeleton = () => {
+        return (
+            <div className={`${styles.newsSectionWrapper} ${className || ''}`}>
+                {title && <h2 className={styles.sectionTitle}>{title}</h2>}
+                <div className={variant === 'grid' ? styles.newsGrid : styles.newsListHorizontal}>
+                    {[...Array(PAGE_SIZE)].map((_, i) => (
+                        <div key={i} className={variant === 'grid' ? styles.newsCard : styles.newsCardHorizontal}>
+                            <div className={variant === 'grid' ? styles.imageWrapper : styles.imageWrapperHorizontal}>
+                                <div className={`${styles.skeleton} ${styles.skeletonImage}`} />
+                                <div className={`${styles.skeleton} ${styles.skeletonTag}`} />
+                            </div>
+                            <div className={variant === 'grid' ? styles.cardBody : styles.cardBodyHorizontal}>
+                                <div className={`${styles.skeleton} ${styles.skeletonTitle}`} />
+                                <div className={`${styles.skeleton} ${styles.skeletonDesc}`} />
+                                <div className={`${styles.skeleton} ${styles.skeletonDesc}`} style={{ width: '80%' }} />
+                                <div className={`${styles.skeleton} ${styles.skeletonMeta}`} />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
+    if (isLoading) return renderSkeleton();
 
     if (!items || items.length === 0) return null;
 
