@@ -17,12 +17,13 @@ interface Props {
 }
 
 // Helper to process article content: replace backend URLs and generate captions
-const processContent = (content: string, baseUrl: string) => {
+const processContent = (content: string) => {
   if (!content) return '';
 
-  // Replace backend absolute URL with public domain URL from environment variables
-  // ensuring the backend IP links work through the main domain proxy.
-  const processed = content.replace(/https?:\/\/103\.82\.23\.181:5000\//g, `${baseUrl}/`);
+  // Replace backend absolute URL with relative /images/ path
+  // This will be handled by the Next.js rewrite in next.config.ts
+  // ensuring the backend IP links work through the main domain proxy without Mixed Content issues.
+  const processed = content.replace(/https?:\/\/103\.82\.23\.181:5000\/images\//g, '/images/');
 
   return processed.replace(
     /(<img\s[^>]*?alt=["']([^"']+)["'][^>]*?>)/gi,
@@ -36,7 +37,7 @@ const processContent = (content: string, baseUrl: string) => {
 export default function NewsDetailView({ item, slug, locale }: Props) {
   const t = useTranslations();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
-  const processedContent = processContent(item.content, baseUrl);
+  const processedContent = processContent(item.content);
 
   return (
     <main className={styles.container}>
