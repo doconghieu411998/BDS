@@ -16,10 +16,15 @@ interface Props {
   locale: string;
 }
 
-// Helper to auto-generate captions from alt text
-const processContent = (content: string) => {
+// Helper to process article content: replace backend URLs and generate captions
+const processContent = (content: string, baseUrl: string) => {
   if (!content) return '';
-  return content.replace(
+
+  // Replace backend absolute URL with public domain URL from environment variables
+  // ensuring the backend IP links work through the main domain proxy.
+  const processed = content.replace(/https?:\/\/103\.82\.23\.181:5000\//g, `${baseUrl}/`);
+
+  return processed.replace(
     /(<img\s[^>]*?alt=["']([^"']+)["'][^>]*?>)/gi,
     (match, imgTag, altText) => {
       if (!altText || altText.trim() === '') return match;
@@ -30,12 +35,15 @@ const processContent = (content: string) => {
 
 export default function NewsDetailView({ item, slug, locale }: Props) {
   const t = useTranslations();
-  const processedContent = processContent(item.content);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
+  const processedContent = processContent(item.content, baseUrl);
+  const bannerUrl = (item.banner || '').replace(/https?:\/\/103\.82\.23\.181:5000\//g, `${baseUrl}/`) || '/images/placeholder.jpg';
+
   return (
     <main className={styles.container}>
       <section className={styles.bannerWrapper}>
         <Image
-          src={item.banner || '/images/placeholder.jpg'}
+          src={bannerUrl}
           alt={item.title}
           fill
           priority

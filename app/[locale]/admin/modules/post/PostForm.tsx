@@ -9,7 +9,8 @@ import { AntButton } from '@/crema/components/AntButton';
 import { AntSelect } from '@/crema/components/AntSelect';
 import { AntUpload } from '@/crema/components/AntUpload';
 import { AntMessage } from '@/crema/components/AntMessage';
-import { Image, Upload } from 'antd';
+import { Image as AntImage, Upload } from 'antd';
+import NextImage from 'next/image';
 import dynamic from 'next/dynamic';
 const RichTextEditor = dynamic(() => import('@/crema/components/RichTextEditor'), {
     ssr: false,
@@ -257,17 +258,17 @@ export default function PostForm({ initialData, isEdit = false, onSubmit }: Post
                                         justifyContent: 'center',
                                         marginBottom: 12
                                     }}>
-                                        <Image
+                                        <NextImage
                                             src={thumbnailUrl}
                                             alt="Preview"
+                                            width={400}
+                                            height={200}
+                                            unoptimized={thumbnailUrl.startsWith('data:') || thumbnailUrl.startsWith('blob:')}
                                             style={{
                                                 maxWidth: '100%',
-                                                maxHeight: 200,
+                                                height: 'auto',
                                                 objectFit: 'contain',
                                                 borderRadius: 4
-                                            }}
-                                            preview={{
-                                                mask: 'Xem toàn màn hình',
                                             }}
                                         />
                                     </div>

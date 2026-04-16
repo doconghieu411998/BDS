@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { Spin, Image as AntImage, Row, Col, Upload, App } from 'antd';
+import NextImage from 'next/image';
 import { EditOutlined, UploadOutlined } from '@ant-design/icons';
 import {
     IntroduceImage,
@@ -243,12 +244,15 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
                 render: (imageUrl: string | null) => {
                     if (!imageUrl) return <span style={{ color: '#999' }}>Không có ảnh</span>;
                     return (
-                        <AntImage
-                            src={imageUrl}
-                            alt="Preview"
-                            className={styles.imagePreview}
-                            preview={{ mask: 'Xem' }}
-                        />
+                        <div className={styles.imagePreviewWrapper}>
+                            <NextImage
+                                src={imageUrl}
+                                alt="Preview"
+                                width={80}
+                                height={50}
+                                style={{ objectFit: 'cover', borderRadius: '4px' }}
+                            />
+                        </div>
                     );
                 },
             },
@@ -329,12 +333,13 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
                                 Xem trước ảnh
                             </label>
                             {editingItem?.imageUrl ? (
-                                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 400 }}>
-                                    <AntImage
+                                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 400, position: 'relative' }}>
+                                    <NextImage
                                         src={editingItem.imageUrl}
                                         alt="Preview"
-                                        style={{ width: '100%', height: 'auto', maxHeight: 400, objectFit: 'contain', borderRadius: 4 }}
-                                        preview={{ mask: 'Xem toàn màn hình' }}
+                                        fill
+                                        style={{ objectFit: 'contain', borderRadius: 4 }}
+                                        unoptimized={editingItem.imageUrl.startsWith('data:') || editingItem.imageUrl.startsWith('blob:')}
                                     />
                                 </div>
                             ) : (
@@ -369,7 +374,13 @@ export default function ImageTab({ title, filterCondition, showStatus = false, f
                                 >
                                     {editingItem?.imageUrl ? (
                                         <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                                            <AntImage src={editingItem.imageUrl} alt="Current" style={{ width: '100%', height: '100%', objectFit: 'cover' }} preview={false} />
+                                            <NextImage 
+                                                src={editingItem.imageUrl} 
+                                                alt="Current" 
+                                                fill
+                                                style={{ objectFit: 'cover' }} 
+                                                unoptimized={editingItem.imageUrl.startsWith('data:') || editingItem.imageUrl.startsWith('blob:')}
+                                            />
                                             <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s', cursor: 'pointer' }} className="upload-hover-overlay">
                                                 <UploadOutlined style={{ fontSize: 24, color: '#fff' }} />
                                             </div>

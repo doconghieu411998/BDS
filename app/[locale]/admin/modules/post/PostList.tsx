@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Post, PostStatus, PostCategory, Tag, PostMedia } from '@/types/common';
 import { postService } from './postApiService';
@@ -136,11 +136,12 @@ export default function PostList() {
             width: 200,
             render: (media: PostMedia | undefined) => (
                 media?.url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                         src={media.url}
                         alt="banner"
-                        style={{ width: '80px', height: '50px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #eee' }}
+                        width={80}
+                        height={50}
+                        style={{ objectFit: 'cover', borderRadius: '4px', border: '1px solid #eee' }}
                     />
                 ) : null
             ),

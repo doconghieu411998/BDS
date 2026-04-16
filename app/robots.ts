@@ -10,6 +10,25 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/admin',
       },
       {
+        userAgent: [
+          'Amazonbot',
+          'Applebot-Extended',
+          'Bytespider',
+          'CCBot',
+          'ClaudeBot',
+          'CloudflareBrowserRenderingCrawler',
+          'Google-Extended',
+          'GPTBot',
+          'meta-externalagent',
+          'urlscan.io',
+          'CensysInspect',
+          'DotBot',
+          'DataForSeoBot',
+          'MJ12bot'
+        ],
+        disallow: '/',
+      },
+      {
         userAgent: ['facebookexternalhit', 'Twitterbot', 'Discordbot'],
         allow: '/',
       }
