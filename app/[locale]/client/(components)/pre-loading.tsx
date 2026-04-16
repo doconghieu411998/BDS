@@ -1,17 +1,30 @@
 "use client"
 
-import { useLayoutEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState, useEffect } from "react"
 import gsap from "gsap"
 import styles from "./pre-loading.module.css"
 import { withBasePath } from "@/services/commonService"
 import Image from "next/image"
+import { SESSION_KEYS } from "@/constants/help"
 
 export default function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState<boolean | null>(null) // Use null for initial state to avoid flash
+
+  useEffect(() => {
+    // Check if preloader has already been shown in this session
+    const hasBeenShown = sessionStorage.getItem(SESSION_KEYS.PRELOADER_SHOWN)
+    if (hasBeenShown) {
+      setIsActive(false)
+    } else {
+      setIsActive(true)
+    }
+  }, [])
 
   useLayoutEffect(() => {
+    if (isActive !== true) return; // Only run animation if specifically set to true
+
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual"
     }
@@ -50,6 +63,9 @@ export default function Preloader() {
           }
 
           window.scrollTo(0, 0)
+
+          // Record that preloader has been shown in this session
+          sessionStorage.setItem(SESSION_KEYS.PRELOADER_SHOWN, "true")
 
           setIsActive(false)
         },

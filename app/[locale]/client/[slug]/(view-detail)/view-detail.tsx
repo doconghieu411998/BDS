@@ -1,3 +1,5 @@
+"use client";
+
 import Image from 'next/image';
 import styles from './view-detail.module.css';
 import ArticleTracker from './article-tracker';
@@ -26,7 +28,7 @@ const processContent = (content: string) => {
   );
 };
 
-export default async function NewsDetailView({ item, locale }: Props) {
+export default function NewsDetailView({ item, slug, locale }: Props) {
   const t = useTranslations();
   const processedContent = processContent(item.content);
   return (

@@ -1,3 +1,5 @@
+"use client";
+
 // app/[locale]/tin-tuc/[slug]/views/tag-list-view.tsx
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
