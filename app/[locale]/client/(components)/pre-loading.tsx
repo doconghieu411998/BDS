@@ -123,7 +123,7 @@ export default function Preloader() {
       document.body.style.left = originalBodyLeft
       document.body.style.right = originalBodyRight
     }
-  }, [])
+  }, [isActive])
 
   if (!isActive) return null
 
