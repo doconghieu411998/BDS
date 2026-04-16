@@ -98,6 +98,18 @@ function convertBase64ToBlob(base64: string) {
     return new Blob([u8arr], { type: mime });
 }
 
+// Helper to transform absolute backend URLs to relative ones for proxy support
+const transformBackendUrl = (url: string) => {
+    if (!url) return url;
+    return url.replace(/https?:\/\/103\.82\.23\.181:5000\/images\//g, '/images/');
+};
+
+// Helper to transform HTML content
+const transformHtmlContent = (html: string) => {
+    if (!html) return html;
+    return html.replace(/https?:\/\/103\.82\.23\.181:5000\/images\//g, '/images/');
+};
+
 interface RichTextEditorProps {
     value?: string;
     onChange?: (value: string) => void;
@@ -147,7 +159,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                 upload: async (file: File) => {
                     try {
                         const url = await FileApiService.uploadImage(file);
-                        return url; // The extension expects a Promise<string> returning the URL
+                        return transformBackendUrl(url); // Transform to relative path for proxy support
                     } catch (error) {
                         console.error("Upload failed", error);
                         throw error;
@@ -250,7 +262,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                 },
             }),
         ],
-        content: value,
+        content: transformHtmlContent(value),
         onUpdate: ({ editor }) => {
             const html = editor.getHTML();
             onChange?.(html);
@@ -264,10 +276,11 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     });
 
     React.useEffect(() => {
-        if (editor && value !== editor.getHTML()) {
+        const transformedValue = transformHtmlContent(value);
+        if (editor && transformedValue !== editor.getHTML()) {
             // Only update if content is different to avoid cursor jumps
-            if (value === '' || (Math.abs(value.length - editor.getHTML().length) > 10)) {
-                editor.commands.setContent(value);
+            if (value === '' || (Math.abs(transformedValue.length - editor.getHTML().length) > 10)) {
+                editor.commands.setContent(transformedValue);
             }
         }
     }, [value, editor]);

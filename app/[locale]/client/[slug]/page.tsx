@@ -9,6 +9,13 @@ interface Props {
     params: Promise<{ slug: string }>;
 }
 
+const transformSeoUrl = (url: string | undefined, baseUrl: string) => {
+    if (!url) return undefined;
+    // Replace backend absolute URL with the main domain base URL
+    // This ensures bots like Facebook/Zalo can fetch the image over HTTPS via our proxy
+    return url.replace(/https?:\/\/103\.82\.23\.181:5000\/images\//g, `${baseUrl}/images/`);
+};
+
 export async function generateMetadata({ params }: Props) {
     const locale = await getLocale();
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
@@ -98,7 +105,7 @@ export async function generateMetadata({ params }: Props) {
                 siteName: 'The Hera Resort Quy Nhon',
                 images: [
                     {
-                        url: newsItem?.banner || '/images/og-image.png',
+                        url: transformSeoUrl(newsItem?.banner, baseUrl) || `${baseUrl}/images/og-image.png`,
                         width: 1200,
                         height: 630,
                         alt: newsItem?.title,
@@ -111,7 +118,7 @@ export async function generateMetadata({ params }: Props) {
                 card: 'summary_large_image',
                 title: newsItem?.title,
                 description: newsItem?.description,
-                images: [newsItem?.banner || '/images/og-image.png'],
+                images: [transformSeoUrl(newsItem?.banner, baseUrl) || `${baseUrl}/images/og-image.png`],
             },
             robots: {
                 index: true,
