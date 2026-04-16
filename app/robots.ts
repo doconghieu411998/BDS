@@ -3,11 +3,17 @@ import { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = 'https://theheraresort.com';
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: '/admin',
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: '/admin',
+      },
+      {
+        userAgent: ['facebookexternalhit', 'Twitterbot', 'Discordbot'],
+        allow: '/',
+      }
+    ],
     sitemap: `${baseUrl}/sitemap.xml`,
   };
 }
