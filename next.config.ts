@@ -7,6 +7,7 @@ const config = (phase: string) => {
 
   const nextConfig: NextConfig = {
     output: "standalone",
+    serverExternalPackages: ['sharp'],
 
     basePath: "",
 
