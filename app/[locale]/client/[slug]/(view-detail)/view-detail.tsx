@@ -37,13 +37,12 @@ export default function NewsDetailView({ item, slug, locale }: Props) {
   const t = useTranslations();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
   const processedContent = processContent(item.content, baseUrl);
-  const bannerUrl = (item.banner || '').replace(/https?:\/\/103\.82\.23\.181:5000\//g, `${baseUrl}/`) || '/images/placeholder.jpg';
 
   return (
     <main className={styles.container}>
       <section className={styles.bannerWrapper}>
         <Image
-          src={bannerUrl}
+          src={item.banner}
           alt={item.title}
           fill
           priority
