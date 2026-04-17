@@ -15,7 +15,7 @@ const InfrastructureConnectivitySection = () => {
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  
+
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartRef = useRef(0);
@@ -61,7 +61,7 @@ const InfrastructureConnectivitySection = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        setItemsPerRow(2);
+        setItemsPerRow(1);
       } else if (window.innerWidth <= 1200) {
         setItemsPerRow(3);
       } else {
@@ -104,12 +104,12 @@ const InfrastructureConnectivitySection = () => {
       return () => clearTimeout(jumpTimeout);
     }
     if (currentIndex <= totalOriginal - itemsPerRow) {
-        const jumpTimeout = setTimeout(() => {
-          setIsTransitioning(false);
-          setCurrentIndex(currentIndex + totalOriginal);
-        }, transitionTime);
-        return () => clearTimeout(jumpTimeout);
-      }
+      const jumpTimeout = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(currentIndex + totalOriginal);
+      }, transitionTime);
+      return () => clearTimeout(jumpTimeout);
+    }
   }, [currentIndex, totalOriginal, itemsPerRow]);
 
   const slideWidth = 100 / itemsPerRow;
@@ -134,7 +134,7 @@ const InfrastructureConnectivitySection = () => {
   const handleDragEnd = () => {
     if (!isDragging) return;
     setIsDragging(false);
-    
+
     const containerWidth = containerRef.current?.offsetWidth || 1;
     const slidePixelWidth = containerWidth / itemsPerRow;
     const threshold = slidePixelWidth / 4;
@@ -177,7 +177,7 @@ const InfrastructureConnectivitySection = () => {
       </div>
 
       <div className={styles.carouselWrapper}>
-        <div 
+        <div
           className={`${styles.carouselContainer} ${isDragging ? styles.grabbing : ''}`}
           ref={containerRef}
           onMouseDown={handleDragStart}
@@ -188,9 +188,9 @@ const InfrastructureConnectivitySection = () => {
           onTouchMove={handleDragMove}
           onTouchEnd={handleDragEnd}
         >
-          <div 
+          <div
             className={styles.carouselTrack}
-            style={{ 
+            style={{
               transform: `translateX(calc(-${currentIndex * slideWidth}% + ${centerShift}% + ${dragOffset}px))`,
               transition: isTransitioning ? 'transform 1s ease-in-out' : 'none'
             }}
@@ -215,18 +215,20 @@ const InfrastructureConnectivitySection = () => {
                   </div>
 
                   <div className={styles.cardContent}>
-                    <div className={styles.timeWrapper}>
+                    <div className={styles.headerRow}>
                       <span className={styles.timeValue}>{item.time}</span>
                       <span className={styles.timeUnit}>{item.unit}</span>
                     </div>
 
-                    <div className={styles.cardFooter}>
+                    <div className={styles.spacer} />
+
+                    <div className={styles.footerRow}>
                       <p className={styles.itemTitle}>{item.title}</p>
                       <div className={styles.pinIcon}>
                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="20" cy="20" r="19.25" stroke="white" strokeWidth="1.5" />
-                          <path d="M20 26C23.3137 26 26 23.3137 26 20C26 16.6863 23.3137 14 20 14C16.6863 14 14 16.6863 14 20C14 23.3137 16.6863 26 20 26Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M20 22C21.1046 22 22 21.1046 22 20C22 18.8954 21.1046 18 20 18C18.8954 18 18 18.8954 18 20C18 21.1046 18.8954 22 20 22Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          <circle cx="20" cy="20" r="19.25" stroke="currentColor" strokeWidth="1" />
+                          <path d="M20 26C23.3137 26 26 23.3137 26 20C26 16.6863 23.3137 14 20 14C16.6863 14 14 16.6863 14 20C14 23.3137 16.6863 26 20 26Z" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M20 22C21.1046 22 22 21.1046 22 20C22 18.8954 21.1046 18 20 18C18.8954 18 18 18.8954 18 20C18 21.1046 18.8954 22 20 22Z" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
                     </div>

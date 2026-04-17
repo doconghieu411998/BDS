@@ -152,7 +152,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     text-align: center;
     color: #fff;
     background: linear-gradient(0deg, rgba(0, 118, 183, 0.4) 0%, rgba(0, 118, 183, 0) 100%);
@@ -161,6 +161,29 @@
 
 .carouselCard:hover .cardContent {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+.headerRow {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 8px;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+.footerRow {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .timeWrapper {
@@ -229,11 +252,138 @@
 
 @media (max-width: 768px) {
     .section {
-        padding: 60px 0 40px;
-        padding-top: 80px;
-        /* Account for fixed header */
+        padding: 60px 0 80px;
+        background-color: #ffffff;
         display: flex;
         flex-direction: column;
+    }
+
+    .container {
+        padding: 0 20px;
+        order: 1;
+    }
+
+    .topContent {
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    .textSide {
+        width: 100%;
+    }
+
+    .carouselWrapper {
+        order: 3;
+        background-color: #ffffff;
+        /* White background behind cards on mobile */
+        padding: 40px 0;
+        margin-top: 20px;
+    }
+
+    .carouselSlide {
+        padding: 0 20px;
+    }
+
+    .carouselCard {
+        background-color: #0076B7 !important;
+        /* Blue background as in image */
+        border: none;
+        aspect-ratio: auto;
+        height: 320px !important;
+        /* Fixed height to ensure all cards are the same size */
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* Header at top, footer at bottom */
+        transform: none !important;
+        box-shadow: 0 10px 25px rgba(0, 118, 183, 0.2) !important;
+    }
+
+    .cardBg {
+        display: none !important;
+        /* Hide image background on mobile card */
+    }
+
+    .cardContent {
+        background: none !important;
+        padding: 0 !important;
+        color: #ffffff !important;
+        /* White text on blue background */
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .headerRow {
+        width: 100%;
+        justify-content: flex-start;
+        align-items: baseline;
+        margin-bottom: 0;
+        gap: 12px;
+    }
+
+    .timeValue {
+        font-family: var(--font-sans), sans-serif;
+        font-size: 96px;
+        /* Max size for 1-item layout */
+        font-weight: 400;
+        color: #ffffff !important;
+        line-height: 1.1;
+    }
+
+    .timeUnit {
+        font-family: var(--font-sans), sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        color: #ffffff !important;
+        text-transform: uppercase;
+    }
+
+    .spacer {
+        height: 100px;
+        /* Push content further down */
+        flex: none;
+    }
+
+    .footerRow {
+        position: static;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .itemTitle {
+        font-family: var(--font-sans), sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: #ffffff !important;
+        max-width: 85%;
+        text-transform: uppercase;
+        line-height: 1.3;
+        margin: 0;
+        /* Ensure title area has enough space for 2 lines without shifting layout */
+        min-height: 2.6em;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .pinIcon {
+        color: #ffffff;
+        /* White icon on blue */
+        width: 32px;
+        height: 32px;
+        opacity: 1;
+    }
+
+    .pinIcon svg {
+        width: 32px;
+        height: 32px;
     }
 
     .mapBackground {
@@ -241,53 +391,8 @@
         width: 100%;
         height: auto;
         aspect-ratio: 1113 / 788;
-        margin-top: 30px;
+        margin-top: 40px;
         order: 2;
-        /* Move map below text */
-    }
-
-    .container {
-        padding: 0 20px;
-        order: 1;
-        /* Keep text on top */
-    }
-
-    .topContent {
-        flex-direction: column;
-        margin-bottom: 0;
-    }
-
-    .textSide {
-        width: 100%;
-        font-size: 1.1rem;
-    }
-
-    .carouselWrapper {
-        margin-top: 30px;
-        order: 3;
-        /* Carousel at the bottom */
-    }
-
-    .carouselCard {
-        width: 100%;
-        aspect-ratio: 1.2 / 1;
-        height: auto;
-    }
-
-    .cardContent {
-        padding: 20px;
-    }
-
-    .timeValue {
-        font-size: 48px;
-    }
-
-    .timeUnit {
-        font-size: 14px;
-    }
-
-    .itemTitle {
-        font-size: 12px;
     }
 }
 

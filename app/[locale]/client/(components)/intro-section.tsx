@@ -119,25 +119,33 @@ const IntroSection = () => {
         </div>
 
         <div className={styles.imageCard}>
-          <AnimatePresence mode="wait">
+          {Object.entries(CONTENT).map(([key, item]) => (
             <motion.div
-              key={activeTab}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+              key={key}
+              initial={false}
+              animate={{
+                opacity: activeTab === key ? 1 : 0,
+                scale: activeTab === key ? 1 : 1.05
+              }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
               className={styles.imageWrapper}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: activeTab === key ? 2 : 1,
+                pointerEvents: activeTab === key ? 'auto' : 'none'
+              }}
             >
               <Image
-                src={withBasePath(current.image)}
-                alt={current.title}
+                src={withBasePath(item.image)}
+                alt={item.title}
                 fill
                 className={styles.image}
                 sizes="(max-width: 992px) 100vw, 50vw"
                 loading="eager"
               />
             </motion.div>
-          </AnimatePresence>
+          ))}
         </div>
       </div>
     </section>
