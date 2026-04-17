@@ -7,6 +7,11 @@ const config = (phase: string) => {
 
   const nextConfig: NextConfig = {
     output: "standalone",
+    experimental: {
+      imgOptConcurrency: 2,
+      imgOptTimeoutInSeconds: 30
+
+    },
     serverExternalPackages: ['sharp'],
     outputFileTracingIncludes: {
       '/*': [
