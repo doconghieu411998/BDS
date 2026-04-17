@@ -76,6 +76,9 @@ export default function Preloader() {
           }
 
           window.scrollTo(0, 0)
+          
+          // Signal that preloader is finished
+          window.dispatchEvent(new CustomEvent('preloaderFinished'))
 
           // Record that preloader has been shown in this session
           sessionStorage.setItem(SESSION_KEYS.PRELOADER_SHOWN, "true")

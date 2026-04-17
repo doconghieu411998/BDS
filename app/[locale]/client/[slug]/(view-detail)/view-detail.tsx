@@ -1,5 +1,5 @@
 "use client";
-
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import styles from './view-detail.module.css';
 import ArticleTracker from './article-tracker';
@@ -36,6 +36,11 @@ const processContent = (content: string) => {
 
 export default function NewsDetailView({ item, slug, locale }: Props) {
   const t = useTranslations();
+
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
   const processedContent = processContent(item.content);
 

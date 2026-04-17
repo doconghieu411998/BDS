@@ -176,7 +176,16 @@ const NewsList = ({
                                 </h3>
 
                                 <div className={styles.cardFooter}>
-                                    <span className={styles.date}>{formattedDate}</span>
+                                    <div className={styles.cardMeta}>
+                                        <span className={styles.date}>{formattedDate}</span>
+                                        <span className={styles.viewCount}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px', verticalAlign: 'middle' }}>
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
+                                            {item.viewCount || 0}
+                                        </span>
+                                    </div>
                                     <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }} className={styles.arrowBtn}>
                                         <div className={styles.circleArrow}>
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">

@@ -99,7 +99,20 @@
 }
 
 .date {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.cardMeta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.viewCount {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
     color: #999;
 }
 

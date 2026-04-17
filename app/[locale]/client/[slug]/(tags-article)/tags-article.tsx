@@ -1,13 +1,13 @@
 "use client";
 
-// app/[locale]/tin-tuc/[slug]/views/tag-list-view.tsx
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import slugify from 'slugify';
 import styles from './tags-article.module.css';
 import { NewsItem } from '@/models/news';
 import { withBasePath } from '@/services/commonService';
-import { NEWS_DETAIL_KEYS } from '@/constants/localeKeys';
+import { NEWS_DETAIL_KEYS, COMMON_KEYS } from '@/constants/localeKeys';
 import { useTranslations } from 'next-intl';
 
 interface TagListViewProps {
@@ -20,6 +20,11 @@ interface TagListViewProps {
 export default function TagArticleList({ tagSlug, tagName, articles, locale }: TagListViewProps) {
     const t = useTranslations();
     const displayName = tagName || tagSlug;
+
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -66,10 +71,16 @@ export default function TagArticleList({ tagSlug, tagName, articles, locale }: T
                                     {/* Cột phải: Nội dung */}
                                     <div className={styles.contentWrapper}>
                                         <div className={styles.metaRow}>
-                                            <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }} style={{ textDecoration: 'none' }}>
-                                                <h3 className={styles.title}>{item.title}</h3>
-                                            </Link>
+                                            <span className={styles.categoryBadge}>{item.tags[0]?.tagName}</span>
+                                            <span className={styles.date}>{new Date(item.createDate).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US')}</span>
+                                            <span className={styles.metaSeparator}>|</span>
+                                            <span className={styles.viewCount}>
+                                                {t(COMMON_KEYS.VIEW_LABEL)} {item.viewCount || 0}
+                                            </span>
                                         </div>
+                                        <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }} style={{ textDecoration: 'none' }}>
+                                            <h3 className={styles.title}>{item.title}</h3>
+                                        </Link>
 
                                         <p className={styles.description}>
                                             {item.description}

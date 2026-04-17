@@ -19,6 +19,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { HOME_KEYS } from '@/constants/localeKeys';
 import LanguageSwitcher from './(components)/language-switcher';
 import { FileTextOutlined } from '@ant-design/icons';
+import { SESSION_KEYS } from '@/constants/help';
 import { getAllIntroduceImages, filterImagesByType } from '@/api/introduceImageApiService';
 import { IntroduceImage, IntroduceImageType } from '@/models/introduce-image';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -46,13 +47,31 @@ export default function Main() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [allImages, setAllImages] = useState<IntroduceImage[]>([]);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const [canStartSlideshow, setCanStartSlideshow] = useState(false);
+
+  // Synchronize slideshow with preloader
+  useEffect(() => {
+    // Check if preloader was already shown
+    const hasBeenShown = sessionStorage.getItem(SESSION_KEYS.PRELOADER_SHOWN);
+    if (hasBeenShown) {
+      setCanStartSlideshow(true);
+    } else {
+      // Listen for preloader to finish
+      const handleFinished = () => {
+        setCanStartSlideshow(true);
+      };
+      window.addEventListener('preloaderFinished', handleFinished);
+      return () => window.removeEventListener('preloaderFinished', handleFinished);
+    }
+  }, []);
 
   useEffect(() => {
+    if (!canStartSlideshow) return;
     const interval = setInterval(() => {
       setCurrentBgIndex((prev) => (prev + 1) % HOME_IMAGES.length);
     }, SLIDE_DURATION);
     return () => clearInterval(interval);
-  }, []);
+  }, [canStartSlideshow]);
 
   useEffect(() => {
     const fetchImages = async () => {

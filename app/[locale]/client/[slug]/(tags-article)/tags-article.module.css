@@ -128,10 +128,37 @@
 /* --- Content Column --- */
 .contentWrapper {
     flex: 1;
-    padding: 2rem;
+    padding: 2.5rem 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.metaRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.categoryBadge {
+    background: #0076B7;
+    color: #fff;
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+.date, .viewCount {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.metaSeparator {
+    color: #e2e8f0;
 }
 
 .title {
