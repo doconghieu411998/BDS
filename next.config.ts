@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 import createNextIntlPlugin from 'next-intl/plugin';
 
@@ -7,7 +8,13 @@ const config = (phase: string) => {
 
   const nextConfig: NextConfig = {
     output: "standalone",
-    serverExternalPackages: ['sharp'],
+    outputFileTracingIncludes: {
+      '/*': [
+        './messages/**/*',
+        './locales/**/*',
+        './node_modules/sharp/**/*',
+      ],
+    },
 
     basePath: "",
 
