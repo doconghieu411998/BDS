@@ -13,6 +13,7 @@ const config = (phase: string) => {
         'messages/**/*',
         'locales/**/*',
         'node_modules/sharp/**/*',
+        'node_modules/@img/**/*',
       ],
     },
 
