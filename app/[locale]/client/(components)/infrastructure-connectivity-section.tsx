@@ -209,6 +209,7 @@ const InfrastructureConnectivitySection = () => {
                         alt={item.title}
                         fill
                         style={{ objectFit: 'cover' }}
+                        priority
                       />
                     )}
                   </div>

@@ -6,8 +6,6 @@ import styles from './main.module.css';
 import IntroSection from './(components)/intro-section';
 import OverviewSection from './(components)/overview-section';
 import InfrastructureConnectivitySection from './(components)/infrastructure-connectivity-section';
-import HighlightSection from './(components)/highlight-section';
-import PinSpace from './(components)/pin-space-section';
 import NewsSection from './(components)/news-section';
 import { withBasePath } from '@/services/commonService';
 import FloorDetail from './(components)/floor-detail';
@@ -128,6 +126,20 @@ export default function Main() {
           >
             {t(HOME_KEYS.HOME_BTN_SUBSCRIBE_LABEL)}
           </button>
+        </div>
+
+        {/* Preload background images */}
+        <div style={{ display: 'none' }} aria-hidden="true">
+          {HOME_IMAGES.map((src) => (
+            <Image
+              key={src}
+              src={withBasePath(src)}
+              alt="preload"
+              width={10}
+              height={10}
+              priority={true}
+            />
+          ))}
         </div>
 
       </section>

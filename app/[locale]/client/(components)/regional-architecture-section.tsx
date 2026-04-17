@@ -76,6 +76,7 @@ const RegionalArchitectureSection = ({ images = [] }: { images?: IntroduceImage[
                       style={{ objectFit: 'cover' }}
                       className={styles.slideImage}
                       sizes="(max-width: 768px) 100vw, (max-width: 1440px) 90vw, 1440px"
+                      priority
                     />
                     <div className={styles.overlay}>
                       <h3 className={styles.overlayTitle}>{item.title}</h3>

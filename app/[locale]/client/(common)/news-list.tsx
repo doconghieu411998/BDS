@@ -126,7 +126,7 @@ const NewsList = ({
                             <div key={item.id} className={styles.newsCardHorizontal}>
                                 <div className={styles.imageWrapperHorizontal}>
                                     <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }}>
-                                        <Image src={item.banner || '/images/placeholder.jpg'} alt={item.title} fill className={styles.image} />
+                                        <Image src={item.banner || '/images/placeholder.jpg'} alt={item.title} fill className={styles.image} priority />
                                     </Link>
                                     {item.tags.length > 0 && (
                                         <span className={styles.floatingTag}>{item.tags[0].tagName}</span>
@@ -160,7 +160,7 @@ const NewsList = ({
                         <div key={item.id} className={styles.newsCard}>
                             <div className={styles.imageWrapper}>
                                 <Link href={{ pathname: '/client/[slug]', params: { slug: urlSlug } }}>
-                                    <Image src={item.banner || '/images/placeholder.jpg'} alt={item.title} fill className={styles.image} />
+                                    <Image src={item.banner || '/images/placeholder.jpg'} alt={item.title} fill className={styles.image} priority />
                                 </Link>
                                 {/* Hiển thị tag đầu tiên lên ảnh cho đẹp */}
                                 {item.tags.length > 0 && (

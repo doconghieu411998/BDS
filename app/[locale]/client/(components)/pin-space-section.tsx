@@ -77,7 +77,7 @@ const PinSpace = () => {
                 alt={`Location Background ${index + 1}`}
                 fill
                 className={styles.image}
-                priority={index === 0} // Load nhanh ảnh đầu
+                priority
                 sizes="(max-width: 768px) 100vw, 100vw"
               />
               {/* Overlay text demo (tùy chọn) */}

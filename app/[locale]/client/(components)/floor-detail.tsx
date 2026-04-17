@@ -185,6 +185,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
                         alt={locale === 'en' ? String(item?.titleEn || '') : String(item?.titleVi || '')}
                         fill
                         style={{ objectFit: 'cover' }}
+                        priority
                       />
                     </div>
                     <div className={`${styles.cardTitle} ${colorBar ? styles[colorBar] : ''}`}>
@@ -252,6 +253,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
                   alt={title || ''}
                   fill
                   className={styles.modalImage}
+                  priority
                 />
               </div>
               <div className={styles.modalInfo}>
