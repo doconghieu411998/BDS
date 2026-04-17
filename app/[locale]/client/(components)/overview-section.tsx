@@ -35,7 +35,7 @@ const OverviewSection = () => {
             alt={t(FLOOR_KEYS.HOME_FLOOR_ALT_MAP)}
             fill
             className={styles.image}
-            priority
+            loading="eager"
           />
         </div>
 

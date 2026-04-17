@@ -134,7 +134,7 @@ const IntroSection = () => {
                 fill
                 className={styles.image}
                 sizes="(max-width: 992px) 100vw, 50vw"
-                priority
+                loading="eager"
               />
             </motion.div>
           </AnimatePresence>

@@ -77,7 +77,7 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
                         fill
                         style={{ objectFit: 'cover' }}
                         className={styles.mobileImg}
-                        priority
+                        loading="eager"
                       />
                       <div className={styles.mobileOverlay}>
                         <h3 className={styles.mobileTitle}>{title}</h3>
@@ -123,7 +123,7 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
                           alt={title || 'Tiện ích'}
                           fill
                           style={{ objectFit: 'cover' }}
-                          priority
+                          loading="eager"
                         />
                         <div className={`${styles.thumbnailTitleOverlay} ${isActive ? styles.thumbTitleActive : ''}`}>
                           <span className={styles.thumbTitleText}>{title}</span>
@@ -143,7 +143,7 @@ const OutstandingArchitectureSection = ({ images }: { images: IntroduceImage[] }
                   fill
                   style={{ objectFit: 'cover' }}
                   className={styles.mainImage}
-                  priority
+                  loading="eager"
                 />
                 <div className={styles.overlay}>
                   <p className={styles.overlayDesc}>{activeDescription}</p>

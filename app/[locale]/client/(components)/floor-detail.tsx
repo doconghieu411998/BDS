@@ -105,7 +105,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
           alt={t(FLOOR_KEYS.HOME_FLOOR_ALT_MAP)}
           fill
           className={styles.mapImage}
-          priority
+          loading="eager"
         />
 
         <div className={styles.overlay} />
@@ -185,7 +185,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
                         alt={locale === 'en' ? String(item?.titleEn || '') : String(item?.titleVi || '')}
                         fill
                         style={{ objectFit: 'cover' }}
-                        priority
+                        loading="eager"
                       />
                     </div>
                     <div className={`${styles.cardTitle} ${colorBar ? styles[colorBar] : ''}`}>
@@ -253,7 +253,7 @@ export default function FloorDetail({ images = [] }: { images?: IntroduceImage[]
                   alt={title || ''}
                   fill
                   className={styles.modalImage}
-                  priority
+                  loading="eager"
                 />
               </div>
               <div className={styles.modalInfo}>

@@ -158,7 +158,7 @@ const InfrastructureConnectivitySection = () => {
           alt="Infrastructure Map"
           fill
           style={{ objectFit: 'cover', objectPosition: 'right center' }}
-          priority
+          loading="eager"
         />
       </div>
 
@@ -209,7 +209,7 @@ const InfrastructureConnectivitySection = () => {
                         alt={item.title}
                         fill
                         style={{ objectFit: 'cover' }}
-                        priority
+                        loading="eager"
                       />
                     )}
                   </div>

@@ -46,7 +46,7 @@ const SlideContent = ({ images, activeTab, onSwap }: { images: any[], activeTab:
               fill
               style={{ objectFit: 'cover' }}
               className={styles.slideImage}
-              priority
+              loading="eager"
             />
             {isMain ? (
               <div className={styles.overlay}>

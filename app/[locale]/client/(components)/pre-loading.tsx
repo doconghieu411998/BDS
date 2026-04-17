@@ -10,20 +10,33 @@ import { SESSION_KEYS } from "@/constants/help"
 export default function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
-  const [isActive, setIsActive] = useState<boolean | null>(null) // Use null for initial state to avoid flash
+  
+  // Start as active to show immediately on SSR
+  const [isActive, setIsActive] = useState(true)
+  const [isHydrated, setIsHydrated] = useState(false)
 
   useEffect(() => {
+    setIsHydrated(true)
     // Check if preloader has already been shown in this session
     const hasBeenShown = sessionStorage.getItem(SESSION_KEYS.PRELOADER_SHOWN)
     if (hasBeenShown) {
       setIsActive(false)
-    } else {
-      setIsActive(true)
     }
   }, [])
 
+  // Safety fallback: Ensure preloader always hides after a timeout
+  useEffect(() => {
+    if (isActive) {
+      const timer = setTimeout(() => {
+        setIsActive(false)
+      }, 5000) // 5 second maximum
+      return () => clearTimeout(timer)
+    }
+  }, [isActive])
+
   useLayoutEffect(() => {
-    if (isActive !== true) return; // Only run animation if specifically set to true
+    // Only run animation/lock if we are hydrated and active
+    if (!isHydrated || !isActive) return;
 
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual"
@@ -123,9 +136,9 @@ export default function Preloader() {
       document.body.style.left = originalBodyLeft
       document.body.style.right = originalBodyRight
     }
-  }, [isActive])
+  }, [isHydrated, isActive])
 
-  if (!isActive) return null
+  if (isHydrated && !isActive) return null
 
   return (
     <div ref={containerRef} className={styles.preloader}>
