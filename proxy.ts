@@ -14,10 +14,11 @@ export default function middleware(request: NextRequest) {
     
     const { pathname } = request.nextUrl;
 
-    // Nếu là Bot truy cập trang chủ, thực hiện rewrite sang /vi để trả về 200 OK luôn
+    // Nếu là Bot truy cập trang chủ, thực hiện rewrite thẳng vào /vi/client 
+    // để tránh bị app/[locale]/page.tsx redirect thêm một lần nữa.
     if (isBot && pathname === '/') {
         const url = request.nextUrl.clone();
-        url.pathname = '/vi';
+        url.pathname = '/vi/client';
         return NextResponse.rewrite(url);
     }
 
