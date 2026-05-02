@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const title = t(META_KEYS.HOME_META_TITLE);
   const description = t(META_KEYS.HOME_META_DESC);
   const keywords = locale === 'vi'
-    ? ["bất động sản Quy Nhơn", "The Hera Resort Quy Nhon", "biệt thự Quy Nhơn", "căn hộ nghỉ dưỡng", "Ghềnh Ráng Quy Nhơn", "dự án The Hera", "đầu tư bất động sản"]
+    ? ["bất động sản Quy Nhơn", "The Hera Resort Quy Nhơn", "biệt thự Quy Nhơn", "căn hộ nghỉ dưỡng", "Ghềnh Ráng Quy Nhơn", "dự án The Hera", "đầu tư bất động sản"]
     : ["Quy Nhon real estate", "The Hera Resort Quy Nhon", "Quy Nhon villas", "resort apartments", "Ghenh Rang Quy Nhon", "The Hera project", "property investment"];
 
   return {
