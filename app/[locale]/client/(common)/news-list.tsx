@@ -10,7 +10,7 @@ import { Pagination } from 'antd';
 import { NewsItem } from '@/models/news';
 import { ClientPostApiService } from '@/api/clientPostApiService';
 import { useTranslations } from 'next-intl';
-import { COMMON_KEYS } from '@/constants/localeKeys';
+import { COMMON_KEYS, NEWS_KEYS } from '@/constants/localeKeys';
 
 interface NewsListProps {
     relatedTags?: number[];  // Changed from string[] to number[] for tag IDs
@@ -135,7 +135,7 @@ const NewsList = ({
 
                                 <div className={styles.cardBodyHorizontal}>
                                     <div className={styles.cardHeaderHorizontal}>
-                                         {item.tags.length > 0 && (
+                                        {item.tags.length > 0 && (
                                             <span className={styles.categoryBadge}>{item.tags[0].tagName}</span>
                                         )}
                                         <h3 className={styles.cardTitleHorizontal}>
@@ -147,9 +147,9 @@ const NewsList = ({
                                     </div>
 
                                     <div className={styles.cardFooterHorizontal}>
-                                        <span className={styles.metaItem}>{t(COMMON_KEYS.DATE_LABEL)} {formattedDate}</span>
+                                        <span className={styles.metaItem}>{t(NEWS_KEYS.HOME_NEWS_DATE_LABEL)} {formattedDate}</span>
                                         <span className={styles.separator}>|</span>
-                                        <span className={styles.metaItem}>{t(COMMON_KEYS.VIEW_LABEL)} {item.viewCount || 0}</span>
+                                        <span className={styles.metaItem}>{t(NEWS_KEYS.HOME_NEWS_VIEW_LABEL)} {item.viewCount || 0}</span>
                                     </div>
                                 </div>
                             </div>

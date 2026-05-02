@@ -44,7 +44,7 @@ export default function TagArticleList({ tagSlug, tagName, articles, locale }: T
             <div className={styles.wrapper}>
                 <div className={styles.headerWrapper}>
                     <h1 className={styles.heading}>
-                        <span className={styles.tagLabel}>{t(NEWS_DETAIL_KEYS.new_detail_tag)}:</span> {displayName}
+                        <span className={styles.tagLabel}>{t(NEWS_DETAIL_KEYS.NEWS_DETAIL_TAG)}:</span> {displayName}
                     </h1>
                 </div>
 

@@ -41,7 +41,6 @@ export default function NewsDetailView({ item, slug, locale }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
   const processedContent = processContent(item.content);
 
   return (
@@ -65,9 +64,9 @@ export default function NewsDetailView({ item, slug, locale }: Props) {
           <h1 className={styles.title}>{item.title}</h1>
 
           <div className={styles.meta}>
-            <span>Ngày đăng: {new Date(item.createDate).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US')}</span>
+            <span>{t(NEWS_DETAIL_KEYS.NEWS_DETAIL_DATE_LABEL)}: {new Date(item.createDate).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US')}</span>
             <span className={styles.separator}>|</span>
-            <span>Lượt xem: {item.viewCount}</span>
+            <span>{t(NEWS_DETAIL_KEYS.NEWS_DETAIL_VIEW_LABEL)}: {item.viewCount}</span>
           </div>
         </header>
 
@@ -90,7 +89,7 @@ export default function NewsDetailView({ item, slug, locale }: Props) {
 
           {item.tags && item.tags.length > 0 && (
             <div className={styles.relatedTagContainer}>
-              <span className={styles.tagPrefix}>{t(NEWS_DETAIL_KEYS.new_detail_tag)}:</span>
+              <span className={styles.tagPrefix}>{t(NEWS_DETAIL_KEYS.NEWS_DETAIL_TAG)}:</span>
               <div className={styles.relatedTagList}>
                 {item.tags.map((tag, index) => {
                   const tagSlug = `${convertSlugUrl(tag.tagName, locale)}-t${tag.id}.html`;
@@ -117,7 +116,7 @@ export default function NewsDetailView({ item, slug, locale }: Props) {
 
           <div className={styles.seeMoreWrapper}>
             <Link href="/client/news" className={styles.seeMoreBtn}>
-              {t(NEWS_DETAIL_KEYS.new_detail_more_btn_label)}
+              {t(NEWS_DETAIL_KEYS.NEWS_DETAIL_MORE_BTN_LABEL)}
             </Link>
           </div>
         </div>

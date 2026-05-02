@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styles from './footer.module.css';
 import { FacebookFilled, YoutubeFilled, LinkedinFilled } from '@ant-design/icons';
 import { useTranslations } from 'next-intl';
-import { FOOTER_KEYS } from '@/constants/localeKeys';
+import { COMMON_KEYS, FOOTER_KEYS } from '@/constants/localeKeys';
 
 const Footer = () => {
   const t = useTranslations();
@@ -44,9 +44,9 @@ const Footer = () => {
           <div className={styles.infoCol}>
             <h4 className={styles.heading}>{t(FOOTER_KEYS.HOME_FOOTER_SOCIAL)}</h4>
             <div className={styles.socialIcons}>
-              <a href="#" className={styles.iconCircle}><FacebookFilled /></a>
-              <a href="#" className={styles.iconCircle}><YoutubeFilled /></a>
-              <a href="#" className={styles.iconCircle}><LinkedinFilled /></a>
+              <a href={t(COMMON_KEYS.HOME_CONTACT_FACEBOOK_LINK)} className={styles.iconCircle}><FacebookFilled /></a>
+              <a href={t(COMMON_KEYS.HOME_CONTACT_YOUTUBE_LINK)} className={styles.iconCircle}><YoutubeFilled /></a>
+              <a href={t(COMMON_KEYS.HOME_CONTACT_LINKEDIN_LINK)} className={styles.iconCircle}><LinkedinFilled /></a>
             </div>
           </div>
         </div>

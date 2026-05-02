@@ -31,17 +31,17 @@ export async function generateMetadata({ params }: Props) {
             'en': `${baseUrl}/en/the-hera-resort-quy-nhon/${slug}`,
         };
 
-        // TODO: Fetch actual tag name from API using tagId for better SEO
         const tagTitle = locale === 'vi'
             ? 'Bài viết theo danh mục'
             : 'Articles by Category';
         const tagDescription = locale === 'vi'
-            ? 'Khám phá các bài viết liên quan đến danh mục này tại The Hera Resort Quy Nhon'
+            ? 'Khám phá các bài viết liên quan đến danh mục này tại The Hera Resort Quy Nhơn'
             : 'Explore related articles in this category at The Hera Resort Quy Nhon';
 
         return {
             title: `${tagTitle}`,
             description: tagDescription,
+            keywords: [tagTitle, "The Hera Resort", "Hera Resort Quy Nhơn", "biệt thự Quy Nhơn", "MST Group"],
             alternates: {
                 canonical: currentUrl,
                 languages: alternatesLanguages,
@@ -75,7 +75,6 @@ export async function generateMetadata({ params }: Props) {
         };
     }
 
-    // Check for post (posts have -ID.html pattern without 't')
     const id = getIdFromSlug(slug);
 
     if (id) {
@@ -91,13 +90,18 @@ export async function generateMetadata({ params }: Props) {
             'en': `${baseUrl}/en/the-hera-resort-quy-nhon/${slug}`,
         };
 
+        // Extract tag names for keywords
+        const articleKeywords = newsItem.tags?.map(tag => tag.tagName) || [];
+
         return {
-            title: `${newsItem?.title} | The Hera Resort Quy Nhon`,
+            title: `${newsItem?.title}`,
             description: newsItem?.description,
+            keywords: [...articleKeywords, newsItem?.title, "The Hera Resort", "Hera Resort Quy Nhơn", "MST Group", "Hera Resort Quy Nhơn", " Quy Nhơn", "Quy Nhon", "biệt thự Quy Nhơn", "biệt thự Quy Nhon", "căn hộ nghỉ dưỡng", "căn hộ nghỉ dưỡng Quy Nhơn", "Ghềnh Ráng Quy Nhơn", "dự án The Hera", "đầu tư bất động sản", "The Hera Quy Nhơn"],
             alternates: {
                 canonical: currentUrl,
                 languages: alternatesLanguages,
             },
+
             openGraph: {
                 title: newsItem.title,
                 description: newsItem?.description,
@@ -170,8 +174,32 @@ export default async function SlugPage({ params }: Props) {
             return notFound();
         }
 
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
+
+        // Structured Data (JSON-LD) for NewsArticle
+        const jsonLd = {
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "headline": newsItem.title,
+            "description": newsItem.description,
+            "image": [
+                transformSeoUrl(newsItem.banner, baseUrl) || `${baseUrl}/images/og-image.png`
+            ],
+            "datePublished": newsItem.createDate,
+            "dateModified": newsItem.createDate,
+            "author": [{
+                "@type": "Organization",
+                "name": "The Hera Resort Quy Nhon",
+                "url": baseUrl
+            }]
+        };
+
         return (
             <>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
                 <NewsDetailView item={newsItem} slug={slug} locale={locale} />
             </>
         );

@@ -150,6 +150,8 @@ export const DESIGN_KEYS = {
 
 export const NEWS_KEYS = {
     HOME_NEWS_TITLE_MAIN: 'home_news_title_main',
+    HOME_NEWS_DATE_LABEL: 'news_detail_date_label',
+    HOME_NEWS_VIEW_LABEL: 'news_detail_view_label',
 } as const;
 
 export const FOOTER_KEYS = {
@@ -189,11 +191,20 @@ export const COMMON_KEYS = {
     HOME_CONTACT_ZALO_LINK: 'home_contact_zalo_link',
     HOME_CONTACT_FACEBOOK_LINK: 'home_contact_facebook_link',
     HOME_CONTACT_YOUTUBE_LINK: 'home_contact_youtube_link',
+    HOME_CONTACT_LINKEDIN_LINK: 'home_contact_linkedin_link',
+
 } as const;
 
 export const NEWS_DETAIL_KEYS = {
-    new_detail_tag: 'new_detail_tag',
-    new_detail_more_btn_label: 'new_detail_more_btn_label',
+    NEWS_DETAIL_TAG: 'news_detail_tag',
+    NEWS_DETAIL_MORE_BTN_LABEL: 'news_detail_more_btn_label',
+    NEWS_DETAIL_VIEW_LABEL: 'news_detail_view_label',
+    NEWS_DETAIL_DATE_LABEL: 'news_detail_date_label',
+} as const;
+
+export const SEO_KEYS = {
+    HOME_SEO_TITLE: 'home_seo_title',
+    HOME_SEO_DESCRIPTION: 'home_seo_description',
 } as const;
 
 // Type for keys

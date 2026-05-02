@@ -21,7 +21,7 @@ export async function generateMetadata({
 
   return {
     title: {
-      template: `${t('home_overview_name_value')}`,
+      template: `%s`,
       default: t('home_meta_title'),
     },
     description: t('home_meta_desc'),
@@ -36,8 +36,9 @@ export async function generateMetadata({
     },
     keywords: [
       "The Hera Resort", "Hera Resort Quy Nhon", "Biệt thự Quy Nhơn",
-      "Nghỉ dưỡng Quy Nhơn", "Sunshine Group", "Bất động sản Quy Nhơn",
-      "Luxury Villa Quy Nhon", "Resort Quy Nhon"
+      "Nghỉ dưỡng Quy Nhơn", "MST Group", "Bất động sản Quy Nhơn",
+      "Luxury Villa Quy Nhon", "Resort Quy Nhon", "Dự án The Hera",
+      "The Hera Quy Nhơn", "Villas Quy Nhon", "Villas Ghềnh Ráng"
     ],
     openGraph: {
       title: t('home_meta_title'),
@@ -62,8 +63,14 @@ export async function generateMetadata({
       images: ['/images/og-image.png'],
     },
     icons: {
-      icon: '/favicon.png',
-      apple: '/apple-touch-icon.png',
+      icon: [
+        { url: `${baseUrl}/favicon.png`, type: 'image/png' },
+        { url: `${baseUrl}/favicon.png`, sizes: '32x32', type: 'image/png' },
+      ],
+      shortcut: `${baseUrl}/favicon.png`,
+      apple: [
+        { url: `${baseUrl}/apple-touch-icon.png`, sizes: '180x180', type: 'image/png' },
+      ],
     },
     robots: {
       index: true,
@@ -119,7 +126,7 @@ export default async function RootLayout({
       "name": t('home_overview_developer_value'),
       "logo": {
         "@type": "ImageObject",
-        "url": "/images/logo-black.png"
+        "url": "https://theheraresort.com/images/og-image.png"
       }
     }
   };

@@ -4,18 +4,18 @@ import Preloader from "./(components)/pre-loading";
 import FloatingActions from "./(components)/floating-actions";
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { META_KEYS } from '@/constants/localeKeys';
+import { META_KEYS, SEO_KEYS } from '@/constants/localeKeys';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
 
   const t = await getTranslations({ locale });
 
-  const title = t(META_KEYS.HOME_META_TITLE);
-  const description = t(META_KEYS.HOME_META_DESC);
+  const title = t(SEO_KEYS.HOME_SEO_TITLE);
+  const description = t(SEO_KEYS.HOME_SEO_DESCRIPTION);
   const keywords = locale === 'vi'
-    ? ["bất động sản Quy Nhơn", "The Hera Resort Quy Nhơn", "biệt thự Quy Nhơn", "căn hộ nghỉ dưỡng", "Ghềnh Ráng Quy Nhơn", "dự án The Hera", "đầu tư bất động sản"]
-    : ["Quy Nhon real estate", "The Hera Resort Quy Nhon", "Quy Nhon villas", "resort apartments", "Ghenh Rang Quy Nhon", "The Hera project", "property investment"];
+    ? ["bất động sản Quy Nhơn", "The Hera Resort Quy Nhơn", "biệt thự Quy Nhơn", "căn hộ nghỉ dưỡng", "Ghềnh Ráng Quy Nhơn", "dự án The Hera", "đầu tư bất động sản", "MST Group", "The Hera Quy Nhơn"]
+    : ["Quy Nhon real estate", "The Hera Resort Quy Nhon", "Quy Nhon villas", "resort apartments", "Ghenh Rang Quy Nhon", "The Hera project", "property investment", "MST Group", "The Hera Quy Nhon"];
 
   return {
     title: title,
