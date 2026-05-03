@@ -51,18 +51,12 @@ export default function Main() {
 
   // Synchronize slideshow with preloader
   useEffect(() => {
-    // Check if preloader was already shown
-    const hasBeenShown = sessionStorage.getItem(SESSION_KEYS.PRELOADER_SHOWN);
-    if (hasBeenShown) {
+    // Since preloader is now home-page specific, we always wait for it to finish
+    const handleFinished = () => {
       setCanStartSlideshow(true);
-    } else {
-      // Listen for preloader to finish
-      const handleFinished = () => {
-        setCanStartSlideshow(true);
-      };
-      window.addEventListener('preloaderFinished', handleFinished);
-      return () => window.removeEventListener('preloaderFinished', handleFinished);
-    }
+    };
+    window.addEventListener('preloaderFinished', handleFinished);
+    return () => window.removeEventListener('preloaderFinished', handleFinished);
   }, []);
 
   useEffect(() => {

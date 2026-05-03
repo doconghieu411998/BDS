@@ -10,18 +10,13 @@ import { SESSION_KEYS } from "@/constants/help"
 export default function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
-  
+
   // Start as active to show immediately on SSR
   const [isActive, setIsActive] = useState(true)
   const [isHydrated, setIsHydrated] = useState(false)
 
   useEffect(() => {
     setIsHydrated(true)
-    // Check if preloader has already been shown in this session
-    const hasBeenShown = sessionStorage.getItem(SESSION_KEYS.PRELOADER_SHOWN)
-    if (hasBeenShown) {
-      setIsActive(false)
-    }
   }, [])
 
   // Safety fallback: Ensure preloader always hides after a timeout
@@ -76,12 +71,9 @@ export default function Preloader() {
           }
 
           window.scrollTo(0, 0)
-          
+
           // Signal that preloader is finished
           window.dispatchEvent(new CustomEvent('preloaderFinished'))
-
-          // Record that preloader has been shown in this session
-          sessionStorage.setItem(SESSION_KEYS.PRELOADER_SHOWN, "true")
 
           setIsActive(false)
         },

@@ -1,6 +1,5 @@
 import Footer from "./(components)/footer";
 import Header from "./(components)/header";
-import Preloader from "./(components)/pre-loading";
 import FloatingActions from "./(components)/floating-actions";
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
@@ -50,6 +49,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'en-US': '/en/the-hera-resort-quy-nhon',
       },
     },
+    icons: {
+      icon: [
+        { url: '/favicon.png', type: 'image/png' },
+      ],
+      shortcut: '/favicon.png',
+      apple: [
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+    },
+    manifest: '/manifest.json',
   };
 }
 
@@ -60,8 +69,6 @@ export default function ClientLayout({
 }>) {
   return (
     <div style={{ position: 'relative' }}>
-
-      <Preloader />
 
       <FloatingActions />
 

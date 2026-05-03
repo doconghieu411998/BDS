@@ -3,6 +3,7 @@ import usePageView from "@/hook/use-page-view";
 import Main from "./main";
 import { DEFAULT_VIEW_EXPIRATION_MS, SESSION_KEYS } from "@/constants/help";
 import { useLocale } from "next-intl";
+import Preloader from "./(components)/pre-loading";
 export default function HomePage() {
 
   usePageView({
@@ -13,6 +14,7 @@ export default function HomePage() {
   
   return (
     <>
+      <Preloader />
       <Main />
     </>
   );

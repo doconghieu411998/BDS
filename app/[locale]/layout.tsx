@@ -64,12 +64,11 @@ export async function generateMetadata({
     },
     icons: {
       icon: [
-        { url: `${baseUrl}/favicon.png`, type: 'image/png' },
-        { url: `${baseUrl}/favicon.png`, sizes: '32x32', type: 'image/png' },
+        { url: '/favicon.png', type: 'image/png' },
       ],
-      shortcut: `${baseUrl}/favicon.png`,
+      shortcut: '/favicon.png',
       apple: [
-        { url: `${baseUrl}/apple-touch-icon.png`, sizes: '180x180', type: 'image/png' },
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
       ],
     },
     robots: {
@@ -83,6 +82,7 @@ export async function generateMetadata({
         'max-snippet': -1,
       },
     },
+    manifest: '/manifest.json',
   };
 }
 
@@ -108,28 +108,48 @@ export default async function RootLayout({
   const messages = await getMessages();
   const t = await getTranslations({ locale });
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://theheraresort.com';
+
   // Structured Data (JSON-LD)
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "RealEstateListing",
-    "name": t('home_overview_name_value'),
-    "description": t('home_meta_desc'),
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": t('home_overview_location_value'),
-      "addressLocality": "Quy Nhơn",
-      "addressRegion": "Bình Định",
-      "addressCountry": "VN"
-    },
-    "provider": {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
       "@type": "Organization",
-      "name": t('home_overview_developer_value'),
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://theheraresort.com/images/og-image.png"
+      "name": t('home_overview_name_value'),
+      "url": baseUrl,
+      "logo": `${baseUrl}/images/logo.png`,
+      "sameAs": [
+        "https://www.facebook.com/theheraresortquynhon"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": t('home_overview_name_value'),
+      "url": baseUrl,
+      "publisher": {
+        "@type": "Organization",
+        "name": t('home_overview_developer_value'),
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${baseUrl}/images/logo.png`
+        }
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "name": t('home_overview_name_value'),
+      "description": t('home_meta_desc'),
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": t('home_overview_location_value'),
+        "addressLocality": "Quy Nhơn",
+        "addressRegion": "Bình Định",
+        "addressCountry": "VN"
       }
     }
-  };
+  ];
 
   return (
     <html lang={locale} className={montserrat.variable}>
