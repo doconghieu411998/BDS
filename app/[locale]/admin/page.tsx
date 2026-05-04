@@ -15,7 +15,7 @@ export default function Admin() {
 
     if (accessToken) {
       // Redirect to dashboard if already authenticated
-      router.replace(ROUTES.DASHBOARD);
+      router.replace(ROUTES.LANGUAGE);
     } else {
       // Redirect to login page
       router.replace(ROUTES.LOGIN);

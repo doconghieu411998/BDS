@@ -17,12 +17,6 @@ export interface MenuItem {
 
 export const MENU_ITEMS: MenuItem[] = [
     {
-        key: 'dashboard',
-        icon: <HomeOutlined />,
-        label: 'Trang chủ',
-        path: ROUTES.DASHBOARD,
-    },
-    {
         key: 'language',
         icon: <GlobalOutlined />,
         label: 'Quản lý ngôn ngữ',

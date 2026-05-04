@@ -37,13 +37,13 @@ export default function DashboardPage() {
                 </AntCol>
             </AntRow> */}
 
-            <AntRow gutter={[16, 16]} className={styles.statsGrid}>
+            {/* <AntRow gutter={[16, 16]} className={styles.statsGrid}>
                 <AntCol span={24}>
                     <AntCard title="Thông tin liên hệ" className={styles.activityCard}>
                         <ContactInfo />
                     </AntCard>
                 </AntCol>
-            </AntRow>
+            </AntRow> */}
         </div>
     );
 }

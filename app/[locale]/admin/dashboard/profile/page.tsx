@@ -8,10 +8,8 @@ import {
   AntForm,
   AntInput,
   AntButton,
-  AntAvatar,
-  AntUpload,
 } from "@/crema/components";
-import { UserOutlined, UploadOutlined, LockOutlined } from "@ant-design/icons";
+import {  LockOutlined } from "@ant-design/icons";
 import { t } from "@/utils/i18n";
 import { success as notifySuccess } from "@/utils/antd-notification";
 import styles from "./page.module.css";
@@ -32,7 +30,7 @@ export default function ProfilePage() {
       newPassword: values.newPassword,
     });
     console.log("Change password values:", values);
-    if (response) {
+    if (response?.success === null || response?.success === undefined || response?.success === true) {
       notifySuccess("Đổi mật khẩu thành công!");
       passwordForm.resetFields();
     }

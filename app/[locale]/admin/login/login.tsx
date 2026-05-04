@@ -35,7 +35,7 @@ export default function LoginForm() {
             notifySuccess('Đăng nhập thành công!');
 
             // Redirect về dashboard
-            router.push(ROUTES.DASHBOARD);
+            router.push(ROUTES.LANGUAGE);
         } catch (error: unknown) {
             // Xử lý error message từ API
             let message = 'Đăng nhập thất bại!';
