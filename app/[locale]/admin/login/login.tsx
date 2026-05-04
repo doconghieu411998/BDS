@@ -116,7 +116,10 @@ export default function LoginForm() {
                                 <a
                                     className={styles.forgotPasswordLink}
                                     href="#"
-                                    onClick={(e) => e.preventDefault()}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        notifySuccess('Vui lòng liên hệ bộ phận kỹ thuật');
+                                    }}
                                 >
                                     Quên mật khẩu?
                                 </a>
