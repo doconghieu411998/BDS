@@ -83,7 +83,7 @@ export default function LoginForm() {
                         >
                             <AntInput
                                 prefix={<UserOutlined className={styles.inputPrefixIcon} />}
-                                placeholder={'Email'}
+                                placeholder={'Tài khoản'}
                             />
                         </AntForm.Item>
 
