@@ -73,11 +73,11 @@ export default function LoginForm() {
                     >
                         <AntForm.Item
                             name="username"
-                            label={'Email'}
+                            label={'Tài khoản'}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Vui lòng nhập email!',
+                                    message: 'Vui lòng nhập tài khoản!',
                                 },
                             ]}
                         >
