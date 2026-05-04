@@ -12,6 +12,7 @@ const COOKIE_CONFIG = {
         ACCESS_TOKEN: 'accessToken',
         REFRESH_TOKEN: 'refreshToken',
         USER: 'user',
+        REMEMBER: 'rememberMe',
     },
 } as const;
 
@@ -22,21 +23,31 @@ export const authStorage = {
     /**
      * Lưu authentication data sau khi login thành công
      */
-    setAuth(accessToken: string, refreshToken: string, remember: boolean = false) {
-        const expires = remember ? COOKIE_CONFIG.DEFAULT_EXPIRES : COOKIE_CONFIG.SHORT_EXPIRES;
+    setAuth(accessToken: string, refreshToken: string, remember?: boolean) {
+        const effectiveRemember = typeof remember === 'boolean' ? remember : this.getRemember();
+        const expires = effectiveRemember ? COOKIE_CONFIG.DEFAULT_EXPIRES : COOKIE_CONFIG.SHORT_EXPIRES;
         const options = { expires };
 
         Cookies.set(COOKIE_CONFIG.KEYS.ACCESS_TOKEN, accessToken, options);
         Cookies.set(COOKIE_CONFIG.KEYS.REFRESH_TOKEN, refreshToken, options);
+        Cookies.set(COOKIE_CONFIG.KEYS.REMEMBER, String(!!effectiveRemember), options);
     },
 
     /**
      * Lưu thông tin user
      */
-    setUser(user: User, remember: boolean = false) {
-        const expires = remember ? COOKIE_CONFIG.DEFAULT_EXPIRES : COOKIE_CONFIG.SHORT_EXPIRES;
+    setUser(user: User, remember?: boolean) {
+        const effectiveRemember = typeof remember === 'boolean' ? remember : this.getRemember();
+        const expires = effectiveRemember ? COOKIE_CONFIG.DEFAULT_EXPIRES : COOKIE_CONFIG.SHORT_EXPIRES;
         Cookies.set(COOKIE_CONFIG.KEYS.USER, JSON.stringify(user), { expires });
     },
+    /**
+     * Lấy trạng thái remember me
+     */
+    getRemember(): boolean {
+        return Cookies.get(COOKIE_CONFIG.KEYS.REMEMBER) === 'true';
+    },
+
 
     /**
      * Lấy access token
@@ -80,15 +91,15 @@ export const authStorage = {
         Cookies.remove(COOKIE_CONFIG.KEYS.ACCESS_TOKEN);
         Cookies.remove(COOKIE_CONFIG.KEYS.REFRESH_TOKEN);
         Cookies.remove(COOKIE_CONFIG.KEYS.USER);
+        Cookies.remove(COOKIE_CONFIG.KEYS.REMEMBER);
     },
 
     /**
      * Cập nhật access token mới (dùng cho refresh token flow)
      */
     updateAccessToken(accessToken: string) {
-        // Giữ nguyên thời gian expire của token cũ
-        const user = this.getUser();
-        const expires = user ? COOKIE_CONFIG.DEFAULT_EXPIRES : COOKIE_CONFIG.SHORT_EXPIRES;
+        // Giữ nguyên thời gian expire theo trạng thái remember me
+        const expires = this.getRemember() ? COOKIE_CONFIG.DEFAULT_EXPIRES : COOKIE_CONFIG.SHORT_EXPIRES;
         Cookies.set(COOKIE_CONFIG.KEYS.ACCESS_TOKEN, accessToken, { expires });
     },
 };
