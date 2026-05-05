@@ -11,9 +11,6 @@ export default function VillaImageTab() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{ marginBottom: 32 }}>
-                <Title level={4} style={{ marginBottom: 16 }}>
-                    Villa Song Lập
-                </Title>
                 <ImageTab
                     title="Villa Song Lập"
                     filterCondition={(item) => item.type === 3 && item.status === IntroduceStatus.DUPLEX}
@@ -25,9 +22,6 @@ export default function VillaImageTab() {
             <Divider style={{ margin: '24px 0' }} />
 
             <div>
-                <Title level={4} style={{ marginBottom: 16 }}>
-                    Villa Đơn Lập
-                </Title>
                 <ImageTab
                     title="Villa Đơn Lập"
                     filterCondition={(item) => item.type === 3 && item.status === IntroduceStatus.SINGLE}
