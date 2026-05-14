@@ -12,6 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   const title = t(SEO_KEYS.HOME_SEO_TITLE);
   const description = t(SEO_KEYS.HOME_SEO_DESCRIPTION);
+  const siteName = t(SEO_KEYS.HOME_SEO_TITLE);
   const keywords = locale === 'vi'
     ? ["bất động sản Quy Nhơn", "The Hera Resort Quy Nhơn", "biệt thự Quy Nhơn", "căn hộ nghỉ dưỡng", "Ghềnh Ráng Quy Nhơn", "dự án The Hera", "đầu tư bất động sản", "MST Group", "The Hera Quy Nhơn"]
     : ["Quy Nhon real estate", "The Hera Resort Quy Nhon", "Quy Nhon villas", "resort apartments", "Ghenh Rang Quy Nhon", "The Hera project", "property investment", "MST Group", "The Hera Quy Nhon"];
@@ -24,13 +25,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       title: title,
       description: description,
       url: `/${locale}/the-hera-resort-quy-nhon`,
-      siteName: "The Hera Resort Quy Nhon",
+      siteName: siteName,
       images: [
         {
           url: '/images/og-image.png',
           width: 1200,
           height: 630,
-          alt: "Hera Resort Quy Nhon",
+          alt: siteName,
         },
       ],
       locale: locale === 'vi' ? 'vi_VN' : 'en_US',

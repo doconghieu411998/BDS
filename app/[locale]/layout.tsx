@@ -116,16 +116,18 @@ export default async function RootLayout({
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": t('home_overview_name_value'),
+      "alternateName": ["Hera Resort", "The Hera", "Hera Resort Quy Nhơn", "The Hera Resort Quy Nhon"],
       "url": baseUrl,
       "logo": `${baseUrl}/images/logo.png`,
       "sameAs": [
-        "https://www.facebook.com/theheraresortquynhon"
+        "https://www.facebook.com/theheraresort"
       ]
     },
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": t('home_overview_name_value'),
+      "alternateName": ["Hera Resort", "The Hera"],
       "url": baseUrl,
       "publisher": {
         "@type": "Organization",
@@ -138,7 +140,7 @@ export default async function RootLayout({
     },
     {
       "@context": "https://schema.org",
-      "@type": "RealEstateListing",
+      "@type": "RealEstateProject",
       "name": t('home_overview_name_value'),
       "description": t('home_meta_desc'),
       "address": {
@@ -147,6 +149,11 @@ export default async function RootLayout({
         "addressLocality": "Quy Nhơn",
         "addressRegion": "Bình Định",
         "addressCountry": "VN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "13.7291",
+        "longitude": "109.2136"
       }
     }
   ];
